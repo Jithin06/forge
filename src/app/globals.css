@@ -1,0 +1,116 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+/*
+ * Design tokens. This is the only file allowed to contain color values.
+ * Values follow USC's published color guidance (identity.usc.edu/color):
+ * cardinal may be darkened, never tinted; gold may be tinted, never darkened.
+ */
+:root {
+  --cardinal: #990000;
+  --cardinal-pressed: #7a0000;
+  --gold: #ffcc00;
+  --gold-soft: #fff2bf;
+  --black: #000000;
+  --white: #ffffff;
+  --gray-text: #767676;
+  --gray-line: #cccccc;
+
+  /* shadcn/ui semantic tokens mapped onto the palette */
+  --background: var(--white);
+  --foreground: var(--black);
+  --card: var(--white);
+  --card-foreground: var(--black);
+  --popover: var(--white);
+  --popover-foreground: var(--black);
+  --primary: var(--cardinal);
+  --primary-foreground: var(--white);
+  --secondary: var(--white);
+  --secondary-foreground: var(--cardinal);
+  --muted: var(--gold-soft);
+  --muted-foreground: var(--gray-text);
+  --accent: var(--gold-soft);
+  --accent-foreground: var(--black);
+  --destructive: var(--cardinal);
+  --border: var(--gray-line);
+  --input: var(--gray-text);
+  --ring: var(--black);
+  --radius: 0.75rem; /* 12 px card radius */
+}
+
+@theme inline {
+  --color-cardinal: var(--cardinal);
+  --color-cardinal-pressed: var(--cardinal-pressed);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-gray-text: var(--gray-text);
+  --color-gray-line: var(--gray-line);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --font-sans: var(--font-source-sans);
+  --font-heading: var(--font-source-sans);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    @apply font-sans;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  h1,
+  h2,
+  h3 {
+    line-height: 1.15;
+  }
+  /* Visible focus ring everywhere: 2 px black, 2 px offset. */
+  :focus-visible {
+    outline: 2px solid var(--black);
+    outline-offset: 2px;
+  }
+  .on-dark :focus-visible,
+  .on-dark:focus-visible {
+    outline-color: var(--gold);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}
