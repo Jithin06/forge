@@ -4,6 +4,8 @@ Tell Forge what you want to make. It finds where at USC you can make it, what it
 
 Built for the AI@USC Hackathon, November 14 to 15, 2026. The code was written by Claude under Jithin's direction. `SPEC.md` is the source of truth for what is built.
 
+Live: https://forge-beta-hazel.vercel.app
+
 Student project. Not an official USC service.
 
 ## Run locally
