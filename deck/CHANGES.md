@@ -39,7 +39,7 @@ This replaces the earlier six-slide draft that was in `deck/`. That draft is sti
 | The plan shows "Easiest for a first build" only, with no "Cheapest" tag. | That is what the live plan returned. Slide 5 still says labels are computed, which the code confirms. |
 | "Cost is quantities times posted prices", without "no posted price, no dollar figure". | The app now uses the Maker Space's prices as typical campus prices for some spaces that list none, so the second half is no longer always true. |
 | The Maker Space training order from the brief (Level 2 as the entry point) is not stated anywhere. | The app's data and screens say Level 1 orientation comes first. I showed only what the app shows. See `NEEDS.md`. |
-| The Scrap Exchange slide says "Proposed pilot. Test piece shown." | Supervisor approval is not confirmed, and the piece in the screenshots is the drawn stand-in. |
+| The Scrap Exchange slide says "Test piece shown." | The piece in the screenshots is the drawn stand-in. "Proposed pilot" was removed on Nov 14 after Jithin said the supervisor approved giving scrap away. |
 | Print Doctor and training booking are not mentioned. | They are stretch items and are not in the app. |
 | No repository link on the last slide. | I could not tell whether the repository is public. |
 | The stack line reads "Next.js on Vercel. Supabase. Gemini API." | Checked against `package.json`, the environment settings and the live URL. |

@@ -281,11 +281,11 @@
   "materials": [
     {
       "id": "pla_filament",
-      "name": "PLA black, Prusa MK4 printers",
+      "name": "PLA black or white, Prusa printers",
       "category": "pla_filament",
       "unit_price_usd": 1.0,
       "price_unit": "cubic inch",
-      "price_source": "https://viterbiundergrad.usc.edu/bfms/operations/prices/ (printing-cost chart; page last updated 2024-02-21)",
+      "price_source": "BFMS 3DP Quote Generator sheet, shown by Jithin on 2026-11-14 (newer than the chart on the public prices page, which was last updated 2024-02-21)",
       "stocked": null,
       "price_by_audience": {
         "usc_undergrad_other": 5.0,
@@ -294,11 +294,11 @@
     },
     {
       "id": "pla_specialty",
-      "name": "PLA specialty colors, Prusa MK4 printers",
+      "name": "PLA other colors, Prusa printers",
       "category": "pla_filament",
-      "unit_price_usd": 1.25,
+      "unit_price_usd": 1.5,
       "price_unit": "cubic inch",
-      "price_source": "https://viterbiundergrad.usc.edu/bfms/operations/prices/ (printing-cost chart; page last updated 2024-02-21)",
+      "price_source": "BFMS 3DP Quote Generator sheet, shown by Jithin on 2026-11-14 (newer than the chart on the public prices page, which was last updated 2024-02-21)",
       "stocked": null,
       "price_by_audience": {
         "usc_undergrad_other": 5.5,
@@ -307,11 +307,24 @@
     },
     {
       "id": "pc_blend_cf",
-      "name": "PC Blend CF, Prusa MK4 printers",
+      "name": "PC Blend CF, Prusa printers",
       "category": "other_filament",
       "unit_price_usd": 2.5,
       "price_unit": "cubic inch",
-      "price_source": "https://viterbiundergrad.usc.edu/bfms/operations/prices/ (printing-cost chart; page last updated 2024-02-21)",
+      "price_source": "BFMS 3DP Quote Generator sheet, shown by Jithin on 2026-11-14 (newer than the chart on the public prices page, which was last updated 2024-02-21)",
+      "stocked": null,
+      "price_by_audience": {
+        "usc_undergrad_other": null,
+        "usc_grad_other": null
+      }
+    },
+    {
+      "id": "byo_filament",
+      "name": "Your own filament, printed on the Prusa printers",
+      "category": "other_filament",
+      "unit_price_usd": 0.1,
+      "price_unit": "cubic inch",
+      "price_source": "BFMS 3DP Quote Generator sheet, shown by Jithin on 2026-11-14 (newer than the chart on the public prices page, which was last updated 2024-02-21)",
       "stocked": null,
       "price_by_audience": {
         "usc_undergrad_other": null,
@@ -320,11 +333,11 @@
     },
     {
       "id": "abs_m30",
-      "name": "ABS M30, Stratasys printers",
+      "name": "ABS, Stratasys printers",
       "category": "other_filament",
       "unit_price_usd": 3.0,
       "price_unit": "cubic inch",
-      "price_source": "https://viterbiundergrad.usc.edu/bfms/operations/prices/ (printing-cost chart; page last updated 2024-02-21)",
+      "price_source": "BFMS 3DP Quote Generator sheet, shown by Jithin on 2026-11-14 (newer than the chart on the public prices page, which was last updated 2024-02-21)",
       "stocked": null,
       "price_by_audience": {
         "usc_undergrad_other": null,
@@ -337,7 +350,7 @@
       "category": "other_filament",
       "unit_price_usd": 4.0,
       "price_unit": "cubic inch",
-      "price_source": "https://viterbiundergrad.usc.edu/bfms/operations/prices/ (printing-cost chart; page last updated 2024-02-21)",
+      "price_source": "BFMS 3DP Quote Generator sheet, shown by Jithin on 2026-11-14 (newer than the chart on the public prices page, which was last updated 2024-02-21)",
       "stocked": null,
       "price_by_audience": {
         "usc_undergrad_other": null,
@@ -345,25 +358,12 @@
       }
     },
     {
-      "id": "tpu_f370",
-      "name": "TPU (flexible), Stratasys F370",
-      "category": "other_filament",
-      "unit_price_usd": 3.0,
-      "price_unit": "cubic inch",
-      "price_source": "https://viterbiundergrad.usc.edu/bfms/operations/prices/ (printing-cost chart; page last updated 2024-02-21)",
-      "stocked": null,
-      "price_by_audience": {
-        "usc_undergrad_other": null,
-        "usc_grad_other": null
-      }
-    },
-    {
-      "id": "nylon_12cf",
-      "name": "Nylon 12CF, Stratasys F900",
+      "id": "stratasys_specialty",
+      "name": "Specialty material, Stratasys printers",
       "category": "other_filament",
       "unit_price_usd": 5.0,
       "price_unit": "cubic inch",
-      "price_source": "https://viterbiundergrad.usc.edu/bfms/operations/prices/ (printing-cost chart; page last updated 2024-02-21)",
+      "price_source": "BFMS 3DP Quote Generator sheet, shown by Jithin on 2026-11-14 (newer than the chart on the public prices page, which was last updated 2024-02-21)",
       "stocked": null,
       "price_by_audience": {
         "usc_undergrad_other": null,
@@ -372,24 +372,11 @@
     },
     {
       "id": "ultem_1010",
-      "name": "ULTEM 1010, Stratasys F900",
+      "name": "Ultem, Stratasys printers",
       "category": "other_filament",
       "unit_price_usd": 5.0,
       "price_unit": "cubic inch",
-      "price_source": "https://viterbiundergrad.usc.edu/bfms/operations/prices/ (printing-cost chart; page last updated 2024-02-21)",
-      "stocked": null,
-      "price_by_audience": {
-        "usc_undergrad_other": null,
-        "usc_grad_other": null
-      }
-    },
-    {
-      "id": "st_130",
-      "name": "ST 130, Stratasys F900",
-      "category": "other_filament",
-      "unit_price_usd": 5.0,
-      "price_unit": "cubic inch",
-      "price_source": "https://viterbiundergrad.usc.edu/bfms/operations/prices/ (printing-cost chart; page last updated 2024-02-21)",
+      "price_source": "BFMS 3DP Quote Generator sheet, shown by Jithin on 2026-11-14 (newer than the chart on the public prices page, which was last updated 2024-02-21)",
       "stocked": null,
       "price_by_audience": {
         "usc_undergrad_other": null,
@@ -398,11 +385,11 @@
     },
     {
       "id": "stratasys_support",
-      "name": "Dissolvable support material, Stratasys printers",
+      "name": "Support material, Stratasys printers",
       "category": "other_filament",
       "unit_price_usd": 5.0,
       "price_unit": "cubic inch",
-      "price_source": "https://viterbiundergrad.usc.edu/bfms/operations/prices/ (printing-cost chart; page last updated 2024-02-21)",
+      "price_source": "BFMS 3DP Quote Generator sheet, shown by Jithin on 2026-11-14 (newer than the chart on the public prices page, which was last updated 2024-02-21)",
       "stocked": null,
       "price_by_audience": {
         "usc_undergrad_other": null,
@@ -411,11 +398,11 @@
     },
     {
       "id": "printer_resin",
-      "name": "Resin for the Form 3L (clear, black, castable wax or Tough 2000)",
+      "name": "Resin for the Formlabs printer, any type",
       "category": "resin",
       "unit_price_usd": 0.5,
       "price_unit": "ml",
-      "price_source": "https://viterbiundergrad.usc.edu/bfms/operations/prices/ (printing-cost chart; page last updated 2024-02-21)",
+      "price_source": "BFMS 3DP Quote Generator sheet, shown by Jithin on 2026-11-14 (newer than the chart on the public prices page, which was last updated 2024-02-21)",
       "stocked": null,
       "price_by_audience": {
         "usc_undergrad_other": null,
@@ -424,11 +411,11 @@
     },
     {
       "id": "onyx",
-      "name": "Onyx, Onyx FR, Onyx ESD or TPU, Markforged X7",
+      "name": "Markforged material, any type",
       "category": "other_filament",
       "unit_price_usd": 0.5,
       "price_unit": "cubic centimeter",
-      "price_source": "https://viterbiundergrad.usc.edu/bfms/operations/prices/ (printing-cost chart; page last updated 2024-02-21)",
+      "price_source": "BFMS 3DP Quote Generator sheet, shown by Jithin on 2026-11-14 (newer than the chart on the public prices page, which was last updated 2024-02-21)",
       "stocked": null,
       "price_by_audience": {
         "usc_undergrad_other": null,
@@ -437,11 +424,11 @@
     },
     {
       "id": "fiber_reinforcement",
-      "name": "Fiber reinforcement (carbon fiber, Kevlar or fiberglass), Markforged X7",
+      "name": "Fiber reinforcement, Markforged",
       "category": "other_filament",
       "unit_price_usd": 3.0,
       "price_unit": "cubic centimeter",
-      "price_source": "https://viterbiundergrad.usc.edu/bfms/operations/prices/ (printing-cost chart; page last updated 2024-02-21)",
+      "price_source": "BFMS 3DP Quote Generator sheet, shown by Jithin on 2026-11-14 (newer than the chart on the public prices page, which was last updated 2024-02-21)",
       "stocked": null,
       "price_by_audience": {
         "usc_undergrad_other": null,
@@ -470,7 +457,7 @@
       "open_to_all": true
     }
   ],
-  "usage_fee_note": "The Maker Space sells no material: bring your own. Material on hand is for Maker Space members' use and is never sold. The only charge is for 3D prints made by work order, by the material used; the chart lists higher prices for non-Viterbi students, and only for the Prusa printers.",
+  "usage_fee_note": "The Maker Space sells no material: bring your own. Material on hand is for Maker Space members' use and is never sold. The only charge is for 3D prints made by work order, by the volume of material used. Non-Viterbi students pay a higher price, listed for PLA on the Prusa printers only.",
   "prohibited": [],
   "scrap_policy": {
     "offers_scrap": true,

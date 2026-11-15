@@ -252,11 +252,13 @@ describe("whole plan", () => {
 });
 
 describe("seed prices", () => {
-  it("the Maker Space sells no material: its only prices are the 3D printing chart's, and nothing is confirmed", () => {
+  it("the Maker Space sells no material: its only prices are for 3D print work orders, from the staff quote sheet, and nothing is confirmed", () => {
     const bfms = realSeedSpaces().find((s) => s.id === "bfms")!;
     expect(bfms.status.prices.state).toBe("estimated");
     expect(bfms.sells_materials).toBe(false);
-    expect(bfms.materials.every((m) => m.price_source?.startsWith("https://viterbiundergrad.usc.edu/bfms/operations/prices/"))).toBe(true);
+    expect(bfms.materials.every((m) => m.price_source?.startsWith("BFMS 3DP Quote Generator sheet"))).toBe(true);
+    expect(bfms.materials.find((m) => m.id === "pla_specialty")!.unit_price_usd).toBe(1.5);
+    expect(bfms.materials.find((m) => m.id === "byo_filament")!.unit_price_usd).toBe(0.1);
     expect(bfms.materials.map((m) => m.category)).not.toContain("plywood");
     expect(TYPICAL_PRICES.map((p) => p.category).sort()).toEqual(["acrylic", "cardboard_paper", "mdf", "other_plastic_sheet", "plywood"]);
   });
@@ -273,7 +275,7 @@ describe("seed prices", () => {
     expect(r.prices_estimated).toBe(true);
     expect(r.labels).not.toContain("cheapest");
   });
-  it("a non-Viterbi student pays the chart's non-Viterbi price, and gets no price where the chart lists none", () => {
+  it("a non-Viterbi student pays the non-Viterbi price, and gets no price where none is listed", () => {
     const bfms = seedSpaces().find((s) => s.id === "bfms")!;
     const pla = [{ category: "pla_filament" as const, material_id: "pla_filament", quantity_low: 2, quantity_high: 4, unit: "cubic inches" }];
     expect(routeCost(bfms, pla, "viterbi_undergrad").total).toEqual({ low: 2, high: 4 }); // $1.00 per cubic inch
@@ -490,5 +492,14 @@ describe("Maker Space rules from Jithin (Nov 15)", () => {
     model.routes[1] = { ...model.routes[1], equipment_ids: ["prusa_mk4"] };
     expect(missedStaffPrint(model, realSeedSpaces())).toEqual([]);
     expect(missedStaffPrint(planFixture("club-sign"), realSeedSpaces())).toEqual([]); // a laser job is not printable
+  });
+});
+
+describe("the quote sheet's own example", () => {
+  it("3.40 cubic inches of black PLA for a non-Viterbi student comes to $17.00", () => {
+    const bfms = realSeedSpaces().find((s) => s.id === "bfms")!;
+    const line = [{ category: "pla_filament" as const, material_id: "pla_filament", quantity_low: 3.4, quantity_high: 3.4, unit: "cubic inch" }];
+    expect(routeCost(bfms, line, "usc_undergrad_other").total).toEqual({ low: 17, high: 17 });
+    expect(routeCost(bfms, line, "viterbi_undergrad").total).toEqual({ low: 3.4, high: 3.4 });
   });
 });

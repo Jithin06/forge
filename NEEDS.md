@@ -38,16 +38,16 @@ The key works. 91 live calls made so far (5 of them, on Nov 15 around 06:38Z, we
 - **Why:** everything so far uses one drawn stand-in (`data/samples/scrap-standin.jpg`). The M4 check "a real offcut photo yields a sensible draft" and M2b's scrap check need real photos, and the demo needs real pieces in the bin.
 - **Where:** save them in `data/samples/real/` (any names), or post them yourself: sign in as staff, Staff portal, Post scrap.
 
-### 6. Scrap exchange: has your supervisor said yes?
-- **What:** your scrap rules for the Maker Space are in (free, student use only, pickup with staff present, the may-post and never-post lists). The spec still asks for your supervisor's yes before it is shown as more than a proposed pilot. Tell me which it is.
-- **Also:** confirm the may-post and never-post lists yourself; they show as estimated.
+### 6. Confirm the scrap lists in the portal
+Your supervisor has approved the scrap exchange, so it is no longer described as a proposed pilot. The may-post and never-post lists still show as estimated until you confirm them with your real account.
 
 ### 7. The general price table is still my guesses
 "Typical price if you buy it yourself" (`data/typical-prices.json`) holds the five sheet prices that used to sit under the Maker Space: plywood $6, MDF $4, acrylic $12, PETG $10, cardboard $1, each per sheet of about 12 x 24 in. They are labelled Estimated and used for every space. Correct any you know.
 
-### 7b. Two things still open on 3D print prices
-- For printers other than the Prusas the chart has no non-Viterbi price, so a non-Viterbi student sees "Ask staff for the price" there. Tell me if those printers are Viterbi-only.
-- Prices are per cubic inch or cubic centimeter and the model guesses the volume. A typical volume for a small print would make the range better.
+### 7b. 3D print prices: two small questions
+Prices now come from the staff quote sheet you showed (Nov 14), which is newer than the public chart.
+- The sheet lists non-Viterbi prices for PLA on the Prusas only, so a non-Viterbi student sees "Ask staff for the price" for every other material. Tell me if those are Viterbi-only.
+- The public prices page still shows the 2024 chart (PLA specialty $1.25; the sheet says $1.50). The app follows the sheet.
 
 ### 8b. The four new spaces: what the official pages did not say
 - **Iovine and Young Hall, Roski shops, Dramatic Arts scene shop:** who may use them is not stated for students outside those schools, so all four audiences are "Ask first". If you know the rule, tell me.

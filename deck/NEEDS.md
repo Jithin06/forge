@@ -4,7 +4,7 @@ Nothing here blocks this version. Each item says what to decide and which slide 
 
 ## Before submitting
 
-1. **Scrap approval (slide 4).** If your supervisor has approved giving leftovers away, delete "Proposed pilot." from the note under the third screenshot in `deck/index.html`. If not, leave it.
+1. **Scrap approval (slide 4).** Done: you confirmed approval, so "Proposed pilot" is gone. The app's data still says the Maker Space does not offer scrap (`scrap_policy.offers_scrap` is false in `data/spaces/bfms.json`), with no pickup note. I did not change it.
 2. **Real scrap photos (slides 3 and 4).** The piece in the screenshots is the drawn stand-in, and the slides say "test piece". Post one real leftover as staff, then retake the scrap draft, claim and held screenshots, and the cost crop on slide 3.
 3. **The plan screenshot has a model slip (slide 3).** The live plan says "staff operate the printer" about a laser cutter. It is the app's real output, so I left it. If it bothers you, make another live plan and run `PLAN=<new id> node deck/shots.mjs`.
 4. **The live site (slide 7, QR code).** The QR code scans to `https://forge-beta-hazel.vercel.app`, which answers and lists eight spaces. It is in Google sign-in mode, so check that sign-in works there before judges try to claim scrap, and that plans come from a live model and not sample data.

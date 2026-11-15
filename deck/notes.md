@@ -28,8 +28,6 @@ Now the materials. Staff posted a leftover piece of plywood that fits, so the co
 
 That free piece comes from the Scrap Exchange. Staff photograph a leftover, the AI drafts the listing, and staff check it before it goes live. A student claims it, and it's held for forty-eight hours. We tested five students claiming one piece at the same instant: exactly one gets it.
 
-[Until your supervisor approves giving scrap away, add: "This part is a proposed pilot."]
-
 ## Slide 5. How the AI stays honest (2:05 to 2:30, about 55 words)
 
 How do we keep the AI honest? The model only proposes. Code checks every tool against that space's own data, and rejects the plan if a tool isn't there. The model never sets a price: code multiplies quantities by posted prices. Access badges and labels come from rules. Eighty-nine of eighty-nine unit tests pass.
