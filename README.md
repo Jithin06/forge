@@ -8,6 +8,13 @@ Live: https://forge-beta-hazel.vercel.app
 
 Student project. Not an official USC service.
 
+Notes for anyone reading or judging:
+
+- Claude Code wrote all the code, under Jithin's direction.
+- All space data is estimated. Every fact about a space is marked "Estimated" until staff confirm it in the staff portal, and none has been confirmed yet.
+- The scrap photos are generated samples, not real Maker Space stock. Each one carries a "Sample" tag.
+- Sign-in is in test mode: a picker signs you in as a test student or test staff member, and a "Test sign-in" banner shows on every page.
+
 ## Run locally
 
 ```bash
@@ -15,6 +22,8 @@ npm install
 cp .env.example .env.local   # fill in Supabase values; AI_PROVIDER=fixture needs no key
 npm run dev                  # http://localhost:3000
 ```
+
+Fixture mode is the default and makes no AI calls: with `AI_PROVIDER=fixture` (or unset) every answer comes from the saved examples in `data/fixtures/`, and a "Sample data" banner shows. Add `AUTH_MODE=test` to `.env.local` to sign in with the test accounts instead of Google.
 
 Production build: `npm run build && npm start`.
 
@@ -39,7 +48,7 @@ All reads and writes go through server routes with the service key. The public k
 
 | Command | What it checks |
 | --- | --- |
-| `npm run typecheck`, `npm run lint`, `npm test`, `npm run build` | Types, lint, 70 unit tests, production build |
+| `npm run typecheck`, `npm run lint`, `npm test`, `npm run build` | Types, lint, 137 unit tests, production build |
 | `npm run check:rls` | The public key cannot read any table, call the claim function or upload photos |
 | `npm run check:secrets` | No server secret in the client bundle or in git (run after a build) |
 | `npm run check:seed` | Seeding twice neither duplicates nor overwrites a space |
