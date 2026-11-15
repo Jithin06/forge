@@ -5,7 +5,7 @@ Each item says what, why, and exactly where to put it. Newest blockers first.
 ## Live AI
 
 ### 1. Gemini API key in `.env.local`: done
-The key works. 80 live calls made so far, logged in `logs/ai-calls.jsonl`. Local cap: 150.
+The key works. 91 live calls made so far (5 of them, on Nov 15 around 06:38Z, were not mine), logged in `logs/ai-calls.jsonl`. Local cap: 150.
 
 ### 2. Put the live site on Gemini
 - **What:** set the variables listed in `docs/production-settings.md` in Vercel and redeploy. In short: `AI_PROVIDER=gemini`, `GEMINI_API_KEY`, `GEMINI_MODEL_PRIMARY=gemini-3.5-flash-lite`, `GEMINI_MODEL_FALLBACK=gemini-3.1-flash-lite`, `AI_DAILY_BUDGET=450`, `AUTH_MODE=test`. Do **not** set `AI_CALL_BUDGET` there.
@@ -38,32 +38,16 @@ The key works. 80 live calls made so far, logged in `logs/ai-calls.jsonl`. Local
 - **Why:** everything so far uses one drawn stand-in (`data/samples/scrap-standin.jpg`). The M4 check "a real offcut photo yields a sensible draft" and M2b's scrap check need real photos, and the demo needs real pieces in the bin.
 - **Where:** save them in `data/samples/real/` (any names), or post them yourself: sign in as staff, Staff portal, Post scrap.
 
-### 6. Makerspace scrap policy
-- **What:** may the Makerspace give leftovers away this way? Which materials must never be offered? Where do students pick pieces up?
-- **Why:** the seed says `offers_scrap: false`, `never_offer: []`, `pickup_note: null`. Without your supervisor's yes, present the scrap exchange as a proposed pilot.
-- **Where:** `scrap_policy` in `data/spaces/bfms.json`, then `npm run seed -- --force`. (From M5 on, staff can also edit space facts in the Staff portal, but not the scrap policy.)
+### 6. Scrap exchange: has your supervisor said yes?
+- **What:** your scrap rules for the Maker Space are in (free, student use only, pickup with staff present, the may-post and never-post lists). The spec still asks for your supervisor's yes before it is shown as more than a proposed pilot. Tell me which it is.
+- **Also:** confirm the may-post and never-post lists yourself; they show as estimated.
 
-### 7. Maker Space prices: five sheet prices are still my guesses
-3D printing prices now come from the official chart (page last updated Feb 21, 2024). These five are still marked `coder estimate, unverified`. Correct them in `data/spaces/bfms.json`, or in the Staff portal's Space info tab.
+### 7. The general price table is still my guesses
+"Typical price if you buy it yourself" (`data/typical-prices.json`) holds the five sheet prices that used to sit under the Maker Space: plywood $6, MDF $4, acrylic $12, PETG $10, cardboard $1, each per sheet of about 12 x 24 in. They are labelled Estimated and used for every space. Correct any you know.
 
-| Material | My estimate | Per |
-| --- | --- | --- |
-| Plywood sheet (about 12 x 24 in) | $6.00 | sheet |
-| MDF sheet (about 12 x 24 in) | $4.00 | sheet |
-| Acrylic sheet (about 12 x 24 in) | $12.00 | sheet |
-| PETG sheet (about 12 x 24 in) | $10.00 | sheet |
-| Cardboard sheet | $1.00 | sheet |
-
-These five also stand in as "typical campus prices" on routes at spaces that list no prices (BME, Iovine and Young, Roski), so they matter more now.
-
-### 7b. Two things the price chart leaves open
-- The chart gives non-Viterbi prices for the Prusa printers only. For every other printer, a non-Viterbi student sees "Ask staff for the price". Tell me if non-Viterbi students cannot use those printers at all.
-- The chart is in cubic inches and cubic centimeters. The model estimates the volume of the part, which is rough. Tell me a typical volume for a small print if you want a better starting point.
-
-### 8. Maker Space details still missing
-- How to sign up for each training level, and how long each takes (all say "Ask the staff how to sign up").
-- Level 3 (power tools): I left it as "after Level 1". You said Level 1 then Level 2; tell me if Level 3 also needs Level 2.
-- Confirm each group in the Staff portal with your real account once Google sign-in works. Until then everything shows as estimated.
+### 7b. Two things still open on 3D print prices
+- For printers other than the Prusas the chart has no non-Viterbi price, so a non-Viterbi student sees "Ask staff for the price" there. Tell me if those printers are Viterbi-only.
+- Prices are per cubic inch or cubic centimeter and the model guesses the volume. A typical volume for a small print would make the range better.
 
 ### 8b. The four new spaces: what the official pages did not say
 - **Iovine and Young Hall, Roski shops, Dramatic Arts scene shop:** who may use them is not stated for students outside those schools, so all four audiences are "Ask first". If you know the rule, tell me.
@@ -74,9 +58,8 @@ These five also stand in as "typical campus prices" on routes at spaces that lis
 
 ## Proof
 
-### 9. Review the eval cases again: they predate the new spaces
-- **What:** `data/eval-cases.json` has 15 cases written when there were four spaces. There are now eight, the Maker Space is open to Viterbi undergraduates, and its 3D prints need no training. I did not revise the accepted sets. Correct them, then change `"status"` at the top of the file.
-- **Why:** the eval scores the top route against these sets. Run as they are, several cases would be marked wrong for good answers (for example a poster or a podcast now has two valid spaces).
+### 9. Approve the proposed eval-case changes
+- **What:** `reports/eval-cases-proposal.md` lists a proposed change for each of the 15 cases, 6 new cases and one risk to decide (the guitar pedal). Nothing is applied. Mark what you accept; I will edit `data/eval-cases.json` and wait for your word before running the eval.
 
 ### 10. Live checks still to run, when you say so
 - `npm run check:quality` is done for the six home-page ideas (see RESULTS.md).

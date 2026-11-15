@@ -3,13 +3,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import { FactChip } from "@/components/badges";
+import { EstimatedNote, FactChip } from "@/components/badges";
 import { Band, Body } from "@/components/page";
 import { Swatch } from "@/components/swatch";
 import { AccessSection } from "@/components/spaces/access-section";
 import { AUDIENCE_LABELS, CAPABILITY_LABELS, WEEKDAY_LABELS, formatDate, formatTime } from "@/lib/labels";
 import { AUDIENCES, CAPABILITIES, WEEKDAYS, type GroupStatus, type Material, type SpaceDoc } from "@/lib/schemas";
 import { getAvailableScrap, getSpace, type ScrapCard } from "@/lib/spaces";
+import { TYPICAL_PRICES, TYPICAL_PRICES_LABEL } from "@/lib/typical-prices";
 
 /** The tab title is the space's name, so several open spaces can be told apart. */
 export async function generateMetadata({ params }: PageProps<"/spaces/[id]">): Promise<Metadata> {
@@ -201,7 +202,7 @@ function SpaceView({ space, scrap }: { space: SpaceDoc; scrap: ScrapCard[] }) {
         {space.usage_fee_note && <p className="mb-3">{space.usage_fee_note}</p>}
         {space.materials.length === 0 ? (
           <>
-            <p>No materials are listed. Ask the staff what they sell and what to bring.</p>
+            <p>{space.sells_materials === false ? "This space sells no material. Bring your own." : "No materials are listed. Ask the staff what they sell and what to bring."}</p>
             {space.estimates?.cost_note && (
               <>
                 <p className="mt-2">{space.estimates.cost_note}</p>
@@ -244,6 +245,33 @@ function SpaceView({ space, scrap }: { space: SpaceDoc; scrap: ScrapCard[] }) {
         )}
       </Section>
 
+      <section aria-labelledby="typical-prices" className="space-y-3">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+          <h2 id="typical-prices" className="text-[24px] font-bold tracking-[-0.01em]">{TYPICAL_PRICES_LABEL}</h2>
+          <EstimatedNote />
+        </div>
+        <p>
+          {space.sells_materials === false ? "This space sells no material, so you bring your own. " : ""}
+          These are not this space&apos;s prices. Plans use them for any material a space does not price itself.
+        </p>
+        <table className="w-full text-left">
+          <caption className="sr-only">{TYPICAL_PRICES_LABEL}</caption>
+          <tbody>
+            {TYPICAL_PRICES.map((m) => (
+              <tr key={m.category} className="border-b border-gray-line last:border-0">
+                <th scope="row" className="py-2 pr-4 font-normal">
+                  <span className="flex items-center gap-2.5">
+                    <Swatch category={m.category} className="size-7" />
+                    {m.name}
+                  </span>
+                </th>
+                <td className="py-2 tabular">about ${m.unit_price_usd.toFixed(2)} per {m.price_unit}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
+
       {(space.scrap_policy.offers_scrap || scrap.length > 0) && (
         <section aria-labelledby="free-here" className="space-y-3">
           <h2 id="free-here" className="text-[24px] font-bold tracking-[-0.01em]">Free here now</h2>
@@ -268,6 +296,7 @@ function SpaceView({ space, scrap }: { space: SpaceDoc; scrap: ScrapCard[] }) {
               ))}
             </ul>
           )}
+          {space.scrap_policy.terms && <p>{space.scrap_policy.terms}</p>}
           {space.scrap_policy.pickup_note && <p className="text-[15px]">{space.scrap_policy.pickup_note}</p>}
         </section>
       )}

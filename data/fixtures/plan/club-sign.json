@@ -2,7 +2,7 @@
   "call": "plan",
   "note": "Recorded from the live model by scripts/check-plan-quality.mts.",
   "recorded": {
-    "at": "2026-11-15T06:30:07.901Z",
+    "at": "2026-11-15T06:54:55.710Z",
     "attempts": 1
   },
   "key": {
@@ -24,7 +24,7 @@
   "output": {
     "needs": [
       {
-        "why": "To cut and engrave the acrylic sheet precisely.",
+        "why": "To cut and engrave the acrylic sheet.",
         "capability": "laser_cutting"
       }
     ],
@@ -33,60 +33,27 @@
         "steps": [
           {
             "title": "Design the piece",
-            "detail": "Draw your club name in a digital design tool to the desired size."
+            "detail": "Draw your club name and outline for the sign on your computer."
           },
           {
             "title": "Take the training",
-            "detail": "Complete the required safety and equipment training before using the space."
+            "detail": "Take the safety training and the training for the laser cutter."
           },
           {
-            "title": "Make the sign",
-            "detail": "Use the laser cutter to cut and engrave your acrylic sheet."
+            "title": "Make a small test",
+            "detail": "Cut a small test piece to check your design sizes."
+          },
+          {
+            "title": "Assemble and finish",
+            "detail": "Cut and engrave your acrylic sheet on the laser cutter, then clean the edges."
           }
         ],
-        "process": "Cut and engrave an acrylic sheet using a laser cutter",
+        "process": "Cut and engrave acrylic sheets with a laser cutter",
         "space_id": "bfms",
         "warnings": [
           {
-            "fix": "Make sure your engraved text and lines are thick enough to show clearly.",
-            "issue": "Lines too thin"
-          }
-        ],
-        "materials": [
-          {
-            "unit": "sheet",
-            "category": "acrylic",
-            "material_id": "acrylic_sheet",
-            "quantity_low": 1,
-            "quantity_high": 1
-          }
-        ],
-        "fit_reason": "This space provides direct access to a laser cutter and suitable acrylic sheets. It is ideal for making a clean, professional sign.",
-        "equipment_ids": [
-          "laser_vls675"
-        ]
-      },
-      {
-        "steps": [
-          {
-            "title": "Design the piece",
-            "detail": "Create a file with your club name sized for the sign."
-          },
-          {
-            "title": "Take the training",
-            "detail": "Complete the general safety and laser cutter training for the space."
-          },
-          {
-            "title": "Ask staff to check the file",
-            "detail": "Have the space staff review your file before cutting."
-          }
-        ],
-        "process": "Cut and engrave an acrylic sheet using a laser cutter",
-        "space_id": "bme-innovation",
-        "warnings": [
-          {
-            "fix": "Ensure you use cast acrylic suitable for laser cutting and engraving.",
-            "issue": "Wrong material"
+            "fix": "Use a thicker sheet so the sign is sturdy.",
+            "issue": "The acrylic part may be too thin."
           }
         ],
         "materials": [
@@ -98,7 +65,48 @@
             "quantity_high": 1
           }
         ],
-        "fit_reason": "The BME Innovation Space features a laser cutter that handles sheet materials well. Staff are available to guide you through the process.",
+        "fit_reason": "This space has a laser cutter that cuts and engraves acrylic precisely. It is a direct way to make your sign.",
+        "equipment_ids": [
+          "laser_vls675"
+        ]
+      },
+      {
+        "steps": [
+          {
+            "title": "Design the piece",
+            "detail": "Draw your club name and outline for the sign on your computer."
+          },
+          {
+            "title": "Take the training",
+            "detail": "Complete the required general safety training and the laser cutter training."
+          },
+          {
+            "title": "Make a small test",
+            "detail": "Run a small test cut to verify the settings."
+          },
+          {
+            "title": "Assemble and finish",
+            "detail": "Use the laser cutter to make your sign and finish the edges."
+          }
+        ],
+        "process": "Cut and engrave acrylic sheets with a laser cutter",
+        "space_id": "bme-innovation",
+        "warnings": [
+          {
+            "fix": "Keep text clear and spaced out.",
+            "issue": "The acrylic sheet might crack if the design is too intricate."
+          }
+        ],
+        "materials": [
+          {
+            "unit": "sheet",
+            "category": "acrylic",
+            "material_id": null,
+            "quantity_low": 1,
+            "quantity_high": 1
+          }
+        ],
+        "fit_reason": "This space also provides a laser cutter suitable for cutting and engraving your sign. Bring your own material.",
         "equipment_ids": [
           "bme_laser"
         ]
@@ -107,52 +115,16 @@
     "summary": "An engraved acrylic sign with a club name for a tabling booth.",
     "ways_considered": [
       {
-        "reason": "Does not cut flat acrylic sheets.",
-        "process": "3D printing",
-        "verdict": "left_out",
-        "space_id": "ahmanson-lab"
-      },
-      {
-        "reason": "Cuts and engraves acrylic sheets perfectly.",
-        "process": "Laser cutting acrylic",
+        "reason": "Has a laser cutter and lists acrylic.",
+        "process": "Cut and engrave acrylic with a laser cutter",
         "verdict": "offered",
         "space_id": "bfms"
       },
       {
-        "reason": "Equipped with a laser cutter for acrylic.",
-        "process": "Laser cutting acrylic",
+        "reason": "Has a laser cutter.",
+        "process": "Cut and engrave acrylic with a laser cutter",
         "verdict": "offered",
         "space_id": "bme-innovation"
-      },
-      {
-        "reason": "Does not have laser cutting equipment.",
-        "process": "3D printing",
-        "verdict": "left_out",
-        "space_id": "digital-creative-lab"
-      },
-      {
-        "reason": "CNC router is for wood and sheet material, not laser engraving.",
-        "process": "CNC routing",
-        "verdict": "left_out",
-        "space_id": "iya-hall"
-      },
-      {
-        "reason": "Prints on paper, not acrylic.",
-        "process": "Large format printing",
-        "verdict": "left_out",
-        "space_id": "its-printing"
-      },
-      {
-        "reason": "Woodshop tools cannot engrave acrylic.",
-        "process": "Woodshop cutting",
-        "verdict": "left_out",
-        "space_id": "roski-shops"
-      },
-      {
-        "reason": "Scene shop does not list laser cutting tools.",
-        "process": "Scene shop build",
-        "verdict": "left_out",
-        "space_id": "sda-technical-theatre-lab"
       }
     ],
     "clarifying_question": null,

@@ -125,6 +125,13 @@ function uniqueSpaces(routes: FinalRoute[]): FinalRoute[] {
 
 const bare = (r: { low: number; high: number }) => moneyRange(r).replace(/^about /, "");
 
+/** "about $6" for a listed price; for the general table, who buys it is spelled out. */
+function costText(l: { low_usd: number | null; high_usd: number | null; typical?: boolean }, bringYourOwn: boolean): string {
+  const range = moneyRange({ low: l.low_usd!, high: l.high_usd! });
+  if (!l.typical) return range;
+  return bringYourOwn ? "Bring your own, " + range + " to buy" : range + ", typical price if you buy it yourself";
+}
+
 /** One way to build it, drawn as a workshop job ticket: ruler, body, tear line, cost stub. */
 function RouteCard({ route: r, top, n, of, planId, spaceNames }: { route: FinalRoute; top: boolean; n: number; of: number; planId: string; spaceNames: Record<string, string> }) {
   const hid = `route-${n}`;
@@ -205,7 +212,7 @@ function RouteCard({ route: r, top, n, of, planId, spaceNames }: { route: FinalR
                 <li key={t.id} className="flex items-start gap-2.5">
                   <span className="ico"><GraduationCap aria-hidden className="size-5" /></span>
                   <div className="leading-[1.3]">
-                    <b>{t.name}.</b> {t.how_to_sign_up ?? "Ask the staff how to sign up."}
+                    <b>{t.name}.</b> {t.duration_note ? t.duration_note + " " : ""}{t.how_to_sign_up ?? "Ask the staff how to sign up."}
                     {t.restricted_to && <span className="block text-[15px]">Only for: {t.restricted_to}</span>}
                   </div>
                 </li>
@@ -229,8 +236,10 @@ function RouteCard({ route: r, top, n, of, planId, spaceNames }: { route: FinalR
                           {free.length > 0
                             ? "Free with scrap"
                             : l.low_usd !== null && l.high_usd !== null
-                              ? `${moneyRange({ low: l.low_usd, high: l.high_usd })}${l.typical ? ", typical campus price" : ""}`
-                              : "Ask staff for the price"}
+                              ? costText(l, !!r.bring_your_own)
+                              : r.bring_your_own && !l.material_id
+                                ? "Bring your own"
+                                : "Ask staff for the price"}
                         </span>
                       </p>
                     </div>
@@ -273,7 +282,7 @@ function RouteCard({ route: r, top, n, of, planId, spaceNames }: { route: FinalR
             ) : (
               <>
                 <p>
-                  <span className="block text-[15px]">Materials, about</span>
+                  <span className="block text-[15px]">{r.typical_from ? (r.bring_your_own ? "Bring your own material. To buy it, about" : "Materials, if you buy them yourself, about") : "Materials, about"}</span>
                   <span className="figure block">{bare(r.total)}</span>
                 </p>
                 {r.prices_estimated && !r.typical_from && <p className="text-[15px] text-gray-text">Estimated prices</p>}
@@ -281,18 +290,23 @@ function RouteCard({ route: r, top, n, of, planId, spaceNames }: { route: FinalR
             )
           ) : (
             <>
-              <p className="text-[22px] font-bold leading-[1.15]">Ask staff for prices</p>
-              <p className="text-[15px] text-gray-text">No prices are listed for these yet. Ask the staff what they cost.</p>
+              <p className="text-[22px] font-bold leading-[1.15]">{r.bring_your_own ? "Bring your own material" : "Ask staff for prices"}</p>
+              <p className="text-[15px] text-gray-text">
+                {r.bring_your_own
+                  ? "This space sells no material. What it has on hand is for its members' use and is never sold."
+                  : "No prices are listed for these yet. Ask the staff what they cost."}
+              </p>
             </>
           )}
           {r.typical_from && (
             <p className="text-[15px] text-gray-text">
-              This space lists no prices. These are typical campus prices, taken from the {r.typical_from}; what you pay here may differ.
+              {r.bring_your_own ? "This space sells no material. " : "This space lists no prices. "}
+              This is a typical price if you buy it yourself, estimated; what you pay may differ.
             </p>
           )}
           {r.estimate_notes?.cost && !r.typical_from && <p className="text-[15px] text-gray-text">{r.estimate_notes.cost}</p>}
           {r.total && r.cost_lines.some((l) => l.low_usd === null) && (
-            <p className="text-[15px]">Some materials have no listed price and are not in this total.</p>
+            <p className="text-[15px]">Some materials have no price here and are not in this total.</p>
           )}
         </div>
       )}

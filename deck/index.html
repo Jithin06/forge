@@ -2,85 +2,151 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Forge: pitch deck (first draft)</title>
+<title>Forge: pitch deck</title>
 <link rel="stylesheet" href="deck.css">
 </head>
 <body>
 
-<section class="slide dark s1">
-  <h1>New builders have ideas, but <span class="gold-rule">no map</span> of where to build.</h1>
-  <div class="story">
-    <p class="todo">[Jithin: one true story here. One student, one idea, where they got stuck.]</p>
-  </div>
-  <p class="cap byline">Jithin, AI@USC Hackathon. Student project. Not an official USC service.</p>
+<!-- 1. Title and hook -->
+<section class="slide dark peg s1">
+  <div class="brand"><span class="mark"><svg viewBox="0 0 26 38"><path d="M0 0h26v9H10v8h13v9H10v12H0z"/></svg></span>Forge</div>
+  <h1>Describe what you want<br>to build. Forge finds<br><span class="accent">where at USC</span> to make it.</h1>
+  <p class="sub">The space, the training, the cost, and the free leftover material that fits.</p>
+  <p class="by"><b>Jithin Rajan</b><br>MS Computer Science. Robotics Engineer at the Baum Family Maker Space.
+    <span>AI@USC Hackathon, November 2026. Student project. Not an official USC service.</span></p>
+  <figure class="frame phone"><img src="assets/ask.png" alt="Forge's first screen: What do you want to make? with one text box, example chips and the student's profile"></figure>
+  <span class="tag">No login to try</span>
+  <div class="ruler"></div>
 </section>
 
+<!-- 2. Problem -->
 <section class="slide s2">
-  <h1>Describe your idea. Forge shows where to build it and the cost.</h1>
-  <div class="shot a"><img src="assets/plan-route.png" alt="A plan's first route: Cheapest and Easiest labels, the Maker Space, and an Ask first badge"></div>
-  <div class="shot b"><img src="assets/plan-materials.png" alt="The plan's materials: a free plywood offcut to claim, and the cost with and without scrap"></div>
-  <div class="calls">
-    <p class="call"><b>Can I get in?</b> A badge per space.</p>
-    <p class="call"><b>What will it cost?</b> From stored prices.</p>
-    <p class="call"><b>What is free?</b> Leftovers to claim.</p>
-    <p class="cap">Real screens, sample data.</p>
+  <h1>USC has the tools. A first-time builder can't find the way in.</h1>
+  <div class="abs lead"><p>A first-year has an idea and a sketch, but not the words. You can't search for a “laser cutter” if you have never heard of one.</p>
+    <p>So staff answer the same “how do I make this?” again and again.</p></div>
+  <p class="abs free"><b>Meanwhile, students ask the Maker Space desk for failed prints, leftover wood and scrap metal.</b> Nothing matches them up.</p>
+  <div class="abs board peg">
+    <span class="q" style="left:56px; top:70px; transform:rotate(-3deg)">Where can I make this?</span>
+    <span class="q" style="left:300px; top:218px; transform:rotate(2.5deg)">Am I allowed in?</span>
+    <span class="q" style="left:70px; top:366px; transform:rotate(-1.5deg)">What training do I need?</span>
+    <span class="q" style="left:330px; top:514px; transform:rotate(3deg)">What will it cost?</span>
   </div>
+  <div class="foot"><span class="mark sm"><svg viewBox="0 0 26 38"><path d="M0 0h26v9H10v8h13v9H10v12H0z"/></svg></span>Forge</div>
   <span class="num">2</span>
 </section>
 
+<!-- 3. Product -->
 <section class="slide s3">
-  <h1>The model proposes. Code decides access, training, cost and labels.</h1>
-  <div class="col">
-    <h2>Model</h2>
-    <ul><li>Reads idea and sketch</li><li>Suggests routes</li></ul>
-  </div>
-  <div class="col">
-    <h2>Code</h2>
-    <ul><li>Access and trainings</li><li>Cost and labels</li></ul>
-  </div>
-  <div class="proof">
-    <p class="hero"><span>79</span></p>
-    <p class="hero-label">of 79 tests pass.</p>
-    <p class="cap">Live-model eval: not run yet.</p>
-  </div>
+  <h1>One sentence in. A plan a first-timer can follow comes out.</h1>
+  <p class="step" style="left:120px; top:292px; width:288px"><i>1</i><span>Say it in your own words.</span></p>
+  <p class="abs box shadow quote">“I want to make a wooden sign with my club's name on it for our table at the involvement fair.”</p>
+  <p class="abs note">Real screens from the running app on a live model. The scrap pieces are test pieces.</p>
+
+  <p class="step" style="left:452px; top:292px; width:420px"><i>2</i><span>Tap an answer. Asked only if it changes the plan.</span></p>
+  <figure class="frame" style="left:452px; top:384px; width:420px; height:600px"><img src="assets/question.png" alt="A few quick questions: How big is it? with tap answers including Not sure"></figure>
+
+  <p class="step" style="left:916px; top:292px; width:420px"><i>3</i><span>Where to go, whether you can get in, what to train on.</span></p>
+  <figure class="frame" style="left:916px; top:384px; width:420px; height:600px"><img src="assets/plan-top.png" alt="The plan's first route at the Baum Family Maker Space, labelled Easiest for a first build, with an Open to you badge and the trainings needed"></figure>
+
+  <p class="step" style="left:1380px; top:292px; width:420px"><i>4</i><span>What it costs, and what leftover material is free.</span></p>
+  <figure class="frame" style="left:1380px; top:384px; width:420px; height:600px"><img src="assets/plan-cost.png" alt="The plan's materials: two free plywood pieces to claim, and a cost of 0 dollars with free scrap, about 6 dollars new at estimated prices"></figure>
+
+  <div class="foot"><span class="mark sm"><svg viewBox="0 0 26 38"><path d="M0 0h26v9H10v8h13v9H10v12H0z"/></svg></span>Forge</div>
   <span class="num">3</span>
 </section>
 
+<!-- 4. Scrap Exchange -->
 <section class="slide s4">
-  <h1>Each space's own staff keep its page true, in minutes.</h1>
-  <div class="fact key"><h2>Staff own their data</h2><p>One tap confirms the facts.</p></div>
-  <div class="fact"><h2>One photo to post</h2><p>AI drafts, staff publish.</p></div>
-  <div class="fact"><h2>Live today</h2><p>No account needed to plan.</p></div>
+  <h1>Scrap Exchange: leftover material finds its next builder, free.</h1>
+
+  <p class="step" style="left:120px; top:292px; width:440px"><i>1</i><span>Staff photograph a leftover. AI drafts the listing; staff check it before it goes live.</span></p>
+  <figure class="frame dialog" style="left:120px; top:414px; width:440px; height:515px"><img src="assets/scrap-draft.png" alt="The staff portal's draft of a scrap listing: a photo of a plywood piece and the AI's title, Plywood sheet with hole"></figure>
+  <span class="arrow" style="left:618px; top:640px; width:64px; height:44px"><svg viewBox="0 0 64 44"><path d="M4 22h52M38 5l18 17-18 17"/></svg></span>
+
+  <p class="step" style="left:740px; top:292px; width:440px"><i>2</i><span>A student signs in and claims it. If 5 claim at once, exactly 1 gets it (race-tested).</span></p>
+  <figure class="frame dialog" style="left:740px; top:414px; width:440px; height:551px"><img src="assets/claim.png" alt="Claim this piece? The piece will be held for you for 48 hours; pick it up at the Maker Space front desk"></figure>
+  <span class="arrow" style="left:1238px; top:640px; width:64px; height:44px"><svg viewBox="0 0 64 44"><path d="M4 22h52M38 5l18 17-18 17"/></svg></span>
+
+  <p class="step" style="left:1360px; top:292px; width:440px"><i>3</i><span>Held for 48 hours. Pickup is at the front desk, with staff.</span></p>
+  <figure class="frame dialog" style="left:1360px; top:414px; width:440px; height:504px"><img src="assets/held.png" alt="The claimed piece with a Held for you stamp and pickup details"></figure>
+  <p class="abs note">Proposed pilot. Test piece shown.</p>
+
+  <div class="foot"><span class="mark sm"><svg viewBox="0 0 26 38"><path d="M0 0h26v9H10v8h13v9H10v12H0z"/></svg></span>Forge</div>
   <span class="num">4</span>
 </section>
 
+<!-- 5. How the AI stays honest -->
 <section class="slide s5">
-  <h1>Four spaces are listed today, and every fact is labelled.</h1>
-  <table>
-    <tbody>
-      <tr><th scope="row">Baum Family Maker Space</th><td><span class="chip">Estimated</span></td></tr>
-      <tr><th scope="row">BME Innovation Space</th><td><span class="chip">Estimated</span></td></tr>
-      <tr><th scope="row">Ahmanson Lab</th><td><span class="chip">Estimated</span></td></tr>
-      <tr><th scope="row">Digital Creative Lab</th><td><span class="chip">Estimated</span></td></tr>
-    </tbody>
-  </table>
-  <div class="side">
-    <p class="hero">0</p>
-    <p class="hero-label">pieces reused so far.</p>
+  <h1>The model proposes. Code checks every fact before a student sees it.</h1>
+
+  <div class="node box" style="left:120px; top:392px; width:270px; height:250px"><h2>Idea</h2>A sentence, an optional photo, a few taps.</div>
+  <span class="arrow" style="left:400px; top:495px; width:56px; height:44px"><svg viewBox="0 0 56 44"><path d="M4 22h44M30 5l18 17-18 17"/></svg></span>
+  <div class="node box" style="left:466px; top:392px; width:372px; height:250px"><h2>Model proposes</h2>Structured output only: ways to build it, tools and quantities. Never a price.</div>
+  <span class="arrow" style="left:848px; top:495px; width:56px; height:44px"><svg viewBox="0 0 56 44"><path d="M4 22h44M30 5l18 17-18 17"/></svg></span>
+  <div class="node box shadow code" style="left:914px; top:330px; width:590px; height:374px">
+    <h2>Code verifies</h2>
+    <ul>
+      <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg><b>Tools</b> must exist in that space's data, or the plan is rejected</li>
+      <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg><b>Cost</b> is quantities times posted prices</li>
+      <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg><b>Access</b> badges come from rules on the student's profile</li>
+      <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg><b>Labels</b> like “Cheapest” are computed</li>
+    </ul>
   </div>
+  <span class="arrow" style="left:1524px; top:495px; width:56px; height:44px"><svg viewBox="0 0 56 44"><path d="M4 22h44M30 5l18 17-18 17"/></svg></span>
+  <div class="node box plan" style="left:1590px; top:392px; width:210px; height:250px"><div class="strip"></div><div class="body"><h2>Plan</h2>Checked facts only.</div></div>
+
+  <p class="hero" style="left:120px; top:808px">89</p>
+  <p class="abs hero-label">of 89 unit tests pass.<span>They cover grounding, cost, access rules and labels.</span></p>
+  <div class="abs side">Scrap listings use vision: the AI drafts from a photo, and nothing is published until staff confirm it.
+    <p class="note">Next.js on Vercel. Supabase. Gemini API.</p></div>
+
+  <div class="foot"><span class="mark sm"><svg viewBox="0 0 26 38"><path d="M0 0h26v9H10v8h13v9H10v12H0z"/></svg></span>Forge</div>
   <span class="num">5</span>
 </section>
 
-<section class="slide dark s6">
-  <h1>We ask for <span class="gold-rule">one pilot semester</span>.</h1>
-  <ul>
-    <li>Pilot: the Maker Space plus one intro course</li>
-    <li>USC single sign-on</li>
-    <li>Introductions to space managers</li>
+<!-- 6. Adoption -->
+<section class="slide s6">
+  <h1>Forge launches on estimates. Each space's own staff confirm them.</h1>
+  <figure class="frame dialog" style="left:120px; top:312px; width:440px; height:632px"><img src="assets/confirm.png" alt="The staff portal's confirmation step: Confirm hours for Baum Family Maker Space? This will show to every student as Confirmed by staff with today's date"></figure>
+
+  <p class="hero" style="left:640px; top:318px">8</p>
+  <p class="abs hero-label">campus spaces are listed today, one data file each.<span>Every fact reads “Estimated” until that space's staff press Confirm. None are confirmed yet: that is the pilot's first job.</span></p>
+  <div class="abs labels"><span class="badge est"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01"/></svg>Estimated</span>
+    <span class="arrow"><svg viewBox="0 0 60 34"><path d="M4 17h48M38 4l14 13-14 13"/></svg></span>
+    <span class="badge ok"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Confirmed by staff</span>
+    <span>with the date, in one tap</span></div>
+  <ul class="abs spaces">
+    <li><b>Baum Family Maker Space</b> (pilot)</li>
+    <li>BME Innovation Space</li>
+    <li>Ahmanson Lab</li>
+    <li>Digital Creative Lab</li>
+    <li>ITS Printing Services at Leavey</li>
+    <li>Iovine and Young Hall maker spaces</li>
+    <li>Roski sculpture studio and shared woodshop</li>
+    <li>Technical Theatre Lab (Scene Shop)</li>
   </ul>
-  
-  <p class="links">forge-beta-hazel.vercel.app<br>github.com/Jithin06/forge<br><span class="cap">Jithin. Student project. Not an official USC service.</span></p>
-  <div class="qr"><!--QR--></div>
+  <div class="abs facts">
+    <p><b>Built inside the pilot space.</b> Jithin works at the Maker Space as a Robotics Engineer.</p>
+    <p><b>Next:</b> USC single sign-on with university IT, then more spaces.</p>
+  </div>
+  <div class="foot"><span class="mark sm"><svg viewBox="0 0 26 38"><path d="M0 0h26v9H10v8h13v9H10v12H0z"/></svg></span>Forge</div>
+  <span class="num">6</span>
+</section>
+
+<!-- 7. Ask -->
+<section class="slide dark peg s7">
+  <div class="brand"><span class="mark"><svg viewBox="0 0 26 38"><path d="M0 0h26v9H10v8h13v9H10v12H0z"/></svg></span>Forge</div>
+  <h1>Give Forge <span class="accent">one pilot semester</span><br>at the Maker Space.</h1>
+  <ol class="asks">
+    <li><i>1</i><span><b>Maker Space:</b> run the pilot, scrap bin included.</span></li>
+    <li><i>2</i><span><b>Faculty:</b> give first-years the link in week one.</span></li>
+    <li><i>3</i><span><b>Staff at other spaces:</b> confirm your page.</span></li>
+  </ol>
+  <p class="by"><b>Jithin Rajan</b>, MS Computer Science. Robotics Engineer at the Baum Family Maker Space.<br>Student project. Not an official USC service.</p>
+  <div class="abs qr"><!--QR--></div>
+  <span class="tag">Try it now</span>
+  <p class="abs url">forge-beta-hazel.vercel.app<span>No login needed to plan a build.</span></p>
+  <div class="ruler"></div>
 </section>
 
 </body>

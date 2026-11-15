@@ -79,7 +79,8 @@ describe("SPEC 6.5", () => {
   });
 
   it("6. no material in any route has a price: no dollar figure anywhere on the plan", () => {
-    const plan = finalize(computeBase(planFixture("phone-stand"), unpricedSpaces(), "viterbi_undergrad"), []);
+    // No space price and an empty general table: there is no price data of any kind.
+    const plan = finalize(computeBase(planFixture("phone-stand"), unpricedSpaces(), "viterbi_undergrad", []), []);
     expect(JSON.stringify(plan)).not.toMatch(/\$\s?\d|\d\s?dollars?/i);
     expect(plan.routes.every((r) => r.total === null && r.with_scrap === null && r.cost_lines.every((l) => l.low_usd === null))).toBe(true);
   });

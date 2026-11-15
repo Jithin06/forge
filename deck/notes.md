@@ -1,37 +1,45 @@
-# Speaker notes: 3 minutes, about 390 words
+# Speaker notes: 3 minutes, about 400 words
 
-First draft. Bracketed parts are for Jithin to fill in. Say only numbers that are in `RESULTS.md` on the day.
+Seven slides. Slide 3 is where the live demo happens, so it gets a full minute. Say only numbers that are in `RESULTS.md` on the day; the ones below were true on Nov 14. Parts in square brackets are for you to decide.
 
-## Slide 1. Problem (0:00 to 0:25, about 55 words)
-[Tell your one true story from the Maker Space desk: a student who had an idea and did not know where to start. Use your own words and no statistics.]
+## Slide 1. Title (0:00 to 0:15, about 35 words)
 
-The tools exist at USC. They are spread across schools with different rules, and good leftover material goes in the bin.
+Hi, I'm Jithin. I'm a master's student in computer science, and I work as a Robotics Engineer at the Baum Family Maker Space. This is Forge. Describe what you want to build, and it finds where at USC to make it.
 
-## Slide 2. Product, with the live demo (0:25 to 1:35, about 150 words)
-This is Forge. Watch a first-year use it.
+## Slide 2. Problem (0:15 to 0:40, about 55 words)
 
-(Phone.) She types her idea the way she would say it, and adds a photo of her sketch. Forge asks two quick tap questions, only the ones that change the answer.
+USC has the tools. But a first-year with an idea doesn't have the words. You can't search for a laser cutter if you've never heard of one. So they don't know where to go, whether they're allowed in, what training they need, or what it costs. And at our desk, students keep asking for failed prints and leftover wood. Nothing matches them up.
 
-Here is her plan. Where to go. Whether she is allowed in. What training she needs first. What it will cost, added up from the space's own prices. And this plywood piece is free, because staff posted a leftover.
+[If you have one true story from the desk, tell it here in place of the first three sentences. One student, one idea, where they got stuck.]
 
-Change who she is, and run it again. Same idea, different student, different answer.
+## Slide 3. Product, with the live demo (0:40 to 1:40, about 125 words)
 
-She taps Claim, signs in with her USC account, and it is held for her for 48 hours.
+(Phone.) A first-year types one sentence: a wooden sign with the club's name, for the involvement fair. No login.
 
-## Slide 3. How the AI is kept honest (1:35 to 2:05, about 65 words)
-The model reads the idea and suggests ways to build it. It never decides who is allowed in, what training is needed, or what anything costs. Code does that, from each space's own data. If the model names a tool the space does not have, the plan is rejected and it tries once more.
+Forge asks one question, because the size changes the answer. Tap Shoebox.
 
-[If the eval has run, say the score exactly as RESULTS.md prints it, with the case count.]
+Here is the plan. Three ways to build it, and the best fit for this student is first. The Maker Space is open to them. These are the trainings to take first, in order.
 
-## Slide 4. Adoption (2:05 to 2:30, about 55 words)
-Forge launches with estimates, each one labelled. A space's own staff sign in, fix what is wrong, and press Confirm. Posting a leftover takes one photo: the AI drafts the listing, staff check it and publish.
+Now the materials. Staff posted a leftover piece of plywood that fits, so the cost drops from an estimated six dollars to zero.
 
-A professor can hand a first-year class one link. Planning needs no account.
+[Optional, if time: change the profile to another kind of student.] Same idea, different student, different badges. One space says Ask first, another says Not open to you. Nobody gets sent to a door they can't open.
 
-## Slide 5. What exists today (2:30 to 2:45, about 30 words)
-Four spaces are listed today, in two schools and the library. Everything about them is marked estimated until their staff confirm it. [Say the reuse number from RESULTS.md, even if it is zero.]
+## Slide 4. Scrap Exchange (1:40 to 2:05, about 55 words)
 
-## Slide 6. Ask (2:45 to 3:00, about 35 words)
-We are asking for three things. One pilot semester with the Maker Space and one intro course. USC single sign-on. And introductions to the people who run the other spaces.
+That free piece comes from the Scrap Exchange. Staff photograph a leftover, the AI drafts the listing, and staff check it before it goes live. A student claims it, and it's held for forty-eight hours. We tested five students claiming one piece at the same instant: exactly one gets it.
 
-The prototype is live at this link.
+[Until your supervisor approves giving scrap away, add: "This part is a proposed pilot."]
+
+## Slide 5. How the AI stays honest (2:05 to 2:30, about 55 words)
+
+How do we keep the AI honest? The model only proposes. Code checks every tool against that space's own data, and rejects the plan if a tool isn't there. The model never sets a price: code multiplies quantities by posted prices. Access badges and labels come from rules. Eighty-nine of eighty-nine unit tests pass.
+
+[If the eval has run, add the score exactly as `RESULTS.md` prints it, with the case count.]
+
+## Slide 6. Adoption (2:30 to 2:45, about 35 words)
+
+Forge launches on estimates, and says so. Eight spaces are listed today, each one a single data file. Their own staff sign in, fix what's wrong, and press Confirm. None are confirmed yet. That's the pilot's first job.
+
+## Slide 7. Ask (2:45 to 3:00, about 35 words)
+
+So here's the ask. One pilot semester at the Maker Space. Faculty: give your first-years this link in week one. Staff at other spaces: confirm your page. It's live now, and you don't need a login to try it.

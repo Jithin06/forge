@@ -13,18 +13,22 @@ export type CostLine = {
   low_usd: number | null;
   high_usd: number | null;
   /**
-   * True when this space lists no price and the figure is another space's
-   * price for the same kind of material, used as a typical campus price.
+   * True when this space lists no price and the figure comes from the
+   * general table of typical prices for buying the material yourself.
    */
   typical?: boolean;
 };
+
+/** One row of the general price table (data/typical-prices.json). */
+export type TypicalPrice = { category: MaterialCategory; name: string; unit_price_usd: number; price_unit: string };
+export const TYPICAL_LABEL = "typical price if you buy it yourself";
 
 export type RouteCost = {
   lines: CostLine[];
   /** null when nothing on the route has a price: show no dollar figure */
   total: { low: number; high: number } | null;
   prices_estimated: boolean;
-  /** Name of the space whose prices stand in as typical campus prices, when any line uses them. */
+  /** Set when any line uses the general table of typical prices. */
   typical_from: string | null;
 };
 
@@ -57,37 +61,39 @@ export function sameUnit(a: string, b: string): boolean {
  * stored price, or whose quantity unit differs from the price unit, is
  * left unpriced ("ask staff for the price") rather than guessed. Two
  * exceptions, both from stored data: an audience may have its own price, and
- * a space that lists no material of that kind may borrow the reference
- * space's price, marked typical.
+ * a space that lists no material of that kind uses the general table of
+ * typical prices, marked typical.
  */
 export function routeCost(
   space: SpaceDoc,
   materials: ModelRoute["materials"],
   audience: Audience,
-  /** A space whose prices may stand in, labelled typical, where this one lists none. */
-  reference?: SpaceDoc,
-  /** False when the route's work is not something the reference space does, so its prices would not be typical for it. */
+  /** The general table: what a material typically costs if the student buys it. Estimated, the same for every space. */
+  typicalPrices: TypicalPrice[] = [],
+  /** False when the route's work is not making something from bought material (a poster, a recording). */
   allowTypical = true,
 ): RouteCost {
   let usedTypical = false;
   const lines: CostLine[] = materials.map((m) => {
     const mat = m.material_id ? space.materials.find((x) => x.id === m.material_id) : undefined;
-    const unitOk = (x: Material) => x.price_unit === null || sameUnit(x.price_unit, m.unit);
+    const unitOk = (x: { price_unit: string | null }) => x.price_unit === null || sameUnit(x.price_unit, m.unit);
     let price = mat && unitOk(mat) ? priceFor(mat, audience) : null;
     let typical = false;
-    // No material of this kind is listed here at all: borrow a typical campus price.
-    if (price === null && !mat && allowTypical && reference && reference.id !== space.id && !space.materials.some((x) => x.category === m.category)) {
-      const ref = reference.materials.find((x) => x.category === m.category && x.unit_price_usd !== null && unitOk(x));
+    let typicalName: string | null = null;
+    // The space lists no material of this kind: use the typical price for buying it yourself.
+    if (price === null && !mat && allowTypical && !space.materials.some((x) => x.category === m.category)) {
+      const ref = typicalPrices.find((x) => x.category === m.category && unitOk(x));
       if (ref) {
         price = ref.unit_price_usd;
         typical = true;
+        typicalName = ref.name;
         usedTypical = true;
       }
     }
     return {
       category: m.category,
       material_id: m.material_id,
-      name: mat?.name ?? sentenceCase(m.category.replaceAll("_", " ")),
+      name: mat?.name ?? typicalName ?? sentenceCase(m.category.replaceAll("_", " ")),
       quantity_low: m.quantity_low,
       quantity_high: m.quantity_high,
       unit: m.unit,
@@ -106,9 +112,9 @@ export function routeCost(
           high: cents(priced.reduce((s, l) => s + l.high_usd!, 0)),
         }
       : null,
-    // A borrowed price is always an estimate, whatever this space has confirmed.
+    // A typical price is always an estimate, whatever this space has confirmed.
     prices_estimated: usedTypical || space.status.prices.state === "estimated",
-    typical_from: usedTypical ? reference!.name : null,
+    typical_from: usedTypical ? TYPICAL_LABEL : null,
   };
 }
 

@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { UNKNOWN_PLASTIC_RESTRICTION, type ScrapOutput } from "../ai/schemas";
-import { seedSpaces } from "../test-fixtures";
-import { normalizeDraft, publishBlockedReason, withRequiredRestrictions } from "./scrapRules";
+import { realSeedSpaces, seedSpaces } from "../test-fixtures";
+import { normalizeDraft, draftBlockedReason, publishBlockedReason, withRequiredRestrictions } from "./scrapRules";
 
 const draft = (over: Partial<ScrapOutput>): ScrapOutput => ({
   error: null, material_category: "acrylic", title: "Clear sheet", description: "A clear plastic sheet.", size_note: "30 x 20 cm",
@@ -33,9 +33,37 @@ describe("scrap rules", () => {
   });
   it("publishing in a never_offer category is refused with the reason", () => {
     const bfms = seedSpaces().find((s) => s.id === "bfms")!;
+    bfms.scrap_policy.never_offer = [];
     expect(publishBlockedReason(bfms, "resin")).toBeNull();
     bfms.scrap_policy.never_offer = ["resin"];
     expect(publishBlockedReason(bfms, "resin")).toBe("Baum Family Maker Space does not give away resin. Its scrap policy lists it as never offered.");
     expect(publishBlockedReason(bfms, "plywood")).toBeNull();
+  });
+
+  describe("Maker Space scrap rules (from Jithin, estimated)", () => {
+    const bfms = realSeedSpaces().find((s) => s.id === "bfms")!;
+    const draft = { material_category: "plywood" as const, confidence: "high" as const, never_post_match: null };
+    it("an ordinary offcut may be published", () => {
+      expect(draftBlockedReason(bfms, draft)).toBeNull();
+      expect(bfms.scrap_policy.pickup_note).toBe("Show this claim to a staff member at the Maker Space. They will hand the piece to you.");
+    });
+    it("something on the never-post list is blocked, and the reason names it", () => {
+      expect(draftBlockedReason(bfms, { ...draft, material_category: "other", never_post_match: "Batteries" })).toBe(
+        "This cannot be posted. Baum Family Maker Space never gives away: batteries.",
+      );
+    });
+    it("resin is blocked by category even if the model does not flag it", () => {
+      expect(draftBlockedReason(bfms, { ...draft, material_category: "resin" })).toMatch(/^This cannot be posted\. Baum Family Maker Space does not give away resin/);
+      expect(publishBlockedReason(bfms, "resin")).not.toBeNull(); // the publish route refuses it too
+    });
+    it("material nobody can identify is blocked: low confidence, or unknown plastic", () => {
+      expect(draftBlockedReason(bfms, { ...draft, confidence: "low" })).toMatch(/could not be identified/);
+      expect(draftBlockedReason(bfms, { ...draft, material_category: "unknown_plastic", confidence: "medium" })).toMatch(/could not be identified/);
+      expect(publishBlockedReason(bfms, "unknown_plastic")).not.toBeNull();
+    });
+    it("a space without such rules blocks none of these", () => {
+      const bme = realSeedSpaces().find((s) => s.id === "bme-innovation")!;
+      expect(draftBlockedReason(bme, { ...draft, confidence: "low", never_post_match: "Batteries" })).toBeNull();
+    });
   });
 });

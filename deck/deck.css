@@ -1,10 +1,14 @@
-@import "../node_modules/@fontsource/source-sans-3/400.css";
-@import "../node_modules/@fontsource/source-sans-3/600.css";
-@import "../node_modules/@fontsource/source-sans-3/700.css";
+/*
+ * Forge pitch deck. 1920 x 1080 per slide, printed to PDF by build.mjs.
+ * Tokens follow the usc-theme skill; this is the only place hex values appear.
+ */
+@font-face { font-family: "Source Sans 3"; font-weight: 400; src: url("../node_modules/@fontsource/source-sans-3/files/source-sans-3-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Source Sans 3"; font-weight: 600; src: url("../node_modules/@fontsource/source-sans-3/files/source-sans-3-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Source Sans 3"; font-weight: 700; src: url("../node_modules/@fontsource/source-sans-3/files/source-sans-3-latin-700-normal.woff2") format("woff2"); }
 
-/* Tokens from the usc-theme skill. The only place color values appear. */
 :root {
   --cardinal: #990000;
+  --cardinal-pressed: #7a0000;
   --gold: #ffcc00;
   --gold-soft: #fff2bf;
   --black: #000000;
@@ -12,79 +16,119 @@
   --gray-text: #767676;
   --gray-line: #cccccc;
 }
+
 @page { size: 1920px 1080px; margin: 0; }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { background: var(--white); }
-body { font-family: "Source Sans 3", sans-serif; color: var(--black); font-size: 38px; line-height: 1.35; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--white); }
+body { font-family: "Source Sans 3", sans-serif; color: var(--black); font-size: 36px; line-height: 1.3; -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums; }
+p, h1, h2, ol, ul, figure { margin: 0; padding: 0; }
+ol, ul { list-style: none; }
+b, strong { font-weight: 700; }
 
-.slide {
-  position: relative; width: 1920px; height: 1080px; overflow: hidden;
-  padding: 96px 120px; page-break-after: always; break-after: page;
-  display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 24px; grid-template-rows: auto 1fr; row-gap: 48px;
-}
-.slide > h1 { grid-column: 1 / -1; font-size: 76px; font-weight: 700; line-height: 1.1; color: var(--cardinal); max-width: 1500px; text-wrap: balance; }
-.slide > .num { position: absolute; right: 120px; bottom: 44px; font-size: 26px; color: var(--gray-text); }
-.cap { font-size: 26px; color: var(--gray-text); line-height: 1.3; }
-strong { font-weight: 600; }
+/* ---------------------------------------------------------------- slide */
+.slide { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: var(--white); break-after: page; page-break-after: always; }
+.slide > h1 { position: absolute; left: 120px; top: 92px; width: 1680px; font-size: 76px; line-height: 1.08; font-weight: 700; letter-spacing: -0.02em; color: var(--cardinal); }
+.abs { position: absolute; }
+.num { position: absolute; right: 120px; bottom: 38px; font-size: 26px; color: var(--gray-text); }
+.foot { position: absolute; left: 120px; bottom: 34px; display: flex; align-items: center; gap: 12px; font-size: 26px; font-weight: 700; color: var(--gray-text); }
+.note { font-size: 26px; line-height: 1.3; color: var(--gray-text); }
 
-/* Slides 1 and 6: full cardinal, white headline, gold accent. */
-.slide.dark { background: var(--cardinal); color: var(--white); grid-template-rows: 1fr auto auto; row-gap: 40px; padding-bottom: 76px; }
-.slide.dark > h1 { color: var(--white); font-size: 88px; align-self: end; max-width: 1400px; }
-.slide.dark .cap { color: var(--white); }
-.slide.dark .num { color: var(--white); }
-.slide.dark::after { /* the app's ruler-tick strip, on these two slides only */
-  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 20px; background-color: var(--black);
-  background-image: repeating-linear-gradient(90deg, var(--gold) 0 3px, transparent 3px 80px), repeating-linear-gradient(90deg, var(--gold) 0 2px, transparent 2px 16px);
-  background-size: 100% 100%, 100% 50%; background-repeat: no-repeat; background-position: top left, bottom left;
-}
-.gold-rule { display: inline; box-shadow: inset 0 -0.12em 0 var(--gold); }
+/* Pegboard: the cardinal field used on the title and closing slides. */
+.peg { background-color: var(--cardinal); background-image: radial-gradient(var(--cardinal-pressed) 4.6px, transparent 5.4px); background-size: 46px 46px; color: var(--white); }
+.dark > h1 { color: var(--white); }
+.dark .accent { color: var(--gold); }
 
-/* 1 */
-.story { grid-column: 1 / span 11; align-self: start; font-size: 40px; }
-.todo { border: 3px dashed var(--gold); padding: 20px 28px; }
-.byline { grid-column: 1 / -1; }
+/* The app's mark: a gold tile with a black F. */
+.mark { display: inline-grid; place-items: center; flex: none; width: 72px; height: 72px; background: var(--gold); border: 4px solid var(--black); border-radius: 18px; }
+.mark svg { width: 34px; height: 44px; fill: var(--black); }
+.mark.sm { width: 38px; height: 38px; border-width: 2.5px; border-radius: 10px; }
+.mark.sm svg { width: 18px; height: 23px; }
+.brand { display: flex; align-items: center; gap: 22px; font-size: 64px; font-weight: 700; letter-spacing: -0.01em; line-height: 1; }
 
-/* 2 */
-.shot { border: 2px solid var(--gray-line); border-radius: 28px; padding: 28px; background: var(--white); align-self: start; overflow: hidden; }
-.shot img { display: block; width: 100%; height: auto; }
-.s2 .a { grid-column: 1 / span 4; }
-.s2 .b { grid-column: 5 / span 4; }
-.s2 .calls { grid-column: 9 / span 4; display: flex; flex-direction: column; gap: 34px; padding-top: 8px; }
-.call { border-left: 3px solid var(--black); padding-left: 22px; font-size: 34px; line-height: 1.3; }
-.call b { display: block; width: fit-content; margin-bottom: 6px; }
-.call b { font-weight: 600; background: var(--gold); padding: 0 8px; }
+/* Ruler strip: the signature detail, on the title and closing slides only. */
+.ruler { position: absolute; left: 0; right: 0; bottom: 0; height: 34px; border-top: 4px solid var(--black); background-color: var(--gold);
+  background-image: repeating-linear-gradient(90deg, var(--black) 0 4px, transparent 4px 24px), repeating-linear-gradient(90deg, var(--black) 0 4px, transparent 4px 120px);
+  background-size: auto 13px, auto 30px; background-repeat: repeat-x; }
 
-/* 3 */
-.s3 .col { grid-column: span 4; align-self: center; }
-.s5 table, .s5 .side { align-self: center; }
-.s4 .fact { align-self: start; margin-top: 190px; }
-.s3 h2, .s4 h2, .s5 h2 { font-size: 30px; font-weight: 600; color: var(--gray-text); margin-bottom: 14px; }
-.s3 ul, .s6 ul { list-style: none; }
-.s3 li { padding: 22px 0; border-top: 2px solid var(--gray-line); font-size: 44px; }
-.s3 .proof { grid-column: 9 / span 4; align-self: center; }
-.hero { font-size: 200px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.hero span { display: inline-block; background: var(--gold); padding: 0 28px 8px; line-height: 1; }
-.hero-label { font-size: 36px; margin: 18px 0 30px; }
+/* Real screenshots sit in a frame with the app's own outline and hard shadow. */
+.frame { position: absolute; overflow: hidden; background: var(--white); border: 3px solid var(--black); border-radius: 26px; box-shadow: 10px 10px 0 var(--black); }
+.frame img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+.frame.dialog { border-radius: 22px; }
 
-/* 4 */
-.s4 .fact { grid-column: span 4; border-top: 6px solid var(--black); padding-top: 22px; }
-.s4 .fact.key { border-top-color: var(--gold); }
-.s4 .fact p { font-size: 40px; line-height: 1.25; }
+/* Things the deck draws itself: outlined boxes, tags, numbered steps. */
+.box { background: var(--white); border: 3px solid var(--black); border-radius: 18px; }
+.shadow { box-shadow: 10px 10px 0 var(--black); }
+.tag { position: absolute; white-space: nowrap; font-size: 30px; font-weight: 700; line-height: 1.2; padding: 8px 18px; background: var(--gold); color: var(--black); border: 3px solid var(--black); border-radius: 12px; box-shadow: 4px 4px 0 var(--black); }
+.free { background: var(--gold-soft); border: 2.5px solid var(--black); border-left: 16px solid var(--gold); border-radius: 16px; }
+.step { position: absolute; display: flex; align-items: flex-start; gap: 16px; font-size: 28px; line-height: 1.28; }
+.step i, .asks li i { display: grid; place-items: center; flex: none; width: 48px; height: 48px; margin-top: -4px; font-style: normal; font-weight: 700; font-size: 28px; background: var(--gold); color: var(--black); border: 2.5px solid var(--black); border-radius: 50%; }
+.arrow { position: absolute; color: var(--black); }
+.arrow svg { display: block; width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
 
-/* 5 */
-.s5 table { grid-column: 1 / span 8; border-collapse: collapse; width: 100%; }
-.s5 th, .s5 td { text-align: left; padding: 22px 24px 22px 0; border-bottom: 2px solid var(--gray-line); font-size: 36px; font-weight: 400; vertical-align: top; }
-.s5 thead th { font-size: 28px; color: var(--gray-text); }
-.s5 tbody th { font-weight: 600; }
-.chip { display: inline-block; background: var(--gold); color: var(--black); border-radius: 999px; padding: 2px 22px; font-size: 30px; font-weight: 600; }
-.s5 .side { grid-column: 9 / span 4; }
-.s5 .side .hero { font-size: 160px; }
+/* ---------------------------------------------------------------- 1 title */
+.s1 .brand { position: absolute; left: 120px; top: 96px; }
+.s1 > h1 { top: 216px; width: 1140px; font-size: 92px; line-height: 1.04; }
+.s1 .sub { position: absolute; left: 120px; top: 546px; width: 960px; font-size: 40px; line-height: 1.3; }
+.s1 .by { position: absolute; left: 120px; bottom: 92px; width: 1100px; font-size: 30px; line-height: 1.4; }
+.s1 .by span { display: block; font-size: 26px; }
+.s1 .phone { left: 1322px; top: 104px; width: 392px; height: 848px; border-width: 4px; border-radius: 44px; box-shadow: 16px 16px 0 var(--black); transform: rotate(2.5deg); }
+.s1 .tag { left: 124px; top: 704px; font-size: 34px; transform: rotate(-3deg); }
 
-/* 6 */
-.s6 > h1 { align-self: end; }
-.s6 ul { grid-column: 1 / span 8; }
-.s6 li { font-size: 44px; padding: 14px 0 14px 34px; border-left: 6px solid var(--gold); margin-bottom: 22px; line-height: 1.2; }
-.s6 .links { grid-column: 1 / span 8; font-size: 34px; line-height: 1.5; }
-.s6 .qr { grid-column: 10 / span 3; grid-row: 2 / span 2; align-self: end; justify-self: end; background: var(--white); padding: 22px; width: 340px; }
-.s6 .qr svg { display: block; width: 100%; height: auto; }
-.s6 .qr p { color: var(--black); font-size: 26px; text-align: center; margin-top: 10px; }
+/* ---------------------------------------------------------------- 2 problem */
+.s2 .lead { left: 120px; top: 306px; width: 800px; font-size: 40px; line-height: 1.3; }
+.s2 .lead p + p { margin-top: 26px; }
+.s2 .free { left: 120px; top: 772px; width: 800px; padding: 30px 34px; font-size: 38px; line-height: 1.3; }
+.s2 .board { left: 1010px; top: 312px; width: 790px; height: 672px; border: 3px solid var(--black); border-radius: 22px; box-shadow: 10px 10px 0 var(--black); }
+.s2 .q { position: absolute; padding: 22px 30px 24px; font-size: 44px; font-weight: 700; line-height: 1.1; color: var(--black); background: var(--white); border: 3px solid var(--black); border-radius: 12px; box-shadow: 6px 6px 0 var(--black); white-space: nowrap; }
+.s2 .q::before { content: ""; position: absolute; left: 50%; top: -11px; width: 20px; height: 20px; margin-left: -10px; background: var(--black); border-radius: 50%; }
+
+/* ---------------------------------------------------------------- 3 product, 4 scrap */
+.quote { left: 120px; top: 384px; width: 288px; padding: 24px 24px 28px; font-size: 30px; line-height: 1.32; }
+.s3 .note { left: 120px; top: 846px; width: 288px; }
+.s4 .note { left: 1360px; top: 938px; width: 440px; }
+
+/* ---------------------------------------------------------------- 5 honest AI */
+.node { position: absolute; padding: 26px 28px; font-size: 28px; line-height: 1.3; }
+.node h2 { font-size: 38px; line-height: 1.1; font-weight: 700; margin-bottom: 12px; }
+.node.code { background: var(--gold); border-width: 4px; padding: 30px 34px; }
+.node.code h2 { font-size: 46px; margin-bottom: 18px; }
+.node.code li { position: relative; padding-left: 46px; margin-top: 12px; font-size: 29px; line-height: 1.25; }
+.node.code li svg { position: absolute; left: 0; top: 3px; width: 32px; height: 32px; fill: none; stroke: currentColor; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; }
+.node.plan { padding: 0; overflow: hidden; }
+.node.plan .strip { height: 26px; border-bottom: 3px solid var(--black); background-color: var(--gold);
+  background-image: repeating-linear-gradient(90deg, var(--black) 0 3px, transparent 3px 18px), repeating-linear-gradient(90deg, var(--black) 0 3px, transparent 3px 90px); background-size: auto 10px, auto 26px; background-repeat: repeat-x; }
+.node.plan .body { padding: 20px 24px 18px; }
+.node.plan .stub { border-top: 3px dashed var(--black); padding: 14px 24px 20px; font-weight: 700; }
+.hero { position: absolute; font-size: 200px; line-height: 0.8; font-weight: 700; letter-spacing: -0.03em; }
+.s5 .hero-label { left: 372px; top: 800px; width: 620px; font-size: 40px; line-height: 1.2; font-weight: 700; }
+.s5 .hero-label span { display: block; margin-top: 10px; font-size: 28px; line-height: 1.3; font-weight: 400; }
+.s5 .side { left: 1080px; top: 800px; width: 720px; font-size: 28px; line-height: 1.32; }
+.s5 .side .note { margin-top: 18px; }
+
+/* ---------------------------------------------------------------- 6 adoption */
+.s6 .hero-label { left: 800px; top: 306px; width: 1000px; font-size: 40px; line-height: 1.2; font-weight: 700; }
+.s6 .hero-label span { display: block; margin-top: 12px; font-size: 30px; line-height: 1.32; font-weight: 400; }
+.badge { display: inline-flex; align-items: center; gap: 10px; white-space: nowrap; font-size: 28px; font-weight: 700; line-height: 1; padding: 12px 20px; border: 2.5px solid var(--black); border-radius: 999px; }
+.badge svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.badge.est { background: var(--gold); color: var(--black); }
+.badge.ok { background: var(--black); color: var(--gold); }
+.s6 .labels { left: 640px; top: 548px; display: flex; align-items: center; gap: 22px; font-size: 28px; }
+.s6 .labels .arrow { position: static; width: 60px; height: 34px; }
+.s6 .spaces { left: 640px; top: 632px; width: 1160px; columns: 2; column-gap: 40px; font-size: 26px; line-height: 1.5; }
+.s6 .spaces li { break-inside: avoid; }
+.s6 .facts { left: 640px; top: 812px; width: 1160px; padding-top: 24px; border-top: 3px solid var(--black); font-size: 30px; line-height: 1.3; }
+.s6 .facts p + p { margin-top: 12px; }
+
+/* ---------------------------------------------------------------- 7 ask */
+.s7 .brand { position: absolute; left: 120px; top: 96px; }
+.s7 > h1 { top: 226px; width: 1200px; font-size: 84px; line-height: 1.06; }
+.asks { position: absolute; left: 120px; top: 500px; width: 1100px; }
+.asks li { display: flex; align-items: flex-start; gap: 24px; font-size: 40px; line-height: 1.25; }
+.asks li + li { margin-top: 34px; }
+.asks li i { width: 60px; height: 60px; font-size: 34px; margin-top: -4px; }
+.s7 .by { position: absolute; left: 120px; bottom: 92px; width: 1100px; font-size: 26px; line-height: 1.4; }
+.s7 .qr { left: 1372px; top: 226px; width: 428px; height: 428px; padding: 34px; background: var(--white); border: 4px solid var(--black); border-radius: 26px; box-shadow: 14px 14px 0 var(--black); }
+.s7 .qr svg { display: block; width: 100%; height: 100%; }
+.s7 .url { left: 1220px; top: 712px; width: 580px; text-align: right; font-size: 40px; font-weight: 700; line-height: 1.2; }
+.s7 .url span { display: block; margin-top: 8px; font-size: 28px; font-weight: 400; }
+.s7 .tag { left: 1290px; top: 196px; font-size: 34px; transform: rotate(-6deg); }

@@ -1,6 +1,7 @@
 import type { PlanOutput } from "../ai/schemas";
 import type { AccessStatus, Audience, SpaceDoc } from "../schemas";
-import { routeCost, withScrapTotal, type CostLine } from "./cost";
+import { TYPICAL_PRICES } from "../typical-prices";
+import { routeCost, withScrapTotal, type CostLine, type TypicalPrice } from "./cost";
 import { eligibility, eligibilityRank } from "./eligibility";
 import { firstVisit, staffService } from "./firstVisit";
 import { assignLabels, type Label } from "./labels";
@@ -26,7 +27,7 @@ export type BaseRoute = {
   steps: { title: string; detail: string }[];
   warnings: { issue: string; fix: string }[];
   eligibility: { status: AccessStatus; note: string | null };
-  trainings: { id: string; name: string; how_to_sign_up: string | null; restricted_to: string | null }[];
+  trainings: { id: string; name: string; how_to_sign_up: string | null; restricted_to: string | null; duration_note?: string | null }[];
   cost_lines: CostLine[];
   total: { low: number; high: number } | null;
   prices_estimated: boolean;
@@ -35,18 +36,30 @@ export type BaseRoute = {
   kind?: "self_use" | "staff_fabrication";
   /** The request the student makes, for a staff_fabrication route. */
   service?: { name: string; how_to_request: string | null; url: string | null } | null;
-  /** The space whose prices stand in as typical campus prices on this route, if any. */
+  /** Set when a material on this route is priced from the general table of typical prices. */
   typical_from?: string | null;
   /** Typical-practice notes for a space whose page is silent. Worded as likely, shown as estimated. */
   estimate_notes?: { basis: string; training: string | null; cost: string | null } | null;
   space_url?: string;
   hours_listed?: boolean;
+  /** The space sells no material: the student brings their own. */
+  bring_your_own?: boolean;
   /** True when the student would run tools at a space that lists no trainings, so what is needed is not known. */
   training_unknown?: boolean;
 };
 
-/** The space whose stored prices are used, labelled typical, where another space lists none. */
-export const REFERENCE_SPACE_ID = "bfms";
+/** Kinds of work whose material a student could buy, so a typical price makes sense. Not posters or recordings. */
+const MAKES_FROM_MATERIAL = new Set<string>([
+  "fdm_3d_printing", "resin_3d_printing", "laser_cutting", "woodworking", "metalworking", "cnc_machining", "electronics", "hand_tools", "textiles",
+]);
+
+/** Sentences that name a file type. No space's page states one, so they are removed from steps and warnings. */
+const FILE_TYPE = /\b(pdf|stl|svg|dxf|obj|step|png|jpe?g|gcode|g-code|\.ai)\b/i;
+export function withoutFileTypes(text: string, fallback: string): string {
+  if (!FILE_TYPE.test(text)) return text;
+  const kept = text.split(/(?<=[.!?])\s+/).filter((sentence) => !FILE_TYPE.test(sentence));
+  return kept.length ? kept.join(" ") : fallback;
+}
 
 /** What the student does when staff make the piece. Titles are fixed; details come from the space's service. */
 const FAB_TITLES = ["Prepare the file", "Submit the work order", "Collect and pay"] as const;
@@ -88,13 +101,10 @@ export type FinalPlan = Omit<BasePlan, "routes"> & {
   none_open: boolean;
 };
 
-/** A borrowed price is typical only for work the reference space also does (a laser cut, a 3D print), not for a poster or a recording. */
-function comparable(space: SpaceDoc, equipmentIds: string[], reference?: SpaceDoc): boolean {
-  if (!reference || equipmentIds.length === 0) return false;
-  return equipmentIds.every((id) => {
-    const cap = space.equipment.find((e) => e.id === id)?.capability;
-    return !!cap && reference.capabilities.includes(cap);
-  });
+/** A typical price applies only to routes that make something from material the student could buy. */
+function comparable(space: SpaceDoc, equipmentIds: string[]): boolean {
+  if (equipmentIds.length === 0) return false;
+  return equipmentIds.every((id) => MAKES_FROM_MATERIAL.has(space.equipment.find((e) => e.id === id)?.capability ?? ""));
 }
 
 /** The space's typical-practice training note may be about some kinds of equipment only. */
@@ -107,15 +117,19 @@ function noteApplies(space: SpaceDoc, equipmentIds: string[]): boolean {
 const firstVisitFor = (space: SpaceDoc, equipmentIds: string[]) =>
   firstVisit(space, trainingsFor(space, equipmentIds), staffService(space, equipmentIds));
 
-export function computeBase(model: PlanOutput, spaces: SpaceDoc[], audience: Audience): BasePlan {
+/** A request any student may make is open to them, whatever the space's own access says. */
+function routeEligibility(space: SpaceDoc, audience: Audience, service: { open_to_all?: boolean } | null) {
+  return service?.open_to_all ? { status: "open" as const, note: null } : eligibility(space, audience);
+}
+
+export function computeBase(model: PlanOutput, spaces: SpaceDoc[], audience: Audience, typicalPrices: TypicalPrice[] = TYPICAL_PRICES): BasePlan {
   const byId = new Map(spaces.map((s) => [s.id, s]));
 
-  const reference = byId.get(REFERENCE_SPACE_ID);
   const routes: BaseRoute[] = model.routes.map((r) => {
     const space = byId.get(r.space_id)!;
     const service = staffService(space, r.equipment_ids);
     const trainings = trainingsFor(space, r.equipment_ids);
-    const cost = routeCost(space, r.materials, audience, reference, comparable(space, r.equipment_ids, reference));
+    const cost = routeCost(space, r.materials, audience, typicalPrices, comparable(space, r.equipment_ids));
     const selfUse = r.equipment_ids.some((id) => space.equipment.find((e) => e.id === id)?.staff_operated !== true);
     const est = space.estimates;
     return {
@@ -124,6 +138,7 @@ export function computeBase(model: PlanOutput, spaces: SpaceDoc[], audience: Aud
       space_location: space.location,
       space_url: space.official_url,
       hours_listed: !!space.hours,
+      bring_your_own: space.sells_materials === false,
       training_unknown: !service && selfUse && space.trainings.length === 0,
       kind: service ? "staff_fabrication" : "self_use",
       service: service ? { name: service.name, how_to_request: service.how_to_request, url: service.url ?? null } : null,
@@ -133,14 +148,18 @@ export function computeBase(model: PlanOutput, spaces: SpaceDoc[], audience: Aud
       }),
       process: r.process,
       fit_reason: r.fit_reason,
-      steps: service ? fabricationSteps(r.steps, service, space.name) : r.steps,
-      warnings: r.warnings,
-      eligibility: eligibility(space, audience),
+      steps: (service ? fabricationSteps(r.steps, service, space.name) : r.steps).map((st) => ({
+        title: st.title,
+        detail: withoutFileTypes(st.detail, "Get your file ready and check its size."),
+      })),
+      warnings: r.warnings.map((w) => ({ issue: withoutFileTypes(w.issue, "Check your file before you go."), fix: withoutFileTypes(w.fix, "Ask the space's staff what they need from you.") })),
+      eligibility: routeEligibility(space, audience, service),
       trainings: trainings.map((t) => ({
         id: t.id,
         name: t.name,
         how_to_sign_up: t.how_to_sign_up,
         restricted_to: t.restricted_to,
+        duration_note: t.duration_note,
       })),
       cost_lines: cost.lines,
       total: cost.total,
@@ -195,6 +214,7 @@ export function forAudience(
   spaces: SpaceDoc[],
   audience: Audience,
   modelOrder: { space_id: string; process: string }[] = [],
+  typicalPrices: TypicalPrice[] = TYPICAL_PRICES,
 ): BasePlan {
   if (audience === base.audience) return base;
   const byId = new Map(spaces.map((s) => [s.id, s]));
@@ -207,10 +227,10 @@ export function forAudience(
       const space = byId.get(r.space_id);
       if (!space) return { r, i, o: original(r) };
       // Prices can differ by audience, so the cost lines are priced again from the same quantities.
-      const ref = byId.get(REFERENCE_SPACE_ID);
-      const cost = routeCost(space, r.cost_lines, audience, ref, comparable(space, r.equipment.map((e) => e.id), ref));
+      const ids = r.equipment.map((e) => e.id);
+      const cost = routeCost(space, r.cost_lines, audience, typicalPrices, comparable(space, ids));
       return {
-        r: { ...r, eligibility: eligibility(space, audience), cost_lines: cost.lines, total: cost.total, prices_estimated: cost.prices_estimated, typical_from: cost.typical_from },
+        r: { ...r, eligibility: routeEligibility(space, audience, staffService(space, ids)), cost_lines: cost.lines, total: cost.total, prices_estimated: cost.prices_estimated, typical_from: cost.typical_from },
         i,
         o: original(r),
       };
@@ -237,7 +257,7 @@ export function finalize(base: BasePlan, availableScrap: ScrapItem[]): FinalPlan
   const labels = assignLabels(
     withScrap.map(({ r, with_scrap }) => ({
       status: r.eligibility.status,
-      // A price borrowed from another space cannot win "Cheapest".
+      // A typical price from the general table cannot win "Cheapest".
       withScrapLow: r.typical_from ? null : (with_scrap?.low ?? null),
       trainingCount: r.trainings.length,
       staffMade: r.kind === "staff_fabrication",

@@ -1,6 +1,6 @@
 import "server-only";
 import { EXPERIENCE_LABELS } from "../labels";
-import { REFERENCE_SPACE_ID } from "../compute/plan";
+import { TYPICAL_PRICES } from "../typical-prices";
 import type { Experience, SpaceDoc } from "../schemas";
 import { getSpaces } from "../spaces";
 import { QUESTIONS, QUESTION_IDS } from "./questions";
@@ -18,6 +18,7 @@ function spaceForModel(s: SpaceDoc) {
     location: s.location,
     hours_note: s.hours_note ?? null,
     how_to_start: s.access_steps,
+    sells_materials: s.sells_materials ?? null,
     capabilities: s.capabilities,
     equipment: s.equipment.map((e) => ({
       id: e.id,
@@ -36,12 +37,9 @@ function spaceForModel(s: SpaceDoc) {
   };
 }
 
-/** The unit each kind of material is sold in at the reference space, so quantities can be priced as typical campus prices. */
-function typicalUnits(spaces: SpaceDoc[]): Record<string, string> {
-  const ref = spaces.find((s) => s.id === REFERENCE_SPACE_ID);
-  const out: Record<string, string> = {};
-  for (const m of ref?.materials ?? []) if (m.price_unit && !(m.category in out)) out[m.category] = m.price_unit;
-  return out;
+/** The unit each kind of material is priced in, in the general table, so quantities can be priced. */
+function typicalUnits(): Record<string, string> {
+  return Object.fromEntries(TYPICAL_PRICES.map((p) => [p.category, p.price_unit]));
 }
 
 // Rebuilt at most once a minute so staff edits show up quickly (SPEC 6.1).
@@ -49,7 +47,7 @@ let cache: { at: number; spaces: SpaceDoc[]; json: string } | null = null;
 export async function spaceContext(): Promise<{ spaces: SpaceDoc[]; json: string }> {
   if (cache && Date.now() - cache.at < 60_000) return cache;
   const spaces = await getSpaces();
-  cache = { at: Date.now(), spaces, json: JSON.stringify({ spaces: spaces.map(spaceForModel), units_when_a_space_lists_no_material: typicalUnits(spaces) }, null, 1) };
+  cache = { at: Date.now(), spaces, json: JSON.stringify({ spaces: spaces.map(spaceForModel), units_when_a_space_lists_no_material: typicalUnits() }, null, 1) };
   return cache;
 }
 
@@ -109,6 +107,7 @@ Rules:
 - If the space data lacks something you need, say so and point the student to the space's staff. Never guess specifications.
 - Equipment with staff_operated true is run by staff, not by the student. A route that uses only such equipment is a request to staff: it needs no training, and it has exactly three steps, titled "Prepare the file", "Submit the work order" and "Collect and pay". The first says what to design and check; the other two follow the space's service for that equipment. Never tell the student to take a training or to use the machine on such a route. Use those three titles on no other kind of route.
 - How to book, reserve, request or pay: say only what the space's how_to_start, services and hours_note say. If they do not say, the step tells the student to ask the space's staff. Never invent an email, a form or a booking step. For someone who has never built anything this is usually the easiest way, so offer it whenever the idea can be made that way.
+- sells_materials false means the student brings their own material for anything they make themselves there. Say "bring your own". Never say that space provides, stocks or sells the material. Its listed materials are only what staff use for work they do for the student.
 - staff_operated null means it is not known who runs the machine. Do not say staff will run it and do not say the student will. Say to ask the space's staff how it works there.
 - A space that lists no equipment can be a route only for what its listed services cover; use an empty equipment list and tell the student to ask its staff. Do not assume it has any particular tool.
 - If a photo is provided, describe only what bears on building the object. Do not identify or describe people.

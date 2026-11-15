@@ -32,6 +32,14 @@ export function PostScrap({ spaceId, onPublished }: { spaceId: string; onPublish
   const [step, setStep] = useState<Step>({ name: "photo" });
   const [error, setError] = useState<string | null>(null);
   const [asking, setAsking] = useState(false);
+  const [blocked, setBlocked] = useState<string | null>(null);
+  const [policy, setPolicy] = useState<{ terms?: string | null; may_post?: string[]; never_post?: string[] } | null>(null);
+  useEffect(() => {
+    fetch("/api/spaces/" + spaceId, { cache: "no-store" })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => setPolicy(d?.space?.scrap_policy ?? null))
+      .catch(() => {});
+  }, [spaceId]);
   const doneRef = useRef<HTMLParagraphElement>(null);
   // After publishing, the form and its button are gone: focus goes to the result.
   useEffect(() => {
@@ -60,9 +68,16 @@ export function PostScrap({ spaceId, onPublished }: { spaceId: string; onPublish
   async function makeDraft() {
     if (!image) return setError("Add a photo of the piece first.");
     setError(null);
+    setBlocked(null);
     setStep({ name: "drafting" });
     try {
       const data = await send("/api/staff/scrap/draft", { space_id: spaceId, image, ...(note.trim() ? { note } : {}) });
+      if (data.blocked_reason) {
+        // On the never-post list, or nobody can say what it is: there is no draft to publish.
+        setBlocked(data.blocked_reason);
+        setDraft(null);
+        return setStep({ name: "photo" });
+      }
       setDraft(data.draft);
       setStep({ name: "review", fixture: data.fixture });
     } catch (e) {
@@ -232,6 +247,33 @@ export function PostScrap({ spaceId, onPublished }: { spaceId: string; onPublish
         <input id={`${id}-note`} value={note} onChange={(e) => setNote(e.target.value)} maxLength={300} placeholder="For example: 3 mm birch plywood" className={field} />
       </div>
       {alert}
+      {blocked && (
+        <p role="alert" className="alert">
+          <CircleAlert aria-hidden className="size-5" />
+          <span>{blocked}</span>
+        </p>
+      )}
+      {policy && ((policy.may_post?.length ?? 0) > 0 || (policy.never_post?.length ?? 0) > 0) && (
+        <details className="panel p-3">
+          <summary className="link cursor-pointer">What may be posted here</summary>
+          <div className="mt-2 space-y-3 text-[15px]">
+            {policy.terms && <p>{policy.terms}</p>}
+            {(policy.may_post?.length ?? 0) > 0 && (
+              <div>
+                <p className="font-bold">May be posted</p>
+                <ul className="list-disc pl-5">{policy.may_post!.map((x) => <li key={x}>{x}</li>)}</ul>
+              </div>
+            )}
+            {(policy.never_post?.length ?? 0) > 0 && (
+              <div>
+                <p className="font-bold">Never posted</p>
+                <ul className="list-disc pl-5">{policy.never_post!.map((x) => <li key={x}>{x}</li>)}</ul>
+              </div>
+            )}
+            <p className="text-gray-text">These lists are estimated until staff confirm them.</p>
+          </div>
+        </details>
+      )}
       <button type="button" onClick={makeDraft} disabled={step.name === "drafting"} className={primaryBtn}>
         {step.name === "drafting" ? "Looking at the photo..." : "Draft the listing"}
       </button>

@@ -42,7 +42,7 @@ describe("eligibility", () => {
   it("Maker Space: open to Viterbi undergraduates, ask first for everyone else", () => {
     const bfms = seed("bfms");
     expect(AUDIENCES.map((a) => eligibility(bfms, a).status)).toEqual(["open", "ask_first", "ask_first", "ask_first"]);
-    expect(eligibility(bfms, "viterbi_grad").note).toMatch(/ask staff about graduate access/);
+    expect(eligibility(bfms, "viterbi_grad").note).toMatch(/^Graduate students need special approval/);
   });
 
   it("falls back to ask first, never open, when an audience is missing", () => {

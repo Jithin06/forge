@@ -42,3 +42,23 @@ export function normalizeDraft(out: ScrapOutput): ScrapOutput {
     restrictions: withRequiredRestrictions(category, out.restrictions),
   };
 }
+
+/**
+ * Why a drafted listing may not be published at this space, or null.
+ * Three reasons, all from the space's scrap policy: the piece is on its
+ * never-post list, its category is never offered, or nobody can say what the
+ * material is. Staff see the reason and cannot publish that draft.
+ */
+export function draftBlockedReason(space: Pick<SpaceDoc, "name" | "scrap_policy">, draft: Pick<ScrapOutput, "material_category" | "confidence" | "never_post_match">): string | null {
+  const policy = space.scrap_policy;
+  const match = draft.never_post_match?.trim();
+  if (match && (policy.never_post?.length ?? 0) > 0) {
+    return `This cannot be posted. ${space.name} never gives away: ${match.replace(/[.\s]+$/, "").toLowerCase()}.`;
+  }
+  const unidentified = draft.confidence === "low" || draft.material_category === "unknown_plastic";
+  if (policy.block_unidentified && unidentified) {
+    return `This cannot be posted. The material could not be identified, and ${space.name} never gives away material nobody can identify. If you know what it is, start over and say so in the note.`;
+  }
+  const category = publishBlockedReason(space, draft.material_category);
+  return category ? `This cannot be posted. ${category}` : null;
+}

@@ -2,7 +2,7 @@
   "call": "ask",
   "recorded": {
     "model": "gemini-3.5-flash-lite",
-    "at": "2026-11-15T06:32:23.939Z"
+    "at": "2026-11-15T06:55:01.464Z"
   },
   "key": {
     "text": "A printed poster of my research for a poster session, 36 by 48 inches, in color. I have the file ready and need one copy.",
@@ -10,7 +10,7 @@
     "image": null
   },
   "output": {
-    "summary": "You want to print a 36 by 48 inch research poster in color for a poster session.",
+    "summary": "You want to print a 36 by 48 inch color research poster for a session.",
     "question_ids": [],
     "prefilled": [
       {

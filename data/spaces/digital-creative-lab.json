@@ -130,7 +130,7 @@
       "You will likely need your USC ID."
     ],
     "training_note": "3D printing here is likely by request: staff typically run the printer for you, so you would need no training. Ask to be sure.",
-    "cost_note": "You likely pay for materials only. Where this space lists no price, cost ranges use the Baum Family Maker Space's prices as typical campus prices.",
+    "cost_note": "You likely pay for materials only. Where this space lists no price, cost ranges use typical prices for buying the material yourself.",
     "training_note_for": [
       "fdm_3d_printing",
       "resin_3d_printing"

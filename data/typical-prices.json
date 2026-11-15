@@ -1,0 +1,36 @@
+{
+  "label": "Typical price if you buy it yourself",
+  "basis": "Forge's own estimates, not checked against any shop. No campus space is known to sell these at these prices.",
+  "items": [
+    {
+      "category": "plywood",
+      "name": "Plywood sheet (about 12 x 24 in)",
+      "unit_price_usd": 6.0,
+      "price_unit": "sheet"
+    },
+    {
+      "category": "mdf",
+      "name": "MDF (fiberboard) sheet (about 12 x 24 in)",
+      "unit_price_usd": 4.0,
+      "price_unit": "sheet"
+    },
+    {
+      "category": "acrylic",
+      "name": "Acrylic sheet (about 12 x 24 in)",
+      "unit_price_usd": 12.0,
+      "price_unit": "sheet"
+    },
+    {
+      "category": "other_plastic_sheet",
+      "name": "PETG sheet (about 12 x 24 in)",
+      "unit_price_usd": 10.0,
+      "price_unit": "sheet"
+    },
+    {
+      "category": "cardboard_paper",
+      "name": "Cardboard sheet",
+      "unit_price_usd": 1.0,
+      "price_unit": "sheet"
+    }
+  ]
+}

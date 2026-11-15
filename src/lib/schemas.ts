@@ -163,6 +163,8 @@ export const spaceDocSchema = z
         url: z.url().optional(),
         /** Equipment that staff run for the student through this service. */
         equipment_ids: z.array(id).optional(),
+        /** True when any USC student may use this service, whatever the space's own access says. */
+        open_to_all: z.boolean().optional(),
         /** What the student does, in order, e.g. submit the form, wait for the estimate, collect and pay. */
         steps: z.array(text).optional(),
       }),
@@ -182,11 +184,20 @@ export const spaceDocSchema = z
       })
       .optional(),
     usage_fee_note: z.string().nullable(),
+    /** false: the space sells no material, so students bring their own. Absent or null: not known. */
+    sells_materials: z.boolean().nullable().optional(),
     prohibited: z.array(text),
     scrap_policy: z.object({
       offers_scrap: z.boolean(),
       never_offer: z.array(vocab("material category", MATERIAL_CATEGORIES)),
       pickup_note: z.string().nullable(),
+      /** Who the scrap is for and what it costs, in one line. */
+      terms: z.string().nullable().optional(),
+      /** Plain-language lists for staff and the listing drafter. Estimated until staff confirm. */
+      may_post: z.array(text).optional(),
+      never_post: z.array(text).optional(),
+      /** true: a piece whose material cannot be identified is never posted. */
+      block_unidentified: z.boolean().optional(),
     }),
     source: z.object({
       urls: z.array(z.url()).min(1),

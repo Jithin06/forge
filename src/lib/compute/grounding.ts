@@ -82,7 +82,39 @@ export function groundPlan(plan: PlanOutput, spaces: SpaceDoc[]): GroundingResul
  * once to add them or to give a reason about the equipment or the material.
  */
 export function missedSpaces(plan: PlanOutput, spaces: SpaceDoc[]): string[] {
-  if (plan.routes.length === 0 || plan.routes.length >= 3) return [];
+  if (plan.routes.length === 0) return [];
+  const staffMade = missedStaffPrint(plan, spaces);
+  if (plan.routes.length >= 3) return staffMade;
+  return [...staffMade, ...passedOver(plan, spaces)];
+}
+
+const PRINTING = new Set(["fdm_3d_printing", "resin_3d_printing"]);
+
+/**
+ * The idea can be 3D printed (the model says it needs printing, or a route
+ * prints), a space prints for students by request, and yet no route is a
+ * staff-made print. For a beginner that is usually the easiest way, so the
+ * model is asked once to add it.
+ */
+export function missedStaffPrint(plan: PlanOutput, spaces: SpaceDoc[]): string[] {
+  const capOf = (spaceId: string, eqId: string) => spaces.find((s) => s.id === spaceId)?.equipment.find((e) => e.id === eqId);
+  const printable =
+    plan.needs.some((n) => PRINTING.has(n.capability)) ||
+    plan.routes.some((r) => r.equipment_ids.some((id) => PRINTING.has(capOf(r.space_id, id)?.capability ?? "")));
+  if (!printable) return [];
+  const isStaffPrint = (r: PlanOutput["routes"][number]) =>
+    r.equipment_ids.length > 0 &&
+    r.equipment_ids.every((id) => capOf(r.space_id, id)?.staff_operated === true) &&
+    r.equipment_ids.some((id) => PRINTING.has(capOf(r.space_id, id)?.capability ?? ""));
+  if (plan.routes.some(isStaffPrint)) return [];
+  const offers = spaces.filter((s) => s.equipment.some((e) => e.staff_operated === true && PRINTING.has(e.capability)));
+  if (offers.length === 0) return [];
+  return [
+    `this idea can be 3D printed, and ${offers.map((s) => `"${s.id}"`).join(" and ")} print for students by request (staff run the printer, no training), but no route is a staff-made print. Add one as a route with only that space's staff_operated printer${plan.routes.length >= 3 ? ", in place of the weakest route" : ""}. Leave it out only if the piece cannot be 3D printed at all, and say so in ways_considered`,
+  ];
+}
+
+function passedOver(plan: PlanOutput, spaces: SpaceDoc[]): string[] {
   const used = new Set(plan.routes.map((r) => r.space_id));
   const notes: string[] = [];
   const flagged = new Set<string>();

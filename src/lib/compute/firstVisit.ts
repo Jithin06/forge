@@ -64,7 +64,7 @@ export function firstVisit(space: SpaceDoc, trainings: Training[], service: Serv
       (step) => mentions(step, t.name) && !space.trainings.some((o) => o.id !== t.id && mentions(step, o.name)),
     );
     if (already) continue;
-    items.push(`Take ${t.name}. ${t.how_to_sign_up ?? "Ask the staff how to sign up."}`);
+    items.push(`Take ${t.name}. ${t.duration_note ? `${t.duration_note} ` : ""}${t.how_to_sign_up ?? "Ask the staff how to sign up."}`);
   }
   // Where the official page is silent: typical practice, worded as likely, never as fact.
   for (const line of space.estimates?.first_visit ?? []) items.push(line);

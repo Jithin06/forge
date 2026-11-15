@@ -1,13 +1,14 @@
 import { describe, expect, it } from "vitest";
 import { planOutputSchema } from "../ai/schemas";
-import { planFixture, pricedSpaces, seedSpaces, unpricedSpaces, PLAN_FIXTURES } from "../test-fixtures";
+import { planFixture, pricedSpaces, realSeedSpaces, seedSpaces, unpricedSpaces, PLAN_FIXTURES } from "../test-fixtures";
 import { routeCost, sameUnit, withScrapTotal } from "./cost";
 import { firstVisit, hoursSummary, staffService } from "./firstVisit";
-import { groundPlan } from "./grounding";
+import { groundPlan, missedStaffPrint } from "./grounding";
 import { assignLabels } from "./labels";
-import { computeBase, finalize, forAudience } from "./plan";
+import { computeBase, finalize, forAudience, withoutFileTypes } from "./plan";
 import { matchScrap, type ScrapItem } from "./scrapMatch";
 import { trainingsFor } from "./training";
+import { TYPICAL_PRICES } from "../typical-prices";
 
 const scrap = (id: string, space_id: string, material_category: string, posted_at = "2026-11-14T10:00:00Z"): ScrapItem => ({
   id, space_id, material_category, title: id, size_note: null, condition: "good", restrictions: [], photo_url: null, posted_at,
@@ -185,19 +186,19 @@ describe("whole plan", () => {
     // Route A laser at bfms (open): 10.50 to 11.50, 1 training
     // Route A laser at bfms: Level 1, 2 and 5 = 3 trainings.
     // Route B print at bfms (open): 40 to 80 g x $0.05 = 2.00 to 4.00. Student workers print it: 0 trainings.
-    // Route C laser at BME (ask first): BME lists no materials, so the Maker Space's plywood
-    // price stands in as a typical campus price: 1 x 9.50. 3 trainings.
+    // Route C laser at BME (ask first): BME lists no materials, so the general table's
+    // typical price for plywood applies: 1 x 6.00. 3 trainings.
     // Cheapest: B (2.00). Easiest: B (0 trainings, staff make it).
     const plan = finalize(computeBase(planFixture("phone-stand"), pricedSpaces(), "viterbi_undergrad"), []);
     expect(plan.routes.map((r) => [r.space_id, r.eligibility.status, r.total, r.trainings.length, r.labels])).toEqual([
       ["bfms", "open", { low: 10.5, high: 11.5 }, 3, []],
       ["bfms", "open", { low: 2, high: 4 }, 0, ["cheapest", "easiest"]],
-      ["bme-innovation", "ask_first", { low: 9.5, high: 9.5 }, 3, []],
+      ["bme-innovation", "ask_first", { low: 6, high: 6 }, 3, []],
     ]);
     expect(plan.routes.map((r) => [r.kind, r.typical_from ?? null])).toEqual([
       ["self_use", null],
       ["staff_fabrication", null],
-      ["self_use", "Baum Family Maker Space"],
+      ["self_use", "typical price if you buy it yourself"],
     ]);
     expect(plan.routes[2].prices_estimated).toBe(true);
     expect(plan.routes[2].cost_lines[0].typical).toBe(true);
@@ -238,7 +239,7 @@ describe("whole plan", () => {
   });
 
   it("no priced material means no dollar figure anywhere on the plan", () => {
-    const p = finalize(computeBase(planFixture("phone-stand"), unpricedSpaces(), "viterbi_undergrad"), []);
+    const p = finalize(computeBase(planFixture("phone-stand"), unpricedSpaces(), "viterbi_undergrad", []), []);
     expect(p.routes.every((r) => r.total === null && r.with_scrap === null)).toBe(true);
     expect(JSON.stringify(p)).not.toMatch(/\$\s?\d/);
     expect(p.routes.flatMap((r) => r.labels)).not.toContain("cheapest");
@@ -251,15 +252,26 @@ describe("whole plan", () => {
 });
 
 describe("seed prices", () => {
-  it("Maker Space 3D printing prices cite the official chart; sheet prices are labelled estimates; nothing is confirmed", () => {
-    const bfms = seedSpaces().find((s) => s.id === "bfms")!;
+  it("the Maker Space sells no material: its only prices are the 3D printing chart's, and nothing is confirmed", () => {
+    const bfms = realSeedSpaces().find((s) => s.id === "bfms")!;
     expect(bfms.status.prices.state).toBe("estimated");
-    const chart = bfms.materials.filter((m) => m.price_source?.startsWith("https://viterbiundergrad.usc.edu/bfms/operations/prices/"));
-    const guesses = bfms.materials.filter((m) => m.price_source === "coder estimate, unverified");
-    expect(chart.length + guesses.length).toBe(bfms.materials.length);
-    expect(chart.map((m) => m.id)).toContain("pla_filament");
-    expect(guesses.map((m) => m.category).sort()).toEqual(["acrylic", "cardboard_paper", "mdf", "other_plastic_sheet", "plywood"]);
-    for (const m of bfms.materials) expect(m.unit_price_usd, m.id).not.toBeNull();
+    expect(bfms.sells_materials).toBe(false);
+    expect(bfms.materials.every((m) => m.price_source?.startsWith("https://viterbiundergrad.usc.edu/bfms/operations/prices/"))).toBe(true);
+    expect(bfms.materials.map((m) => m.category)).not.toContain("plywood");
+    expect(TYPICAL_PRICES.map((p) => p.category).sort()).toEqual(["acrylic", "cardboard_paper", "mdf", "other_plastic_sheet", "plywood"]);
+  });
+  it("at the real Maker Space a sheet is priced from the general table and marked bring-your-own; solid wood has no price", () => {
+    const model = planFixture("club-sign");
+    model.routes[0].materials = [
+      { category: "acrylic", material_id: null, quantity_low: 1, quantity_high: 1, unit: "sheet" },
+      { category: "solid_wood", material_id: null, quantity_low: 1, quantity_high: 1, unit: "piece" },
+    ];
+    const r = finalize(computeBase(model, realSeedSpaces(), "viterbi_undergrad"), []).routes[0];
+    expect(r.bring_your_own).toBe(true);
+    expect(r.cost_lines.map((l) => [l.low_usd, l.typical ?? false])).toEqual([[12, true], [null, false]]);
+    expect(r.total).toEqual({ low: 12, high: 12 });
+    expect(r.prices_estimated).toBe(true);
+    expect(r.labels).not.toContain("cheapest");
   });
   it("a non-Viterbi student pays the chart's non-Viterbi price, and gets no price where the chart lists none", () => {
     const bfms = seedSpaces().find((s) => s.id === "bfms")!;
@@ -281,7 +293,8 @@ describe("first visit", () => {
     const bfms = seedSpaces().find((s) => s.id === "bfms")!;
     const list = firstVisit(bfms, trainingsFor(bfms, ["electronics_bench"]));
     expect(list.filter((x) => /Level 1/.test(x) && /^Take/.test(x))).toHaveLength(1);
-    expect(list.at(-1)).toBe("Take Level 4: Electronics. Ask the staff how to sign up.");
+    expect(list.at(-1)).toBe("Take Level 4: Electronics. A 30-minute session. Scan the training QR code on the Maker Space website, or on the door of the building.");
+    expect(list.at(-2)).toMatch(/^Take Level 2: Basic hand tools\. A 30-minute session\. Scan the training QR code/);
   });
   it("summarises hours in runs of days", () => {
     const bfms = seedSpaces().find((s) => s.id === "bfms")!;
@@ -404,13 +417,13 @@ describe("typical campus prices", () => {
   const plan = finalize(computeBase(model(), [...seedSpaces(), dcl], "viterbi_undergrad"), []);
   const by = (id: string) => plan.routes.find((r) => r.space_id === id)!;
 
-  it("are borrowed only for work the Maker Space also does: a poster gets no borrowed price", () => {
+  it("apply only to making something from bought material: a poster gets none", () => {
     expect(by("poster-room").total).toBeNull();
     expect(by("poster-room").typical_from).toBeNull();
   });
-  it("a laser cut at a space with no price list borrows the Maker Space's price, says so, and is marked estimated", () => {
+  it("a laser cut at a space with no price list uses the general table, says so, and is marked estimated", () => {
     expect(by("bme-innovation").total).toEqual({ low: 12, high: 12 });
-    expect(by("bme-innovation").typical_from).toBe("Baum Family Maker Space");
+    expect(by("bme-innovation").typical_from).toBe("typical price if you buy it yourself");
     expect(by("bme-innovation").prices_estimated).toBe(true);
   });
   it("a borrowed price never wins Cheapest", () => {
@@ -432,5 +445,50 @@ describe("Easiest when a space lists no trainings", () => {
       { status: "open", withScrapLow: null, trainingCount: 2 },
       { status: "ask_first", withScrapLow: null, trainingCount: 0, staffMade: true },
     ])).toEqual([[], [], ["easiest"]]);
+  });
+});
+
+describe("Maker Space rules from Jithin (Nov 15)", () => {
+  const bfms = realSeedSpaces().find((s) => s.id === "bfms")!;
+  it("Levels 3, 4 and 5 each follow Level 2, which follows Level 1", () => {
+    expect(trainingsFor(bfms, ["power_tools"]).map((t) => t.id)).toEqual(["level_1", "level_2", "level_3"]);
+    expect(trainingsFor(bfms, ["electronics_bench"]).map((t) => t.id)).toEqual(["level_1", "level_2", "level_4"]);
+    expect(trainingsFor(bfms, ["laser_vls675"]).map((t) => t.id)).toEqual(["level_1", "level_2", "level_5"]);
+    expect(trainingsFor(bfms, ["prusa_mk4"])).toEqual([]);
+  });
+  it("every training says to scan the QR code; Levels 2, 3 and 4 are 30-minute sessions; no dates or times", () => {
+    for (const t of bfms.trainings) {
+      expect(t.how_to_sign_up, t.id).toBe("Scan the training QR code on the Maker Space website, or on the door of the building.");
+      expect(t.duration_note, t.id).toBe(["level_2", "level_3", "level_4"].includes(t.id) ? "A 30-minute session." : null);
+    }
+    expect(JSON.stringify([bfms.trainings, bfms.access_steps])).not.toMatch(/\b\d{1,2}(:\d\d)?\s?(am|pm)\b|monday|tuesday|wednesday|thursday|friday/i);
+  });
+  it("a 3D print work order is open to all four audiences, even where the space itself is ask first", () => {
+    const model = planFixture("night-light");
+    model.routes = [{ ...model.routes[1], equipment_ids: ["prusa_mk4"], materials: [] }, { ...model.routes[1], equipment_ids: ["electronics_bench"], materials: [] }];
+    for (const a of ["viterbi_undergrad", "viterbi_grad", "usc_undergrad_other", "usc_grad_other"] as const) {
+      const p = computeBase(model, realSeedSpaces(), a);
+      const order = p.routes.find((r) => r.kind === "staff_fabrication")!;
+      const bench = p.routes.find((r) => r.kind === "self_use")!;
+      expect(order.eligibility, a).toEqual({ status: "open", note: null });
+      expect(bench.eligibility.status, a).toBe(a === "viterbi_undergrad" ? "open" : "ask_first");
+      // and the same when a stored plan is re-seen by another audience
+      const moved = forAudience(computeBase(model, realSeedSpaces(), "viterbi_undergrad"), realSeedSpaces(), a, model.routes);
+      expect(moved.routes.find((r) => r.kind === "staff_fabrication")!.eligibility.status, a).toBe("open");
+    }
+  });
+  it("a sentence naming a file type is removed from steps; a step that was only that gets a plain line", () => {
+    expect(withoutFileTypes("Check the size. Save your poster as a PDF file.", "x")).toBe("Check the size.");
+    expect(withoutFileTypes("Save it as a PDF.", "Get your file ready and check its size.")).toBe("Get your file ready and check its size.");
+    expect(withoutFileTypes("Draw the outline at full size.", "x")).toBe("Draw the outline at full size.");
+  });
+  it("an idea that can be 3D printed gets one look-again when no route is a staff-made print", () => {
+    const model = planFixture("night-light"); // prints at BME and at the Maker Space bench: neither is staff-made
+    const notes = missedStaffPrint(model, realSeedSpaces());
+    expect(notes).toHaveLength(1);
+    expect(notes[0]).toMatch(/can be 3D printed, and "bfms" print for students by request/);
+    model.routes[1] = { ...model.routes[1], equipment_ids: ["prusa_mk4"] };
+    expect(missedStaffPrint(model, realSeedSpaces())).toEqual([]);
+    expect(missedStaffPrint(planFixture("club-sign"), realSeedSpaces())).toEqual([]); // a laser job is not printable
   });
 });

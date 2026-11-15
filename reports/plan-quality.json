@@ -1,27 +1,24 @@
 {
-  "at": "2026-11-15T06:32:43.463Z",
+  "at": "2026-11-15T06:55:09.526Z",
   "route_counts": {
-    "poster": 2,
     "phone-stand": 3,
-    "night-light": 2,
     "club-sign": 2,
+    "poster": 2,
+    "night-light": 2,
     "podcast": 2,
     "video-interview": 2
   },
   "calls": {
-    "note": "Last full run of the six ideas (06:38Z to 06:41Z). The poster was then run again alone after a price-unit fix: 1 plan, 1 answer.",
-    "plans": 6,
-    "model_answers_per_plan": 1.5,
-    "plan_requests_sent": 10,
-    "plan_requests_failed": 1,
-    "plan_requests_per_plan": 1.67,
+    "note": "Last full run of the six ideas was 06:38Z to 06:41Z on Nov 15: 1.5 model answers per plan. The phone stand, club sign and poster were run again at 06:55Z after the Maker Space update: 3 plans, 1 answer each, no request failed.",
+    "plans": 3,
+    "model_answers_per_plan": 1,
+    "plan_requests_sent": 3,
+    "plan_requests_failed": 0,
+    "plan_requests_per_plan": 1,
     "attempts": {
-      "phone-stand": 2,
-      "night-light": 2,
+      "phone-stand": 1,
       "club-sign": 1,
-      "podcast": 2,
-      "poster": 1,
-      "video-interview": 1
+      "poster": 1
     }
   },
   "checks": [
@@ -34,31 +31,6 @@
       "check": "weapon part is blocked",
       "ok": true,
       "detail": "Weapons and weapon parts are not allowed."
-    },
-    {
-      "check": "phone-stand: a detailed idea is asked at most one question (asked 0)",
-      "ok": true,
-      "detail": ""
-    },
-    {
-      "check": "phone-stand: 3 route(s)",
-      "ok": true,
-      "detail": "roski-shops [roski_woodshop]: Cut and shape wood using the woodshop\nbfms [power_tools]: Cut and shape wood using power tools\niya-hall [iya_woodworking]: Cut and shape wood using woodworking machinery"
-    },
-    {
-      "check": "phone-stand: no step or warning tells the student how to operate a machine (12 lines read)",
-      "ok": true,
-      "detail": ""
-    },
-    {
-      "check": "phone-stand: no explanation in brackets is repeated (0 found in all)",
-      "ok": true,
-      "detail": ""
-    },
-    {
-      "check": "phone-stand: no dollar amounts in the raw output",
-      "ok": true,
-      "detail": ""
     },
     {
       "check": "night-light: a detailed idea is asked at most one question (asked 0)",
@@ -82,31 +54,6 @@
     },
     {
       "check": "night-light: no dollar amounts in the raw output",
-      "ok": true,
-      "detail": ""
-    },
-    {
-      "check": "club-sign: a detailed idea is asked at most one question (asked 1)",
-      "ok": true,
-      "detail": "What does it need to handle? (pick any)"
-    },
-    {
-      "check": "club-sign: 2 route(s)",
-      "ok": true,
-      "detail": "bfms [laser_vls675]: Cut and engrave an acrylic sheet using a laser cutter\nbme-innovation [bme_laser]: Cut and engrave an acrylic sheet using a laser cutter"
-    },
-    {
-      "check": "club-sign: no step or warning tells the student how to operate a machine (8 lines read)",
-      "ok": true,
-      "detail": ""
-    },
-    {
-      "check": "club-sign: no explanation in brackets is repeated (0 found in all)",
-      "ok": true,
-      "detail": ""
-    },
-    {
-      "check": "club-sign: no dollar amounts in the raw output",
       "ok": true,
       "detail": ""
     },
@@ -161,6 +108,56 @@
       "detail": ""
     },
     {
+      "check": "phone-stand: a detailed idea is asked at most one question (asked 0)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "phone-stand: 3 route(s)",
+      "ok": true,
+      "detail": "bfms [power_tools]: Cut and sand wood pieces using power tools\nroski-shops [roski_woodshop]: Cut and shape wood using the shared woodshop\niya-hall [iya_woodworking]: Cut wood using woodworking machinery"
+    },
+    {
+      "check": "phone-stand: no step or warning tells the student how to operate a machine (13 lines read)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "phone-stand: no explanation in brackets is repeated (0 found in all)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "phone-stand: no dollar amounts in the raw output",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "club-sign: a detailed idea is asked at most one question (asked 1)",
+      "ok": true,
+      "detail": "What does it need to handle? (pick any)"
+    },
+    {
+      "check": "club-sign: 2 route(s)",
+      "ok": true,
+      "detail": "bfms [laser_vls675]: Cut and engrave acrylic sheets with a laser cutter\nbme-innovation [bme_laser]: Cut and engrave acrylic sheets with a laser cutter"
+    },
+    {
+      "check": "club-sign: no step or warning tells the student how to operate a machine (10 lines read)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "club-sign: no explanation in brackets is repeated (0 found in all)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "club-sign: no dollar amounts in the raw output",
+      "ok": true,
+      "detail": ""
+    },
+    {
       "check": "poster: a detailed idea is asked at most one question (asked 0)",
       "ok": true,
       "detail": ""
@@ -168,7 +165,7 @@
     {
       "check": "poster: 2 route(s)",
       "ok": true,
-      "detail": "its-printing [its_plotters]: Print a color poster on heavyweight coated paper\ndigital-creative-lab [dcl_plotters]: Print a color poster using plotters"
+      "detail": "its-printing [its_plotters]: Print a large poster on a plotter\ndigital-creative-lab [dcl_plotters]: Print a large poster using plotters"
     },
     {
       "check": "poster: no step or warning tells the student how to operate a machine (8 lines read)",
@@ -206,7 +203,7 @@
       "raw_model_output": {
         "needs": [
           {
-            "why": "To cut and engrave the acrylic sheet precisely.",
+            "why": "To cut and engrave the acrylic sheet.",
             "capability": "laser_cutting"
           }
         ],
@@ -215,60 +212,27 @@
             "steps": [
               {
                 "title": "Design the piece",
-                "detail": "Draw your club name in a digital design tool to the desired size."
+                "detail": "Draw your club name and outline for the sign on your computer."
               },
               {
                 "title": "Take the training",
-                "detail": "Complete the required safety and equipment training before using the space."
+                "detail": "Take the safety training and the training for the laser cutter."
               },
               {
-                "title": "Make the sign",
-                "detail": "Use the laser cutter to cut and engrave your acrylic sheet."
+                "title": "Make a small test",
+                "detail": "Cut a small test piece to check your design sizes."
+              },
+              {
+                "title": "Assemble and finish",
+                "detail": "Cut and engrave your acrylic sheet on the laser cutter, then clean the edges."
               }
             ],
-            "process": "Cut and engrave an acrylic sheet using a laser cutter",
+            "process": "Cut and engrave acrylic sheets with a laser cutter",
             "space_id": "bfms",
             "warnings": [
               {
-                "fix": "Make sure your engraved text and lines are thick enough to show clearly.",
-                "issue": "Lines too thin"
-              }
-            ],
-            "materials": [
-              {
-                "unit": "sheet",
-                "category": "acrylic",
-                "material_id": "acrylic_sheet",
-                "quantity_low": 1,
-                "quantity_high": 1
-              }
-            ],
-            "fit_reason": "This space provides direct access to a laser cutter and suitable acrylic sheets. It is ideal for making a clean, professional sign.",
-            "equipment_ids": [
-              "laser_vls675"
-            ]
-          },
-          {
-            "steps": [
-              {
-                "title": "Design the piece",
-                "detail": "Create a file with your club name sized for the sign."
-              },
-              {
-                "title": "Take the training",
-                "detail": "Complete the general safety and laser cutter training for the space."
-              },
-              {
-                "title": "Ask staff to check the file",
-                "detail": "Have the space staff review your file before cutting."
-              }
-            ],
-            "process": "Cut and engrave an acrylic sheet using a laser cutter",
-            "space_id": "bme-innovation",
-            "warnings": [
-              {
-                "fix": "Ensure you use cast acrylic suitable for laser cutting and engraving.",
-                "issue": "Wrong material"
+                "fix": "Use a thicker sheet so the sign is sturdy.",
+                "issue": "The acrylic part may be too thin."
               }
             ],
             "materials": [
@@ -280,7 +244,48 @@
                 "quantity_high": 1
               }
             ],
-            "fit_reason": "The BME Innovation Space features a laser cutter that handles sheet materials well. Staff are available to guide you through the process.",
+            "fit_reason": "This space has a laser cutter that cuts and engraves acrylic precisely. It is a direct way to make your sign.",
+            "equipment_ids": [
+              "laser_vls675"
+            ]
+          },
+          {
+            "steps": [
+              {
+                "title": "Design the piece",
+                "detail": "Draw your club name and outline for the sign on your computer."
+              },
+              {
+                "title": "Take the training",
+                "detail": "Complete the required general safety training and the laser cutter training."
+              },
+              {
+                "title": "Make a small test",
+                "detail": "Run a small test cut to verify the settings."
+              },
+              {
+                "title": "Assemble and finish",
+                "detail": "Use the laser cutter to make your sign and finish the edges."
+              }
+            ],
+            "process": "Cut and engrave acrylic sheets with a laser cutter",
+            "space_id": "bme-innovation",
+            "warnings": [
+              {
+                "fix": "Keep text clear and spaced out.",
+                "issue": "The acrylic sheet might crack if the design is too intricate."
+              }
+            ],
+            "materials": [
+              {
+                "unit": "sheet",
+                "category": "acrylic",
+                "material_id": null,
+                "quantity_low": 1,
+                "quantity_high": 1
+              }
+            ],
+            "fit_reason": "This space also provides a laser cutter suitable for cutting and engraving your sign. Bring your own material.",
             "equipment_ids": [
               "bme_laser"
             ]
@@ -289,52 +294,16 @@
         "summary": "An engraved acrylic sign with a club name for a tabling booth.",
         "ways_considered": [
           {
-            "reason": "Does not cut flat acrylic sheets.",
-            "process": "3D printing",
-            "verdict": "left_out",
-            "space_id": "ahmanson-lab"
-          },
-          {
-            "reason": "Cuts and engraves acrylic sheets perfectly.",
-            "process": "Laser cutting acrylic",
+            "reason": "Has a laser cutter and lists acrylic.",
+            "process": "Cut and engrave acrylic with a laser cutter",
             "verdict": "offered",
             "space_id": "bfms"
           },
           {
-            "reason": "Equipped with a laser cutter for acrylic.",
-            "process": "Laser cutting acrylic",
+            "reason": "Has a laser cutter.",
+            "process": "Cut and engrave acrylic with a laser cutter",
             "verdict": "offered",
             "space_id": "bme-innovation"
-          },
-          {
-            "reason": "Does not have laser cutting equipment.",
-            "process": "3D printing",
-            "verdict": "left_out",
-            "space_id": "digital-creative-lab"
-          },
-          {
-            "reason": "CNC router is for wood and sheet material, not laser engraving.",
-            "process": "CNC routing",
-            "verdict": "left_out",
-            "space_id": "iya-hall"
-          },
-          {
-            "reason": "Prints on paper, not acrylic.",
-            "process": "Large format printing",
-            "verdict": "left_out",
-            "space_id": "its-printing"
-          },
-          {
-            "reason": "Woodshop tools cannot engrave acrylic.",
-            "process": "Woodshop cutting",
-            "verdict": "left_out",
-            "space_id": "roski-shops"
-          },
-          {
-            "reason": "Scene shop does not list laser cutting tools.",
-            "process": "Scene shop build",
-            "verdict": "left_out",
-            "space_id": "sda-technical-theatre-lab"
           }
         ],
         "clarifying_question": null,
@@ -351,6 +320,8 @@
             "space_location": "Ground floor, Science and Engineering Library",
             "space_url": "https://viterbiundergrad.usc.edu/bfms/",
             "hours_listed": true,
+            "bring_your_own": true,
+            "training_unknown": false,
             "kind": "self_use",
             "service": null,
             "equipment": [
@@ -361,26 +332,30 @@
                 "explain": true
               }
             ],
-            "process": "Cut and engrave an acrylic sheet using a laser cutter",
-            "fit_reason": "This space provides direct access to a laser cutter and suitable acrylic sheets. It is ideal for making a clean, professional sign.",
+            "process": "Cut and engrave acrylic sheets with a laser cutter",
+            "fit_reason": "This space has a laser cutter that cuts and engraves acrylic precisely. It is a direct way to make your sign.",
             "steps": [
               {
                 "title": "Design the piece",
-                "detail": "Draw your club name in a digital design tool to the desired size."
+                "detail": "Draw your club name and outline for the sign on your computer."
               },
               {
                 "title": "Take the training",
-                "detail": "Complete the required safety and equipment training before using the space."
+                "detail": "Take the safety training and the training for the laser cutter."
               },
               {
-                "title": "Make the sign",
-                "detail": "Use the laser cutter to cut and engrave your acrylic sheet."
+                "title": "Make a small test",
+                "detail": "Cut a small test piece to check your design sizes."
+              },
+              {
+                "title": "Assemble and finish",
+                "detail": "Cut and engrave your acrylic sheet on the laser cutter, then clean the edges."
               }
             ],
             "warnings": [
               {
-                "issue": "Lines too thin",
-                "fix": "Make sure your engraved text and lines are thick enough to show clearly."
+                "issue": "The acrylic part may be too thin.",
+                "fix": "Use a thicker sheet so the sign is sturdy."
               }
             ],
             "eligibility": {
@@ -391,33 +366,37 @@
               {
                 "id": "level_1",
                 "name": "Level 1: Orientation and safety",
-                "how_to_sign_up": null,
-                "restricted_to": null
+                "how_to_sign_up": "Scan the training QR code on the Maker Space website, or on the door of the building.",
+                "restricted_to": null,
+                "duration_note": null
               },
               {
                 "id": "level_2",
                 "name": "Level 2: Basic hand tools",
-                "how_to_sign_up": null,
-                "restricted_to": null
+                "how_to_sign_up": "Scan the training QR code on the Maker Space website, or on the door of the building.",
+                "restricted_to": null,
+                "duration_note": "A 30-minute session."
               },
               {
                 "id": "level_5",
                 "name": "Level 5: Machine tools",
-                "how_to_sign_up": null,
-                "restricted_to": null
+                "how_to_sign_up": "Scan the training QR code on the Maker Space website, or on the door of the building.",
+                "restricted_to": null,
+                "duration_note": null
               }
             ],
             "cost_lines": [
               {
                 "category": "acrylic",
-                "material_id": "acrylic_sheet",
+                "material_id": null,
                 "name": "Acrylic sheet (about 12 x 24 in)",
                 "quantity_low": 1,
                 "quantity_high": 1,
                 "unit": "sheet",
                 "unit_price_usd": 12,
                 "low_usd": 12,
-                "high_usd": 12
+                "high_usd": 12,
+                "typical": true
               }
             ],
             "total": {
@@ -425,7 +404,7 @@
               "high": 12
             },
             "prices_estimated": true,
-            "typical_from": null,
+            "typical_from": "typical price if you buy it yourself",
             "estimate_notes": null,
             "scrap": [
               []
@@ -444,6 +423,8 @@
             "space_location": "Denney Research Building (DRB), basement rooms B7, B11, B14 and B18",
             "space_url": "https://bme.usc.edu/innovation/",
             "hours_listed": true,
+            "bring_your_own": false,
+            "training_unknown": false,
             "kind": "self_use",
             "service": null,
             "equipment": [
@@ -454,26 +435,30 @@
                 "explain": false
               }
             ],
-            "process": "Cut and engrave an acrylic sheet using a laser cutter",
-            "fit_reason": "The BME Innovation Space features a laser cutter that handles sheet materials well. Staff are available to guide you through the process.",
+            "process": "Cut and engrave acrylic sheets with a laser cutter",
+            "fit_reason": "This space also provides a laser cutter suitable for cutting and engraving your sign. Bring your own material.",
             "steps": [
               {
                 "title": "Design the piece",
-                "detail": "Create a file with your club name sized for the sign."
+                "detail": "Draw your club name and outline for the sign on your computer."
               },
               {
                 "title": "Take the training",
-                "detail": "Complete the general safety and laser cutter training for the space."
+                "detail": "Complete the required general safety training and the laser cutter training."
               },
               {
-                "title": "Ask staff to check the file",
-                "detail": "Have the space staff review your file before cutting."
+                "title": "Make a small test",
+                "detail": "Run a small test cut to verify the settings."
+              },
+              {
+                "title": "Assemble and finish",
+                "detail": "Use the laser cutter to make your sign and finish the edges."
               }
             ],
             "warnings": [
               {
-                "issue": "Wrong material",
-                "fix": "Ensure you use cast acrylic suitable for laser cutting and engraving."
+                "issue": "The acrylic sheet might crack if the design is too intricate.",
+                "fix": "Keep text clear and spaced out."
               }
             ],
             "eligibility": {
@@ -485,26 +470,29 @@
                 "id": "shop_safety",
                 "name": "General shop safety",
                 "how_to_sign_up": null,
-                "restricted_to": "BME-affiliated students, staff and faculty"
+                "restricted_to": "BME-affiliated students, staff and faculty",
+                "duration_note": null
               },
               {
                 "id": "orientation",
                 "name": "Orientation",
                 "how_to_sign_up": null,
-                "restricted_to": "BME-affiliated students, staff and faculty"
+                "restricted_to": "BME-affiliated students, staff and faculty",
+                "duration_note": null
               },
               {
                 "id": "laser_training",
                 "name": "Laser cutter training",
                 "how_to_sign_up": null,
-                "restricted_to": "BME-affiliated students, staff and faculty"
+                "restricted_to": "BME-affiliated students, staff and faculty",
+                "duration_note": null
               }
             ],
             "cost_lines": [
               {
                 "category": "acrylic",
                 "material_id": null,
-                "name": "Acrylic",
+                "name": "Acrylic sheet (about 12 x 24 in)",
                 "quantity_low": 1,
                 "quantity_high": 1,
                 "unit": "sheet",
@@ -519,11 +507,11 @@
               "high": 12
             },
             "prices_estimated": true,
-            "typical_from": "Baum Family Maker Space",
+            "typical_from": "typical price if you buy it yourself",
             "estimate_notes": {
               "basis": "typical for campus workshops",
               "training": null,
-              "cost": "You likely pay for materials only. Where this space lists no price, cost ranges use the Baum Family Maker Space's prices as typical campus prices."
+              "cost": "You likely pay for materials only. Where this space lists no price, cost ranges use typical prices for buying the material yourself."
             },
             "scrap": [
               []
@@ -537,10 +525,10 @@
         ],
         "first_visit": [
           "Go to Baum Family Maker Space, Ground floor, Science and Engineering Library. Listed hours: Monday to Friday 11 AM to 10 PM; Saturday 10 AM to 5 PM.",
-          "Take the Level 1 orientation and safety training first. It lets you use the non-powered hand tools.",
-          "Each tool needs its own level after that. The trainings list shows the order.",
-          "Take Level 2: Basic hand tools. Ask the staff how to sign up.",
-          "Take Level 5: Machine tools. Ask the staff how to sign up."
+          "Take the Level 1 orientation and safety training first. To sign up, scan the training QR code on the Maker Space website, or on the door of the building.",
+          "After Level 1 comes Level 2, then the level for your tool: Level 3, Level 4 or Level 5. The trainings list shows which.",
+          "Take Level 2: Basic hand tools. A 30-minute session. Scan the training QR code on the Maker Space website, or on the door of the building.",
+          "Take Level 5: Machine tools. Scan the training QR code on the Maker Space website, or on the door of the building."
         ],
         "clarifying_question": null,
         "not_supported_reason": null,
@@ -560,11 +548,11 @@
           "one"
         ]
       },
-      "attempts": 2,
+      "attempts": 1,
       "raw_model_output": {
         "needs": [
           {
-            "why": "To cut and shape wood into a phone stand",
+            "why": "To cut and shape wood for the phone stand",
             "capability": "woodworking"
           }
         ],
@@ -573,60 +561,27 @@
             "steps": [
               {
                 "title": "Design the piece",
-                "detail": "Sketch the phone stand and check its sizes to fit your hand."
+                "detail": "Sketch your phone stand and check its sizes to ensure it fits your phone and hand."
               },
               {
-                "title": "Ask at the tool crib",
-                "detail": "Ask at the tool crib, which checks out hand and power tools."
+                "title": "Take the training",
+                "detail": "Take the Level 1 orientation and safety training, then complete the power tools training."
               },
               {
-                "title": "Assemble and finish",
-                "detail": "Sand the wood smooth so it is safe to touch."
-              }
-            ],
-            "process": "Cut and shape wood using the woodshop",
-            "space_id": "roski-shops",
-            "warnings": [
-              {
-                "fix": "Keep the base thick enough to hold the weight of a phone.",
-                "issue": "Wood parts can crack if cut too thin."
-              }
-            ],
-            "materials": [
-              {
-                "unit": "sheet",
-                "category": "solid_wood",
-                "material_id": null,
-                "quantity_low": 1,
-                "quantity_high": 1
-              }
-            ],
-            "fit_reason": "The woodshop has saws and sanders to shape a small wooden stand. It suits a beginner who wants to work with wood.",
-            "equipment_ids": [
-              "roski_woodshop"
-            ]
-          },
-          {
-            "steps": [
-              {
-                "title": "Design the piece",
-                "detail": "Plan the angles and dimensions for your phone stand."
-              },
-              {
-                "title": "Take training",
-                "detail": "Take the Level 1 orientation and safety training first, then the power tools training."
+                "title": "Ask staff to check the file",
+                "detail": "Ask the space staff to review your measurements and design before you cut."
               },
               {
                 "title": "Assemble and finish",
-                "detail": "Cut and sand the wood until it is smooth."
+                "detail": "Bring your own wood, cut the pieces with the power tools, and assemble your stand."
               }
             ],
-            "process": "Cut and shape wood using power tools",
+            "process": "Cut and sand wood pieces using power tools",
             "space_id": "bfms",
             "warnings": [
               {
-                "fix": "Use solid pieces for the main structure.",
-                "issue": "Power tools can splinter thin wood."
+                "fix": "Make the base and support back thick enough to remain sturdy.",
+                "issue": "Wood pieces may be cut too thin to support the weight of a phone."
               }
             ],
             "materials": [
@@ -638,7 +593,7 @@
                 "quantity_high": 1
               }
             ],
-            "fit_reason": "The space provides power tools for cutting and sanding wood. It is a good fit for making a small desk stand.",
+            "fit_reason": "This route provides access to power tools for shaping wood. It is well-suited for a beginner who takes the required training.",
             "equipment_ids": [
               "power_tools"
             ]
@@ -647,23 +602,23 @@
             "steps": [
               {
                 "title": "Design the piece",
-                "detail": "Draw your phone stand design and measure your phone."
+                "detail": "Draw a simple plan for your phone stand with dimensions that fit your hand."
               },
               {
-                "title": "Ask staff",
-                "detail": "Contact the Academy to ask who may use the maker spaces and how."
+                "title": "Ask staff to check the file",
+                "detail": "Ask at the tool crib for guidance on how to use the woodshop safely as a beginner."
               },
               {
                 "title": "Assemble and finish",
-                "detail": "Sand the cut wood pieces to remove sharp edges."
+                "detail": "Bring your own wood, use the woodshop saws and sanders, and glue your pieces together."
               }
             ],
-            "process": "Cut and shape wood using woodworking machinery",
-            "space_id": "iya-hall",
+            "process": "Cut and shape wood using the shared woodshop",
+            "space_id": "roski-shops",
             "warnings": [
               {
-                "fix": "Cut a larger block first, then shape it.",
-                "issue": "Small pieces are hard to hold against saws."
+                "fix": "Ask staff at the tool crib for help before making your cuts.",
+                "issue": "Using saws without experience can lead to uneven cuts."
               }
             ],
             "materials": [
@@ -675,61 +630,74 @@
                 "quantity_high": 1
               }
             ],
-            "fit_reason": "The maker space includes woodworking machinery such as a table saw. This allows you to cut your stand from solid wood.",
+            "fit_reason": "The shared woodshop offers multiple saws and sanders for woodworking. Staff are available to assist you at the tool crib.",
+            "equipment_ids": [
+              "roski_woodshop"
+            ]
+          },
+          {
+            "steps": [
+              {
+                "title": "Design the piece",
+                "detail": "Plan out the dimensions for your phone stand on paper."
+              },
+              {
+                "title": "Ask staff to check the file",
+                "detail": "Contact the academy at iovine-young@usc.edu to ask who may use the maker spaces and how."
+              },
+              {
+                "title": "Assemble and finish",
+                "detail": "Bring your own wood, cut your parts using the woodworking machinery, and assemble the stand."
+              }
+            ],
+            "process": "Cut wood using woodworking machinery",
+            "space_id": "iya-hall",
+            "warnings": [
+              {
+                "fix": "Email the academy staff to confirm when you can use the equipment.",
+                "issue": "The official page does not list hours or access rules for students."
+              }
+            ],
+            "materials": [
+              {
+                "unit": "sheet",
+                "category": "solid_wood",
+                "material_id": null,
+                "quantity_low": 1,
+                "quantity_high": 1
+              }
+            ],
+            "fit_reason": "Iovine and Young Hall includes woodworking machinery suited for cutting desk accessories. Contact the academy first to verify access.",
             "equipment_ids": [
               "iya_woodworking"
             ]
           }
         ],
-        "summary": "A small wooden phone stand for a desk",
+        "summary": "The student wants to make a small wooden phone stand for a desk.",
         "ways_considered": [
           {
-            "reason": "Student asked for wood",
-            "process": "3D printing",
-            "verdict": "left_out",
-            "space_id": "ahmanson-lab"
-          },
-          {
-            "reason": "Has power tools for woodworking",
-            "process": "Cut and shape wood using power tools",
+            "reason": "Has power tools and hand tools suitable for woodworking",
+            "process": "Cut wood using power tools and hand tools",
             "verdict": "offered",
             "space_id": "bfms"
           },
           {
-            "reason": "No woodworking equipment listed",
-            "process": "Woodworking",
+            "reason": "Machine shop focuses on metalworking",
+            "process": "Cut and shape wood in the machine shop",
             "verdict": "left_out",
             "space_id": "bme-innovation"
           },
           {
-            "reason": "Student asked for wood",
-            "process": "3D printing",
-            "verdict": "left_out",
-            "space_id": "digital-creative-lab"
-          },
-          {
             "reason": "Has woodworking machinery including a table saw",
-            "process": "Cut and shape wood using woodworking machinery",
+            "process": "Cut wood using woodworking machinery",
             "verdict": "offered",
             "space_id": "iya-hall"
           },
           {
-            "reason": "Student asked for wood",
-            "process": "3D printing",
-            "verdict": "left_out",
-            "space_id": "its-printing"
-          },
-          {
-            "reason": "Has a shared woodshop with saws and sanders",
-            "process": "Cut and shape wood using the woodshop",
+            "reason": "Has saws and sanders for woodworking",
+            "process": "Cut and shape wood in the shared woodshop",
             "verdict": "offered",
             "space_id": "roski-shops"
-          },
-          {
-            "reason": "No equipment listed",
-            "process": "Scene shop building",
-            "verdict": "left_out",
-            "space_id": "sda-technical-theatre-lab"
           }
         ],
         "clarifying_question": null,
@@ -737,7 +705,7 @@
         "not_supported_reason": null
       },
       "computed_plan": {
-        "summary": "A small wooden phone stand for a desk",
+        "summary": "The student wants to make a small wooden phone stand for a desk.",
         "audience": "viterbi_undergrad",
         "routes": [
           {
@@ -746,6 +714,8 @@
             "space_location": "Ground floor, Science and Engineering Library",
             "space_url": "https://viterbiundergrad.usc.edu/bfms/",
             "hours_listed": true,
+            "bring_your_own": true,
+            "training_unknown": false,
             "kind": "self_use",
             "service": null,
             "equipment": [
@@ -756,26 +726,30 @@
                 "explain": true
               }
             ],
-            "process": "Cut and shape wood using power tools",
-            "fit_reason": "The space provides power tools for cutting and sanding wood. It is a good fit for making a small desk stand.",
+            "process": "Cut and sand wood pieces using power tools",
+            "fit_reason": "This route provides access to power tools for shaping wood. It is well-suited for a beginner who takes the required training.",
             "steps": [
               {
                 "title": "Design the piece",
-                "detail": "Plan the angles and dimensions for your phone stand."
+                "detail": "Sketch your phone stand and check its sizes to ensure it fits your phone and hand."
               },
               {
-                "title": "Take training",
-                "detail": "Take the Level 1 orientation and safety training first, then the power tools training."
+                "title": "Take the training",
+                "detail": "Take the Level 1 orientation and safety training, then complete the power tools training."
+              },
+              {
+                "title": "Ask staff to check the file",
+                "detail": "Ask the space staff to review your measurements and design before you cut."
               },
               {
                 "title": "Assemble and finish",
-                "detail": "Cut and sand the wood until it is smooth."
+                "detail": "Bring your own wood, cut the pieces with the power tools, and assemble your stand."
               }
             ],
             "warnings": [
               {
-                "issue": "Power tools can splinter thin wood.",
-                "fix": "Use solid pieces for the main structure."
+                "issue": "Wood pieces may be cut too thin to support the weight of a phone.",
+                "fix": "Make the base and support back thick enough to remain sturdy."
               }
             ],
             "eligibility": {
@@ -786,14 +760,23 @@
               {
                 "id": "level_1",
                 "name": "Level 1: Orientation and safety",
-                "how_to_sign_up": null,
-                "restricted_to": null
+                "how_to_sign_up": "Scan the training QR code on the Maker Space website, or on the door of the building.",
+                "restricted_to": null,
+                "duration_note": null
+              },
+              {
+                "id": "level_2",
+                "name": "Level 2: Basic hand tools",
+                "how_to_sign_up": "Scan the training QR code on the Maker Space website, or on the door of the building.",
+                "restricted_to": null,
+                "duration_note": "A 30-minute session."
               },
               {
                 "id": "level_3",
                 "name": "Level 3: Power tools",
-                "how_to_sign_up": null,
-                "restricted_to": null
+                "how_to_sign_up": "Scan the training QR code on the Maker Space website, or on the door of the building.",
+                "restricted_to": null,
+                "duration_note": "A 30-minute session."
               }
             ],
             "cost_lines": [
@@ -817,7 +800,9 @@
               []
             ],
             "with_scrap": null,
-            "labels": []
+            "labels": [
+              "easiest"
+            ]
           },
           {
             "space_id": "roski-shops",
@@ -825,6 +810,8 @@
             "space_location": "Watt Hall",
             "space_url": "https://roski.usc.edu/studios-labs/",
             "hours_listed": false,
+            "bring_your_own": false,
+            "training_unknown": true,
             "kind": "self_use",
             "service": null,
             "equipment": [
@@ -835,26 +822,26 @@
                 "explain": true
               }
             ],
-            "process": "Cut and shape wood using the woodshop",
-            "fit_reason": "The woodshop has saws and sanders to shape a small wooden stand. It suits a beginner who wants to work with wood.",
+            "process": "Cut and shape wood using the shared woodshop",
+            "fit_reason": "The shared woodshop offers multiple saws and sanders for woodworking. Staff are available to assist you at the tool crib.",
             "steps": [
               {
                 "title": "Design the piece",
-                "detail": "Sketch the phone stand and check its sizes to fit your hand."
+                "detail": "Draw a simple plan for your phone stand with dimensions that fit your hand."
               },
               {
-                "title": "Ask at the tool crib",
-                "detail": "Ask at the tool crib, which checks out hand and power tools."
+                "title": "Ask staff to check the file",
+                "detail": "Ask at the tool crib for guidance on how to use the woodshop safely as a beginner."
               },
               {
                 "title": "Assemble and finish",
-                "detail": "Sand the wood smooth so it is safe to touch."
+                "detail": "Bring your own wood, use the woodshop saws and sanders, and glue your pieces together."
               }
             ],
             "warnings": [
               {
-                "issue": "Wood parts can crack if cut too thin.",
-                "fix": "Keep the base thick enough to hold the weight of a phone."
+                "issue": "Using saws without experience can lead to uneven cuts.",
+                "fix": "Ask staff at the tool crib for help before making your cuts."
               }
             ],
             "eligibility": {
@@ -881,15 +868,13 @@
             "estimate_notes": {
               "basis": "typical for campus workshops",
               "training": "Cutting, power and machine tools likely need an orientation plus training on that tool. Ask staff before you plan around one.",
-              "cost": "You likely pay for materials only. Where this space lists no price, cost ranges use the Baum Family Maker Space's prices as typical campus prices."
+              "cost": "You likely pay for materials only. Where this space lists no price, cost ranges use typical prices for buying the material yourself."
             },
             "scrap": [
               []
             ],
             "with_scrap": null,
-            "labels": [
-              "easiest"
-            ]
+            "labels": []
           },
           {
             "space_id": "iya-hall",
@@ -897,6 +882,8 @@
             "space_location": "Iovine and Young Hall, 3780 Watt Way",
             "space_url": "https://iovine-young.usc.edu/discover/spaces-that-drive-innovation",
             "hours_listed": false,
+            "bring_your_own": false,
+            "training_unknown": true,
             "kind": "self_use",
             "service": null,
             "equipment": [
@@ -907,26 +894,26 @@
                 "explain": true
               }
             ],
-            "process": "Cut and shape wood using woodworking machinery",
-            "fit_reason": "The maker space includes woodworking machinery such as a table saw. This allows you to cut your stand from solid wood.",
+            "process": "Cut wood using woodworking machinery",
+            "fit_reason": "Iovine and Young Hall includes woodworking machinery suited for cutting desk accessories. Contact the academy first to verify access.",
             "steps": [
               {
                 "title": "Design the piece",
-                "detail": "Draw your phone stand design and measure your phone."
+                "detail": "Plan out the dimensions for your phone stand on paper."
               },
               {
-                "title": "Ask staff",
-                "detail": "Contact the Academy to ask who may use the maker spaces and how."
+                "title": "Ask staff to check the file",
+                "detail": "Contact the academy at iovine-young@usc.edu to ask who may use the maker spaces and how."
               },
               {
                 "title": "Assemble and finish",
-                "detail": "Sand the cut wood pieces to remove sharp edges."
+                "detail": "Bring your own wood, cut your parts using the woodworking machinery, and assemble the stand."
               }
             ],
             "warnings": [
               {
-                "issue": "Small pieces are hard to hold against saws.",
-                "fix": "Cut a larger block first, then shape it."
+                "issue": "The official page does not list hours or access rules for students.",
+                "fix": "Email the academy staff to confirm when you can use the equipment."
               }
             ],
             "eligibility": {
@@ -953,7 +940,7 @@
             "estimate_notes": {
               "basis": "typical for campus workshops",
               "training": "Cutting, power and machine tools likely need an orientation plus training on that tool. Ask staff before you plan around one.",
-              "cost": "You likely pay for materials only. Where this space lists no price, cost ranges use the Baum Family Maker Space's prices as typical campus prices."
+              "cost": "You likely pay for materials only. Where this space lists no price, cost ranges use typical prices for buying the material yourself."
             },
             "scrap": [
               []
@@ -964,9 +951,10 @@
         ],
         "first_visit": [
           "Go to Baum Family Maker Space, Ground floor, Science and Engineering Library. Listed hours: Monday to Friday 11 AM to 10 PM; Saturday 10 AM to 5 PM.",
-          "Take the Level 1 orientation and safety training first. It lets you use the non-powered hand tools.",
-          "Each tool needs its own level after that. The trainings list shows the order.",
-          "Take Level 3: Power tools. Ask the staff how to sign up."
+          "Take the Level 1 orientation and safety training first. To sign up, scan the training QR code on the Maker Space website, or on the door of the building.",
+          "After Level 1 comes Level 2, then the level for your tool: Level 3, Level 4 or Level 5. The trainings list shows which.",
+          "Take Level 2: Basic hand tools. A 30-minute session. Scan the training QR code on the Maker Space website, or on the door of the building.",
+          "Take Level 3: Power tools. A 30-minute session. Scan the training QR code on the Maker Space website, or on the door of the building."
         ],
         "clarifying_question": null,
         "not_supported_reason": null,
@@ -1648,7 +1636,7 @@
       "raw_model_output": {
         "needs": [
           {
-            "why": "To print a large 36 by 48 inch poster.",
+            "why": "To print a large research poster on paper",
             "capability": "large_format_printing"
           }
         ],
@@ -1657,23 +1645,23 @@
             "steps": [
               {
                 "title": "Prepare the file",
-                "detail": "Save your poster design as a PDF file and check that the longest side measures 48 inches."
+                "detail": "Check that your poster file measures 36 by 48 inches and is ready to print."
               },
               {
-                "title": "Load your card",
-                "detail": "Load discretionary funds on your USC Card to pay for the printing."
+                "title": "Load funds",
+                "detail": "Load discretionary funds on your USC Card to pay for the print."
               },
               {
-                "title": "Bring the file",
-                "detail": "Bring your file to the Leavey computing center and ask ITS staff on site for help printing."
+                "title": "Bring file to center",
+                "detail": "Bring your file to the Leavey computing center and ask ITS staff on site for help."
               }
             ],
-            "process": "Print a color poster on heavyweight coated paper",
+            "process": "Print a large poster on a plotter",
             "space_id": "its-printing",
             "warnings": [
               {
-                "fix": "Check that all images and figures in your file are high resolution before printing.",
-                "issue": "The poster might look pixelated if images in your file have low resolution."
+                "fix": "Double-check your file dimensions before you go.",
+                "issue": "Poster dimensions may not match paper width if set incorrectly."
               }
             ],
             "materials": [
@@ -1685,7 +1673,7 @@
                 "quantity_high": 48
               }
             ],
-            "fit_reason": "This route is ideal because staff are on site to assist with printing large formats directly from your file. You can easily pay using your USC Card.",
+            "fit_reason": "This is the direct way to print research posters at Leavey Library. Staff are on site to help.",
             "equipment_ids": [
               "its_plotters"
             ]
@@ -1694,23 +1682,23 @@
             "steps": [
               {
                 "title": "Prepare the file",
-                "detail": "Save your poster in a standard print format and verify its dimensions."
+                "detail": "Make sure your poster file is formatted correctly for printing."
               },
               {
-                "title": "Contact staff",
-                "detail": "Ask the ITS Learning Environments team how to submit your file to the plotters."
+                "title": "Ask staff",
+                "detail": "Ask the ITS Learning Environments team how to print on the plotters."
               },
               {
-                "title": "Collect the poster",
-                "detail": "Pick up your printed poster from the lab once it is complete."
+                "title": "Print the poster",
+                "detail": "Follow staff instructions to print your poster."
               }
             ],
-            "process": "Print a color poster using plotters",
+            "process": "Print a large poster using plotters",
             "space_id": "digital-creative-lab",
             "warnings": [
               {
-                "fix": "Ask the space's staff for guidance on file requirements and submission.",
-                "issue": "The page does not list specific instructions for using the plotters."
+                "fix": "Ask staff for guidance on file types and paper.",
+                "issue": "Printing procedures are not listed on the page."
               }
             ],
             "materials": [
@@ -1718,29 +1706,29 @@
                 "unit": "sheet",
                 "category": "cardboard_paper",
                 "material_id": null,
-                "quantity_low": 48,
-                "quantity_high": 48
+                "quantity_low": 1,
+                "quantity_high": 1
               }
             ],
-            "fit_reason": "This space provides plotters for printing large sheets. Ask the ITS Learning Environments team for assistance with your print job.",
+            "fit_reason": "Another option in Leavey Library for large format printing.",
             "equipment_ids": [
               "dcl_plotters"
             ]
           }
         ],
-        "summary": "A printed research poster, 36 by 48 inches, in color.",
+        "summary": "A printed research poster, 36 by 48 inches in color",
         "ways_considered": [
           {
-            "reason": "Has plotters for large poster printing.",
-            "process": "Print on a large format plotter",
-            "verdict": "offered",
-            "space_id": "digital-creative-lab"
-          },
-          {
-            "reason": "Offers large-format plotters and matte or gloss poster paper.",
-            "process": "Print on large-format plotters",
+            "reason": "Has plotters and matte or gloss paper options",
+            "process": "Print a large poster on a plotter",
             "verdict": "offered",
             "space_id": "its-printing"
+          },
+          {
+            "reason": "Has plotters for posters",
+            "process": "Print a large poster using plotters",
+            "verdict": "offered",
+            "space_id": "digital-creative-lab"
           }
         ],
         "clarifying_question": null,
@@ -1748,7 +1736,7 @@
         "not_supported_reason": null
       },
       "computed_plan": {
-        "summary": "A printed research poster, 36 by 48 inches, in color.",
+        "summary": "A printed research poster, 36 by 48 inches in color",
         "audience": "viterbi_undergrad",
         "routes": [
           {
@@ -1757,6 +1745,7 @@
             "space_location": "Ahmanson Information Commons, Leavey Library (LVL)",
             "space_url": "https://itservices.usc.edu/learning-environments-services/usc-computing-center-printing-services/",
             "hours_listed": false,
+            "bring_your_own": false,
             "training_unknown": true,
             "kind": "self_use",
             "service": null,
@@ -1768,26 +1757,26 @@
                 "explain": true
               }
             ],
-            "process": "Print a color poster on heavyweight coated paper",
-            "fit_reason": "This route is ideal because staff are on site to assist with printing large formats directly from your file. You can easily pay using your USC Card.",
+            "process": "Print a large poster on a plotter",
+            "fit_reason": "This is the direct way to print research posters at Leavey Library. Staff are on site to help.",
             "steps": [
               {
                 "title": "Prepare the file",
-                "detail": "Save your poster design as a PDF file and check that the longest side measures 48 inches."
+                "detail": "Check that your poster file measures 36 by 48 inches and is ready to print."
               },
               {
-                "title": "Load your card",
-                "detail": "Load discretionary funds on your USC Card to pay for the printing."
+                "title": "Load funds",
+                "detail": "Load discretionary funds on your USC Card to pay for the print."
               },
               {
-                "title": "Bring the file",
-                "detail": "Bring your file to the Leavey computing center and ask ITS staff on site for help printing."
+                "title": "Bring file to center",
+                "detail": "Bring your file to the Leavey computing center and ask ITS staff on site for help."
               }
             ],
             "warnings": [
               {
-                "issue": "The poster might look pixelated if images in your file have low resolution.",
-                "fix": "Check that all images and figures in your file are high resolution before printing."
+                "issue": "Poster dimensions may not match paper width if set incorrectly.",
+                "fix": "Double-check your file dimensions before you go."
               }
             ],
             "eligibility": {
@@ -1836,6 +1825,7 @@
             "space_location": "Leavey Library, lower level",
             "space_url": "https://itservices.usc.edu/digital-creative-lab/",
             "hours_listed": false,
+            "bring_your_own": false,
             "training_unknown": true,
             "kind": "self_use",
             "service": null,
@@ -1847,26 +1837,26 @@
                 "explain": false
               }
             ],
-            "process": "Print a color poster using plotters",
-            "fit_reason": "This space provides plotters for printing large sheets. Ask the ITS Learning Environments team for assistance with your print job.",
+            "process": "Print a large poster using plotters",
+            "fit_reason": "Another option in Leavey Library for large format printing.",
             "steps": [
               {
                 "title": "Prepare the file",
-                "detail": "Save your poster in a standard print format and verify its dimensions."
+                "detail": "Make sure your poster file is formatted correctly for printing."
               },
               {
-                "title": "Contact staff",
-                "detail": "Ask the ITS Learning Environments team how to submit your file to the plotters."
+                "title": "Ask staff",
+                "detail": "Ask the ITS Learning Environments team how to print on the plotters."
               },
               {
-                "title": "Collect the poster",
-                "detail": "Pick up your printed poster from the lab once it is complete."
+                "title": "Print the poster",
+                "detail": "Follow staff instructions to print your poster."
               }
             ],
             "warnings": [
               {
-                "issue": "The page does not list specific instructions for using the plotters.",
-                "fix": "Ask the space's staff for guidance on file requirements and submission."
+                "issue": "Printing procedures are not listed on the page.",
+                "fix": "Ask staff for guidance on file types and paper."
               }
             ],
             "eligibility": {
@@ -1879,8 +1869,8 @@
                 "category": "cardboard_paper",
                 "material_id": null,
                 "name": "Cardboard paper",
-                "quantity_low": 48,
-                "quantity_high": 48,
+                "quantity_low": 1,
+                "quantity_high": 1,
                 "unit": "sheet",
                 "unit_price_usd": null,
                 "low_usd": null,
@@ -1893,7 +1883,7 @@
             "estimate_notes": {
               "basis": "typical for campus workshops",
               "training": null,
-              "cost": "You likely pay for materials only. Where this space lists no price, cost ranges use the Baum Family Maker Space's prices as typical campus prices."
+              "cost": "You likely pay for materials only. Where this space lists no price, cost ranges use typical prices for buying the material yourself."
             },
             "scrap": [
               []

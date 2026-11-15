@@ -142,6 +142,10 @@ export const scrapOutputSchema = z.object({
   restrictions: z.array(z.string().min(1).max(120)).max(4),
   confidence: z.enum(["low", "medium", "high"]),
   needs_staff_check: z.boolean(),
+  never_post_match: z
+    .string()
+    .nullish()
+    .describe("If the piece is one of the things this space never gives away, copy that line from the list. Otherwise null"),
 });
 export type ScrapOutput = z.infer<typeof scrapOutputSchema>;
 

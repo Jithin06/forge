@@ -24,12 +24,32 @@ export const PLAN_FIXTURES: Record<string, unknown> = {
   default: defaultPlan,
 };
 
-export function seedSpaces(): SpaceDoc[] {
+/** The seed documents exactly as they are in data/spaces. For tests about the real facts. */
+export function realSeedSpaces(): SpaceDoc[] {
   return SEED_DOCS.map((raw) => {
     const r = parseSpaceDoc(raw);
     if (!r.ok) throw new Error(r.errors.join("; "));
     return r.doc;
   });
+}
+
+/**
+ * The seed spaces plus TEST-ONLY sheet stock at the Maker Space, so the
+ * hand-written plans (which name those materials) still exercise grounding,
+ * pricing by quantity, scrap matching and labels. The real Maker Space sells
+ * no material; realSeedSpaces() has the truth.
+ */
+export function seedSpaces(): SpaceDoc[] {
+  const spaces = realSeedSpaces();
+  const bfms = spaces.find((s) => s.id === "bfms")!;
+  const stock = (id: string, name: string, category: SpaceDoc["materials"][number]["category"], usd: number) =>
+    bfms.materials.push({ id, name, category, unit_price_usd: usd, price_unit: "sheet", price_source: "test stock, not real", stocked: null });
+  stock("plywood_sheet", "Plywood sheet (about 12 x 24 in)", "plywood", 6);
+  stock("mdf_sheet", "MDF (fiberboard) sheet (about 12 x 24 in)", "mdf", 4);
+  stock("acrylic_sheet", "Acrylic sheet (about 12 x 24 in)", "acrylic", 12);
+  stock("petg_sheet", "PETG sheet (about 12 x 24 in)", "other_plastic_sheet", 10);
+  stock("cardboard", "Cardboard sheet", "cardboard_paper", 1);
+  return spaces;
 }
 
 export function planFixture(name: string): PlanOutput {

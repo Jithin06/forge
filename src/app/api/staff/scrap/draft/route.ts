@@ -17,7 +17,7 @@ export async function POST(request: Request) {
     const r = await describeScrap({ image: parsed.data.image, space, note: parsed.data.note });
     console.log(`scrap draft tokens in=${r.usage.input_tokens} out=${r.usage.output_tokens} fixture=${r.fixture}`);
     if (r.error !== null) return apiError(400, "PHOTO_NOT_USABLE", r.error);
-    return Response.json({ draft: r.draft, fixture: r.fixture }, { headers: NO_STORE });
+    return Response.json({ draft: r.draft, blocked_reason: r.blocked_reason, fixture: r.fixture }, { headers: NO_STORE });
   } catch (e) {
     return aiFailure(e);
   }
