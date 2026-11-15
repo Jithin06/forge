@@ -1,13 +1,17 @@
 {
   "call": "ask",
-  "note": "Vague idea: three questions.",
+  "note": "Recorded from the live model by scripts/check-plan-quality.mts.",
+  "recorded": {
+    "model": "gemini-3.5-flash-lite",
+    "at": "2026-11-15T05:25:02.929Z"
+  },
   "key": {
     "text": "something cool for my room",
     "experience": "never",
     "image": null
   },
   "output": {
-    "summary": "Something to make for your room. A few quick answers will help narrow it down.",
+    "summary": "You want to make something cool to put in your room.",
     "question_ids": [
       "size",
       "demands",

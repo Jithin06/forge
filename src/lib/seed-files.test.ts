@@ -28,13 +28,15 @@ describe("every seed file in data/spaces", () => {
     }
   });
 
-  it("Ahmanson Lab lists no equipment or capabilities, only what its page states", () => {
+  it("Ahmanson Lab lists only what its pages state: equipment, no trainings, prices or opening times", () => {
     const lab = docs.get("ahmanson-lab")!;
-    expect([lab.capabilities, lab.equipment, lab.materials, lab.trainings]).toEqual([[], [], [], []]);
+    expect(lab.equipment.map((e) => e.id)).toContain("ultimaker_s5");
+    expect(lab.equipment.every((e) => e.required_training_ids.length === 0 && e.staff_operated === null)).toBe(true);
+    expect([lab.materials, lab.trainings]).toEqual([[], []]);
     expect(lab.hours).toBeNull();
     expect(lab.hours_note).toMatch(/9 AM to 9 PM/);
-    expect(lab.services.map((s) => s.how_to_request)).toEqual(["Contact lvy@usc.edu", "Contact lvy@usc.edu"]);
-    expect(firstVisit(lab, [])[0]).toBe("Go to Ahmanson Lab, Leavey Library, room 301. The official page lists 9 AM to 9 PM and does not say which days.");
+    expect(lab.source.urls).toContain("https://polymathic.usc.edu/ahmanson-lab-equipment");
+    expect(firstVisit(lab, [])[0]).toMatch(/^Go to Ahmanson Lab, Leavey Library, room 301\. /);
   });
 
   it("Digital Creative Lab lists podcast studios and no hours, prices or trainings", () => {

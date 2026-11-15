@@ -1,5 +1,10 @@
 {
   "call": "plan",
+  "note": "Recorded from the live model by scripts/check-plan-quality.mts.",
+  "recorded": {
+    "model": "gemini-3.5-flash-lite",
+    "at": "2026-11-15T05:20:38.186Z"
+  },
   "key": {
     "text": "I want to make a phone stand for my desk out of wood. It should hold my phone at a slight angle, fit in my hand, and I only need one.",
     "experience": "never",
@@ -9,33 +14,57 @@
       ],
       "quantity": [
         "one"
-      ],
-      "demands": [
-        "looks"
       ]
     },
     "image": null
   },
   "output": {
-    "summary": "A small wooden phone stand that holds your phone at an angle.",
+    "summary": "Make a wooden phone stand for a desk",
     "needs": [
       {
-        "capability": "laser_cutting",
-        "why": "Cut flat wooden pieces that slot together"
+        "capability": "woodworking",
+        "why": "To cut and shape wood for the stand"
       },
       {
-        "capability": "fdm_3d_printing",
-        "why": "Or print the stand in one piece"
+        "capability": "laser_cutting",
+        "why": "To cut flat wooden pieces accurately"
+      }
+    ],
+    "ways_considered": [
+      {
+        "space_id": "ahmanson-lab",
+        "process": "3D printing the phone stand",
+        "verdict": "left_out",
+        "reason": "The student wants wood, not plastic"
+      },
+      {
+        "space_id": "bfms",
+        "process": "Laser cutting pieces from plywood and slotting them together",
+        "verdict": "offered",
+        "reason": "Fits the student's wood choice and is easy to assemble"
+      },
+      {
+        "space_id": "bme-innovation",
+        "process": "Laser cutting a wooden stand",
+        "verdict": "left_out",
+        "reason": "Restricted to BME-affiliated students"
+      },
+      {
+        "space_id": "digital-creative-lab",
+        "process": "Recording audio about the stand",
+        "verdict": "left_out",
+        "reason": "Does not make physical objects"
       }
     ],
     "routes": [
       {
         "space_id": "bfms",
         "equipment_ids": [
-          "laser_vls675"
+          "laser_vls675",
+          "hand_tools"
         ],
-        "process": "Cut flat pieces from plywood and slot them together.",
-        "fit_reason": "Slotted plywood is quick to cut and needs no glue. It is a good first project on the laser cutter.",
+        "process": "Cut flat pieces from plywood and slot them together",
+        "fit_reason": "This route uses a laser cutter to make precise wooden parts that easily fit together. It is a great choice for a beginner.",
         "materials": [
           {
             "category": "plywood",
@@ -43,118 +72,35 @@
             "quantity_low": 1,
             "quantity_high": 1,
             "unit": "sheet"
-          },
-          {
-            "category": "cardboard_paper",
-            "material_id": "cardboard",
-            "quantity_low": 1,
-            "quantity_high": 2,
-            "unit": "sheet"
           }
         ],
         "steps": [
           {
-            "title": "Sketch the pieces",
-            "detail": "Draw the stand as two or three flat pieces that slot together. Keep slots the same width as the plywood."
+            "title": "Design the parts",
+            "detail": "Draw flat interlocking pieces for your phone stand on a computer."
           },
           {
-            "title": "Take Level 1 training",
-            "detail": "Do the Level 1 orientation and safety training before using the laser cutter (cuts flat sheets very precisely)."
+            "title": "Complete safety training",
+            "detail": "Take the required orientation and safety training before using the space."
           },
           {
-            "title": "Make a cardboard test",
-            "detail": "Cut the shapes from cardboard first to check the angle and fit with your phone."
+            "title": "Cut the wood",
+            "detail": "Ask staff to check your file, then use the laser cutter to cut your pieces."
           },
           {
-            "title": "Cut and assemble",
-            "detail": "Cut the final pieces from plywood and slide them together. Sand any rough edges."
+            "title": "Assemble the stand",
+            "detail": "Slot the wooden pieces together to form your phone stand."
           }
         ],
         "warnings": [
           {
-            "issue": "Slots that are too tight or too loose",
-            "fix": "Measure the plywood thickness and test a single slot in cardboard first."
+            "issue": "The wood might be too thin and bend under the phone's weight.",
+            "fix": "Choose a thicker plywood sheet."
           }
         ]
-      },
-      {
-        "space_id": "bfms",
-        "equipment_ids": [
-          "prusa_mk4"
-        ],
-        "process": "Print the whole stand in one piece from plastic.",
-        "fit_reason": "Printing needs no assembly and the printer does the hard part. It takes a few hours, so plan ahead.",
-        "materials": [
-          {
-            "category": "pla_filament",
-            "material_id": "pla_filament",
-            "quantity_low": 40,
-            "quantity_high": 80,
-            "unit": "g"
-          }
-        ],
-        "steps": [
-          {
-            "title": "Find or draw a model",
-            "detail": "Search for a free phone stand model, or draw a simple wedge shape."
-          },
-          {
-            "title": "Take Level 1 training",
-            "detail": "Do the Level 1 orientation and safety training first."
-          },
-          {
-            "title": "Prepare the file",
-            "detail": "Ask staff to help you slice the model (turn it into printer instructions)."
-          },
-          {
-            "title": "Print and check",
-            "detail": "Start the print, check the first layer sticks, and collect it when done."
-          }
-        ],
-        "warnings": [
-          {
-            "issue": "Thin back support may snap",
-            "fix": "Make the back support at least 4 mm thick."
-          }
-        ]
-      },
-      {
-        "space_id": "bme-innovation",
-        "equipment_ids": [
-          "bme_laser"
-        ],
-        "process": "Cut flat pieces from plywood and slot them together.",
-        "fit_reason": "If you are in Biomedical Engineering, this space also has a laser cutter. Bring your own sheet, since no materials are listed there.",
-        "materials": [
-          {
-            "category": "plywood",
-            "material_id": null,
-            "quantity_low": 1,
-            "quantity_high": 1,
-            "unit": "sheet"
-          }
-        ],
-        "steps": [
-          {
-            "title": "Sketch the pieces",
-            "detail": "Draw the stand as two or three flat pieces that slot together. Keep slots the same width as the plywood."
-          },
-          {
-            "title": "Take Level 1 training",
-            "detail": "Do the Level 1 orientation and safety training before using the laser cutter (cuts flat sheets very precisely)."
-          },
-          {
-            "title": "Make a cardboard test",
-            "detail": "Cut the shapes from cardboard first to check the angle and fit with your phone."
-          },
-          {
-            "title": "Cut and assemble",
-            "detail": "Cut the final pieces from plywood and slide them together. Sand any rough edges."
-          }
-        ],
-        "warnings": []
       }
     ],
+    "single_route_reason": "Only the Baum Family Maker Space has the laser cutting equipment and wood materials needed for this project.",
     "clarifying_question": null,
     "not_supported_reason": null
   }

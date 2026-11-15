@@ -1,25 +1,31 @@
 {
   "call": "ask",
-  "note": "Detailed idea.",
+  "note": "Recorded from the live model by scripts/check-plan-quality.mts.",
+  "recorded": {
+    "model": "gemini-3.5-flash-lite",
+    "at": "2026-11-15T05:24:40.756Z"
+  },
   "key": {
     "text": "An engraved acrylic sign with my club's name for our tabling booth, about 12 inches wide. We need one.",
     "experience": "never",
     "image": null
   },
   "output": {
-    "summary": "An engraved acrylic sign with your club's name, about 12 inches wide.",
-    "question_ids": [],
+    "summary": "An engraved acrylic sign with a club name for a tabling booth.",
+    "question_ids": [
+      "demands"
+    ],
     "prefilled": [
+      {
+        "question_id": "size",
+        "option_ids": [
+          "shoebox"
+        ]
+      },
       {
         "question_id": "quantity",
         "option_ids": [
           "one"
-        ]
-      },
-      {
-        "question_id": "demands",
-        "option_ids": [
-          "looks"
         ]
       }
     ],

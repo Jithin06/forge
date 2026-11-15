@@ -22,6 +22,7 @@
     "check:m5": "tsx --env-file=.env.local scripts/check-m5.mts",
     "eval": "tsx --env-file=.env.local scripts/eval.mts",
     "check:live": "tsx --env-file=.env.local scripts/check-live-6-5.mts",
+    "check:quality": "tsx --env-file=.env.local scripts/check-plan-quality.mts",
     "results": "tsx --env-file=.env.local scripts/results.mts"
   },
   "dependencies": {

@@ -21,6 +21,8 @@ export const askOutputSchema = z.object({
 });
 export type AskOutput = z.infer<typeof askOutputSchema>;
 
+export const WAY_VERDICTS = ["offered", "left_out"] as const;
+
 const routeSchema = z.object({
   space_id: z.string().describe("A space id from the space documents"),
   equipment_ids: z.array(z.string()).max(6).describe("Equipment ids that belong to that space"),
@@ -45,13 +47,36 @@ export const planOutputSchema = z
   .object({
     summary: z.string().min(1).max(300).describe("One sentence: what the student is making"),
     needs: z.array(z.object({ capability: z.enum(CAPABILITIES), why: z.string().min(1).max(200) })).max(5),
-    routes: z.array(routeSchema).max(3).describe("1 to 3 real ways to build it"),
+    ways_considered: z
+      .array(
+        z.object({
+          space_id: z.string().describe("A space id from the space documents"),
+          process: z.string().min(1).max(200).describe("The way of building it, in a few plain words"),
+          verdict: z.enum(WAY_VERDICTS).describe('"offered" if it becomes a route, "left_out" if not'),
+          reason: z.string().min(1).max(200).describe("Why it is offered or left out"),
+        }),
+      )
+      .max(8)
+      .describe("Fill this first: every real way to build the idea across all spaces, before choosing routes"),
+    routes: z.array(routeSchema).max(3).describe("Up to 3 of the offered ways. Each differs from the others in space or in equipment"),
+    single_route_reason: z
+      .string()
+      .max(300)
+      .nullable()
+      .describe("Only when there is exactly one route: one plain sentence the student reads, saying why no second real way exists. Otherwise null"),
     clarifying_question: z.string().nullable().describe("Only if nothing useful can be said without it"),
     not_supported_reason: z.string().nullable().describe("When no space fits"),
   })
   .superRefine((p, ctx) => {
     if (p.routes.length === 0 && !p.clarifying_question && !p.not_supported_reason) {
       ctx.addIssue({ code: "custom", path: ["routes"], message: "give 1 to 3 routes, or a clarifying_question or not_supported_reason" });
+    }
+    if (p.routes.length === 1 && !p.single_route_reason?.trim()) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["single_route_reason"],
+        message: "there is one route, so single_route_reason must say in one sentence why no second real way exists; or add the second way as a route",
+      });
     }
     p.routes.forEach((r, i) =>
       r.materials.forEach((m, j) => {

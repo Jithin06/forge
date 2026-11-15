@@ -1,5 +1,5 @@
 import "server-only";
-import { groundPlan } from "../compute/grounding";
+import { groundPlan, missedSpaces } from "../compute/grounding";
 import type { Experience, SpaceDoc } from "../schemas";
 import { AIError, callTool, type ToolResult } from "./client";
 import { parseImage } from "./image";
@@ -43,6 +43,7 @@ export async function planBuild(
 
   const usage = { input_tokens: 0, output_tokens: 0 };
   let feedback: string[] = [];
+  let firstValid: PlanOutput | null = null;
   for (let attempt = 1; attempt <= 2; attempt++) {
     let res: ToolResult<PlanOutput>;
     try {
@@ -63,6 +64,7 @@ export async function planBuild(
         fixtureKey: attempt === 1 ? key : { ...key, retry: feedback },
       });
     } catch (e) {
+      if (firstValid) return { model: firstValid, spaces, usage, attempts: attempt, fixture: false };
       if (e instanceof AIError && e.code === "INVALID_OUTPUT" && attempt === 1) {
         feedback = e.details;
         console.warn(`plan retry, the answer did not match the expected shape: ${feedback.join("; ")}`);
@@ -74,7 +76,20 @@ export async function planBuild(
     usage.output_tokens += res.usage.output_tokens;
 
     const grounded = groundPlan(res.input, spaces);
-    if (grounded.ok) return { model: res.input, spaces, usage, attempts: attempt, fixture: res.fixture };
+    if (grounded.ok) {
+      // One nudge, first attempt only: a space with the same kind of equipment
+      // was passed over. The second answer stands whatever it decides.
+      const missed = attempt === 1 && !res.fixture ? missedSpaces(res.input, spaces) : [];
+      if (missed.length === 0) return { model: res.input, spaces, usage, attempts: attempt, fixture: res.fixture };
+      feedback = missed;
+      firstValid = res.input;
+      console.warn(`plan retry, a space with the same equipment was passed over: ${missed.join("; ")}`);
+      continue;
+    }
+    if (firstValid) {
+      // The nudged answer broke grounding; the first answer was valid, so keep it.
+      return { model: firstValid, spaces, usage, attempts: attempt, fixture: res.fixture };
+    }
     if (attempt === 2) {
       throw new AIError("INVALID_OUTPUT", "The plan referred to things that are not in the space data.", grounded.errors);
     }

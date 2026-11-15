@@ -10,6 +10,14 @@
         "why": "Most small objects can be printed in one piece"
       }
     ],
+    "ways_considered": [
+      {
+        "space_id": "bfms",
+        "process": "Print the object in one piece from plastic.",
+        "verdict": "offered",
+        "reason": "A real way to build it here."
+      }
+    ],
     "routes": [
       {
         "space_id": "bfms",
@@ -48,6 +56,7 @@
         "warnings": []
       }
     ],
+    "single_route_reason": "The idea asks for one specific process, and only this space lists the tool and the material for it.",
     "clarifying_question": null,
     "not_supported_reason": null
   }

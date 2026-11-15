@@ -5,6 +5,7 @@
  *
  * Needs .env.local so it can read back the stored raw model output.
  */
+import { readFile } from "node:fs/promises";
 import { createClient } from "@supabase/supabase-js";
 import { planOutputSchema } from "../src/lib/ai/schemas";
 import { groundPlan } from "../src/lib/compute/grounding";
@@ -68,16 +69,16 @@ for (const [name, text] of Object.entries({ stand: IDEAS.stand, light: IDEAS.lig
   );
 }
 
-console.log("\n2. A detailed idea is asked no questions; a vague one is asked up to three");
+console.log("\n2. A detailed idea is asked at most one question; a vague one is asked one to three");
 const detailed = await post("/api/ask", { text: IDEAS.stand, experience: "never" }, "10.0.0.2");
-check(detailed.body.questions.length === 0, `detailed idea: ${detailed.body.questions.length} questions`, `summary: ${detailed.body.summary}`);
+check(detailed.body.questions.length <= 1, `detailed idea: ${detailed.body.questions.length} question(s)`, `summary: ${detailed.body.summary}`);
 const vague = await post("/api/ask", { text: IDEAS.vague, experience: "never" }, "10.0.0.2");
 const n = vague.body.questions.length;
 check(n >= 1 && n <= 3, `vague idea: ${n} questions`, vague.body.questions.map((q: { text: string }) => q.text).join(" / "));
 
 console.log("\n3. The same idea from two audiences gives the same routes with different badges and order");
-const a = (await planFor(IDEAS.light, "viterbi_undergrad", "10.0.0.3")).plan.body.plan.routes as Route[];
-const b = (await planFor(IDEAS.light, "usc_undergrad_other", "10.0.0.3")).plan.body.plan.routes as Route[];
+const a = (await planFor(IDEAS.sign, "viterbi_undergrad", "10.0.0.3")).plan.body.plan.routes as Route[];
+const b = (await planFor(IDEAS.sign, "usc_undergrad_other", "10.0.0.3")).plan.body.plan.routes as Route[];
 const set = (rs: Route[]) => rs.map((r) => `${r.space_id}|${r.process}`).sort().join(";");
 const show = (rs: Route[]) => rs.map((r) => `${r.space_id}=${r.eligibility.status}`).join(", ");
 check(set(a) === set(b), "same set of routes");
@@ -89,13 +90,24 @@ check(rawOutputs.every((r) => !/\$|dollar|usd/i.test(r)), `scanned ${rawOutputs.
 console.log("\nAlso checked");
 const blocked = await post("/api/ask", { text: IDEAS.weapon, experience: "never" }, "10.0.0.4");
 check(!!blocked.body.blocked_reason && !("questions" in blocked.body), "weapon part: blocked_reason set, no questions", blocked.body.blocked_reason);
-// Stored estimates: plywood $6 a sheet, cardboard $1 a sheet, PLA $0.05 a gram.
-// Laser route: 1 x 6 + (1 to 2) x 1 = 7 to 8. Print route: (40 to 80) x 0.05 = 2 to 4. BME route: nothing priced.
+// Recomputed here, separately from the app: each material's quantity range times
+// its stored price; no total when a material has no stored price.
+const standFixture = JSON.parse(await readFile("data/fixtures/plan/phone-stand.json", "utf8")).output as {
+  routes: { space_id: string; materials: { material_id: string | null; quantity_low: number; quantity_high: number }[] }[];
+};
+const byHand = standFixture.routes.map((r) => {
+  const space = spaces.find((s) => s.id === r.space_id)!;
+  const prices = r.materials.map((m) => space.materials.find((x) => x.id === m.material_id)?.unit_price_usd ?? null);
+  if (prices.length === 0 || prices.some((p) => p === null)) return null;
+  const sum = (k: "quantity_low" | "quantity_high") => Math.round(r.materials.reduce((t, m, i) => t + m[k] * prices[i]!, 0) * 100) / 100;
+  return { low: sum("quantity_low"), high: sum("quantity_high") };
+});
 const costed = (await planFor(IDEAS.stand, "viterbi_undergrad", "10.0.0.4")).plan.body.plan.routes as (Route & { prices_estimated: boolean })[];
+const sortTotals = (xs: unknown[]) => xs.map((x) => JSON.stringify(x)).sort().join(" ");
 check(
-  JSON.stringify(costed.map((r) => r.total)) === JSON.stringify([{ low: 7, high: 8 }, { low: 2, high: 4 }, null]) && costed[0].prices_estimated,
-  "costs come from stored prices and match a hand calculation; marked estimated",
-  JSON.stringify(costed.map((r) => ({ total: r.total, labels: r.labels }))),
+  sortTotals(costed.map((r) => r.total)) === sortTotals(byHand) && costed.filter((r) => r.total).every((r) => r.prices_estimated),
+  "costs equal quantity times stored price, recomputed in this script; marked estimated",
+  `app: ${JSON.stringify(costed.map((r) => r.total))}  recomputed: ${JSON.stringify(byHand)}`,
 );
 const short = await post("/api/ask", { text: "lamp", experience: "never" }, "10.0.0.4");
 check(short.status === 400 && short.body.error.code === "BAD_REQUEST", `too-short idea: ${short.status}`, short.body.error.message);

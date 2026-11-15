@@ -50,6 +50,13 @@ export function PlanView({ data }: { data: PlanData }) {
       <Body>
         {data.fixture && <SampleBanner />}
 
+        {n === 1 && plan.single_route_reason && (
+          <div className="panel p-3">
+            <p className="font-bold">Why there is only one way</p>
+            <p>{plan.single_route_reason}</p>
+          </div>
+        )}
+
         {plan.none_open && (
           <div className="alert">
             <CircleAlert aria-hidden className="size-5" />
@@ -137,7 +144,10 @@ function RouteCard({ route: r, top, n, of, planId, spaceNames }: { route: FinalR
               {r.equipment.map((e) => (
                 <li key={e.id} className="flex items-center gap-2.5">
                   <span className="ico"><Wrench aria-hidden className="size-5" /></span>
-                  <b>{e.plain_name}</b>
+                  <div className="leading-[1.3]">
+                    <b>{e.name}</b>
+                    {e.explain !== false && e.plain_name !== e.name && <span className="block text-[15px]">{e.plain_name}</span>}
+                  </div>
                 </li>
               ))}
             </ul>

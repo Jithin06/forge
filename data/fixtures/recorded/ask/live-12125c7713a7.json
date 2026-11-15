@@ -1,0 +1,22 @@
+{
+  "call": "ask",
+  "recorded": {
+    "model": "gemini-3.5-flash-lite",
+    "at": "2026-11-15T05:25:02.929Z"
+  },
+  "key": {
+    "text": "something cool for my room",
+    "experience": "never",
+    "image": null
+  },
+  "output": {
+    "summary": "You want to make something cool to put in your room.",
+    "question_ids": [
+      "size",
+      "demands",
+      "quantity"
+    ],
+    "prefilled": [],
+    "blocked_reason": null
+  }
+}

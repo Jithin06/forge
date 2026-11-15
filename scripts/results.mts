@@ -45,6 +45,23 @@ if (existsSync("reports/eval-latest.json")) {
   out.push(`**Not run.** ${cases.cases.length} cases are written (${cases.status}). The eval runs only on a live model, with \`npm run eval\`, after the cases are reviewed.`, "");
 }
 
+// ---- plan quality on a live model
+out.push("## Plan quality on a live model", "");
+if (existsSync("reports/plan-quality.json")) {
+  const q = JSON.parse(readFileSync("reports/plan-quality.json", "utf8")) as { at: string; route_counts: Record<string, number>; checks: { check: string; ok: boolean }[] };
+  const passed = q.checks.filter((c) => c.ok).length;
+  out.push(
+    `- Last run of \`npm run check:quality\`: ${q.at}. ${passed} of ${q.checks.length} checks passed.`,
+    `- Routes per idea: ${Object.entries(q.route_counts).map(([k, v]) => `${k} ${v}`).join(", ") || "no plan came back"}.`,
+    ...q.checks.filter((c) => !c.ok).map((c) => `- Failed: ${c.check}.`),
+    "- Enforced by code on every plan: ids exist and belong to the route's space; no dollar amounts; no two routes with the same space and equipment; a single route must carry a stated reason; the ways the model marks as offered must each become a route.",
+    "- **Not enforced by code:** that steps and warnings do not tell the student how to operate a machine, and that they mention only equipment features found in the space data. These rest on the prompt and on the word-pattern check in `scripts/check-plan-quality.mts`, which reads live plans for three test ideas. Nothing removes such a sentence from a plan a student sees.",
+    "",
+  );
+} else {
+  out.push("**Not run.** `npm run check:quality` needs a live model.", "");
+}
+
 // ---- live AI usage
 out.push("## Live AI calls, tokens and cost per plan", "");
 const logPath = process.env.AI_CALL_LOG || "logs/ai-calls.jsonl";

@@ -4,10 +4,16 @@
   "school": "Sidney Harman Academy for Polymathic Study",
   "location": "Leavey Library, room 301",
   "official_url": "https://libraries.usc.edu/locations/leavey-library/rooms/lvl-301-ahmanson-lab",
-  "blurb": "A lab that offers technology, equipment, services and workshops to USC students, staff and faculty. Its official page does not list specific equipment, so ask the lab what it has.",
-  "capabilities": [],
+  "blurb": "A lab on the third floor of Leavey Library for experimentation and making, with workshops on design, digital authoring and physical computing. Its equipment page also lists desktop computers and laptops, virtual reality headsets, a drone, a depth camera, a 360 camera and an EEG headset. The page does not say how to borrow or book equipment, so ask the lab.",
+  "capabilities": [
+    "fdm_3d_printing",
+    "electronics",
+    "video_production",
+    "audio_recording",
+    "photography"
+  ],
   "hours": null,
-  "hours_note": "The official page lists 9 AM to 9 PM and does not say which days.",
+  "hours_note": "The Leavey Library page lists 9 AM to 9 PM and does not say which days. The lab's own site says staff hold regular lab hours for drop-ins, but lists no times.",
   "access": [
     {
       "audience": "viterbi_undergrad",
@@ -31,10 +37,101 @@
     }
   ],
   "access_steps": [
-    "Email the lab at lvy@usc.edu to ask what equipment and workshops it has."
+    "Email the lab at lvy@usc.edu to ask what you can use and when.",
+    "Staff hold regular lab hours so you can drop by and learn about 3D printing, microcontrollers and more. The times are not listed, so ask before you go.",
+    "The lab's own site sends questions to Curtis Fletcher at cfletche@usc.edu."
   ],
   "trainings": [],
-  "equipment": [],
+  "equipment": [
+    {
+      "id": "ultimaker_s5",
+      "name": "Ultimaker S5",
+      "capability": "fdm_3d_printing",
+      "plain_name": "3D printer",
+      "required_training_ids": [],
+      "staff_operated": null,
+      "work_area_note": "Dual extruder. Builds parts up to 13 x 9.4 x 11.8 in",
+      "good_for": [],
+      "not_for": []
+    },
+    {
+      "id": "arduino_kits",
+      "name": "Elegoo UNO Arduino starter kits",
+      "capability": "electronics",
+      "plain_name": "Small programmable circuit board kit",
+      "required_training_ids": [],
+      "staff_operated": null,
+      "work_area_note": null,
+      "good_for": [],
+      "not_for": []
+    },
+    {
+      "id": "raspberry_pi_kits",
+      "name": "CanaKit Raspberry Pi 3 B+ kits",
+      "capability": "electronics",
+      "plain_name": "Small computer kit for electronics projects",
+      "required_training_ids": [],
+      "staff_operated": null,
+      "work_area_note": null,
+      "good_for": [],
+      "not_for": []
+    },
+    {
+      "id": "sony_fx3",
+      "name": "Sony FX3 cinema camera with tripod, headphones and shotgun microphone",
+      "capability": "video_production",
+      "plain_name": "Video camera",
+      "required_training_ids": [],
+      "staff_operated": null,
+      "work_area_note": null,
+      "good_for": [],
+      "not_for": []
+    },
+    {
+      "id": "canon_t5i",
+      "name": "Canon EOS Rebel T5i DSLR camera with tripod",
+      "capability": "photography",
+      "plain_name": "Photo camera",
+      "required_training_ids": [],
+      "staff_operated": null,
+      "work_area_note": null,
+      "good_for": [],
+      "not_for": []
+    },
+    {
+      "id": "wireless_mics",
+      "name": "DJI Mic 2 and Wireless GO II wireless microphone systems",
+      "capability": "audio_recording",
+      "plain_name": "Wireless microphones",
+      "required_training_ids": [],
+      "staff_operated": null,
+      "work_area_note": null,
+      "good_for": [],
+      "not_for": []
+    },
+    {
+      "id": "studio_mics",
+      "name": "Audio-Technica AT2020 studio microphones (2) with boom arms and pop filters",
+      "capability": "audio_recording",
+      "plain_name": "Studio microphones",
+      "required_training_ids": [],
+      "staff_operated": null,
+      "work_area_note": null,
+      "good_for": [],
+      "not_for": []
+    },
+    {
+      "id": "audio_interface",
+      "name": "Behringer 4-channel USB audio interface",
+      "capability": "audio_recording",
+      "plain_name": "Audio interface (connects microphones to a computer)",
+      "required_training_ids": [],
+      "staff_operated": null,
+      "work_area_note": null,
+      "good_for": [],
+      "not_for": []
+    }
+  ],
   "materials": [],
   "services": [
     {
@@ -44,6 +141,10 @@
     {
       "name": "Workshops",
       "how_to_request": "Contact lvy@usc.edu"
+    },
+    {
+      "name": "Polymathic Making Workshops: hands-on workshops including 3D modeling and printing and generative visual coding, for a general audience, with no prior programming or technical skill needed",
+      "how_to_request": "See the workshop series on polymathic.usc.edu"
     }
   ],
   "usage_fee_note": null,
@@ -55,7 +156,10 @@
   },
   "source": {
     "urls": [
-      "https://libraries.usc.edu/locations/leavey-library/rooms/lvl-301-ahmanson-lab"
+      "https://libraries.usc.edu/locations/leavey-library/rooms/lvl-301-ahmanson-lab",
+      "https://polymathic.usc.edu/ahmanson-lab-equipment",
+      "https://polymathic.usc.edu/ahmanson-lab",
+      "https://polymathic.usc.edu/lab-space"
     ],
     "checked_on": "2026-11-14"
   },

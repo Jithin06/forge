@@ -157,9 +157,9 @@ async function geminiCall<T>(req: ToolCall<T>): Promise<Raw> {
       if ((e as Error).name === "TimeoutError") throw new AIError("TIMEOUT", "The model took too long to answer.");
       throw new AIError("PROVIDER", `Could not reach Gemini: ${(e as Error).message}`);
     }
-    if (res.status === 429) {
-      await logCall({ call: req.call, model, status: 429 });
-      continue; // rate limited: try the fallback model, which has its own quota
+    if (res.status === 429 || res.status >= 500) {
+      await logCall({ call: req.call, model, status: res.status });
+      continue; // rate limited or the model is overloaded: try the fallback model
     }
     const json = (await res.json().catch(() => null)) as GeminiResponse | null;
     const usage = {
@@ -185,7 +185,7 @@ async function geminiCall<T>(req: ToolCall<T>): Promise<Raw> {
       throw new AIError("INVALID_OUTPUT", "The model's answer was not valid JSON.", ["the answer must be one JSON object matching the schema"]);
     }
   }
-  throw new AIError("BUSY", "Both Gemini models are rate limited.");
+  throw new AIError("BUSY", "Both Gemini models are rate limited or overloaded.");
 }
 
 type GeminiResponse = {
@@ -287,11 +287,17 @@ export function fixtureHash(call: CallName, key: unknown): string {
 
 type FixtureFile = { call: CallName; key: unknown; output: unknown };
 let fixtureIndex: Map<string, unknown> | null = null;
+let fixtureByText: Map<string, unknown> | null = null;
+const textOf = (key: unknown): string | null => {
+  const t = (key as { text?: unknown } | null)?.text;
+  return typeof t === "string" ? t.trim() : null;
+};
 let defaults: Map<CallName, unknown> | null = null;
 
 async function loadFixtures() {
   if (fixtureIndex && defaults) return;
   const index = new Map<string, unknown>();
+  const byText = new Map<string, unknown>();
   const defs = new Map<CallName, unknown>();
   for (const call of ["ask", "plan", "scrap"] as const) {
     let files: string[] = [];
@@ -303,18 +309,30 @@ async function loadFixtures() {
     for (const f of files) {
       const data = JSON.parse(await readFile(path.join(FIXTURE_DIR, call, f), "utf8")) as FixtureFile;
       if (f === "default.json") defs.set(call, data.output);
-      else index.set(fixtureHash(call, data.key), data.output);
+      else {
+        index.set(fixtureHash(call, data.key), data.output);
+        const t = textOf(data.key);
+        if (t && !byText.has(`${call}\n${t}`)) byText.set(`${call}\n${t}`, data.output);
+      }
     }
   }
   fixtureIndex = index;
+  fixtureByText = byText;
   defaults = defs;
 }
 
-/** The recorded response for this exact input, or the call's default sample. */
+/**
+ * The recorded response for this exact input; failing that, the recording for
+ * the same idea text (so choosing a different tap answer still shows that
+ * idea's plan); failing that, the call's default sample.
+ */
 async function fixtureFor(call: CallName, key: unknown): Promise<unknown> {
   await loadFixtures();
   const hit = fixtureIndex!.get(fixtureHash(call, key));
   if (hit !== undefined) return structuredClone(hit);
+  const t = textOf(key);
+  const sameIdea = t ? fixtureByText!.get(`${call}\n${t}`) : undefined;
+  if (sameIdea !== undefined) return structuredClone(sameIdea);
   const def = defaults!.get(call);
   if (def === undefined) throw new AIError("NOT_CONFIGURED", `No fixture for "${call}"`);
   return structuredClone(def);

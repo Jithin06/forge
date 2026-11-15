@@ -1,0 +1,300 @@
+{
+  "idea": "An engraved acrylic sign with my club's name for our tabling booth, about 12 inches wide. We need one.",
+  "audience": "viterbi_undergrad",
+  "experience": "never",
+  "answers": {
+    "size": [
+      "shoebox"
+    ],
+    "quantity": [
+      "one"
+    ],
+    "demands": [
+      "not_sure"
+    ]
+  },
+  "attempts": 1,
+  "raw_model_output": {
+    "needs": [
+      {
+        "why": "To cut and engrave the acrylic sign.",
+        "capability": "laser_cutting"
+      }
+    ],
+    "routes": [
+      {
+        "steps": [
+          {
+            "title": "Design the sign",
+            "detail": "Draw your club name and sign outline in design software."
+          },
+          {
+            "title": "Take the training",
+            "detail": "Complete the required safety training for the laser cutter."
+          },
+          {
+            "title": "Ask staff for help",
+            "detail": "Ask the space staff to check your design file before cutting."
+          }
+        ],
+        "process": "Cut and engrave an acrylic sheet with a laser cutter",
+        "space_id": "bfms",
+        "warnings": [
+          {
+            "fix": "Use a clear, bold font for your club name.",
+            "issue": "Fine text might be hard to read when engraved."
+          }
+        ],
+        "materials": [
+          {
+            "unit": "sheet",
+            "category": "acrylic",
+            "material_id": "acrylic_sheet",
+            "quantity_low": 1,
+            "quantity_high": 1
+          }
+        ],
+        "fit_reason": "This space has the laser cutter and acrylic sheets you need.",
+        "equipment_ids": [
+          "laser_vls675"
+        ]
+      },
+      {
+        "steps": [
+          {
+            "title": "Design the sign",
+            "detail": "Create your club name layout in design software."
+          },
+          {
+            "title": "Take the training",
+            "detail": "Complete the required training for the laser cutter."
+          },
+          {
+            "title": "Ask staff for help",
+            "detail": "Ask the space staff to check your file and help you make the sign."
+          }
+        ],
+        "process": "Cut and engrave an acrylic sign using a laser cutter",
+        "space_id": "bme-innovation",
+        "warnings": [
+          {
+            "fix": "Ask staff what acrylic sheets to bring.",
+            "issue": "This space does not list materials."
+          }
+        ],
+        "materials": [
+          {
+            "unit": "sheet",
+            "category": "acrylic",
+            "material_id": null,
+            "quantity_low": 1,
+            "quantity_high": 1
+          }
+        ],
+        "fit_reason": "This space provides a laser cutter to make your sign.",
+        "equipment_ids": [
+          "bme_laser"
+        ]
+      }
+    ],
+    "summary": "An engraved acrylic sign for a club tabling booth.",
+    "ways_considered": [
+      {
+        "reason": "This space does not have a laser cutter.",
+        "process": "Laser cut acrylic sign",
+        "verdict": "left_out",
+        "space_id": "ahmanson-lab"
+      },
+      {
+        "reason": "The space has a laser cutter and acrylic sheets.",
+        "process": "Laser cut and engrave acrylic sheet",
+        "verdict": "offered",
+        "space_id": "bfms"
+      },
+      {
+        "reason": "The space has a laser cutter for acrylic.",
+        "process": "Laser cut acrylic sign",
+        "verdict": "offered",
+        "space_id": "bme-innovation"
+      },
+      {
+        "reason": "This space only has podcast studios.",
+        "process": "Laser cut acrylic sign",
+        "verdict": "left_out",
+        "space_id": "digital-creative-lab"
+      }
+    ],
+    "clarifying_question": null,
+    "single_route_reason": null,
+    "not_supported_reason": null
+  },
+  "computed_plan": {
+    "summary": "An engraved acrylic sign for a club tabling booth.",
+    "audience": "viterbi_undergrad",
+    "routes": [
+      {
+        "space_id": "bfms",
+        "space_name": "Baum Family Maker Space",
+        "space_location": "Ground floor, Science and Engineering Library",
+        "equipment": [
+          {
+            "id": "laser_vls675",
+            "name": "Universal VLS6.75 laser cutter",
+            "plain_name": "Laser cutter (cuts flat sheets precisely)",
+            "explain": true
+          }
+        ],
+        "process": "Cut and engrave an acrylic sheet with a laser cutter",
+        "fit_reason": "This space has the laser cutter and acrylic sheets you need.",
+        "steps": [
+          {
+            "title": "Design the sign",
+            "detail": "Draw your club name and sign outline in design software."
+          },
+          {
+            "title": "Take the training",
+            "detail": "Complete the required safety training for the laser cutter."
+          },
+          {
+            "title": "Ask staff for help",
+            "detail": "Ask the space staff to check your design file before cutting."
+          }
+        ],
+        "warnings": [
+          {
+            "issue": "Fine text might be hard to read when engraved.",
+            "fix": "Use a clear, bold font for your club name."
+          }
+        ],
+        "eligibility": {
+          "status": "ask_first",
+          "note": "The Maker Space says it is for Viterbi undergraduates. Confirm at the front desk."
+        },
+        "trainings": [
+          {
+            "id": "level_1",
+            "name": "Level 1: Orientation and safety",
+            "how_to_sign_up": null,
+            "restricted_to": null
+          }
+        ],
+        "cost_lines": [
+          {
+            "category": "acrylic",
+            "material_id": "acrylic_sheet",
+            "name": "Acrylic sheet (about 12 x 24 in)",
+            "quantity_low": 1,
+            "quantity_high": 1,
+            "unit": "sheet",
+            "unit_price_usd": 12,
+            "low_usd": 12,
+            "high_usd": 12
+          }
+        ],
+        "total": {
+          "low": 12,
+          "high": 12
+        },
+        "prices_estimated": true,
+        "scrap": [
+          []
+        ],
+        "with_scrap": {
+          "low": 12,
+          "high": 12
+        },
+        "labels": [
+          "easiest"
+        ]
+      },
+      {
+        "space_id": "bme-innovation",
+        "space_name": "BME Innovation Space",
+        "space_location": "Denney Research Building",
+        "equipment": [
+          {
+            "id": "bme_laser",
+            "name": "Laser cutter",
+            "plain_name": "Laser cutter (cuts flat sheets precisely)",
+            "explain": false
+          }
+        ],
+        "process": "Cut and engrave an acrylic sign using a laser cutter",
+        "fit_reason": "This space provides a laser cutter to make your sign.",
+        "steps": [
+          {
+            "title": "Design the sign",
+            "detail": "Create your club name layout in design software."
+          },
+          {
+            "title": "Take the training",
+            "detail": "Complete the required training for the laser cutter."
+          },
+          {
+            "title": "Ask staff for help",
+            "detail": "Ask the space staff to check your file and help you make the sign."
+          }
+        ],
+        "warnings": [
+          {
+            "issue": "This space does not list materials.",
+            "fix": "Ask staff what acrylic sheets to bring."
+          }
+        ],
+        "eligibility": {
+          "status": "ask_first",
+          "note": "BME-affiliated only"
+        },
+        "trainings": [
+          {
+            "id": "shop_safety",
+            "name": "General shop safety",
+            "how_to_sign_up": null,
+            "restricted_to": "BME-affiliated students, staff and faculty"
+          },
+          {
+            "id": "orientation",
+            "name": "Orientation",
+            "how_to_sign_up": null,
+            "restricted_to": "BME-affiliated students, staff and faculty"
+          },
+          {
+            "id": "laser_training",
+            "name": "Laser cutter training",
+            "how_to_sign_up": null,
+            "restricted_to": "BME-affiliated students, staff and faculty"
+          }
+        ],
+        "cost_lines": [
+          {
+            "category": "acrylic",
+            "material_id": null,
+            "name": "Acrylic",
+            "quantity_low": 1,
+            "quantity_high": 1,
+            "unit": "sheet",
+            "unit_price_usd": null,
+            "low_usd": null,
+            "high_usd": null
+          }
+        ],
+        "total": null,
+        "prices_estimated": true,
+        "scrap": [
+          []
+        ],
+        "with_scrap": null,
+        "labels": []
+      }
+    ],
+    "first_visit": [
+      "Go to Baum Family Maker Space, Ground floor, Science and Engineering Library. Listed hours: Monday to Friday 11 AM to 10 PM; Saturday 10 AM to 5 PM.",
+      "Take the Level 1 orientation and safety training. It lets you use the non-powered hand tools.",
+      "Take the training level for the tools you need: Level 2 for hand tools and handheld drills, Level 3 for power tools, Level 4 for electronics."
+    ],
+    "clarifying_question": null,
+    "not_supported_reason": null,
+    "single_route_reason": null,
+    "none_open": true
+  }
+}

@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { planOutputSchema } from "../ai/schemas";
 import { planFixture, pricedSpaces, seedSpaces, unpricedSpaces, PLAN_FIXTURES } from "../test-fixtures";
 import { routeCost, sameUnit, withScrapTotal } from "./cost";
 import { firstVisit, hoursSummary } from "./firstVisit";
@@ -271,5 +272,54 @@ describe("first visit", () => {
     expect(list[0]).toMatch(/^Go to BME Innovation Space, Denney Research Building\. Listed hours: Monday to Friday 9 AM to 5 PM\.$/);
     expect(list).toContain("Attend an orientation.");
     expect(list.at(-1)).toBe("Take Laser cutter training. Ask the staff how to sign up.");
+  });
+});
+
+describe("routes are real, different ways (Nov 15 rules)", () => {
+  it("two routes with the same space and the same equipment are refused", () => {
+    const plan = planFixture("phone-stand");
+    plan.routes[1] = { ...plan.routes[0], process: "The same way in other words." };
+    const r = groundPlan(plan, seedSpaces());
+    expect(r.ok).toBe(false);
+    if (!r.ok) expect(r.errors[0]).toMatch(/routes\[1\] uses the same space and the same equipment as routes\[0\]/);
+  });
+
+  it("a single route must say why there is no second way", () => {
+    const one = { ...planFixture("club-sign"), single_route_reason: null };
+    const parsed = planOutputSchema.safeParse(one);
+    expect(parsed.success).toBe(false);
+    expect(planOutputSchema.safeParse({ ...one, single_route_reason: "Only one space lists acrylic." }).success).toBe(true);
+  });
+
+  it("the reason reaches the student only when there is one route", () => {
+    const one = computeBase(planFixture("club-sign"), seedSpaces(), "viterbi_undergrad");
+    expect(one.single_route_reason).toBeTruthy();
+    const three = computeBase({ ...planFixture("phone-stand"), single_route_reason: "ignored" }, seedSpaces(), "viterbi_undergrad");
+    expect(three.single_route_reason).toBeNull();
+  });
+
+  it("ways marked offered must each become a route", () => {
+    const plan = planFixture("club-sign");
+    plan.ways_considered.push({ space_id: "bme-innovation", process: "Laser cut it at BME", verdict: "offered", reason: "It has a laser cutter." });
+    const r = groundPlan(plan, seedSpaces());
+    expect(r.ok).toBe(false);
+    if (!r.ok) expect(r.errors[0]).toMatch(/marks 2 ways as offered but there is 1 route/);
+    plan.ways_considered[1].verdict = "left_out";
+    expect(groundPlan(plan, seedSpaces())).toEqual({ ok: true });
+  });
+
+  it("a way considered at an unknown space is refused", () => {
+    const plan = planFixture("club-sign");
+    plan.ways_considered[0].space_id = "nowhere";
+    expect(groundPlan(plan, seedSpaces()).ok).toBe(false);
+  });
+
+  it("each tool's plain description is shown once per plan, where it first appears", () => {
+    const p = finalize(computeBase(planFixture("phone-stand"), seedSpaces(), "viterbi_undergrad"), []);
+    const flat = p.routes.flatMap((r) => r.equipment);
+    // Two laser cutters (Maker Space and BME) share one plain description.
+    const lasers = flat.filter((e) => e.plain_name === "Laser cutter (cuts flat sheets precisely)");
+    expect(lasers.map((e) => e.explain)).toEqual([true, false]);
+    expect(flat.filter((e) => e.explain).length).toBe(new Set(flat.map((e) => e.plain_name)).size);
   });
 });

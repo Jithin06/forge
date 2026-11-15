@@ -9,13 +9,14 @@ export function clone<T>(v: T): T {
   return structuredClone(v);
 }
 
-import phoneStand from "../../data/fixtures/plan/phone-stand.json";
-import nightLight from "../../data/fixtures/plan/night-light.json";
-import clubSign from "../../data/fixtures/plan/club-sign.json";
-import defaultPlan from "../../data/fixtures/plan/default.json";
+import phoneStand from "./test-data/plan-phone-stand.json";
+import nightLight from "./test-data/plan-night-light.json";
+import clubSign from "./test-data/plan-club-sign.json";
+import defaultPlan from "./test-data/plan-default.json";
 import { parseSpaceDoc, type SpaceDoc } from "./schemas";
 import { planOutputSchema, type PlanOutput } from "./ai/schemas";
 
+/** Hand-written plans with known quantities, so the arithmetic can be checked by hand. */
 export const PLAN_FIXTURES: Record<string, unknown> = {
   "phone-stand": phoneStand,
   "night-light": nightLight,

@@ -1,6 +1,6 @@
 {
   "status": "drafted by coder, awaiting Jithin's review",
-  "note": "Each case lists the space ids a knowledgeable person would accept as the TOP route for that student. An empty list means the right answer is no route at all. The accepted sets are the coder's judgment from the space documents; Jithin should correct them from what he knows of the spaces. Remember that code sorts routes that are open to the student ahead of ask-first ones, so the top route depends on the audience.",
+  "note": "Each case lists the space ids a knowledgeable person would accept as the TOP route for that student. An empty list means the right answer is no route at all. The accepted sets are the coder's judgment from the space documents; Jithin should correct them from what he knows of the spaces. Remember that code sorts routes that are open to the student ahead of ask-first ones, so the top route depends on the audience. Nov 15: the Ahmanson Lab now lists equipment from its own equipment page (a 3D printer, Arduino and Raspberry Pi kits, cameras, microphones) and is open to all four audiences, so it was added to the accepted set of three cases; see each case's why.",
   "spaces_at_time_of_writing": [
     "ahmanson-lab",
     "bfms",
@@ -62,9 +62,10 @@
       "audience": "viterbi_grad",
       "accept_space_ids": [
         "bfms",
-        "bme-innovation"
+        "bme-innovation",
+        "ahmanson-lab"
       ],
-      "why": "Electronics plus 3D printing; both spaces have both."
+      "why": "Electronics plus 3D printing; both spaces have both. Nov 15: the Ahmanson Lab's equipment page lists a 3D printer and Arduino and Raspberry Pi kits, and it is open to this student, so it is accepted too."
     },
     {
       "id": "pi-enclosure",
@@ -83,9 +84,10 @@
       "audience": "viterbi_undergrad",
       "accept_space_ids": [
         "bfms",
-        "bme-innovation"
+        "bme-innovation",
+        "ahmanson-lab"
       ],
-      "why": "3D printed or laser-cut box plus soldering."
+      "why": "3D printed or laser-cut box plus soldering. Nov 15: the Ahmanson Lab's equipment page lists a 3D printer and Arduino and Raspberry Pi kits, and it is open to this student, so it is accepted too."
     },
     {
       "id": "cardboard-model",
@@ -231,7 +233,7 @@
       "accept_space_ids": [
         "ahmanson-lab"
       ],
-      "why": "Non-engineering idea. The Ahmanson Lab's page offers technology, services and workshops to USC students; no other listed space offers workshops for a beginner outside engineering. Its equipment is not listed, so the right route says to ask its staff."
+      "why": "Non-engineering idea. Supported by a page opened on Nov 15: polymathic.usc.edu/ahmanson-lab says the lab runs hands-on workshops, including 3D modeling and printing, for a general audience with no prior programming or technical skill, and that staff hold lab hours for drop-ins. No other listed space offers workshops for a beginner outside engineering."
     },
     {
       "id": "podcast-and-sign",

@@ -2,7 +2,7 @@
   "call": "ask",
   "recorded": {
     "model": "gemini-3.5-flash-lite",
-    "at": "2026-11-15T02:37:41.843Z"
+    "at": "2026-11-15T05:23:53.708Z"
   },
   "key": {
     "text": "A small night light for my dorm desk with a warm LED inside and a 3D printed cover. Just one, about the size of my palm.",
@@ -10,9 +10,9 @@
     "image": null
   },
   "output": {
-    "summary": "You want to build a small desk night light with a warm LED and a 3D printed cover.",
+    "summary": "A small 3D printed night light for a dorm desk with a warm LED inside.",
     "question_ids": [
-      "deadline"
+      "demands"
     ],
     "prefilled": [
       {
@@ -25,12 +25,6 @@
         "question_id": "quantity",
         "option_ids": [
           "one"
-        ]
-      },
-      {
-        "question_id": "demands",
-        "option_ids": [
-          "electronics"
         ]
       }
     ],

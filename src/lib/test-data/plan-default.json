@@ -1,0 +1,63 @@
+{
+  "call": "plan",
+  "note": "Hand-written, for unit tests only. Fixture mode reads data/fixtures/.",
+  "key": null,
+  "output": {
+    "summary": "A small object you described, made from printed plastic.",
+    "needs": [
+      {
+        "capability": "fdm_3d_printing",
+        "why": "Most small objects can be printed in one piece"
+      }
+    ],
+    "ways_considered": [
+      {
+        "space_id": "bfms",
+        "process": "Print the object in one piece from plastic.",
+        "verdict": "offered",
+        "reason": "A real way to build it here."
+      }
+    ],
+    "routes": [
+      {
+        "space_id": "bfms",
+        "equipment_ids": [
+          "prusa_mk4"
+        ],
+        "process": "Print the object in one piece from plastic.",
+        "fit_reason": "3D printing (builds plastic parts layer by layer) is the easiest way to make a small first object. The printer does the hard part.",
+        "materials": [
+          {
+            "category": "pla_filament",
+            "material_id": "pla_filament",
+            "quantity_low": 20,
+            "quantity_high": 100,
+            "unit": "g"
+          }
+        ],
+        "steps": [
+          {
+            "title": "Find or draw a model",
+            "detail": "Search for a free model of something similar, or ask staff for help drawing a simple shape."
+          },
+          {
+            "title": "Take Level 1 training",
+            "detail": "Do the Level 1 orientation and safety training first."
+          },
+          {
+            "title": "Prepare the file",
+            "detail": "Ask staff to help you slice the model (turn it into printer instructions)."
+          },
+          {
+            "title": "Print and collect",
+            "detail": "Start the print, check the first layer sticks, and collect it when done."
+          }
+        ],
+        "warnings": []
+      }
+    ],
+    "single_route_reason": "The idea asks for one specific process, and only this space lists the tool and the material for it.",
+    "clarifying_question": null,
+    "not_supported_reason": null
+  }
+}

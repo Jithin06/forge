@@ -39,9 +39,13 @@ export type BasePlan = {
   first_visit: string[];
   clarifying_question: string | null;
   not_supported_reason: string | null;
+  /** Set when there is exactly one route: why no second real way exists. Absent on plans stored before Nov 15. */
+  single_route_reason?: string | null;
 };
 
-export type FinalRoute = BaseRoute & {
+export type FinalRoute = Omit<BaseRoute, "equipment"> & {
+  /** explain is true the first time a tool (or its plain description) appears in the plan. */
+  equipment: (BaseRoute["equipment"][number] & { explain: boolean })[];
   labels: Label[];
   scrap: ScrapItem[][]; // one list per cost line
   with_scrap: { low: number; high: number } | null;
@@ -104,6 +108,7 @@ export function computeBase(model: PlanOutput, spaces: SpaceDoc[], audience: Aud
     first_visit,
     clarifying_question: model.clarifying_question,
     not_supported_reason: model.not_supported_reason,
+    single_route_reason: ordered.length === 1 ? (model.single_route_reason?.trim() || null) : null,
   };
 }
 
@@ -122,9 +127,24 @@ export function finalize(base: BasePlan, availableScrap: ScrapItem[]): FinalPlan
     })),
   );
 
+  // Each tool's plain description is shown once per plan, where it first appears.
+  const explained = new Set<string>();
+  const once = (e: BaseRoute["equipment"][number]) => {
+    const keys = [e.id, e.plain_name.trim().toLowerCase()];
+    const explain = !keys.some((k) => explained.has(k));
+    keys.forEach((k) => explained.add(k));
+    return { ...e, explain };
+  };
+
   return {
     ...base,
-    routes: withScrap.map(({ r, scrap, with_scrap }, i) => ({ ...r, scrap, with_scrap, labels: labels[i] })),
+    routes: withScrap.map(({ r, scrap, with_scrap }, i) => ({
+      ...r,
+      equipment: r.equipment.map(once),
+      scrap,
+      with_scrap,
+      labels: labels[i],
+    })),
     none_open: base.routes.length > 0 && base.routes.every((r) => r.eligibility.status !== "open"),
   };
 }
