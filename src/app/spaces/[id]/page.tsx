@@ -223,7 +223,8 @@ function Section({ title, status, children }: { title: string; status: GroupStat
 
 function SpaceSkeleton() {
   return (
-    <div aria-busy="true" aria-label="Loading the space" className="space-y-4">
+    <div aria-busy="true" className="space-y-4">
+      <h1 className="sr-only">Loading this space</h1>
       <p className="text-gray-text">Loading this space...</p>
       <div className="h-10 w-2/3 animate-pulse rounded-lg bg-gold-soft" />
       <div className="h-24 animate-pulse rounded-xl border border-gray-line" />
