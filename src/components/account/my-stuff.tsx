@@ -5,7 +5,8 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { formatDate } from "@/lib/labels";
 import { Band, Body } from "@/components/page";
-import { PageSkeleton, SignInGate, primaryBtn, secondaryBtn } from "./gate";
+import { PageSkeleton, primaryBtn, secondaryBtn } from "./gate";
+import { ProfileSection } from "./profile-section";
 
 type Me = {
   profile: { email: string; display_name: string | null };
@@ -51,7 +52,21 @@ export function MyStuff() {
 
   if (state.status === "loading") return <PageSkeleton title="My stuff" />;
   if (state.status === "signed_out")
-    return <SignInGate title="My stuff" why="Sign in to see the plans you saved and the scrap you claimed." />;
+    return (
+      <>
+        <Band title="My stuff">
+          <p>You are not signed in. Your profile is kept in this browser.</p>
+        </Band>
+        <Body>
+          <ProfileSection />
+          <section aria-labelledby="keep-it" className="panel-free space-y-3 p-4">
+            <h2 id="keep-it" className="text-[22px] font-bold">Sign in to keep it</h2>
+            <p>Signed in, your profile is saved to your account and follows you to any device. You can also save plans and claim free scrap.</p>
+            <Link href="/sign-in?next=%2Fme" className={primaryBtn}>Sign in with your USC account</Link>
+          </section>
+        </Body>
+      </>
+    );
   if (state.status === "error")
     return (
       <>
@@ -73,6 +88,7 @@ export function MyStuff() {
         <p className="text-[16px] break-all">Signed in as {me.profile.email}</p>
       </Band>
       <Body>
+      <ProfileSection />
 
       <section aria-labelledby="my-plans" className="space-y-3">
         <h2 id="my-plans" className="text-[24px] font-bold tracking-[-0.01em]">My plans</h2>

@@ -10,7 +10,8 @@ import type { PlanView as PlanData } from "@/lib/plans";
 import { CopyLink } from "./copy-link";
 import { PlanClaim } from "./plan-claim";
 
-export function PlanView({ data }: { data: PlanData }) {
+/** `whoFor` is a line in the band saying whose badges these are. */
+export function PlanView({ data, whoFor }: { data: PlanData; whoFor?: React.ReactNode }) {
   const { plan } = data;
   const editHref = `/?from=${data.id}`;
 
@@ -46,6 +47,7 @@ export function PlanView({ data }: { data: PlanData }) {
       <Band title="Your plan" size="lg">
         <p>{plan.summary}</p>
         <p className="mt-1 font-semibold">{n === 1 ? "One way to build it." : `${n} ways to build it. The best fit for you is first.`}</p>
+        {whoFor}
       </Band>
       <Body>
         {data.fixture && <SampleBanner />}

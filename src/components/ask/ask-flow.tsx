@@ -1,10 +1,13 @@
 "use client";
 
-import { Camera, CircleAlert, X } from "lucide-react";
+import { Camera, CircleAlert, UserRound, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
-import { AudiencePicker, ExperiencePicker } from "@/components/about-you";
-import { useAudience, useExperience } from "@/components/profile-store";
+import Link from "next/link";
+import { ChoiceChips } from "@/components/choice-chips";
+import { saveProfile, useProfile } from "@/components/profile-store";
+import { AUDIENCE_LABELS, EXPERIENCE_LABELS } from "@/lib/labels";
+import { AUDIENCES, EXPERIENCES, type Audience, type Experience } from "@/lib/schemas";
 import { Band, Body, primaryBtn, secondaryBtn } from "@/components/page";
 import { SampleBanner } from "@/components/sample-banner";
 import type { Question, QuestionId } from "@/lib/ai/questions";
@@ -39,14 +42,15 @@ const DRAFT_KEY = "forge.draft";
 /** `below` is shown under the form only, not while asking questions or waiting. */
 export function AskFlow({ below }: { below?: React.ReactNode }) {
   const router = useRouter();
-  const [audience] = useAudience();
-  const [experience] = useExperience();
+  const profile = useProfile();
+  const { audience, experience } = profile;
+  const [justWelcomed, setJustWelcomed] = useState(false);
   const [text, setText] = useState("");
   const [image, setImage] = useState<string | null>(null);
   const [answers, setAnswers] = useState<Answers>({});
   const [step, setStep] = useState<Step>({ name: "form" });
   const [error, setError] = useState<string | null>(null);
-  const [fieldError, setFieldError] = useState<{ text?: string; about?: string; photo?: string }>({});
+  const [fieldError, setFieldError] = useState<{ text?: string; photo?: string }>({});
   const textId = useId();
   const errId = useId();
   const fileRef = useRef<HTMLInputElement>(null);
@@ -108,8 +112,8 @@ export function AskFlow({ below }: { below?: React.ReactNode }) {
 
   // Move focus to the new step's heading so keyboard and screen-reader users follow along.
   useEffect(() => {
-    if (step.name === "questions" || step.name === "blocked") headingRef.current?.focus();
-  }, [step.name]);
+    if (step.name === "questions" || step.name === "blocked" || justWelcomed) headingRef.current?.focus();
+  }, [step.name, justWelcomed]);
 
   async function post(path: string, body: unknown) {
     const res = await fetch(path, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
@@ -135,9 +139,8 @@ export function AskFlow({ below }: { below?: React.ReactNode }) {
     e.preventDefault();
     const errs: typeof fieldError = {};
     if (text.trim().length < 10) errs.text = "Tell us a bit more. One sentence is enough.";
-    if (!audience || !experience) errs.about = "Pick one option in each group below so we can check which spaces you can use.";
     setFieldError(errs);
-    if (errs.text || errs.about) return;
+    if (errs.text || !audience || !experience) return;
 
     setError(null);
     setStep({ name: "asking" });
@@ -223,9 +226,31 @@ export function AskFlow({ below }: { below?: React.ReactNode }) {
     );
   }
 
+  // Until we know whether a profile exists (this browser, or the account), show neither the welcome nor the form.
+  if (!profile.ready) {
+    return (
+      <div aria-busy="true">
+        <Band title="What do you want to make?" size="hero" overlap />
+        <Body overlap>
+          <div className="card space-y-3 p-4">
+            <p role="status" className="sr-only">Loading</p>
+            <div aria-hidden className="skeleton h-24 w-full" />
+            <div aria-hidden className="skeleton h-12 w-full" />
+          </div>
+        </Body>
+      </div>
+    );
+  }
+
+  // Asked once: the first time someone uses the app. Afterwards the answers
+  // are remembered (in the browser, or on the account) and edited in My stuff.
+  if (!audience || !experience) {
+    return <Welcome audience={audience} experience={experience} onDone={() => setJustWelcomed(true)} />;
+  }
+
   return (
     <>
-      <Band title="What do you want to make?" size="hero" overlap>
+      <Band title="What do you want to make?" size="hero" overlap headingRef={headingRef}>
         <p>Tell us in your own words. We find where at USC to build it, and what you can get for free.</p>
       </Band>
       <Body overlap>
@@ -281,11 +306,16 @@ export function AskFlow({ below }: { below?: React.ReactNode }) {
             {fieldError.photo && <FieldError>{fieldError.photo}</FieldError>}
           </div>
 
-          <section aria-label="About you" className="space-y-5 border-t-2 border-dashed border-black pt-4">
-            {fieldError.about && (!audience || !experience) && <FieldError>{fieldError.about}</FieldError>}
-            <AudiencePicker />
-            <ExperiencePicker />
-          </section>
+          <p className="flex flex-wrap items-center gap-x-2 border-t-2 border-dashed border-black pt-3">
+            <UserRound aria-hidden className="size-5 shrink-0" />
+            <span>
+              <span className="sr-only">Your profile: </span>
+              {AUDIENCE_LABELS[audience]}, {lowerFirst(EXPERIENCE_LABELS[experience])}
+            </span>
+            <Link href="/me#profile" className="link inline-flex min-h-11 items-center">
+              Change<span className="sr-only"> your profile</span>
+            </Link>
+          </p>
 
           {error && (
             <div role="alert" className="alert">
@@ -301,6 +331,37 @@ export function AskFlow({ below }: { below?: React.ReactNode }) {
       </Body>
       {below}
     </>
+  );
+}
+
+const lowerFirst = (t: string) => t.charAt(0).toLowerCase() + t.slice(1);
+
+/** The one-time welcome step: who you are and what you have done before. */
+function Welcome({ audience, experience, onDone }: { audience: Audience | null; experience: Experience | null; onDone: () => void }) {
+  const [a, setA] = useState<Audience | null>(audience);
+  const [x, setX] = useState<Experience | null>(experience);
+  const [missing, setMissing] = useState(false);
+  const submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!a || !x) return setMissing(true);
+    onDone();
+    void saveProfile({ audience: a, experience: x });
+  };
+  return (
+    <section>
+      <Band title="Welcome to Forge" size="hero" overlap>
+        <p>Tell us what you want to make and we show where at USC to build it. First, two quick things about you.</p>
+      </Band>
+      <Body overlap>
+        <form onSubmit={submit} noValidate className="card space-y-5 p-4">
+          <ChoiceChips name="welcome-audience" legend="I am a..." hint="So we can check which spaces you can use." options={AUDIENCES} labels={AUDIENCE_LABELS} value={a} onChange={setA} />
+          <ChoiceChips name="welcome-experience" legend="I have..." hint="So the plan starts at your level." options={EXPERIENCES} labels={EXPERIENCE_LABELS} value={x} onChange={setX} />
+          {missing && (!a || !x) && <FieldError>Pick one option in each group to continue.</FieldError>}
+          <button type="submit" className={cn(primaryBtn, "w-full")}>Continue to my idea</button>
+          <p className="text-[15px] text-gray-text">We ask this once. You can change it any time in My stuff.</p>
+        </form>
+      </Body>
+    </section>
   );
 }
 

@@ -23,6 +23,7 @@ export async function GET(request: Request) {
     { id: user.id, email: user.email!.toLowerCase() },
     {
       displayName: (user.user_metadata?.full_name as string | undefined) ?? null,
+      name: url.searchParams.get("name"),
       audience: url.searchParams.get("audience"),
       experience: url.searchParams.get("experience"),
       next,

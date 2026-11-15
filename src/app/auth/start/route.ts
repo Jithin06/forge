@@ -9,7 +9,7 @@ export async function GET(request: Request) {
 
   const callback = new URL("/auth/callback", url.origin);
   callback.searchParams.set("next", next);
-  for (const k of ["audience", "experience"]) {
+  for (const k of ["audience", "experience", "name"]) {
     const v = url.searchParams.get(k);
     if (v) callback.searchParams.set(k, v);
   }

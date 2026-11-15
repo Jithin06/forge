@@ -5,7 +5,7 @@ import { routeCost, sameUnit, withScrapTotal } from "./cost";
 import { firstVisit, hoursSummary } from "./firstVisit";
 import { groundPlan } from "./grounding";
 import { assignLabels } from "./labels";
-import { computeBase, finalize } from "./plan";
+import { computeBase, finalize, forAudience } from "./plan";
 import { matchScrap, type ScrapItem } from "./scrapMatch";
 import { trainingsFor } from "./training";
 
@@ -321,5 +321,26 @@ describe("routes are real, different ways (Nov 15 rules)", () => {
     const lasers = flat.filter((e) => e.plain_name === "Laser cutter (cuts flat sheets precisely)");
     expect(lasers.map((e) => e.explain)).toEqual([true, false]);
     expect(flat.filter((e) => e.explain).length).toBe(new Set(flat.map((e) => e.plain_name)).size);
+  });
+});
+
+describe("the same plan seen by another audience (profile change)", () => {
+  it("gives exactly what a plan made for that audience would give", () => {
+    const model = planFixture("night-light");
+    for (const from of ["viterbi_undergrad", "usc_grad_other"] as const) {
+      for (const to of ["viterbi_undergrad", "viterbi_grad", "usc_undergrad_other", "usc_grad_other"] as const) {
+        const moved = forAudience(computeBase(model, seedSpaces(), from), seedSpaces(), to, model.routes);
+        expect(moved, `${from} -> ${to}`).toEqual(computeBase(model, seedSpaces(), to));
+      }
+    }
+  });
+
+  it("changes badges and order only; steps, materials and costs stay", () => {
+    const model = planFixture("night-light");
+    const a = computeBase(model, pricedSpaces(), "viterbi_undergrad");
+    const b = forAudience(a, pricedSpaces(), "usc_grad_other", model.routes);
+    const strip = (rs: typeof a.routes) => rs.map((r) => ({ ...r, eligibility: null })).sort((x, y) => x.space_id.localeCompare(y.space_id));
+    expect(strip(b.routes)).toEqual(strip(a.routes));
+    expect(b.routes.map((r) => r.eligibility.status)).not.toEqual(a.routes.map((r) => r.eligibility.status));
   });
 });

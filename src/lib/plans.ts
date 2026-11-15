@@ -1,11 +1,12 @@
 import "server-only";
 import { randomBytes } from "node:crypto";
 import type { Answers, PlanOutput } from "./ai/schemas";
-import { finalize, type BasePlan, type FinalPlan } from "./compute/plan";
+import { finalize, forAudience, type BasePlan, type FinalPlan } from "./compute/plan";
 import type { ScrapItem } from "./compute/scrapMatch";
 import { db } from "./db";
 import type { Audience, Experience } from "./schemas";
 import { listAvailable } from "./scrap";
+import { getSpaces } from "./spaces";
 
 export type StoredPlan = { base: BasePlan; model: PlanOutput; fixture: boolean; attempts: number };
 
@@ -64,8 +65,13 @@ export type PlanView = {
   created_at: string;
 };
 
-/** A stored plan with fresh scrap matches, labels and with-scrap totals. */
-export async function getPlan(id: string): Promise<PlanView | null> {
+/**
+ * A stored plan with fresh scrap matches, labels and with-scrap totals.
+ * With `audience`, badges and order are worked out for that audience instead
+ * of the one the plan was made for (the student changed their profile, or
+ * someone else opened the link).
+ */
+export async function getPlan(id: string, audience?: Audience): Promise<PlanView | null> {
   if (!/^[A-Za-z0-9]{6,20}$/.test(id)) return null;
   const { data, error } = await db()
     .from("plans")
@@ -80,7 +86,10 @@ export async function getPlan(id: string): Promise<PlanView | null> {
     idea_text: data.idea_text,
     answers: data.answers as Answers,
     experience: data.experience as Experience,
-    plan: finalize(stored.base, await availableScrap()),
+    plan: finalize(
+      audience && audience !== stored.base.audience ? forAudience(stored.base, await getSpaces(), audience, stored.model?.routes) : stored.base,
+      await availableScrap(),
+    ),
     fixture: stored.fixture,
     created_at: data.created_at,
   };

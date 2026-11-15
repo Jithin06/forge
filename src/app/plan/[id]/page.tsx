@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { Band, Body } from "@/components/page";
-import { PlanView } from "@/components/plan/plan-view";
+import { PlanForMe } from "@/components/plan/plan-for-me";
 import { getPlan } from "@/lib/plans";
 
 export const metadata: Metadata = { title: "Your plan" };
@@ -19,7 +19,7 @@ async function PlanData({ params }: { params: PageProps<"/plan/[id]">["params"] 
   const { id } = await params;
   const data = await getPlan(id);
   if (!data) notFound();
-  return <PlanView data={data} />;
+  return <PlanForMe initial={data} />;
 }
 
 function PlanSkeleton() {

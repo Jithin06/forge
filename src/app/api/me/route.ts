@@ -1,6 +1,8 @@
-import { NO_STORE } from "@/lib/api";
+import { z } from "zod";
+import { NO_STORE, apiError, readJson, zodMessage } from "@/lib/api";
 import { requireUser, staffSpaceIds } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { AUDIENCES, EXPERIENCES } from "@/lib/schemas";
 
 export async function GET() {
   const user = await requireUser();
@@ -31,4 +33,32 @@ export async function GET() {
     },
     { headers: NO_STORE },
   );
+}
+
+const profilePatch = z
+  .object({
+    display_name: z.string().trim().min(1, "Type a name, or leave it as it was.").max(60, "Keep the name under 60 characters.").optional(),
+    audience: z.enum(AUDIENCES).optional(),
+    experience: z.enum(EXPERIENCES).optional(),
+  })
+  .refine((b) => Object.values(b).some((v) => v !== undefined), "Nothing to change.");
+
+/** The signed-in user edits their own profile: name, "I am a..." and "I have...". */
+export async function PATCH(request: Request) {
+  const user = await requireUser();
+  if (user instanceof Response) return user;
+  const parsed = profilePatch.safeParse(await readJson(request));
+  if (!parsed.success) return apiError(400, "BAD_REQUEST", zodMessage(parsed.error.issues));
+
+  const changes = Object.fromEntries(Object.entries(parsed.data).filter(([, v]) => v !== undefined));
+  const { data, error } = await db()
+    .from("profiles")
+    .upsert({ user_id: user.id, email: user.email, ...changes }, { onConflict: "user_id" })
+    .select("email, display_name, audience, experience")
+    .single();
+  if (error) {
+    console.error("profile update failed:", error.message);
+    return apiError(500, "SAVE_FAILED", "We could not save your profile. Please try again.");
+  }
+  return Response.json({ profile: data }, { headers: NO_STORE });
 }

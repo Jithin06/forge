@@ -3,7 +3,7 @@
 import { CircleAlert, FlaskConical } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Band, Body } from "@/components/page";
-import { useAudience, useExperience } from "@/components/profile-store";
+import { profileForSignIn } from "@/components/profile-store";
 import { useSession } from "./use-session";
 
 const NOT_USC = "Forge is for USC accounts. Use your @usc.edu Google account.";
@@ -13,13 +13,20 @@ const secondaryBtn = "btn btn-plain w-full sm:w-auto";
 /** The test picker shows only when the running server says it is in test mode. */
 export function SignInPanel() {
   const mode = useSession()?.auth_mode ?? null;
-  const [audience] = useAudience();
-  const [experience] = useExperience();
   const [params, setParams] = useState<{ next: string; error: string | null }>({ next: "/", error: null });
+  // A profile edited in this browser while signed out goes along, so signing in keeps it.
+  const [carry, setCarry] = useState<{ name?: string; audience?: string; experience?: string }>({});
   useEffect(() => {
     const q = new URLSearchParams(window.location.search);
-    Promise.resolve().then(() => setParams({ next: q.get("next") || "/", error: q.get("error") }));
+    Promise.resolve().then(() => {
+      setParams({ next: q.get("next") || "/", error: q.get("error") });
+      setCarry(profileForSignIn());
+    });
   }, []);
+  const carried = Object.entries(carry)
+    .filter(([, v]) => v)
+    .map(([k, v]) => `&${k}=${encodeURIComponent(v!)}`)
+    .join("");
 
   const why = params.next.startsWith("/scrap")
     ? "Sign in to claim free scrap. It keeps claims to real USC students."
@@ -45,7 +52,7 @@ export function SignInPanel() {
         <p role="status" className="text-gray-text">Loading...</p>
       ) : mode === "google" ? (
         <a
-          href={`/auth/start?next=${encodeURIComponent(params.next)}${audience ? `&audience=${audience}` : ""}${experience ? `&experience=${experience}` : ""}`}
+          href={`/auth/start?next=${encodeURIComponent(params.next)}${carried}`}
           className={primaryBtn}
         >
           Sign in with Google
@@ -68,8 +75,9 @@ export function SignInPanel() {
               <form key={persona} method="post" action="/auth/test">
                 <input type="hidden" name="persona" value={persona} />
                 <input type="hidden" name="next" value={params.next} />
-                <input type="hidden" name="audience" value={audience ?? ""} />
-                <input type="hidden" name="experience" value={experience ?? ""} />
+                <input type="hidden" name="name" value={carry.name ?? ""} />
+                <input type="hidden" name="audience" value={carry.audience ?? ""} />
+                <input type="hidden" name="experience" value={carry.experience ?? ""} />
                 <button type="submit" className={cls}>{label}</button>
               </form>
             ))}

@@ -89,24 +89,31 @@ export async function requireStaff(spaceId: string | null | undefined): Promise<
 // ------------------------------------------- what happens at sign-in
 /**
  * Runs after identity is established, in both modes: create the profile on
- * first sign-in (copying the browser's audience and experience), and attach
- * the plan that was open, if it has no owner yet.
+ * first sign-in, carry over a profile edited in the browser while signed out,
+ * and attach the plan that was open, if it has no owner yet.
  */
 export async function afterSignIn(
   user: SessionUser,
-  opts: { displayName?: string | null; audience?: string | null; experience?: string | null; next: string },
+  opts: { displayName?: string | null; name?: string | null; audience?: string | null; experience?: string | null; next: string },
 ) {
+  // What the person chose in this browser before signing in, if anything.
+  const audience = AUDIENCES.includes(opts.audience as Audience) ? (opts.audience as Audience) : null;
+  const experience = EXPERIENCES.includes(opts.experience as Experience) ? (opts.experience as Experience) : null;
+  const name = opts.name?.trim().slice(0, 60) || null;
+
   const { data: profile } = await db().from("profiles").select("user_id").eq("user_id", user.id).maybeSingle();
   if (!profile) {
-    const audience = AUDIENCES.includes(opts.audience as Audience) ? (opts.audience as Audience) : null;
-    const experience = EXPERIENCES.includes(opts.experience as Experience) ? (opts.experience as Experience) : null;
     await db().from("profiles").insert({
       user_id: user.id,
       email: user.email,
-      display_name: opts.displayName ?? user.email.split("@")[0],
+      display_name: name ?? opts.displayName ?? user.email.split("@")[0],
       audience,
       experience,
     });
+  } else {
+    // Signing in keeps a profile edited while signed out: those choices are the newest.
+    const changes = { ...(name ? { display_name: name } : {}), ...(audience ? { audience } : {}), ...(experience ? { experience } : {}) };
+    if (Object.keys(changes).length) await db().from("profiles").update(changes).eq("user_id", user.id);
   }
   const planId = /^\/plan\/([A-Za-z0-9]{6,20})/.exec(opts.next)?.[1];
   if (planId) {

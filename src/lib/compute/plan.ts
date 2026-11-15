@@ -112,6 +112,41 @@ export function computeBase(model: PlanOutput, spaces: SpaceDoc[], audience: Aud
   };
 }
 
+/**
+ * The same stored plan, seen by a different audience: badges, order and the
+ * first-visit list are worked out again from the space data. Routes, steps,
+ * materials and costs are not touched. `modelOrder` is the order the model
+ * gave the routes in, so the result matches a plan made for that audience.
+ */
+export function forAudience(
+  base: BasePlan,
+  spaces: SpaceDoc[],
+  audience: Audience,
+  modelOrder: { space_id: string; process: string }[] = [],
+): BasePlan {
+  if (audience === base.audience) return base;
+  const byId = new Map(spaces.map((s) => [s.id, s]));
+  const original = (r: BaseRoute) => {
+    const i = modelOrder.findIndex((m) => m.space_id === r.space_id && m.process === r.process);
+    return i < 0 ? Number.MAX_SAFE_INTEGER : i;
+  };
+  const routes = base.routes
+    .map((r, i) => {
+      const space = byId.get(r.space_id);
+      return { r: space ? { ...r, eligibility: eligibility(space, audience) } : r, i, o: original(r) };
+    })
+    .sort((a, b) => eligibilityRank(a.r.eligibility.status) - eligibilityRank(b.r.eligibility.status) || a.o - b.o || a.i - b.i)
+    .map(({ r }) => r);
+  const top = routes[0];
+  const topSpace = top ? byId.get(top.space_id) : undefined;
+  return {
+    ...base,
+    audience,
+    routes,
+    first_visit: top && topSpace ? firstVisit(topSpace, trainingsFor(topSpace, top.equipment.map((e) => e.id))) : base.first_visit,
+  };
+}
+
 export function finalize(base: BasePlan, availableScrap: ScrapItem[]): FinalPlan {
   const withScrap = base.routes.map((r) => {
     const scrap = matchScrap(r.cost_lines, r.space_id, availableScrap);

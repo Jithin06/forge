@@ -22,7 +22,7 @@ export async function POST(request: Request) {
   const id = await ensureAuthUser(p.email);
   await afterSignIn(
     { id, email: p.email },
-    { displayName: p.name, audience: String(form.get("audience") ?? ""), experience: String(form.get("experience") ?? ""), next },
+    { displayName: p.name, name: String(form.get("name") ?? ""), audience: String(form.get("audience") ?? ""), experience: String(form.get("experience") ?? ""), next },
   );
   if (p.staffOf) {
     await db().from("staff_members").upsert({ email: p.email, space_id: p.staffOf }, { ignoreDuplicates: true });
