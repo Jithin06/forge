@@ -18,12 +18,11 @@ export type AskResult =
     };
 type Usage = { input_tokens: number; output_tokens: number };
 
-export async function askFollowUps(input: {
-  text: string;
-  experience: Experience;
-  image?: string;
-}): Promise<AskResult> {
-  const { json } = await spaceContext();
+export async function askFollowUps(
+  input: { text: string; experience: Experience; image?: string },
+  deps: { context?: () => Promise<{ json: string }> } = {},
+): Promise<AskResult> {
+  const { json } = await (deps.context ?? spaceContext)();
   const image = parseImage(input.image);
   const key = { text: input.text.trim(), experience: input.experience, image: image?.sha256 ?? null };
   const system = askSystem(json);

@@ -60,3 +60,17 @@ All seven are my guesses, saved with `price_source: "coder estimate, unverified"
 ### 8. Makerspace access, trainings and first-visit details
 - **What:** access for each of the four audiences (all four are still "Ask first"), which training each machine really needs (I assumed Level 1 for the printers and the laser cutter), how to sign up for each level, and how long each takes.
 - **Where:** `access`, `equipment[].required_training_ids`, `trainings[].how_to_sign_up` and `duration_note` in `data/spaces/bfms.json`.
+
+## Proof
+
+### 9. Review the eval cases
+- **What:** `data/eval-cases.json` has 15 cases I drafted. For each, `accept_space_ids` is the set of spaces I think a knowledgeable person would accept as the top route. Correct them from what you know, then change `"status"` at the top of the file to say you reviewed them.
+- **Why:** the spec says you write these. Until you review them the score is checked against my judgment, and `RESULTS.md` says so.
+
+### 10. Once the Gemini key is in (item 1), run these in order
+1. `AI_PROVIDER=gemini RECORD_FIXTURES=1 AUTH_MODE=test PORT=3123 npm start` (leave running)
+2. `BASE=http://localhost:3123 npm run check:m2b` (about 10 calls)
+3. `BASE=http://localhost:3123 npm run check:live` (about 8 calls)
+4. `BASE=http://localhost:3123 npm run eval` (15 to 30 calls)
+5. `npm run results` (rewrites `RESULTS.md` with the eval score and tokens per plan)
+- Or tell me the key is in and I will run them and fix whatever the first real responses turn up. `logs/ai-calls.jsonl` shows the running count; the budget stops calls at 150.

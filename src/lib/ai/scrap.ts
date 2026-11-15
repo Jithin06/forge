@@ -24,7 +24,11 @@ export type DraftResult =
 type Usage = { input_tokens: number; output_tokens: number };
 
 /** Draft a scrap listing from a staff photo. Nothing is listed automatically. */
-export async function describeScrap(input: { image: string; space: SpaceDoc; note?: string }): Promise<DraftResult> {
+export async function describeScrap(
+  input: { image: string; space: SpaceDoc; note?: string },
+  deps: { call?: typeof callTool<ScrapOutput> } = {},
+): Promise<DraftResult> {
+  const call = deps.call ?? callTool<ScrapOutput>;
   const image = parseImage(input.image);
   if (!image) throw new AIError("INVALID_OUTPUT", "No readable photo.");
   const never = input.space.scrap_policy.never_offer;
@@ -39,7 +43,7 @@ export async function describeScrap(input: { image: string; space: SpaceDoc; not
   let feedback: string[] = [];
   for (let attempt = 1; attempt <= 2; attempt++) {
     try {
-      const res = await callTool({
+      const res = await call({
         call: "scrap",
         system: SYSTEM,
         messages: [{ role: "user", content: feedback.length ? `${base}\n\nYour previous answer had problems:\n- ${feedback.join("\n- ")}` : base }],

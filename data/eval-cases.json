@@ -1,0 +1,295 @@
+{
+  "status": "drafted by coder, awaiting Jithin's review",
+  "note": "Each case lists the space ids a knowledgeable person would accept as the TOP route for that student. An empty list means the right answer is no route at all. The accepted sets are the coder's judgment from the space documents; Jithin should correct them from what he knows of the spaces.",
+  "spaces_at_time_of_writing": [
+    "bfms",
+    "bme-innovation"
+  ],
+  "cases": [
+    {
+      "id": "phone-stand-wood",
+      "idea": "A small wooden stand that holds my phone at an angle on my desk. Fits in my hand. I need one.",
+      "answers": {
+        "size": [
+          "hand"
+        ],
+        "quantity": [
+          "one"
+        ],
+        "demands": [
+          "looks"
+        ]
+      },
+      "audience": "viterbi_undergrad",
+      "accept_space_ids": [
+        "bfms"
+      ],
+      "why": "Laser-cut plywood or a 3D print; both at the Maker Space."
+    },
+    {
+      "id": "club-sign-acrylic",
+      "idea": "An engraved acrylic sign with our club's name, about 12 inches wide, for a tabling booth. One sign.",
+      "answers": {
+        "quantity": [
+          "one"
+        ],
+        "demands": [
+          "looks"
+        ]
+      },
+      "audience": "usc_undergrad_other",
+      "accept_space_ids": [
+        "bfms"
+      ],
+      "why": "Laser cutting. BME is not open to a non-Viterbi student, so the Maker Space must be first."
+    },
+    {
+      "id": "night-light",
+      "idea": "A palm-sized night light for my dorm desk with a warm LED inside and a 3D printed cover. Just one.",
+      "answers": {
+        "size": [
+          "hand"
+        ],
+        "quantity": [
+          "one"
+        ],
+        "demands": [
+          "electronics"
+        ]
+      },
+      "audience": "viterbi_grad",
+      "accept_space_ids": [
+        "bfms",
+        "bme-innovation"
+      ],
+      "why": "Electronics plus 3D printing; both spaces have both."
+    },
+    {
+      "id": "pi-enclosure",
+      "idea": "A small box to hold a Raspberry Pi and a temperature sensor I will solder to it. Shoebox size or smaller, one of them.",
+      "answers": {
+        "size": [
+          "shoebox"
+        ],
+        "quantity": [
+          "one"
+        ],
+        "demands": [
+          "electronics"
+        ]
+      },
+      "audience": "viterbi_undergrad",
+      "accept_space_ids": [
+        "bfms",
+        "bme-innovation"
+      ],
+      "why": "3D printed or laser-cut box plus soldering."
+    },
+    {
+      "id": "cardboard-model",
+      "idea": "A cardboard scale model of a building for my architecture studio, cut from flat sheets. About backpack size.",
+      "answers": {
+        "size": [
+          "backpack"
+        ],
+        "quantity": [
+          "one"
+        ],
+        "demands": [
+          "looks"
+        ]
+      },
+      "audience": "usc_grad_other",
+      "accept_space_ids": [
+        "bfms"
+      ],
+      "why": "Laser-cut cardboard; only the Maker Space lists cardboard, and BME is not open to this student."
+    },
+    {
+      "id": "tiny-figurine",
+      "idea": "A very detailed miniature figurine about 2 inches tall for a board game. I need fine detail on the face.",
+      "answers": {
+        "size": [
+          "hand"
+        ],
+        "quantity": [
+          "one"
+        ],
+        "demands": [
+          "looks"
+        ]
+      },
+      "audience": "viterbi_undergrad",
+      "accept_space_ids": [
+        "bfms"
+      ],
+      "why": "Fine detail points to the resin printer, which only the Maker Space lists."
+    },
+    {
+      "id": "plant-shelf",
+      "idea": "A simple wooden shelf for three small plants that hangs on my wall. About two feet long. It has to hold their weight.",
+      "answers": {
+        "size": [
+          "backpack"
+        ],
+        "quantity": [
+          "one"
+        ],
+        "demands": [
+          "weight"
+        ]
+      },
+      "audience": "usc_undergrad_other",
+      "accept_space_ids": [
+        "bfms"
+      ],
+      "why": "Wood cut with power tools or the laser cutter at the Maker Space."
+    },
+    {
+      "id": "metal-bracket",
+      "idea": "A small aluminum bracket to mount a light on my bike. It has to hold weight and survive rain.",
+      "answers": {
+        "size": [
+          "hand"
+        ],
+        "quantity": [
+          "one"
+        ],
+        "demands": [
+          "weight",
+          "outdoors"
+        ]
+      },
+      "audience": "viterbi_undergrad",
+      "accept_space_ids": [
+        "bfms",
+        "bme-innovation"
+      ],
+      "why": "Metalworking: both spaces list a machine shop. A strong 3D print at the Maker Space is also acceptable."
+    },
+    {
+      "id": "bme-grip",
+      "idea": "A prototype handle grip for a medical device for my biomedical engineering class project. Palm sized, a few copies.",
+      "answers": {
+        "size": [
+          "hand"
+        ],
+        "quantity": [
+          "few"
+        ],
+        "demands": [
+          "weight"
+        ]
+      },
+      "audience": "viterbi_undergrad",
+      "accept_space_ids": [
+        "bme-innovation",
+        "bfms"
+      ],
+      "why": "3D printing; either space."
+    },
+    {
+      "id": "long-part",
+      "idea": "One plastic part about 30 inches long that has to be made in a single piece, not glued together.",
+      "answers": {
+        "size": [
+          "bigger"
+        ],
+        "quantity": [
+          "one"
+        ],
+        "demands": [
+          "weight"
+        ]
+      },
+      "audience": "viterbi_undergrad",
+      "accept_space_ids": [
+        "bfms"
+      ],
+      "why": "Only the Stratasys F900 at the Maker Space lists a build area that long."
+    },
+    {
+      "id": "face-shield",
+      "idea": "A clear face shield visor cut from a thin flat sheet of clear plastic, sized to fit my head.",
+      "answers": {
+        "size": [
+          "backpack"
+        ],
+        "quantity": [
+          "one"
+        ],
+        "demands": [
+          "looks"
+        ]
+      },
+      "audience": "viterbi_grad",
+      "accept_space_ids": [
+        "bfms"
+      ],
+      "why": "Laser-cut PETG sheet at the Maker Space."
+    },
+    {
+      "id": "guitar-pedal",
+      "idea": "I have a guitar effects pedal kit and need to solder the parts onto the circuit board and test it.",
+      "answers": {
+        "size": [
+          "hand"
+        ],
+        "quantity": [
+          "one"
+        ],
+        "demands": [
+          "electronics"
+        ]
+      },
+      "audience": "usc_grad_other",
+      "accept_space_ids": [
+        "bfms"
+      ],
+      "why": "Soldering. BME is not open to this student, so the Maker Space must be first."
+    },
+    {
+      "id": "keychains",
+      "idea": "Twenty small wooden keychains with our team logo engraved, to give away at an event.",
+      "answers": {
+        "size": [
+          "hand"
+        ],
+        "quantity": [
+          "many"
+        ],
+        "demands": [
+          "looks"
+        ]
+      },
+      "audience": "viterbi_undergrad",
+      "accept_space_ids": [
+        "bfms"
+      ],
+      "why": "Laser cutting many small flat pieces."
+    },
+    {
+      "id": "podcast",
+      "idea": "I want to record a podcast episode with two friends and need microphones and a quiet room.",
+      "answers": {},
+      "audience": "viterbi_undergrad",
+      "accept_space_ids": [],
+      "why": "No listed space has audio recording. The right answer is no route, with a reason."
+    },
+    {
+      "id": "tote-bag",
+      "idea": "I want to sew a canvas tote bag with a zipper pocket.",
+      "answers": {
+        "size": [
+          "backpack"
+        ],
+        "quantity": [
+          "one"
+        ]
+      },
+      "audience": "usc_undergrad_other",
+      "accept_space_ids": [],
+      "why": "No listed space has sewing equipment. The right answer is no route, with a reason."
+    }
+  ]
+}
