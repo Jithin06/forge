@@ -14,10 +14,12 @@
     "test": "vitest run",
     "check:seed": "tsx --env-file=.env.local scripts/check-seed.mts",
     "check:m2": "tsx --env-file=.env.local scripts/check-m2.mts",
-    "check:m2b": "tsx --env-file=.env.local scripts/check-m2b.mts"
+    "check:m2b": "tsx --env-file=.env.local scripts/check-m2b.mts",
+    "check:m3": "tsx --env-file=.env.local scripts/check-m3.mts"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",
+    "@supabase/ssr": "^0.12.7",
     "@supabase/supabase-js": "^2.119.0",
     "class-variance-authority": "^0.7.1",
     "cn": "^0.5.2",

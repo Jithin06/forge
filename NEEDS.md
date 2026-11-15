@@ -15,3 +15,19 @@ Each item says what, why, and exactly where to put it. Newest blockers first.
 - **What:** in Vercel, Settings, Environment Variables, set `AI_PROVIDER=gemini`, `GEMINI_MODEL_PRIMARY=gemini-3.5-flash-lite`, `GEMINI_MODEL_FALLBACK=gemini-3.1-flash-lite`, and confirm `GEMINI_API_KEY` is there. Redeploy.
 - **Why:** I cannot change settings in your Vercel account. Until then the live site keeps showing sample data with the banner.
 - **Note:** on Vercel the call count is per server instance and only in the logs, because its file system is read-only. My own 150-call budget is counted in `logs/ai-calls.jsonl` on this machine.
+
+## Sign-in
+
+### 3. Turn test sign-in on for the live site (optional, until Google is ready)
+- **What:** in Vercel, add `AUTH_MODE=test` and redeploy.
+- **Why:** without it the live site is in Google mode, and "Sign in" leads to a Google flow that is not set up, so it fails. With it, anyone visiting can sign in as the test student or test staff. A gold banner says so on every page.
+- **Remove it** as soon as Google sign-in works.
+
+### 4. M3b: real Google sign-in
+1. Google Cloud Console, APIs and Services, Credentials: create an OAuth client of type "Web application".
+2. Authorized redirect URI: `https://xjruxfndvqlzvamlndqn.supabase.co/auth/v1/callback`.
+3. OAuth consent screen: set the audience so any Google user can sign in ("In production", External), not only listed test users. Otherwise only you can sign in during judging.
+4. Supabase, Authentication, Sign In / Providers, Google: turn it on and paste the client ID and client secret there (not in chat, not in the repo).
+5. Supabase, Authentication, URL Configuration: Site URL `https://forge-beta-hazel.vercel.app`; add redirect URLs `https://forge-beta-hazel.vercel.app/auth/callback` and `http://localhost:3000/auth/callback`.
+6. Set `AUTH_MODE=google` in `.env.local` and in Vercel, then tell me to "Do M3b". I will run the four M3 checks with your real `@usc.edu` account and a personal Google account, and confirm the picker and banner are gone.
+- **If it is not working within 30 minutes,** the spec's fallback is Supabase's email one-time code for `@usc.edu` addresses.

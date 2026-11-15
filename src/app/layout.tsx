@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Source_Sans_3 } from "next/font/google";
+import { TestBanner } from "@/components/account/test-banner";
 import { SiteHeader } from "@/components/site-header";
 import { TabBar } from "@/components/tab-bar";
 import "./globals.css";
@@ -32,6 +33,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         >
           Skip to content
         </a>
+        <TestBanner />
         <SiteHeader />
         <main id="main" className="mx-auto w-full max-w-[680px] flex-1 px-4 py-6">
           {children}

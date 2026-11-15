@@ -1,6 +1,7 @@
 import { planBuild } from "@/lib/ai/plan";
 import { planBodySchema } from "@/lib/ai/schemas";
 import { NO_STORE, aiFailure, apiError, rateLimited, readJson, zodMessage } from "@/lib/api";
+import { currentUser } from "@/lib/auth";
 import { computeBase, finalize } from "@/lib/compute/plan";
 import { availableScrap, savePlan } from "@/lib/plans";
 
@@ -31,6 +32,7 @@ export async function POST(request: Request) {
     had_image: !!body.image,
     stored: { base, model: built.model, fixture: built.fixture, attempts: built.attempts },
     usage: built.usage,
+    user_id: (await currentUser())?.id ?? null, // a plan made while signed in goes to "My stuff"
   });
   const plan = finalize(base, await availableScrap());
   return Response.json({ id, plan, fixture: built.fixture }, { status: 201, headers: NO_STORE });

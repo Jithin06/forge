@@ -3,9 +3,40 @@
 import { Suspense } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { UserRound } from "lucide-react";
+import { UserRound, Wrench } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useSession } from "./account/use-session";
 import { NAV_TABS, isActive } from "./nav-tabs";
+
+/** Top right: "Sign in" when signed out, "My stuff" when signed in, plus "Staff" for staff. */
+function AccountLinks({ pathname }: { pathname: string }) {
+  const session = useSession();
+  const link = "flex min-h-11 items-center gap-1.5 rounded-lg px-2 text-black";
+  if (!session) return <span className="min-h-11 w-20" aria-hidden />;
+  if (!session.user) {
+    const next = pathname && pathname !== "/sign-in" ? `?next=${encodeURIComponent(pathname)}` : "";
+    return (
+      <Link href={`/sign-in${next}`} className={link}>
+        <UserRound aria-hidden className="size-5" />
+        Sign in
+      </Link>
+    );
+  }
+  return (
+    <span className="flex items-center gap-1">
+      {session.staff_space_ids.length > 0 && (
+        <Link href="/staff" className={link}>
+          <Wrench aria-hidden className="size-5" />
+          Staff
+        </Link>
+      )}
+      <Link href="/me" className={link}>
+        <UserRound aria-hidden className="size-5" />
+        My stuff
+      </Link>
+    </span>
+  );
+}
 
 function SiteHeaderLive() {
   return <SiteHeaderView pathname={usePathname()} />;
@@ -53,13 +84,7 @@ function SiteHeaderView({ pathname }: { pathname: string }) {
             })}
           </ul>
         </nav>
-        <Link
-          href="/me"
-          className="flex min-h-11 items-center gap-1.5 rounded-lg px-2 text-black"
-        >
-          <UserRound aria-hidden className="size-5" />
-          My stuff
-        </Link>
+        <AccountLinks pathname={pathname} />
       </div>
     </header>
   );
