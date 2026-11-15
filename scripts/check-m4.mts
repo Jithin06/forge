@@ -74,7 +74,7 @@ try {
   const anonUpload = await createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!).storage.from("scrap-photos").upload(`bfms/x-${Date.now()}.txt`, new Blob(["x"]));
   check(!!anonUpload.error, "the public key still cannot upload a photo");
 
-  console.log("\n5. A new plan needing that material shows it as Free with scrap, and the with-scrap total drops");
+  console.log("\n5. A new plan needing that material shows it as a possible free piece, and the with-scrap total (computed, not shown) drops");
   const after = await standPlan();
   check(
     before.scrap[0].length === 0 && after.scrap[0].some((s) => s.id === pub.body.item.id) && after.with_scrap.low < before.with_scrap.low && after.total.low === before.total.low,

@@ -1,9 +1,18 @@
 import "server-only";
-import { EXPERIENCE_LABELS } from "../labels";
 import { TYPICAL_PRICES } from "../typical-prices";
 import type { Experience, SpaceDoc } from "../schemas";
 import { getSpaces } from "../spaces";
 import { QUESTIONS, QUESTION_IDS } from "./questions";
+
+/**
+ * How each experience level is described to the model. Kept apart from the
+ * labels on screen, so rewording a chip never changes what the model reads.
+ */
+export const EXPERIENCE_FOR_MODEL: Record<Experience, string> = {
+  never: "Never built anything",
+  basic_tools: "Used basic tools",
+  workshop: "Comfortable in a workshop",
+};
 
 /**
  * What the model sees of each space. Access and prices are left out on
@@ -130,7 +139,7 @@ export function ideaMessage(opts: {
     "<<<",
     opts.text,
     ">>>",
-    `Experience: ${EXPERIENCE_LABELS[opts.experience]}`,
+    `Experience: ${EXPERIENCE_FOR_MODEL[opts.experience]}`,
     ...(opts.answers?.length ? ["Their answers:", ...opts.answers.map((a) => `- ${a}`)] : []),
     opts.hasImage ? "A photo or sketch is attached." : "No photo.",
   ].join("\n");

@@ -339,9 +339,9 @@ The model does **not** output eligibility, trainings, prices, labels or scrap. I
 2. **Eligibility.** Attach `open`, `ask_first` or `not_open`, with the note, from the space's `access` for this audience.
 3. **Trainings.** The union of `required_training_ids` for the route's equipment, plus prerequisites. Attach each training's `how_to_sign_up`.
 4. **Cost.** For each material with a price, multiply by low and high quantity; sum to a range. Materials without a price are listed as "ask staff for the price". If the space's `prices` status is `estimated`, the range is shown as "about $X to $Y, estimated prices". If nothing is priced, show no dollar figure.
-5. **Scrap matches.** For each material, find `available` scrap in the same category, preferring the route's own space. Show at most 2 per material. A matched material is shown as "Free with scrap" and counts as $0 in the route's "with scrap" total.
+5. **Scrap matches.** For each material, find `available` scrap in the same category, preferring the route's own space. Show at most 2 per material. The match is by kind of material only, never by size, so the plan does not promise a saving: a matched material is shown as "May be free with scrap", and the route's cost stays the price of the materials new, followed by "Could cost less with free scrap. Check the piece is big enough." A "with scrap" total (matched materials counted as $0) is still computed and stored with the plan, but it is not shown.
 6. **Ordering.** `open` routes first, then `ask_first`, then `not_open`.
-7. **Labels.** Among routes that are not `not_open`: "Cheapest" goes to the lowest with-scrap low cost, only if at least two routes have a cost. "Easiest for a first build" goes to the fewest trainings, ties broken by `open` over `ask_first`. One route may hold both. With a single route, show no labels.
+7. **Labels.** Among routes that are not `not_open`: "Cheapest" goes to the lowest low cost as shown, without scrap, only if at least two routes have a cost; a price from the general typical-price table cannot win it. "Easiest for a first build" goes to the fewest trainings, ties broken by `open` over `ask_first`. One route may hold both. With a single route, show no labels.
 8. **First visit.** Build the "Your first visit" checklist for the top route from the space's `access_steps`, its trainings and its hours.
 
 ### 6.4 `describeScrap`
@@ -414,7 +414,7 @@ Navigation: bottom tab bar on phones (Build, Spaces, Scrap) and an account butto
 | Cardinal | `#990000` | Primary buttons, links, key headings |
 | Cardinal pressed | `#7A0000` | Hover and pressed states |
 | Gold | `#FFCC00` | Highlights and badges; never text on white |
-| Gold soft | `#FFF2BF` | "Free with scrap" and "Cheapest" rows |
+| Gold soft | `#FFF2BF` | "May be free with scrap" and "Cheapest" rows |
 | Black | `#000000` | Text |
 | White | `#FFFFFF` | Page and cards |
 | Gray text | `#767676` | Secondary text, input borders |
@@ -518,7 +518,7 @@ Build: `describeScrap`; staff draft, publish and status routes; the Post scrap a
 - [ ] A race script fires 5 simultaneous claims from 5 users at one item: exactly 1 succeeds.
 - [ ] A fourth active claim by one user returns `TOO_MANY_CLAIMS`.
 - [ ] An item past its hold shows as available again.
-- [ ] A new plan needing that material shows the item as "Free with scrap", and its with-scrap total drops.
+- [ ] A new plan needing that material shows the item as "May be free with scrap" with "Claim", and shows no with-scrap dollar figure.
 - [ ] Publishing in a `never_offer` category is refused.
 - [ ] "Picked up" raises the impact counter by one.
 

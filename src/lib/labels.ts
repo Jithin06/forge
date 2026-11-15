@@ -3,14 +3,14 @@ import type { AccessStatus, Audience, Capability, Experience, MaterialCategory, 
 export const AUDIENCE_LABELS: Record<Audience, string> = {
   viterbi_undergrad: "Viterbi undergrad",
   viterbi_grad: "Viterbi grad student",
-  usc_undergrad_other: "Other USC undergrad",
-  usc_grad_other: "Other USC grad student",
+  usc_undergrad_other: "USC undergraduate (not Viterbi)",
+  usc_grad_other: "USC graduate (not Viterbi)",
 };
 
 export const EXPERIENCE_LABELS: Record<Experience, string> = {
   never: "Never built anything",
   basic_tools: "Used basic tools",
-  workshop: "Comfortable in a workshop",
+  workshop: "Worked in a workshop",
 };
 
 export const CAPABILITY_LABELS: Record<Capability, string> = {

@@ -257,7 +257,8 @@ export function finalize(base: BasePlan, availableScrap: ScrapItem[]): FinalPlan
   const labels = assignLabels(
     withScrap.map(({ r, with_scrap }) => ({
       status: r.eligibility.status,
-      // A typical price from the general table cannot win "Cheapest".
+      // "Cheapest" follows the price on screen, without scrap. A typical price from the general table cannot win it.
+      shownLow: r.typical_from ? null : (r.total?.low ?? null),
       withScrapLow: r.typical_from ? null : (with_scrap?.low ?? null),
       trainingCount: r.trainings.length,
       staffMade: r.kind === "staff_fabrication",

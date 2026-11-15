@@ -329,7 +329,7 @@ function Typical({ basis }: { basis: string }) {
   return <p className="mt-1 text-[14px] text-gray-text">Not from this space&apos;s page: {basis}.</p>;
 }
 
-/** Lines for audiences that pay a different price, e.g. "Other USC undergrad: $5.00 per cubic inch". */
+/** Lines for audiences that pay a different price, e.g. "USC undergraduate (not Viterbi): $5.00 per cubic inch". */
 function otherPrices(m: Material): string[] {
   const special = m.price_by_audience;
   if (!special) return [];

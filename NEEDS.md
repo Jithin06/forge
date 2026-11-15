@@ -39,9 +39,9 @@ The `ai_usage` table exists in your Supabase project (checked Nov 15), so the li
 
 ### 5b. Sample scrap is in the bin: what is left for you
 Ten sample items made from generated photos are published at the Maker Space (see `reports/sample-scrap.md`). The "$0" total, the Sample tag and the five listing fixes are done.
-- **The deck still shows the old wording.** `deck/assets/plan-cost.png` and its alt text in `deck/index.html` show "$0 with free scrap". I did not touch the deck. Say if you want the screenshot retaken.
-- **SPEC.md still describes the old behaviour** (section on scrap matches, and the M4 checklist line "its with-scrap total drops"). The number is still computed and still decides "Cheapest"; it is just no longer shown.
-- **A material line still reads "Free with scrap"** above a matched piece. You asked only about the total, so I left it.
+- **A staff-made 3D print is matched to the PLA samples.** In the night light plan, the Maker Space work order's print charge shows "May be free with scrap" beside the failed prints and the near-empty spool. A work order's charge cannot be paid with scrap. This comes from how scrap is matched (by category), which I was told not to change. Ways out: remove the two PLA sample items in the staff portal, or tell me to stop matching scrap to a work order's charge.
+- **The deck edits are not committed.** `deck/` already held uncommitted changes that are not mine, in the same files, so I left all of `deck/` uncommitted. My changes there: `assets/plan-cost.png` retaken, its alt text, one sentence in `notes.md`, item 1 and one table row in `deck/NEEDS.md`, one row in `deck/CHANGES.md`, and `out/` rebuilt.
+- **The two Viterbi chips still read "Viterbi undergrad" and "Viterbi grad student"**, next to "USC undergraduate (not Viterbi)". Say if you want them spelled out too.
 - **Before real use, remove the samples:** `KEEP_SAMPLES=0 npm run clean:test`. Without that setting the cleanup keeps them.
 
 ### 6. Confirm the scrap lists in the portal

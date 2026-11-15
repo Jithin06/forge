@@ -119,6 +119,14 @@ describe("labels", () => {
   it("gives no labels to a single route", () => {
     expect(assignLabels([{ status: "open", withScrapLow: 3, trainingCount: 1 }])).toEqual([[]]);
   });
+  it("Cheapest follows the shown price, not the with-scrap price", () => {
+    expect(
+      assignLabels([
+        { status: "open", shownLow: 12, withScrapLow: 0, trainingCount: 2 },
+        { status: "open", shownLow: 8, withScrapLow: 8, trainingCount: 1 },
+      ]),
+    ).toEqual([[], ["cheapest", "easiest"]]);
+  });
   it("cheapest needs two costed routes; easiest breaks ties by open", () => {
     expect(
       assignLabels([
@@ -205,14 +213,20 @@ describe("whole plan", () => {
     expect(plan.routes[2].cost_lines[0].typical).toBe(true);
   });
 
-  it("scrap makes a matched material free and can move the Cheapest label", () => {
+  it("scrap never moves the Cheapest label: it follows the price shown, without scrap", () => {
     const base = computeBase(planFixture("phone-stand"), pricedSpaces(), "viterbi_undergrad");
+    const without = finalize(base, []);
     const plan = finalize(base, [scrap("ply1", "bfms", "plywood"), scrap("card1", "bfms", "cardboard_paper")]);
     expect(plan.routes[0].total).toEqual({ low: 10.5, high: 11.5 });
+    // Still computed, no longer shown, and no longer decides a tag.
     expect(plan.routes[0].with_scrap).toEqual({ low: 0, high: 0 });
-    // Free with scrap makes the laser route cheapest; the staff-made print is still the easiest.
-    expect(plan.routes[0].labels).toEqual(["cheapest"]);
-    expect(plan.routes[1].labels).toEqual(["easiest"]);
+    expect(plan.routes.map((r) => r.labels)).toEqual(without.routes.map((r) => r.labels));
+    expect(plan.routes[0].labels).not.toContain("cheapest");
+    // The cheapest tag sits on the route with the lowest shown price.
+    const tagged = plan.routes.find((r) => r.labels.includes("cheapest"))!;
+    const priced = plan.routes.filter((r) => r.total && !r.typical_from && r.eligibility.status !== "not_open");
+    expect(tagged.total!.low).toBe(Math.min(...priced.map((r) => r.total!.low)));
+    expect(plan.routes[1].labels).toContain("easiest");
   });
 
   it("same idea, two audiences: same routes, different badges and order", () => {

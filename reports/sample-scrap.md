@@ -78,3 +78,13 @@ Wording and data only. No live calls. How plans and scrap matches are made did n
 4. **Check at 390 px**, sample-data mode, production build: club sign plan shows $12, the new sentence, no "$0", and both pieces tagged; phone stand plan shows the pine piece tagged; Scrap tab shows 10 cards, each tagged, no sideways scroll. `npm test`: 131 of 131. Typecheck and lint clean. The screenshots in `reports/sample-scrap/` are the new ones.
 
 Left alone, for you to decide: the material line above a matched piece still reads "Free with scrap"; the deck's plan-cost screenshot still shows "$0"; SPEC.md still describes the with-scrap total.
+
+## Last cleanup and the ask-screen wording (Nov 15, morning)
+No live calls. Routes and badges did not change.
+
+1. **Material line:** a matched material now reads "May be free with scrap".
+2. **"Cheapest":** computed from the low price the student sees, without scrap. Checked against every recorded plan (7 ideas x 4 audiences = 28 plans, with today's scrap bin) before and after: route order, badges and tags are identical in all 28, and in the deck's stored plan. No recorded plan carries a "Cheapest" tag either way. The with-scrap cost still breaks the last tie for "Easiest", as before.
+3. **Deck:** `deck/assets/plan-cost.png` retaken from the deck's club sign plan (`RRFvTqmeZR`); alt text fixed; the "drops to zero" sentence in the speaker notes reworded; deck rebuilt. No "$0" is left in the deck's pages, notes or documents.
+4. **SPEC.md:** the scrap-match step, the label rule, the color table row and the M4 checklist line now describe what the app does.
+5. **Ask screen:** "Worked in a workshop"; "USC undergraduate (not Viterbi)" and "USC graduate (not Viterbi)". The same labels show everywhere those levels appear. Stored values are unchanged. The model is still told "Comfortable in a workshop": its wording now lives in `EXPERIENCE_FOR_MODEL`, apart from the chip labels, with a test.
+6. **Checks:** `npm test` 136 of 136; typecheck and lint clean. At 390 px: both plans show "May be free with scrap", the Sample tags and no "$0"; every chip is one line, none wider than the screen ("I am a..." is one chip per line; "I have..." is two lines).

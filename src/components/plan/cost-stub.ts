@@ -6,6 +6,9 @@ import { moneyRange } from "@/lib/format";
  */
 export const SCRAP_TOTAL_NOTE = "Could cost less with free scrap. Check the piece is big enough.";
 
+/** Shown on a material line that a free piece matches. "May", because the match is by kind, not size. */
+export const MAY_BE_FREE = "May be free with scrap";
+
 type StubRoute = {
   total: { low: number; high: number } | null;
   typical_from?: string | null;

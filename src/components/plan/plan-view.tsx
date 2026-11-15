@@ -7,7 +7,7 @@ import { Swatch } from "@/components/swatch";
 import type { FinalRoute } from "@/lib/compute/plan";
 import { moneyRange, quantity } from "@/lib/format";
 import { isSample } from "@/lib/sample";
-import { SCRAP_TOTAL_NOTE, costStub } from "./cost-stub";
+import { MAY_BE_FREE, SCRAP_TOTAL_NOTE, costStub } from "./cost-stub";
 import type { PlanView as PlanData } from "@/lib/plans";
 import { CopyLink } from "./copy-link";
 import { PlanClaim } from "./plan-claim";
@@ -234,7 +234,7 @@ function RouteCard({ route: r, top, n, of, planId, spaceNames }: { route: FinalR
                         <b>{l.name}</b>, {quantity(l.quantity_low, l.quantity_high, l.unit)}
                         <span className={free.length > 0 ? "block text-[15px] font-bold" : "block text-[15px] text-gray-text"}>
                           {free.length > 0
-                            ? "Free with scrap"
+                            ? MAY_BE_FREE
                             : l.low_usd !== null && l.high_usd !== null
                               ? costText(l, !!r.bring_your_own)
                               : r.bring_your_own && !l.material_id

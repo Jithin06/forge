@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { isSample, SAMPLE_LINE } from "@/lib/sample";
-import { SCRAP_TOTAL_NOTE, costStub } from "./cost-stub";
+import { MAY_BE_FREE, SCRAP_TOTAL_NOTE, costStub } from "./cost-stub";
 
 const priced = { total: { low: 12, high: 12 }, typical_from: null, prices_estimated: true };
 
@@ -22,6 +22,9 @@ describe("the cost stub never shows a with-scrap dollar figure", () => {
   });
   it("has no figure at all when nothing is priced", () => {
     expect(costStub({ total: null, typical_from: null, prices_estimated: true }, true)).toBeNull();
+  });
+  it("a matched material line says may, not is", () => {
+    expect(MAY_BE_FREE).toBe("May be free with scrap");
   });
   it("the sentence is the agreed one", () => {
     expect(SCRAP_TOTAL_NOTE).toBe("Could cost less with free scrap. Check the piece is big enough.");
