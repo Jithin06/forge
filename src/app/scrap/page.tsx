@@ -1,12 +1,8 @@
 import type { Metadata } from "next";
+import { ScrapBin } from "@/components/scrap/scrap-bin";
 
-export const metadata: Metadata = { title: "Scrap" };
+export const metadata: Metadata = { title: "Free scrap" };
 
 export default function ScrapPage() {
-  return (
-    <section className="space-y-3">
-      <h1 className="text-[28px] font-bold">Free scrap</h1>
-      <p>Leftover material that spaces are giving away. Claim a piece and pick it up.</p>
-    </section>
-  );
+  return <ScrapBin />;
 }

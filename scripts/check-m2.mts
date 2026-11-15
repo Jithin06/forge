@@ -89,8 +89,14 @@ check(rawOutputs.every((r) => !/\$|dollar|usd/i.test(r)), `scanned ${rawOutputs.
 console.log("\nAlso checked");
 const blocked = await post("/api/ask", { text: IDEAS.weapon, experience: "never" }, "10.0.0.4");
 check(!!blocked.body.blocked_reason && !("questions" in blocked.body), "weapon part: blocked_reason set, no questions", blocked.body.blocked_reason);
-const noPrice = (await planFor(IDEAS.stand, "viterbi_undergrad", "10.0.0.4")).plan.body.plan;
-check(!/\$\s?\d/.test(JSON.stringify(noPrice)) && noPrice.routes.every((r: Route) => r.total === null), "no stored prices: no dollar figure anywhere in the plan");
+// Stored estimates: plywood $6 a sheet, cardboard $1 a sheet, PLA $0.05 a gram.
+// Laser route: 1 x 6 + (1 to 2) x 1 = 7 to 8. Print route: (40 to 80) x 0.05 = 2 to 4. BME route: nothing priced.
+const costed = (await planFor(IDEAS.stand, "viterbi_undergrad", "10.0.0.4")).plan.body.plan.routes as (Route & { prices_estimated: boolean })[];
+check(
+  JSON.stringify(costed.map((r) => r.total)) === JSON.stringify([{ low: 7, high: 8 }, { low: 2, high: 4 }, null]) && costed[0].prices_estimated,
+  "costs come from stored prices and match a hand calculation; marked estimated",
+  JSON.stringify(costed.map((r) => ({ total: r.total, labels: r.labels }))),
+);
 const short = await post("/api/ask", { text: "lamp", experience: "never" }, "10.0.0.4");
 check(short.status === 400 && short.body.error.code === "BAD_REQUEST", `too-short idea: ${short.status}`, short.body.error.message);
 const badAud = await post("/api/plan", { text: IDEAS.sign, answers: {}, audience: "martian", experience: "never" }, "10.0.0.4");

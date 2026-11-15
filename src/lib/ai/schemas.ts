@@ -101,3 +101,39 @@ export const planBodySchema = z.object({
   image: imageSchema.optional(),
 });
 export type PlanBody = z.infer<typeof planBodySchema>;
+
+// ------------------------------------------------------- scrap listing
+export const CONDITIONS = ["good", "usable", "rough"] as const;
+export const UNKNOWN_PLASTIC_RESTRICTION = "Not for laser cutting or heating";
+
+export const scrapOutputSchema = z.object({
+  error: z.string().nullable().describe("Set only if the photo shows a person or no material; ask for another photo. Otherwise null"),
+  material_category: z.enum(MATERIAL_CATEGORIES),
+  title: z.string().min(1).max(80).describe("6 words at most"),
+  description: z.string().min(1).max(300).describe("One sentence"),
+  size_note: z.string().min(1).max(120).describe('Approximate size, and say it is approximate, e.g. "About 30 x 20 cm"'),
+  condition: z.enum(CONDITIONS),
+  suggested_uses: z.array(z.string().min(1).max(80)).max(3),
+  restrictions: z.array(z.string().min(1).max(120)).max(4),
+  confidence: z.enum(["low", "medium", "high"]),
+  needs_staff_check: z.boolean(),
+});
+export type ScrapOutput = z.infer<typeof scrapOutputSchema>;
+
+/** What staff review, edit and publish. */
+export const scrapListingSchema = z.object({
+  space_id: z.string().min(1),
+  material_category: z.enum(MATERIAL_CATEGORIES),
+  title: z.string().trim().min(1).max(80),
+  description: z.string().trim().max(300),
+  size_note: z.string().trim().max(120).nullable(),
+  condition: z.enum(CONDITIONS),
+  restrictions: z.array(z.string().trim().min(1).max(120)).max(6),
+  image: imageSchema,
+});
+
+export const scrapDraftBodySchema = z.object({
+  space_id: z.string().min(1),
+  image: imageSchema,
+  note: z.string().trim().max(300).optional(),
+});

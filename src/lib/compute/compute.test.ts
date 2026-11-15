@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { planFixture, pricedSpaces, seedSpaces, PLAN_FIXTURES } from "../test-fixtures";
+import { planFixture, pricedSpaces, seedSpaces, unpricedSpaces, PLAN_FIXTURES } from "../test-fixtures";
 import { routeCost, sameUnit, withScrapTotal } from "./cost";
 import { firstVisit, hoursSummary } from "./firstVisit";
 import { groundPlan } from "./grounding";
@@ -81,7 +81,7 @@ describe("cost", () => {
     expect(c.prices_estimated).toBe(true);
   });
   it("shows no total when nothing has a price", () => {
-    const bfms = seedSpaces().find((s) => s.id === "bfms")!;
+    const bfms = unpricedSpaces().find((s) => s.id === "bfms")!;
     const c = routeCost(bfms, planFixture("phone-stand").routes[0].materials);
     expect(c.total).toBeNull();
     expect(c.lines.every((l) => l.low_usd === null)).toBe(true);
@@ -227,7 +227,7 @@ describe("whole plan", () => {
   });
 
   it("no priced material means no dollar figure anywhere on the plan", () => {
-    const p = finalize(computeBase(planFixture("phone-stand"), seedSpaces(), "viterbi_undergrad"), []);
+    const p = finalize(computeBase(planFixture("phone-stand"), unpricedSpaces(), "viterbi_undergrad"), []);
     expect(p.routes.every((r) => r.total === null && r.with_scrap === null)).toBe(true);
     expect(JSON.stringify(p)).not.toMatch(/\$\s?\d/);
     expect(p.routes.flatMap((r) => r.labels)).not.toContain("cheapest");
@@ -236,6 +236,20 @@ describe("whole plan", () => {
   it("flags when no route is open to the student", () => {
     const p = finalize(computeBase(planFixture("night-light"), seedSpaces(), "usc_grad_other"), []);
     expect(p.none_open).toBe(true);
+  });
+});
+
+describe("seed prices", () => {
+  it("every Maker Space price is a labelled estimate, and the group is not confirmed", () => {
+    const bfms = seedSpaces().find((s) => s.id === "bfms")!;
+    expect(bfms.status.prices.state).toBe("estimated");
+    for (const m of bfms.materials) {
+      expect(m.unit_price_usd, m.id).not.toBeNull();
+      expect(m.price_source, m.id).toBe("coder estimate, unverified");
+    }
+  });
+  it("no seed group is marked confirmed", () => {
+    for (const s of seedSpaces()) expect(Object.values(s.status).every((g) => g.state === "estimated"), s.id).toBe(true);
   });
 });
 

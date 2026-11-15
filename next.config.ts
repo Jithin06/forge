@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     "/api/ask": ["./data/fixtures/**/*"],
     "/api/plan": ["./data/fixtures/**/*"],
+    "/api/staff/scrap/draft": ["./data/fixtures/**/*"],
   },
   turbopack: {
     rules: {

@@ -5,60 +5,362 @@
   "location": "Ground floor, Science and Engineering Library",
   "official_url": "https://viterbiundergrad.usc.edu/bfms/",
   "blurb": "A workshop with 3D printers, a laser cutter, hand and power tools, electronics benches and a staffed machine shop. Everyone starts with the Level 1 orientation and safety training.",
-  "capabilities": ["fdm_3d_printing", "resin_3d_printing", "laser_cutting", "hand_tools", "woodworking", "electronics", "metalworking"],
+  "capabilities": [
+    "fdm_3d_printing",
+    "resin_3d_printing",
+    "laser_cutting",
+    "hand_tools",
+    "woodworking",
+    "electronics",
+    "metalworking"
+  ],
   "hours": {
-    "mon": { "open": "11:00", "close": "22:00" },
-    "tue": { "open": "11:00", "close": "22:00" },
-    "wed": { "open": "11:00", "close": "22:00" },
-    "thu": { "open": "11:00", "close": "22:00" },
-    "fri": { "open": "11:00", "close": "22:00" },
-    "sat": { "open": "10:00", "close": "17:00" },
+    "mon": {
+      "open": "11:00",
+      "close": "22:00"
+    },
+    "tue": {
+      "open": "11:00",
+      "close": "22:00"
+    },
+    "wed": {
+      "open": "11:00",
+      "close": "22:00"
+    },
+    "thu": {
+      "open": "11:00",
+      "close": "22:00"
+    },
+    "fri": {
+      "open": "11:00",
+      "close": "22:00"
+    },
+    "sat": {
+      "open": "10:00",
+      "close": "17:00"
+    },
     "sun": null
   },
   "access": [
-    { "audience": "viterbi_undergrad", "status": "ask_first", "note": "The Maker Space says it is for Viterbi undergraduates. Confirm at the front desk." },
-    { "audience": "viterbi_grad", "status": "ask_first", "note": "The Maker Space says it is for Viterbi undergraduates. Ask the front desk whether graduate students can use it." },
-    { "audience": "usc_undergrad_other", "status": "ask_first", "note": "The Maker Space says it is for Viterbi undergraduates. Ask the front desk whether you can use it." },
-    { "audience": "usc_grad_other", "status": "ask_first", "note": "The Maker Space says it is for Viterbi undergraduates. Ask the front desk whether you can use it." }
+    {
+      "audience": "viterbi_undergrad",
+      "status": "ask_first",
+      "note": "The Maker Space says it is for Viterbi undergraduates. Confirm at the front desk."
+    },
+    {
+      "audience": "viterbi_grad",
+      "status": "ask_first",
+      "note": "The Maker Space says it is for Viterbi undergraduates. Ask the front desk whether graduate students can use it."
+    },
+    {
+      "audience": "usc_undergrad_other",
+      "status": "ask_first",
+      "note": "The Maker Space says it is for Viterbi undergraduates. Ask the front desk whether you can use it."
+    },
+    {
+      "audience": "usc_grad_other",
+      "status": "ask_first",
+      "note": "The Maker Space says it is for Viterbi undergraduates. Ask the front desk whether you can use it."
+    }
   ],
   "access_steps": [
     "Take the Level 1 orientation and safety training. It lets you use the non-powered hand tools.",
     "Take the training level for the tools you need: Level 2 for hand tools and handheld drills, Level 3 for power tools, Level 4 for electronics."
   ],
   "trainings": [
-    { "id": "level_1", "name": "Level 1: Orientation and safety", "covers": "How the shop works and how to stay safe. Unlocks the non-powered hand tools.", "prerequisite_ids": [], "duration_note": null, "how_to_sign_up": null, "restricted_to": null },
-    { "id": "level_2", "name": "Level 2: Basic hand tools", "covers": "Basic hand tools and handheld drills.", "prerequisite_ids": ["level_1"], "duration_note": null, "how_to_sign_up": null, "restricted_to": null },
-    { "id": "level_3", "name": "Level 3: Power tools", "covers": "Power tools such as the drill press, sanders and band saws.", "prerequisite_ids": ["level_1"], "duration_note": null, "how_to_sign_up": null, "restricted_to": null },
-    { "id": "level_4", "name": "Level 4: Electronics", "covers": "Electronics such as soldering and test equipment.", "prerequisite_ids": ["level_1"], "duration_note": null, "how_to_sign_up": null, "restricted_to": null },
-    { "id": "level_5", "name": "Level 5: Machine tools", "covers": "Machine tools.", "prerequisite_ids": ["level_1", "level_2"], "duration_note": null, "how_to_sign_up": null, "restricted_to": "Student workers and designated team members" }
+    {
+      "id": "level_1",
+      "name": "Level 1: Orientation and safety",
+      "covers": "How the shop works and how to stay safe. Unlocks the non-powered hand tools.",
+      "prerequisite_ids": [],
+      "duration_note": null,
+      "how_to_sign_up": null,
+      "restricted_to": null
+    },
+    {
+      "id": "level_2",
+      "name": "Level 2: Basic hand tools",
+      "covers": "Basic hand tools and handheld drills.",
+      "prerequisite_ids": [
+        "level_1"
+      ],
+      "duration_note": null,
+      "how_to_sign_up": null,
+      "restricted_to": null
+    },
+    {
+      "id": "level_3",
+      "name": "Level 3: Power tools",
+      "covers": "Power tools such as the drill press, sanders and band saws.",
+      "prerequisite_ids": [
+        "level_1"
+      ],
+      "duration_note": null,
+      "how_to_sign_up": null,
+      "restricted_to": null
+    },
+    {
+      "id": "level_4",
+      "name": "Level 4: Electronics",
+      "covers": "Electronics such as soldering and test equipment.",
+      "prerequisite_ids": [
+        "level_1"
+      ],
+      "duration_note": null,
+      "how_to_sign_up": null,
+      "restricted_to": null
+    },
+    {
+      "id": "level_5",
+      "name": "Level 5: Machine tools",
+      "covers": "Machine tools.",
+      "prerequisite_ids": [
+        "level_1",
+        "level_2"
+      ],
+      "duration_note": null,
+      "how_to_sign_up": null,
+      "restricted_to": "Student workers and designated team members"
+    }
   ],
   "equipment": [
-    { "id": "prusa_mk4", "name": "Prusa MK4 3D printers (6)", "capability": "fdm_3d_printing", "plain_name": "3D printer", "required_training_ids": ["level_1"], "staff_operated": null, "work_area_note": "Builds parts up to 9.8 x 8.3 x 8.6 in", "good_for": [], "not_for": [] },
-    { "id": "stratasys_f900", "name": "Stratasys F900", "capability": "fdm_3d_printing", "plain_name": "Large industrial 3D printer", "required_training_ids": ["level_1"], "staff_operated": null, "work_area_note": "Builds parts up to 36 x 24 x 36 in", "good_for": [], "not_for": [] },
-    { "id": "stratasys_f370", "name": "Stratasys F370", "capability": "fdm_3d_printing", "plain_name": "Industrial 3D printer", "required_training_ids": ["level_1"], "staff_operated": null, "work_area_note": "Builds parts up to 14 x 10 x 14 in", "good_for": [], "not_for": [] },
-    { "id": "form_3l", "name": "FormLabs Form 3L", "capability": "resin_3d_printing", "plain_name": "Resin 3D printer (very fine detail)", "required_training_ids": ["level_1"], "staff_operated": null, "work_area_note": "Builds parts up to 13.2 x 7.9 x 11.8 in", "good_for": [], "not_for": [] },
-    { "id": "markforged_x7", "name": "Markforged X7", "capability": "fdm_3d_printing", "plain_name": "Extra-strong 3D printer", "required_training_ids": ["level_1"], "staff_operated": null, "work_area_note": "Builds parts up to 13 x 10.6 x 7.9 in", "good_for": [], "not_for": [] },
-    { "id": "prusa_pro_ht90", "name": "Prusa Pro HT90", "capability": "fdm_3d_printing", "plain_name": "High-temperature 3D printer", "required_training_ids": ["level_1"], "staff_operated": null, "work_area_note": null, "good_for": [], "not_for": [] },
-    { "id": "laser_vls675", "name": "Universal VLS6.75 laser cutter", "capability": "laser_cutting", "plain_name": "Laser cutter (cuts flat sheets precisely)", "required_training_ids": ["level_1"], "staff_operated": null, "work_area_note": "Sheets up to 18 x 32 in", "good_for": ["cardboard", "paper", "wood", "fiberboard", "acrylic", "PETG"], "not_for": [] },
-    { "id": "hand_tools", "name": "Non-powered hand tools", "capability": "hand_tools", "plain_name": "Hand tools", "required_training_ids": ["level_1"], "staff_operated": false, "work_area_note": null, "good_for": [], "not_for": [] },
-    { "id": "handheld_drills", "name": "Basic hand tools and handheld drills", "capability": "hand_tools", "plain_name": "Handheld drill", "required_training_ids": ["level_2"], "staff_operated": false, "work_area_note": null, "good_for": [], "not_for": [] },
-    { "id": "power_tools", "name": "Drill press, sanders and band saws", "capability": "woodworking", "plain_name": "Power tools for cutting and sanding", "required_training_ids": ["level_3"], "staff_operated": false, "work_area_note": null, "good_for": [], "not_for": [] },
-    { "id": "electronics_bench", "name": "Soldering and test equipment", "capability": "electronics", "plain_name": "Electronics bench (soldering and testing circuits)", "required_training_ids": ["level_4"], "staff_operated": false, "work_area_note": null, "good_for": [], "not_for": [] },
-    { "id": "machine_shop", "name": "Staffed machine shop", "capability": "metalworking", "plain_name": "Machine shop (cuts and shapes metal)", "required_training_ids": ["level_5"], "staff_operated": null, "work_area_note": null, "good_for": [], "not_for": [] }
+    {
+      "id": "prusa_mk4",
+      "name": "Prusa MK4 3D printers (6)",
+      "capability": "fdm_3d_printing",
+      "plain_name": "3D printer",
+      "required_training_ids": [
+        "level_1"
+      ],
+      "staff_operated": null,
+      "work_area_note": "Builds parts up to 9.8 x 8.3 x 8.6 in",
+      "good_for": [],
+      "not_for": []
+    },
+    {
+      "id": "stratasys_f900",
+      "name": "Stratasys F900",
+      "capability": "fdm_3d_printing",
+      "plain_name": "Large industrial 3D printer",
+      "required_training_ids": [
+        "level_1"
+      ],
+      "staff_operated": null,
+      "work_area_note": "Builds parts up to 36 x 24 x 36 in",
+      "good_for": [],
+      "not_for": []
+    },
+    {
+      "id": "stratasys_f370",
+      "name": "Stratasys F370",
+      "capability": "fdm_3d_printing",
+      "plain_name": "Industrial 3D printer",
+      "required_training_ids": [
+        "level_1"
+      ],
+      "staff_operated": null,
+      "work_area_note": "Builds parts up to 14 x 10 x 14 in",
+      "good_for": [],
+      "not_for": []
+    },
+    {
+      "id": "form_3l",
+      "name": "FormLabs Form 3L",
+      "capability": "resin_3d_printing",
+      "plain_name": "Resin 3D printer (very fine detail)",
+      "required_training_ids": [
+        "level_1"
+      ],
+      "staff_operated": null,
+      "work_area_note": "Builds parts up to 13.2 x 7.9 x 11.8 in",
+      "good_for": [],
+      "not_for": []
+    },
+    {
+      "id": "markforged_x7",
+      "name": "Markforged X7",
+      "capability": "fdm_3d_printing",
+      "plain_name": "Extra-strong 3D printer",
+      "required_training_ids": [
+        "level_1"
+      ],
+      "staff_operated": null,
+      "work_area_note": "Builds parts up to 13 x 10.6 x 7.9 in",
+      "good_for": [],
+      "not_for": []
+    },
+    {
+      "id": "prusa_pro_ht90",
+      "name": "Prusa Pro HT90",
+      "capability": "fdm_3d_printing",
+      "plain_name": "High-temperature 3D printer",
+      "required_training_ids": [
+        "level_1"
+      ],
+      "staff_operated": null,
+      "work_area_note": null,
+      "good_for": [],
+      "not_for": []
+    },
+    {
+      "id": "laser_vls675",
+      "name": "Universal VLS6.75 laser cutter",
+      "capability": "laser_cutting",
+      "plain_name": "Laser cutter (cuts flat sheets precisely)",
+      "required_training_ids": [
+        "level_1"
+      ],
+      "staff_operated": null,
+      "work_area_note": "Sheets up to 18 x 32 in",
+      "good_for": [
+        "cardboard",
+        "paper",
+        "wood",
+        "fiberboard",
+        "acrylic",
+        "PETG"
+      ],
+      "not_for": []
+    },
+    {
+      "id": "hand_tools",
+      "name": "Non-powered hand tools",
+      "capability": "hand_tools",
+      "plain_name": "Hand tools",
+      "required_training_ids": [
+        "level_1"
+      ],
+      "staff_operated": false,
+      "work_area_note": null,
+      "good_for": [],
+      "not_for": []
+    },
+    {
+      "id": "handheld_drills",
+      "name": "Basic hand tools and handheld drills",
+      "capability": "hand_tools",
+      "plain_name": "Handheld drill",
+      "required_training_ids": [
+        "level_2"
+      ],
+      "staff_operated": false,
+      "work_area_note": null,
+      "good_for": [],
+      "not_for": []
+    },
+    {
+      "id": "power_tools",
+      "name": "Drill press, sanders and band saws",
+      "capability": "woodworking",
+      "plain_name": "Power tools for cutting and sanding",
+      "required_training_ids": [
+        "level_3"
+      ],
+      "staff_operated": false,
+      "work_area_note": null,
+      "good_for": [],
+      "not_for": []
+    },
+    {
+      "id": "electronics_bench",
+      "name": "Soldering and test equipment",
+      "capability": "electronics",
+      "plain_name": "Electronics bench (soldering and testing circuits)",
+      "required_training_ids": [
+        "level_4"
+      ],
+      "staff_operated": false,
+      "work_area_note": null,
+      "good_for": [],
+      "not_for": []
+    },
+    {
+      "id": "machine_shop",
+      "name": "Staffed machine shop",
+      "capability": "metalworking",
+      "plain_name": "Machine shop (cuts and shapes metal)",
+      "required_training_ids": [
+        "level_5"
+      ],
+      "staff_operated": null,
+      "work_area_note": null,
+      "good_for": [],
+      "not_for": []
+    }
   ],
   "materials": [
-    { "id": "pla_filament", "name": "PLA filament", "category": "pla_filament", "unit_price_usd": null, "price_unit": null, "stocked": null },
-    { "id": "printer_resin", "name": "Resin for the Form 3L", "category": "resin", "unit_price_usd": null, "price_unit": null, "stocked": null },
-    { "id": "plywood_sheet", "name": "Plywood sheet", "category": "plywood", "unit_price_usd": null, "price_unit": null, "stocked": null },
-    { "id": "mdf_sheet", "name": "MDF (fiberboard) sheet", "category": "mdf", "unit_price_usd": null, "price_unit": null, "stocked": null },
-    { "id": "acrylic_sheet", "name": "Acrylic sheet", "category": "acrylic", "unit_price_usd": null, "price_unit": null, "stocked": null },
-    { "id": "petg_sheet", "name": "PETG sheet", "category": "other_plastic_sheet", "unit_price_usd": null, "price_unit": null, "stocked": null },
-    { "id": "cardboard", "name": "Cardboard", "category": "cardboard_paper", "unit_price_usd": null, "price_unit": null, "stocked": null }
+    {
+      "id": "pla_filament",
+      "name": "PLA filament",
+      "category": "pla_filament",
+      "unit_price_usd": 0.05,
+      "price_unit": "g",
+      "stocked": null,
+      "price_source": "coder estimate, unverified"
+    },
+    {
+      "id": "printer_resin",
+      "name": "Resin for the Form 3L",
+      "category": "resin",
+      "unit_price_usd": 0.2,
+      "price_unit": "ml",
+      "stocked": null,
+      "price_source": "coder estimate, unverified"
+    },
+    {
+      "id": "plywood_sheet",
+      "name": "Plywood sheet (about 12 x 24 in)",
+      "category": "plywood",
+      "unit_price_usd": 6.0,
+      "price_unit": "sheet",
+      "stocked": null,
+      "price_source": "coder estimate, unverified"
+    },
+    {
+      "id": "mdf_sheet",
+      "name": "MDF (fiberboard) sheet (about 12 x 24 in)",
+      "category": "mdf",
+      "unit_price_usd": 4.0,
+      "price_unit": "sheet",
+      "stocked": null,
+      "price_source": "coder estimate, unverified"
+    },
+    {
+      "id": "acrylic_sheet",
+      "name": "Acrylic sheet (about 12 x 24 in)",
+      "category": "acrylic",
+      "unit_price_usd": 12.0,
+      "price_unit": "sheet",
+      "stocked": null,
+      "price_source": "coder estimate, unverified"
+    },
+    {
+      "id": "petg_sheet",
+      "name": "PETG sheet (about 12 x 24 in)",
+      "category": "other_plastic_sheet",
+      "unit_price_usd": 10.0,
+      "price_unit": "sheet",
+      "stocked": null,
+      "price_source": "coder estimate, unverified"
+    },
+    {
+      "id": "cardboard",
+      "name": "Cardboard sheet",
+      "category": "cardboard_paper",
+      "unit_price_usd": 1.0,
+      "price_unit": "sheet",
+      "stocked": null,
+      "price_source": "coder estimate, unverified"
+    }
   ],
   "services": [],
   "usage_fee_note": "For the Stratasys printers, students pay only for material.",
   "prohibited": [],
-  "scrap_policy": { "offers_scrap": false, "never_offer": [], "pickup_note": null },
+  "scrap_policy": {
+    "offers_scrap": false,
+    "never_offer": [],
+    "pickup_note": null
+  },
   "source": {
     "urls": [
       "https://viterbiundergrad.usc.edu/bfms/",
@@ -68,10 +370,20 @@
     "checked_on": "2026-11-14"
   },
   "status": {
-    "hours": { "state": "estimated" },
-    "access": { "state": "estimated" },
-    "trainings": { "state": "estimated" },
-    "equipment": { "state": "estimated" },
-    "prices": { "state": "estimated" }
+    "hours": {
+      "state": "estimated"
+    },
+    "access": {
+      "state": "estimated"
+    },
+    "trainings": {
+      "state": "estimated"
+    },
+    "equipment": {
+      "state": "estimated"
+    },
+    "prices": {
+      "state": "estimated"
+    }
   }
 }

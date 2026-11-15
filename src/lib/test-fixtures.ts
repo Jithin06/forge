@@ -36,6 +36,13 @@ export function planFixture(name: string): PlanOutput {
   return planOutputSchema.parse(f.output);
 }
 
+/** The seed spaces with every price removed, for "no price data" cases. */
+export function unpricedSpaces(): SpaceDoc[] {
+  const spaces = seedSpaces();
+  for (const s of spaces) for (const m of s.materials) m.unit_price_usd = null;
+  return spaces;
+}
+
 /**
  * Test-only prices, so cost and labels can be checked by hand. These are
  * NOT real Maker Space prices and never leave the test suite.

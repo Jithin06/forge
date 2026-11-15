@@ -121,6 +121,8 @@ export const materialSchema = z.object({
   category: vocab("material category", MATERIAL_CATEGORIES),
   unit_price_usd: z.number().nonnegative().nullable(),
   price_unit: z.string().nullable(),
+  /** Where the price came from, e.g. an official page, staff, or "coder estimate, unverified". */
+  price_source: z.string().nullable().optional(),
   /** null means we do not know whether the space stocks it. */
   stocked: z.boolean().nullable(),
 });

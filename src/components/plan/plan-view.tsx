@@ -7,6 +7,7 @@ import { moneyRange, quantity } from "@/lib/format";
 import type { PlanView as PlanData } from "@/lib/plans";
 import { cn } from "@/lib/utils";
 import { CopyLink } from "./copy-link";
+import { PlanClaim } from "./plan-claim";
 
 const primaryBtn =
   "inline-flex min-h-12 items-center justify-center rounded-xl bg-cardinal px-6 font-semibold text-white hover:bg-cardinal-pressed";
@@ -36,6 +37,7 @@ export function PlanView({ data }: { data: PlanData }) {
     );
   }
 
+  const spaceNames = Object.fromEntries(plan.routes.map((r) => [r.space_id, r.space_name]));
   return (
     <div className="space-y-8">
       {data.fixture && <SampleBanner />}
@@ -62,7 +64,7 @@ export function PlanView({ data }: { data: PlanData }) {
 
       <section aria-label="Ways to build it" className="space-y-5">
         {plan.routes.map((r, i) => (
-          <RouteCard key={i} route={r} top={i === 0} n={i + 1} of={plan.routes.length} />
+          <RouteCard key={i} route={r} top={i === 0} n={i + 1} of={plan.routes.length} planId={data.id} spaceNames={spaceNames} />
         ))}
       </section>
 
@@ -91,7 +93,7 @@ function uniqueSpaces(routes: FinalRoute[]): FinalRoute[] {
   return routes.filter((r) => (seen.has(r.space_id) ? false : (seen.add(r.space_id), true)));
 }
 
-function RouteCard({ route: r, top, n, of }: { route: FinalRoute; top: boolean; n: number; of: number }) {
+function RouteCard({ route: r, top, n, of, planId, spaceNames }: { route: FinalRoute; top: boolean; n: number; of: number; planId: string; spaceNames: Record<string, string> }) {
   const hid = `route-${n}`;
   const anyFree = r.scrap.some((s) => s.length > 0);
   return (
@@ -172,13 +174,19 @@ function RouteCard({ route: r, top, n, of }: { route: FinalRoute; top: boolean; 
                       </span>
                     </p>
                     {free.map((s) => (
-                      <p key={s.id} className="mt-1 text-[15px]">
-                        Free piece: {s.title}
-                        {s.size_note ? `, ${s.size_note}` : ""}.{" "}
-                        <Link href="/scrap" className="inline-flex min-h-11 items-center font-semibold text-cardinal underline underline-offset-4">
-                          See it in the scrap bin
-                        </Link>
-                      </p>
+                      <div key={s.id} className="mt-2 flex flex-wrap items-center gap-3">
+                        {s.photo_url && (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img src={s.photo_url} alt={`Photo of ${s.title}`} loading="lazy" className="size-16 rounded-lg border border-gray-line object-cover" />
+                        )}
+                        <p className="min-w-40 flex-1 text-[15px]">
+                          <span className="font-semibold">Free piece: {s.title}</span>
+                          {s.size_note ? `. ${s.size_note}` : ""}
+                          {s.space_id !== r.space_id ? `. At another space: ${spaceNames[s.space_id] ?? s.space_id}` : ""}
+                          {s.restrictions.length > 0 ? `. ${s.restrictions.join(". ")}` : ""}.
+                        </p>
+                        <PlanClaim itemId={s.id} title={s.title} planId={planId} />
+                      </div>
                     ))}
                   </li>
                 );

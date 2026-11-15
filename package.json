@@ -15,7 +15,10 @@
     "check:seed": "tsx --env-file=.env.local scripts/check-seed.mts",
     "check:m2": "tsx --env-file=.env.local scripts/check-m2.mts",
     "check:m2b": "tsx --env-file=.env.local scripts/check-m2b.mts",
-    "check:m3": "tsx --env-file=.env.local scripts/check-m3.mts"
+    "check:m3": "tsx --env-file=.env.local scripts/check-m3.mts",
+    "check:m4": "tsx --env-file=.env.local scripts/check-m4.mts",
+    "race": "tsx --env-file=.env.local scripts/race-test.mts",
+    "clean:test": "tsx --env-file=.env.local scripts/clean-test-data.mts"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",

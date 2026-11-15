@@ -1,0 +1,17 @@
+{
+  "call": "scrap",
+  "note": "Hand-written sample used when no recorded input matches. Describes the stand-in image in data/samples.",
+  "key": null,
+  "output": {
+    "error": null,
+    "material_category": "plywood",
+    "title": "Plywood offcut with one hole",
+    "description": "A flat piece of light plywood with a round hole cut near one corner.",
+    "size_note": "About 26 x 17 cm",
+    "condition": "usable",
+    "suggested_uses": ["Phone stand", "Small sign", "Test cuts"],
+    "restrictions": [],
+    "confidence": "medium",
+    "needs_staff_check": false
+  }
+}

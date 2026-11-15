@@ -5,6 +5,7 @@ import { finalize, type BasePlan, type FinalPlan } from "./compute/plan";
 import type { ScrapItem } from "./compute/scrapMatch";
 import { db } from "./db";
 import type { Audience, Experience } from "./schemas";
+import { listAvailable } from "./scrap";
 
 export type StoredPlan = { base: BasePlan; model: PlanOutput; fixture: boolean; attempts: number };
 
@@ -48,15 +49,9 @@ export async function savePlan(p: {
   throw new Error("Could not save plan: id collisions");
 }
 
-/** All available scrap, newest first. Never cached: availability changes. */
+/** All available scrap, newest first, after expiring stale holds. Never cached. */
 export async function availableScrap(): Promise<ScrapItem[]> {
-  const { data, error } = await db()
-    .from("scrap_items")
-    .select("id, space_id, material_category, title, size_note, condition, restrictions, photo_url, posted_at")
-    .eq("status", "available")
-    .gt("expires_at", new Date().toISOString());
-  if (error) throw new Error(`Could not load scrap: ${error.message}`);
-  return data as ScrapItem[];
+  return listAvailable();
 }
 
 export type PlanView = {

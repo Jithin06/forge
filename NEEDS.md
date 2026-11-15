@@ -31,3 +31,32 @@ Each item says what, why, and exactly where to put it. Newest blockers first.
 5. Supabase, Authentication, URL Configuration: Site URL `https://forge-beta-hazel.vercel.app`; add redirect URLs `https://forge-beta-hazel.vercel.app/auth/callback` and `http://localhost:3000/auth/callback`.
 6. Set `AUTH_MODE=google` in `.env.local` and in Vercel, then tell me to "Do M3b". I will run the four M3 checks with your real `@usc.edu` account and a personal Google account, and confirm the picker and banner are gone.
 - **If it is not working within 30 minutes,** the spec's fallback is Supabase's email one-time code for `@usc.edu` addresses.
+
+## Data and photos
+
+### 5. Real photos of leftover material (8 to 10)
+- **What:** photos of real offcuts, taken today, one piece per photo, with something for scale if possible.
+- **Why:** everything so far uses one drawn stand-in (`data/samples/scrap-standin.jpg`). The M4 check "a real offcut photo yields a sensible draft" and M2b's scrap check need real photos, and the demo needs real pieces in the bin.
+- **Where:** save them in `data/samples/real/` (any names), or post them yourself: sign in as staff, Staff portal, Post scrap.
+
+### 6. Makerspace scrap policy
+- **What:** may the Makerspace give leftovers away this way? Which materials must never be offered? Where do students pick pieces up?
+- **Why:** the seed says `offers_scrap: false`, `never_offer: []`, `pickup_note: null`. Without your supervisor's yes, present the scrap exchange as a proposed pilot.
+- **Where:** `scrap_policy` in `data/spaces/bfms.json`, then `npm run seed -- --force`. (From M5 on, staff can also edit space facts in the Staff portal, but not the scrap policy.)
+
+### 7. Correct my estimated Makerspace prices
+All seven are my guesses, saved with `price_source: "coder estimate, unverified"`, and the price group is marked Estimated. Sheet sizes are guesses too. Correct them in `data/spaces/bfms.json` (then `npm run seed -- --force`) or in the Staff portal's Space info tab.
+
+| Material | My estimate | Per |
+| --- | --- | --- |
+| PLA filament | $0.05 | g |
+| Resin for the Form 3L | $0.20 | ml |
+| Plywood sheet (about 12 x 24 in) | $6.00 | sheet |
+| MDF sheet (about 12 x 24 in) | $4.00 | sheet |
+| Acrylic sheet (about 12 x 24 in) | $12.00 | sheet |
+| PETG sheet (about 12 x 24 in) | $10.00 | sheet |
+| Cardboard sheet | $1.00 | sheet |
+
+### 8. Makerspace access, trainings and first-visit details
+- **What:** access for each of the four audiences (all four are still "Ask first"), which training each machine really needs (I assumed Level 1 for the printers and the laser cutter), how to sign up for each level, and how long each takes.
+- **Where:** `access`, `equipment[].required_training_ids`, `trainings[].how_to_sign_up` and `duration_note` in `data/spaces/bfms.json`.

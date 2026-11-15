@@ -1,4 +1,4 @@
-import type { AccessStatus, Audience, Capability, Experience, Weekday } from "./schemas";
+import type { AccessStatus, Audience, Capability, Experience, MaterialCategory, Weekday } from "./schemas";
 
 export const AUDIENCE_LABELS: Record<Audience, string> = {
   viterbi_undergrad: "Viterbi undergrad",
@@ -61,4 +61,32 @@ export function formatDate(iso: string): string {
     year: "numeric",
     timeZone: "UTC",
   });
+}
+
+export const MATERIAL_LABELS: Record<MaterialCategory, string> = {
+  pla_filament: "PLA filament (3D printer plastic)",
+  other_filament: "Other 3D printer filament",
+  resin: "Resin",
+  plywood: "Plywood",
+  solid_wood: "Solid wood",
+  mdf: "MDF (fiberboard)",
+  acrylic: "Acrylic",
+  other_plastic_sheet: "Other plastic sheet",
+  aluminum: "Aluminum",
+  steel: "Steel",
+  other_metal: "Other metal",
+  cardboard_paper: "Cardboard or paper",
+  foam: "Foam",
+  fabric: "Fabric",
+  electronic_components: "Electronic parts",
+  fasteners_hardware: "Screws and hardware",
+  unknown_plastic: "Unknown plastic",
+  other: "Other",
+};
+
+export const CONDITION_LABELS = { good: "Good", usable: "Usable", rough: "Rough" } as const;
+
+/** "Mon, Nov 16, 3:05 PM" in the viewer's own time zone. */
+export function formatWhen(iso: string): string {
+  return new Date(iso).toLocaleString("en-US", { weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
 }
