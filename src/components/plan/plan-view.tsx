@@ -208,7 +208,7 @@ function RouteCard({ route: r, top, n, of, planId, spaceNames }: { route: FinalR
                           {s.space_id !== r.space_id ? `. At another space: ${spaceNames[s.space_id] ?? s.space_id}` : ""}
                           {s.restrictions.length > 0 ? `. ${s.restrictions.join(". ")}` : ""}.
                         </p>
-                        <PlanClaim itemId={s.id} title={s.title} planId={planId} />
+                        <PlanClaim itemId={s.id} title={s.title} where={s.space_id === r.space_id ? `${r.space_name}, ${r.space_location}` : spaceNames[s.space_id]} planId={planId} />
                       </div>
                     ))}
                   </li>
@@ -264,7 +264,7 @@ function RouteCard({ route: r, top, n, of, planId, spaceNames }: { route: FinalR
                   <li key={w.issue} className="flex items-start gap-2.5">
                     <span className="ico"><TriangleAlert aria-hidden className="size-5" /></span>
                     <span className="leading-[1.35]">
-                      <b>{w.issue}.</b> {w.fix}
+                      <b>{w.issue.replace(/[.\s]+$/, "")}.</b> {w.fix}
                     </span>
                   </li>
                 ))}
@@ -275,7 +275,7 @@ function RouteCard({ route: r, top, n, of, planId, spaceNames }: { route: FinalR
             <ol className="steps">
               {r.steps.map((s) => (
                 <li key={s.title} className="leading-[1.35]">
-                  <b>{s.title}.</b> {s.detail}
+                  <b>{s.title.replace(/[.\s]+$/, "")}.</b> {s.detail}
                 </li>
               ))}
             </ol>

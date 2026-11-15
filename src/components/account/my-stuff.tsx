@@ -2,7 +2,8 @@
 
 import { CircleAlert } from "lucide-react";
 import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { ConfirmDialog } from "@/components/confirm-dialog";
 import { formatDate } from "@/lib/labels";
 import { Band, Body } from "@/components/page";
 import { PageSkeleton, primaryBtn, secondaryBtn } from "./gate";
@@ -28,6 +29,8 @@ export function MyStuff() {
     { status: "loading" } | { status: "signed_out" } | { status: "error" } | { status: "ready"; me: Me }
   >({ status: "loading" });
   const [notice, setNotice] = useState<string | null>(null);
+  const [cancelling, setCancelling] = useState<{ id: string; title: string } | null>(null);
+  const noticeRef = useRef<HTMLParagraphElement>(null);
 
   const load = useCallback(async () => {
     try {
@@ -47,7 +50,7 @@ export function MyStuff() {
     setNotice(null);
     const res = await fetch(`/api/claims/${id}`, { method: "DELETE" });
     setNotice(res.ok ? "Cancelled. The piece is free for someone else now." : "We could not cancel that claim. Please try again.");
-    load();
+    await load();
   }
 
   if (state.status === "loading") return <PageSkeleton title="My stuff" />;
@@ -113,7 +116,7 @@ export function MyStuff() {
 
       <section aria-labelledby="my-claims" className="space-y-3">
         <h2 id="my-claims" className="text-[24px] font-bold tracking-[-0.01em]">My claims</h2>
-        <p role="status" className={notice ? "notice" : "sr-only"}>{notice}</p>
+        <p ref={noticeRef} tabIndex={-1} role="status" className={notice ? "notice" : "sr-only"}>{notice}</p>
         {me.claims.length === 0 ? (
           <div className="space-y-3">
             <p>No claims yet. Free leftover material shows up in your plans and in the Scrap tab.</p>
@@ -131,7 +134,7 @@ export function MyStuff() {
                   </p>
                 </div>
                 {c.status === "active" && (
-                  <button type="button" onClick={() => cancel(c.id)} className={`${secondaryBtn} btn-sm`}>
+                  <button type="button" onClick={() => setCancelling({ id: c.id, title: c.item?.title ?? "this piece" })} className={`${secondaryBtn} btn-sm`}>
                     Cancel<span className="sr-only"> claim on {c.item?.title}</span>
                   </button>
                 )}
@@ -140,6 +143,22 @@ export function MyStuff() {
           </ul>
         )}
       </section>
+
+      <ConfirmDialog
+        open={!!cancelling}
+        title="Cancel your claim?"
+        confirmLabel="Cancel my claim"
+        busyLabel="Cancelling..."
+        cancelLabel="Keep my claim"
+        onConfirm={() => (cancelling ? cancel(cancelling.id) : undefined)}
+        onClose={() => setCancelling(null)}
+        fallbackFocus={noticeRef}
+      >
+        <p>
+          <strong className="font-bold">{cancelling?.title}</strong> goes back in the scrap bin right away, and someone else can claim it.
+        </p>
+        <p>This cannot be undone. If the piece is still in the bin later, you can claim it again.</p>
+      </ConfirmDialog>
 
       <form method="post" action="/auth/sign-out" className="border-t-2 border-dashed border-black pt-5">
         <button type="submit" className={secondaryBtn}>Sign out</button>

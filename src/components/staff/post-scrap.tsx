@@ -2,8 +2,9 @@
 
 import { Camera, CircleAlert, Lock } from "lucide-react";
 import Link from "next/link";
-import { useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { primaryBtn, secondaryBtn } from "@/components/account/gate";
+import { ConfirmDialog } from "@/components/confirm-dialog";
 import { resizeToJpeg } from "@/components/ask/resize-image";
 import { SampleBanner } from "@/components/sample-banner";
 import { CONDITION_LABELS, MATERIAL_LABELS } from "@/lib/labels";
@@ -30,6 +31,12 @@ export function PostScrap({ spaceId, onPublished }: { spaceId: string; onPublish
   const [draft, setDraft] = useState<Draft | null>(null);
   const [step, setStep] = useState<Step>({ name: "photo" });
   const [error, setError] = useState<string | null>(null);
+  const [asking, setAsking] = useState(false);
+  const doneRef = useRef<HTMLParagraphElement>(null);
+  // After publishing, the form and its button are gone: focus goes to the result.
+  useEffect(() => {
+    if (step.name === "done") doneRef.current?.focus();
+  }, [step.name]);
   const file = useRef<HTMLInputElement>(null);
   const id = useId();
   const field = "field";
@@ -63,10 +70,16 @@ export function PostScrap({ spaceId, onPublished }: { spaceId: string; onPublish
       setStep({ name: "photo" });
     }
   }
-  async function publish(e: React.FormEvent) {
+  /** The form's submit only opens the "what will happen" step. Nothing is listed until that is confirmed. */
+  function askToPublish(e: React.FormEvent) {
     e.preventDefault();
     if (!draft || !image) return;
     if (!draft.title.trim()) return setError("Give the piece a short title.");
+    setError(null);
+    setAsking(true);
+  }
+  async function publish() {
+    if (!draft || !image) return;
     const fixture = step.name === "review" && step.fixture;
     setError(null);
     setStep({ name: "publishing" });
@@ -81,6 +94,7 @@ export function PostScrap({ spaceId, onPublished }: { spaceId: string; onPublish
         restrictions: draft.restrictions.filter((r) => r.trim() && r !== LOCKED),
         image,
       });
+      setAsking(false);
       setStep({ name: "done", title: draft.title });
       setDraft(null);
       setImage(null);
@@ -102,7 +116,7 @@ export function PostScrap({ spaceId, onPublished }: { spaceId: string; onPublish
   if (step.name === "done")
     return (
       <div className="space-y-4">
-        <p role="status" className="card flex items-center gap-3 bg-gold-soft p-3">
+        <p ref={doneRef} tabIndex={-1} role="status" className="card flex items-center gap-3 bg-gold-soft p-3">
           <span aria-hidden className="stamp">In the<br />bin</span>
           <span>
             <strong className="font-bold">Published.</strong> “{step.title}” is in the scrap bin now.
@@ -118,7 +132,7 @@ export function PostScrap({ spaceId, onPublished }: { spaceId: string; onPublish
   if ((step.name === "review" || step.name === "publishing") && draft) {
     const lockedOn = draft.material_category === "unknown_plastic";
     return (
-      <form onSubmit={publish} noValidate className="card space-y-4 p-4">
+      <form onSubmit={askToPublish} noValidate className="card space-y-4 p-4">
         {step.name === "review" && step.fixture && <SampleBanner />}
         <p>Check the draft and fix anything that is wrong. Nothing is listed until you publish.</p>
         {draft.needs_staff_check && (
@@ -181,6 +195,20 @@ export function PostScrap({ spaceId, onPublished }: { spaceId: string; onPublish
           </button>
           <button type="button" onClick={() => { setDraft(null); setStep({ name: "photo" }); }} className={secondaryBtn}>Start over</button>
         </div>
+        <ConfirmDialog
+          open={asking}
+          title="Publish this piece to the scrap bin?"
+          confirmLabel="Publish to the scrap bin"
+          busyLabel="Publishing..."
+          cancelLabel="Keep editing"
+          onConfirm={publish}
+          onClose={() => setAsking(false)}
+        >
+          <p>
+            <strong className="font-bold">{draft.title.trim()}</strong> ({MATERIAL_LABELS[draft.material_category]}) will show in the scrap bin at once, with your photo and the details you checked.
+          </p>
+          <p>Every USC student can see it, and a signed-in student can claim it. You can take it out again from the Claims tab.</p>
+        </ConfirmDialog>
       </form>
     );
   }

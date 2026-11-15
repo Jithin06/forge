@@ -2,6 +2,8 @@
 
 import { CircleAlert } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
+import { useSession } from "@/components/account/use-session";
+import { ConfirmDialog } from "@/components/confirm-dialog";
 import { secondaryBtn } from "@/components/account/gate";
 import { FactChip } from "@/components/badges";
 import { ACCESS_LABELS, AUDIENCE_LABELS, WEEKDAY_LABELS } from "@/lib/labels";
@@ -53,6 +55,8 @@ export function SpaceInfoTab({ spaceId }: { spaceId: string }) {
   const [failed, setFailed] = useState(false);
   const [note, setNote] = useState<{ group: string; ok: boolean; text: string } | null>(null);
   const [busy, setBusy] = useState(false);
+  const [confirming, setConfirming] = useState<{ id: StatusGroup; title: string } | null>(null);
+  const email = useSession()?.user?.email ?? null;
 
   const load = useCallback(async () => {
     try {
@@ -103,7 +107,7 @@ export function SpaceInfoTab({ spaceId }: { spaceId: string }) {
     note: note?.group === id ? note : null,
     busy,
     onSave,
-    onConfirm: () => patch(id, { confirm: id }, `Confirmed. Students now see "Confirmed by staff" next to ${title.toLowerCase()}.`),
+    onConfirm: () => setConfirming({ id, title }),
   });
 
   const setHours = (d: Weekday, v: { open: string; close: string } | null) =>
@@ -210,6 +214,28 @@ export function SpaceInfoTab({ spaceId }: { spaceId: string }) {
       <Group {...group("equipment", "Equipment")}>
         <p>{space.equipment.length} pieces of equipment are listed. Check them on your space page. To change one, ask the Forge team.</p>
       </Group>
+
+      <ConfirmDialog
+        open={!!confirming}
+        title={`Confirm ${confirming?.title.toLowerCase() ?? "these facts"} for ${space.name}?`}
+        confirmLabel={`Confirm ${confirming?.title.toLowerCase() ?? ""}`}
+        busyLabel="Confirming..."
+        cancelLabel="Do not confirm"
+        tone="gold"
+        onConfirm={() =>
+          confirming
+            ? patch(confirming.id, { confirm: confirming.id }, `Confirmed. Students now see "Confirmed by staff" next to ${confirming.title.toLowerCase()}.`)
+            : undefined
+        }
+        onClose={() => setConfirming(null)}
+      >
+        <p>
+          This will show as <strong className="font-bold">“Confirmed by staff”</strong> to every student, in place of “Estimated”, under your name
+          {email ? ` (${email})` : ""} and today&apos;s date ({new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}).
+        </p>
+        <p>Confirm only what you have checked yourself. Students will rely on it.</p>
+        <p>Changes you have typed but not saved are not included. Save them first.</p>
+      </ConfirmDialog>
     </div>
   );
 }

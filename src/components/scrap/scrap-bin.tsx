@@ -177,7 +177,10 @@ export function ScrapBin() {
 
       <dialog
         ref={dialog}
-        onClose={() => setOpen(null)}
+        onClose={(e) => {
+          // React passes a nested dialog's close event up to this one; only our own counts.
+          if (e.target === e.currentTarget) setOpen(null);
+        }}
         aria-labelledby="scrap-item-title"
         className="m-auto w-[calc(100%-2rem)] max-w-[520px] rounded-[14px] border-2 border-black p-0 shadow-[6px_6px_0_var(--black)] backdrop:bg-black/60"
       >
@@ -207,7 +210,7 @@ export function ScrapBin() {
               </div>
             )}
             <p className="text-[15px]">{open.pickup_note ?? "Ask at the front desk when you come to pick it up."}</p>
-            <ClaimButton key={open.id} itemId={open.id} title={open.title} onGone={() => { setGoneNote(true); load(); }} />
+            <ClaimButton key={open.id} itemId={open.id} title={open.title} where={[open.space_name, open.space_location].filter(Boolean).join(", ")} pickup={open.pickup_note} onGone={() => { setGoneNote(true); load(); }} />
           </div>
         )}
       </dialog>
