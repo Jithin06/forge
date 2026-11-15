@@ -33,7 +33,7 @@ check(gun.body?.fixture === false && !!gun.body?.blocked_reason, "blocked_reason
 
 console.log("\n3. One-word idea");
 const word = await post("/api/ask", { text: "skateboard", experience: "never" });
-let asked = (word.body?.questions ?? []).length;
+const asked = (word.body?.questions ?? []).length;
 let clarified = "";
 if (!asked && !word.body?.blocked_reason) {
   const p = await post("/api/plan", { text: "skateboard", answers: {}, audience: "viterbi_undergrad", experience: "never" });
