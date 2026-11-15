@@ -10,7 +10,7 @@ import path from "node:path";
 const BASE = process.env.BASE ?? "http://localhost:3124";
 const PLAN = process.env.PLAN ?? "RRFvTqmeZR";
 const out = path.join(import.meta.dirname, "assets");
-const W = 390, H = 561; // css px shown in each slide frame
+const W = 390, H = 526; // css px shown in each slide frame; 526 ends the first crop cleanly after the second training
 
 const browser = await chromium.launch({ channel: "chrome" });
 const ctx = await browser.newContext({ viewport: { width: W, height: 844 }, deviceScaleFactor: 3, isMobile: true, hasTouch: true });
@@ -21,11 +21,14 @@ await p.waitForSelector("main article");
 await p.addStyleTag({ content: "nav[aria-label=Main].fixed{display:none}" }); // the fixed tab bar would sit across long captures
 await p.evaluate(() => Promise.all([...document.images].map((i) => { i.loading = "eager"; return i.complete && i.naturalWidth ? 1 : new Promise((r) => { i.onload = i.onerror = r; }); })));
 if (await p.getByText("Sample data.").count()) throw new Error("This plan shows the Sample data banner; use a plan made on a live model.");
-const art = await p.locator("main article").first().evaluate((e) => { const b = e.getBoundingClientRect(); return { top: b.top + scrollY, height: b.height }; });
-const mat = await p.locator("main article").first().locator("h3", { hasText: "Materials" }).evaluate((e) => e.getBoundingClientRect().top + scrollY);
-console.log("article", art, "materials at", mat);
-await p.screenshot({ path: path.join(out, "plan-top.png"), fullPage: true, clip: { x: 0, y: art.top - 34, width: W, height: H } });
-// The cost crop is only retaken while a matching leftover is in the scrap bin, so a run with an empty bin does not replace it.
-if (await p.locator("main article").first().getByText("Free with scrap").count()) await p.screenshot({ path: path.join(out, "plan-cost.png"), fullPage: true, clip: { x: 0, y: mat - 12, width: W, height: H } });
-else console.log("No free scrap matches this plan right now; kept the existing plan-cost.png.");
+const first = p.locator("main article").first();
+const top = (loc) => loc.evaluate((e) => e.getBoundingClientRect().top + scrollY);
+const tools = await top(first.getByText("Tools you will use", { exact: true }));
+const mat = await top(first.locator("h3", { hasText: "Materials" }));
+const stepsEnd = await first.locator("summary", { hasText: "See the steps" }).evaluate((e) => e.getBoundingClientRect().bottom + scrollY);
+console.log("tools at", tools, "materials at", mat, "see-the-steps ends", stepsEnd);
+// Panel 3 starts at "Tools you will use": the saved plan's intro sentence above it is no longer true of the Maker Space.
+await p.screenshot({ path: path.join(out, "plan-top.png"), fullPage: true, clip: { x: 0, y: tools - 14, width: W, height: H } });
+// Panel 4 runs from "Materials" to the end of the "See the steps" row, so it never ends mid-line.
+await p.screenshot({ path: path.join(out, "plan-cost.png"), fullPage: true, clip: { x: 19.3, y: mat - 12, width: W - 38.6, height: Math.round(stepsEnd + 2 - (mat - 12)) } }); // inside the card's outline, so the frame is the only outline
 await browser.close();

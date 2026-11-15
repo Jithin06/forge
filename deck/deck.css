@@ -75,17 +75,20 @@ b, strong { font-weight: 700; }
 .s1 .tag { left: 124px; top: 704px; font-size: 34px; transform: rotate(-3deg); }
 
 /* ---------------------------------------------------------------- 2 problem */
-.s2 .lead { left: 120px; top: 306px; width: 800px; font-size: 40px; line-height: 1.3; }
-.s2 .lead p + p { margin-top: 26px; }
-.s2 .free { left: 120px; top: 772px; width: 800px; padding: 30px 34px; font-size: 38px; line-height: 1.3; }
+.s2 .lead { left: 120px; top: 320px; width: 800px; font-size: 40px; line-height: 1.3; }
+.s2 .lead p + p { margin-top: 36px; }
+.s2 .lead p + .free { margin-top: 64px; }
+.s2 .lead .free { padding: 28px 34px; font-size: 38px; line-height: 1.3; }
 .s2 .board { left: 1010px; top: 312px; width: 790px; height: 672px; border: 3px solid var(--black); border-radius: 22px; box-shadow: 10px 10px 0 var(--black); }
 .s2 .q { position: absolute; padding: 22px 30px 24px; font-size: 44px; font-weight: 700; line-height: 1.1; color: var(--black); background: var(--white); border: 3px solid var(--black); border-radius: 12px; box-shadow: 6px 6px 0 var(--black); white-space: nowrap; }
 .s2 .q::before { content: ""; position: absolute; left: 50%; top: -11px; width: 20px; height: 20px; margin-left: -10px; background: var(--black); border-radius: 50%; }
 
 /* ---------------------------------------------------------------- 3 product, 4 scrap */
 .quote { left: 120px; top: 384px; width: 288px; padding: 24px 24px 28px; font-size: 30px; line-height: 1.32; }
-.s3 .note { left: 120px; top: 846px; width: 288px; }
-.s4 .note { left: 1360px; top: 938px; width: 440px; }
+.s3 .note { left: 120px; top: 814px; width: 288px; }
+.s4 .note { left: 1360px; top: 962px; width: 440px; }
+/* A card taller than its screenshot: the screenshot sits at the top, plain white below. */
+.frame.pad img { height: auto; object-fit: fill; }
 
 /* ---------------------------------------------------------------- 5 honest AI */
 .node { position: absolute; padding: 26px 28px; font-size: 28px; line-height: 1.3; }
@@ -100,9 +103,11 @@ b, strong { font-weight: 700; }
 .node.plan .body { padding: 20px 24px 18px; }
 .node.plan .stub { border-top: 3px dashed var(--black); padding: 14px 24px 20px; font-weight: 700; }
 .hero { position: absolute; font-size: 200px; line-height: 0.8; font-weight: 700; letter-spacing: -0.03em; }
-.s5 .hero-label { left: 372px; top: 800px; width: 620px; font-size: 40px; line-height: 1.2; font-weight: 700; }
-.s5 .hero-label span { display: block; margin-top: 10px; font-size: 28px; line-height: 1.3; font-weight: 400; }
-.s5 .side { left: 1080px; top: 800px; width: 720px; font-size: 28px; line-height: 1.32; }
+.s5 .hero { font-size: 176px; }
+.s5 .hero-label { left: 592px; top: 772px; width: 560px; font-size: 38px; line-height: 1.18; font-weight: 700; }
+.s5 .hero-label span { display: block; margin-top: 8px; font-size: 26px; line-height: 1.3; font-weight: 400; }
+.s5 .checks { left: 592px; top: 952px; width: 1208px; font-size: 28px; line-height: 1.3; }
+.s5 .side { left: 1220px; top: 776px; width: 580px; font-size: 28px; line-height: 1.32; }
 .s5 .side .note { margin-top: 18px; }
 
 /* ---------------------------------------------------------------- 6 adoption */
@@ -112,19 +117,21 @@ b, strong { font-weight: 700; }
 .badge svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
 .badge.est { background: var(--gold); color: var(--black); }
 .badge.ok { background: var(--black); color: var(--gold); }
-.s6 .labels { left: 640px; top: 548px; display: flex; align-items: center; gap: 22px; font-size: 28px; }
-.s6 .labels .arrow { position: static; width: 60px; height: 34px; }
-.s6 .spaces { left: 640px; top: 632px; width: 1160px; columns: 2; column-gap: 40px; font-size: 26px; line-height: 1.5; }
+.s6 .crop { left: 120px; top: 550px; width: 440px; }
+.s6 .labels { left: 120px; top: 634px; width: 440px; display: flex; flex-direction: column; align-items: flex-start; gap: 16px; font-size: 28px; }
+.s6 .labels .arrow { position: static; width: 34px; height: 60px; margin-left: 56px; }
+.s6 .spaces { left: 640px; top: 510px; width: 1160px; columns: 2; column-gap: 40px; font-size: 26px; line-height: 1.5; }
 .s6 .spaces li { break-inside: avoid; }
-.s6 .facts { left: 640px; top: 812px; width: 1160px; padding-top: 24px; border-top: 3px solid var(--black); font-size: 30px; line-height: 1.3; }
+.s6 .facts { left: 640px; top: 780px; width: 1160px; padding-top: 28px; border-top: 3px solid var(--black); font-size: 30px; line-height: 1.3; }
 .s6 .facts p + p { margin-top: 12px; }
 
 /* ---------------------------------------------------------------- 7 ask */
 .s7 .brand { position: absolute; left: 120px; top: 96px; }
 .s7 > h1 { top: 226px; width: 1200px; font-size: 84px; line-height: 1.06; }
-.asks { position: absolute; left: 120px; top: 500px; width: 1100px; }
+.asks { position: absolute; left: 120px; top: 452px; width: 1140px; }
 .asks li { display: flex; align-items: flex-start; gap: 24px; font-size: 40px; line-height: 1.25; }
-.asks li + li { margin-top: 34px; }
+.asks li + li { margin-top: 24px; }
+.s7 .next { left: 120px; top: 744px; width: 1060px; padding-top: 22px; border-top: 3px solid var(--white); font-size: 30px; line-height: 1.32; }
 .asks li i { width: 60px; height: 60px; font-size: 34px; margin-top: -4px; }
 .s7 .by { position: absolute; left: 120px; bottom: 92px; width: 1100px; font-size: 26px; line-height: 1.4; }
 .s7 .qr { left: 1372px; top: 226px; width: 428px; height: 428px; padding: 34px; background: var(--white); border: 4px solid var(--black); border-radius: 26px; box-shadow: 14px 14px 0 var(--black); }
@@ -132,3 +139,5 @@ b, strong { font-weight: 700; }
 .s7 .url { left: 1220px; top: 712px; width: 580px; text-align: right; font-size: 40px; font-weight: 700; line-height: 1.2; }
 .s7 .url span { display: block; margin-top: 8px; font-size: 28px; font-weight: 400; }
 .s7 .tag { left: 1290px; top: 196px; font-size: 34px; transform: rotate(-6deg); }
+.nb { white-space: nowrap; }
+.step em { display: block; font-style: normal; font-size: 26px; color: var(--gray-text); }
