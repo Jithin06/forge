@@ -26,15 +26,30 @@ Production build: `npm run build && npm start`.
 
 All reads and writes go through server routes with the service key. The public key can only start sign-in.
 
+## Modes
+
+| Variable | Values | What it does |
+| --- | --- | --- |
+| `AI_PROVIDER` | `fixture` (default), `gemini` | `fixture` answers from saved examples in `data/fixtures/` and shows a "Sample data" banner. `gemini` calls `GEMINI_MODEL_PRIMARY`, falling back to `GEMINI_MODEL_FALLBACK` on a 429 |
+| `AUTH_MODE` | `google` (default), `test` | `test` adds a picker of test accounts and a "Test sign-in" banner. Never use it in production |
+| `AI_CALL_BUDGET` | a number | Stops live AI calls after that many. Calls are counted in `logs/ai-calls.jsonl` |
+| `RECORD_FIXTURES` | `1` | Saves each live answer into `data/fixtures/` |
+
 ## Checks
 
 | Command | What it checks |
 | --- | --- |
-| `npm run typecheck` | TypeScript |
-| `npm run lint` | ESLint |
-| `npm run build` | Production build |
+| `npm run typecheck`, `npm run lint`, `npm test`, `npm run build` | Types, lint, 70 unit tests, production build |
 | `npm run check:rls` | The public key cannot read any table, call the claim function or upload photos |
 | `npm run check:secrets` | No server secret in the client bundle or in git (run after a build) |
+| `npm run check:seed` | Seeding twice neither duplicates nor overwrites a space |
+| `npm run check:m2`, `check:m3`, `check:m4`, `check:m5` | Each milestone's checks through the running app. Set `BASE` to the server's address; M3 to M5 need `AUTH_MODE=test` |
+| `npm run race` | 5 users claim one item at once; exactly 1 must succeed |
+| `npm run check:m2b`, `check:live`, `eval` | Live-model checks and the eval. They cost live AI calls |
+| `npm run results` | Rewrites `RESULTS.md` from what the scripts measure |
+| `npm run clean:test` | Removes data made by test accounts and check scripts |
+
+Each milestone's report is in `reports/`. What is still needed from Jithin is in `NEEDS.md`.
 
 ## Layout
 

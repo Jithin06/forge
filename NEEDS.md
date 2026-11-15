@@ -74,3 +74,19 @@ All seven are my guesses, saved with `price_source: "coder estimate, unverified"
 4. `BASE=http://localhost:3123 npm run eval` (15 to 30 calls)
 5. `npm run results` (rewrites `RESULTS.md` with the eval score and tokens per plan)
 - Or tell me the key is in and I will run them and fix whatever the first real responses turn up. `logs/ai-calls.jsonl` shows the running count; the budget stops calls at 150.
+
+## Submission materials (all first drafts)
+
+### 11. Your problem story
+- **What:** one true story from working at the Maker Space: one student, one idea, where they got stuck. About 25 words for the slide, about 55 spoken.
+- **Where:** the dashed box on slide 1 (`deck/index.html`, the `<p class="todo">`), the first section of `deck/notes.md`, and "The problem" in `docs/devpost.md`. Then `node deck/build.mjs`.
+
+### 12. Deck, Devpost and demo script: things only you can settle
+- The seven open questions in `reports/deck.md`.
+- Every bracketed `[Jithin: ...]` part in `docs/devpost.md` and `deck/notes.md`.
+- `docs/demo-script.md` lists what must be true before you record: a live model (no "Sample data" banner), a real leftover posted, and real prices before you press Confirm on camera.
+
+### 13. Things I could not do
+- Use a real phone or a real screen reader. Everything was checked in Chrome's phone mode at 390 and 360 px.
+- Change anything in your Vercel, Supabase or Google accounts.
+- Open the leads in SPEC section 9.5 for more spaces (Ahmanson Lab equipment list, Iovine and Young Hall). Only two spaces are listed. Say the word and I will read those official pages and draft the documents, marked estimated.
