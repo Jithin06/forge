@@ -11,10 +11,12 @@
  * badges it checks three rules on every plan: a work order that is open to
  * all students shows as open; a route priced from the general table never
  * carries "Cheapest"; a space that sells no material never shows its own
- * price on something the student makes there.
+ * price on something the student makes there (a work order's print charge
+ * is exempt; see src/lib/compute/checks.ts).
  */
 import { readFile, writeFile } from "node:fs/promises";
 import { createClient } from "@supabase/supabase-js";
+import { ownPriceWhereNothingIsSold } from "../src/lib/compute/checks";
 import { eligibility } from "../src/lib/compute/eligibility";
 import { parseSpaceDoc, type Audience, type SpaceDoc } from "../src/lib/schemas";
 
@@ -68,7 +70,7 @@ for (const c of file.cases) {
     caseBadges++;
     if (spaces.has(r.space_id) && expectedBadge(r, c.audience) === r.eligibility.status) caseBadgesOk++;
     if (r.typical_from && r.labels.includes("cheapest")) ruleBreaks.push(`${c.id}: "Cheapest" on a route priced from the general table (${r.space_id})`);
-    if (r.bring_your_own && r.kind !== "staff_fabrication" && r.cost_lines.some((l) => l.low_usd !== null && !l.typical)) ruleBreaks.push(`${c.id}: ${r.space_id} sells no material but a line shows its own price`);
+    if (spaces.has(r.space_id) && ownPriceWhereNothingIsSold(r, spaces.get(r.space_id)!)) ruleBreaks.push(`${c.id}: ${r.space_id} sells no material but a line shows its own price`);
   }
   badges += caseBadges;
   badgesOk += caseBadgesOk;

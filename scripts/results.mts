@@ -41,6 +41,8 @@ if (existsSync("reports/eval-latest.json")) {
     `- Rule checks on every plan (open work orders, no "Cheapest" on a general price, bring your own): ${e.rule_breaks?.length ? e.rule_breaks.join("; ") : "none broken"}.`,
     `- Run at ${e.ran_at} with a live model (\`npm run eval\`). Run once; prompts were not changed afterwards.`,
     "",
+    ...((e.notes as string[] | undefined) ?? []).map((n) => `- Note, written by hand after the run: ${n}`),
+    "",
     "| Case | Student | Result | Top route | Accepted | Routes and badges | Calls |",
     "| --- | --- | --- | --- | --- | --- | --- |",
     ...(e.results as { id: string; audience?: string; top?: string | null; accepted?: string[]; top_ok?: boolean; routes?: string[]; model_answers?: number; error?: string }[]).map((r) =>

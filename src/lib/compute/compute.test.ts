@@ -9,6 +9,7 @@ import { computeBase, finalize, forAudience, withoutFileTypes } from "./plan";
 import { matchScrap, type ScrapItem } from "./scrapMatch";
 import { trainingsFor } from "./training";
 import { TYPICAL_PRICES } from "../typical-prices";
+import { ownPriceWhereNothingIsSold } from "./checks";
 
 const scrap = (id: string, space_id: string, material_category: string, posted_at = "2026-11-14T10:00:00Z"): ScrapItem => ({
   id, space_id, material_category, title: id, size_note: null, condition: "good", restrictions: [], photo_url: null, posted_at,
@@ -501,5 +502,36 @@ describe("the quote sheet's own example", () => {
     const line = [{ category: "pla_filament" as const, material_id: "pla_filament", quantity_low: 3.4, quantity_high: 3.4, unit: "cubic inch" }];
     expect(routeCost(bfms, line, "usc_undergrad_other").total).toEqual({ low: 17, high: 17 });
     expect(routeCost(bfms, line, "viterbi_undergrad").total).toEqual({ low: 3.4, high: 3.4 });
+  });
+});
+
+describe("eval check: a space that sells no material shows no price of its own", () => {
+  const spaces = realSeedSpaces();
+  const bfms = spaces.find((s) => s.id === "bfms")!;
+  const pla = { category: "pla_filament" as const, material_id: "pla_filament", quantity_low: 2, quantity_high: 4, unit: "cubic inch" };
+  const acrylic = { category: "acrylic" as const, material_id: null, quantity_low: 1, quantity_high: 1, unit: "sheet" };
+  const route = (equipment_ids: string[], materials: (typeof pla | typeof acrylic)[]) => {
+    const m = planFixture("club-sign");
+    m.routes = [{ ...m.routes[0], equipment_ids, materials }];
+    return finalize(computeBase(m, spaces, "viterbi_undergrad"), []).routes[0];
+  };
+  it("a pure work order's print charge is not a break", () => {
+    expect(ownPriceWhereNothingIsSold(route(["prusa_mk4"], [pla]), bfms)).toBe(false);
+  });
+  it("a route where staff print a part and the student also solders is not a break (the two plans the eval flagged)", () => {
+    const r = route(["prusa_mk4", "electronics_bench"], [pla]);
+    expect(r.kind).toBe("self_use");
+    expect(r.cost_lines[0].low_usd).toBe(2);
+    expect(ownPriceWhereNothingIsSold(r, bfms)).toBe(false);
+  });
+  it("a general-table price on a laser route is not a break", () => {
+    expect(ownPriceWhereNothingIsSold(route(["laser_vls675"], [acrylic]), bfms)).toBe(false);
+  });
+  it("a Maker Space price on a route with no staff-run printer is a break", () => {
+    expect(ownPriceWhereNothingIsSold(route(["laser_vls675"], [pla]), bfms)).toBe(true);
+  });
+  it("a space that does sell material is never flagged", () => {
+    const its = spaces.find((s) => s.id === "its-printing") ?? bfms;
+    expect(ownPriceWhereNothingIsSold({ bring_your_own: false, cost_lines: route(["prusa_mk4"], [pla]).cost_lines, equipment: [] }, its)).toBe(false);
   });
 });

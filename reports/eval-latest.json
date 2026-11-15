@@ -353,5 +353,9 @@
       ],
       "badges_ok": "3/3"
     }
+  ],
+  "notes": [
+    "tote-bag: the right answer was no route, but the plan sent the student to the Dramatic Arts scene shop, because that space's data lists a Costume Shop and the model took it for a place to sew. Left as a miss; the data was not changed.",
+    "The two rule flags above (night-light, pi-enclosure) were the check being too strict, not wrong plans: the price shown was a work order's print charge. The check now exempts that (src/lib/compute/checks.ts, with unit tests). The eval was not re-run, so the line above is what the run printed."
   ]
 }

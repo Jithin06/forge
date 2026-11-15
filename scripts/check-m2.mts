@@ -121,8 +121,8 @@ if (process.env.SKIP_RATE_LIMIT) {
   console.log("SKIP  rate limit (SKIP_RATE_LIMIT set, so this address is not locked out for an hour)");
 } else {
   let last = 0;
-  for (let i = 0; i < 21; i++) last = (await post("/api/ask", { text: IDEAS.sign, experience: "never" }, "10.0.0.99")).status;
-  check(last === 429, `21st AI call in an hour from one address: ${last}`);
+  for (let i = 0; i < 101; i++) last = (await post("/api/ask", { text: IDEAS.sign, experience: "never" }, "10.0.0.99")).status;
+  check(last === 429, `101st AI call in an hour from one address: ${last}`);
 }
 
 const { error: cleanupErr } = await db.from("plans").delete().in("id", created);

@@ -23,7 +23,7 @@ Vercel, the forge project, Settings, Environment Variables. Set these for the **
 | `AI_CALL_BUDGET` | A fixed total that never resets. It is for local work only (150 in `.env.local`). If it is set on the live site, the site stops answering for good once the total is reached, and the daily cap is ignored |
 | `RECORD_FIXTURES` | Saves answers to disk. Vercel's disk is read-only |
 | `AI_CALL_LOG` | A local file path |
-| `RATE_LIMIT_PER_HOUR` | Testing only. Leave the default of 20 AI calls per visitor address per hour |
+| `RATE_LIMIT_PER_HOUR` | Leave unset. The default is 100 AI calls per visitor address per hour (raised from 20 on Nov 15, because a whole venue shares one Wi-Fi address). Each server copy counts on its own, so it limits bursts only; the daily cap is the real protection |
 | `STAFF_SEED` | Read only by `npm run seed` on your machine |
 | `ANTHROPIC_API_KEY`, `FORGE_MODEL` | Not used by the Gemini provider |
 

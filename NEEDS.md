@@ -11,9 +11,8 @@ The key works. 127 live calls made so far (5 of them, on Nov 15 around 06:38Z, w
 - **What:** set the variables listed in `docs/production-settings.md` in Vercel and redeploy. In short: `AI_PROVIDER=gemini`, `GEMINI_API_KEY`, `GEMINI_MODEL_PRIMARY=gemini-3.5-flash-lite`, `GEMINI_MODEL_FALLBACK=gemini-3.1-flash-lite`, `AI_DAILY_BUDGET=450`, `AUTH_MODE=test`. Do **not** set `AI_CALL_BUDGET` there.
 - **Why:** I cannot change settings in your Vercel account. Until then the live site shows sample data with the banner.
 
-### 2b. Run the updated schema once, for an exact daily cap
-- **What:** Supabase, SQL Editor: paste and run the whole of `supabase/schema.sql` again. It adds one table (`ai_usage`) and one function (`spend_ai_call`) and touches nothing else.
-- **Why:** the live site's daily cap is counted in the database so all server copies share it. Without this step the cap is counted per server copy and is only approximate.
+### 2b. Daily cap table: done
+The `ai_usage` table exists in your Supabase project (checked Nov 15), so the live site's daily cap is counted in the database and shared by every server copy. It has no rows yet: no live AI call has been counted on the live site.
 
 ## Sign-in
 
@@ -58,10 +57,8 @@ Prices now come from the staff quote sheet you showed (Nov 14), which is newer t
 
 ## Proof
 
-### 9. Decide on the eval's one failure and one over-strict check
-The eval ran once on Nov 14, 11:15 PM Pacific: 20 of 21 cases, 45 of 45 badges. See RESULTS.md. Prompts were not changed and it was not re-run.
-- **tote-bag failed.** You decided "no route is right"; the model sent the student to the Dramatic Arts scene shop (ask first), because that space lists a Costume Shop as a service. Options: accept that space for this case; remove the Costume Shop line from that space's data; or leave it as an honest miss.
-- **A check I added flagged two plans** (night light, Pi enclosure): a Maker Space route showed a Maker Space price although the space sells no material. Both are routes where staff print a part and the student also works at the electronics bench, so the price is the work order's print charge, which is right. I think the check is too strict, not the plans wrong. Say if you want the check narrowed, or such routes split.
+### 9. Eval: closed
+Run once: 20 of 21, 45 of 45 badges. The tote bag is left as a miss by your decision; RESULTS.md says why. The over-strict price check is fixed and tested. Nothing else is pending here.
 
 ### 10. Local call budget
 `AI_CALL_BUDGET=150` in `.env.local` is our own fixed total and never resets. 127 are used, 23 are left. Raise the number there if you want more local live runs. It has no effect on the live site, whose cap is 450 a Pacific day.
