@@ -1,18 +1,14 @@
-import { CircleAlert, PiggyBank, Sprout, TriangleAlert } from "lucide-react";
+import { ChevronDown, CircleAlert, GraduationCap, TriangleAlert, Wrench } from "lucide-react";
 import Link from "next/link";
 import { EligibilityBadge } from "@/components/badges";
+import { Band, Body, primaryBtn, secondaryBtn } from "@/components/page";
 import { SampleBanner } from "@/components/sample-banner";
+import { Swatch } from "@/components/swatch";
 import type { FinalRoute } from "@/lib/compute/plan";
 import { moneyRange, quantity } from "@/lib/format";
 import type { PlanView as PlanData } from "@/lib/plans";
-import { cn } from "@/lib/utils";
 import { CopyLink } from "./copy-link";
 import { PlanClaim } from "./plan-claim";
-
-const primaryBtn =
-  "inline-flex min-h-12 items-center justify-center rounded-xl bg-cardinal px-6 font-semibold text-white hover:bg-cardinal-pressed";
-const secondaryBtn =
-  "inline-flex min-h-12 items-center justify-center rounded-xl border-[1.5px] border-cardinal bg-white px-5 font-semibold text-cardinal hover:bg-gold-soft";
 
 export function PlanView({ data }: { data: PlanData }) {
   const { plan } = data;
@@ -20,71 +16,82 @@ export function PlanView({ data }: { data: PlanData }) {
 
   if (plan.routes.length === 0) {
     return (
-      <div className="space-y-5">
-        {data.fixture && <SampleBanner />}
-        <h1 className="text-[28px] font-bold">{plan.clarifying_question ? "We need a little more" : "We could not find a way yet"}</h1>
-        <p className="text-[18px]">{plan.summary}</p>
-        <p className="border-l-4 border-cardinal pl-4">
-          {plan.clarifying_question ??
-            plan.not_supported_reason ??
-            "None of the listed spaces can make this. Ask the staff at any space what they would suggest."}
-        </p>
-        <div className="flex flex-col gap-3 sm:flex-row">
-          <Link href={editHref} className={primaryBtn}>Change my answers</Link>
-          <Link href="/spaces" className={secondaryBtn}>See all spaces</Link>
-        </div>
-      </div>
+      <>
+        <Band title={plan.clarifying_question ? "We need a little more" : "We could not find a way yet"} size="md">
+          <p>{plan.summary}</p>
+        </Band>
+        <Body>
+          <p className="alert">
+            <CircleAlert aria-hidden className="size-5" />
+            <span>
+              {plan.clarifying_question ??
+                plan.not_supported_reason ??
+                "None of the listed spaces can make this. Ask the staff at any space what they would suggest."}
+            </span>
+          </p>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <Link href={editHref} className={primaryBtn}>Change my answers</Link>
+            <Link href="/spaces" className={secondaryBtn}>See all spaces</Link>
+          </div>
+          {data.fixture && <SampleBanner />}
+        </Body>
+      </>
     );
   }
 
   const spaceNames = Object.fromEntries(plan.routes.map((r) => [r.space_id, r.space_name]));
+  const n = plan.routes.length;
   return (
-    <div className="space-y-8">
-      {data.fixture && <SampleBanner />}
-      <header className="space-y-2">
-        <h1 className="text-[28px] font-bold">Your plan</h1>
-        <p className="text-[18px]">{plan.summary}</p>
-      </header>
+    <>
+      <Band title="Your plan" size="lg">
+        <p>{plan.summary}</p>
+        <p className="mt-1 font-semibold">{n === 1 ? "One way to build it." : `${n} ways to build it. The best fit for you is first.`}</p>
+      </Band>
+      <Body>
+        {data.fixture && <SampleBanner />}
 
-      {plan.none_open && (
-        <div className="space-y-2 border-l-4 border-cardinal pl-4">
-          <p className="flex items-start gap-2 font-semibold">
-            <CircleAlert aria-hidden className="mt-1 size-5 shrink-0" />
-            None of these spaces is open to you without asking first.
-          </p>
-          <ul className="list-disc space-y-1 pl-6">
-            {uniqueSpaces(plan.routes).map((r) => (
-              <li key={r.space_id}>
-                {r.space_name}: {r.eligibility.note ?? "Ask the staff whether you can use it."}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+        {plan.none_open && (
+          <div className="alert">
+            <CircleAlert aria-hidden className="size-5" />
+            <div className="space-y-2">
+              <p className="font-bold">None of these spaces is open to you without asking first.</p>
+              <ul className="list-disc space-y-1 pl-5">
+                {uniqueSpaces(plan.routes).map((r) => (
+                  <li key={r.space_id}>
+                    {r.space_name}: {r.eligibility.note ?? "Ask the staff whether you can use it."}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )}
 
-      <section aria-label="Ways to build it" className="space-y-5">
-        {plan.routes.map((r, i) => (
-          <RouteCard key={i} route={r} top={i === 0} n={i + 1} of={plan.routes.length} planId={data.id} spaceNames={spaceNames} />
-        ))}
-      </section>
-
-      {plan.first_visit.length > 0 && (
-        <section aria-labelledby="first-visit" className="space-y-3">
-          <h2 id="first-visit" className="text-[22px] font-semibold">Your first visit</h2>
-          <p className="text-[15px] text-gray-text">For the first way above, at {plan.routes[0].space_name}.</p>
-          <ol className="list-decimal space-y-2 pl-6">
-            {plan.first_visit.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ol>
+        <section aria-label="Ways to build it" className="space-y-8 pt-2">
+          {plan.routes.map((r, i) => (
+            <RouteCard key={i} route={r} top={i === 0} n={i + 1} of={n} planId={data.id} spaceNames={spaceNames} />
+          ))}
         </section>
-      )}
 
-      <div className="flex flex-col gap-3 border-t border-gray-line pt-5 sm:flex-row sm:items-center">
-        <Link href={editHref} className={secondaryBtn}>Change my answers</Link>
-        <CopyLink />
-      </div>
-    </div>
+        {plan.first_visit.length > 0 && (
+          <section aria-labelledby="first-visit" className="card space-y-3 p-4">
+            <div>
+              <h2 id="first-visit" className="text-[22px] font-bold">Your first visit</h2>
+              <p className="text-[15px] text-gray-text">For the first way above, at {plan.routes[0].space_name}.</p>
+            </div>
+            <ol className="steps">
+              {plan.first_visit.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ol>
+          </section>
+        )}
+
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <Link href={editHref} className={secondaryBtn}>Change my answers</Link>
+          <CopyLink />
+        </div>
+      </Body>
+    </>
   );
 }
 
@@ -93,47 +100,45 @@ function uniqueSpaces(routes: FinalRoute[]): FinalRoute[] {
   return routes.filter((r) => (seen.has(r.space_id) ? false : (seen.add(r.space_id), true)));
 }
 
+const bare = (r: { low: number; high: number }) => moneyRange(r).replace(/^about /, "");
+
+/** One way to build it, drawn as a workshop job ticket: ruler, body, tear line, cost stub. */
 function RouteCard({ route: r, top, n, of, planId, spaceNames }: { route: FinalRoute; top: boolean; n: number; of: number; planId: string; spaceNames: Record<string, string> }) {
   const hid = `route-${n}`;
   const anyFree = r.scrap.some((s) => s.length > 0);
+  const est = r.prices_estimated ? ", estimated prices" : "";
   return (
-    <article aria-labelledby={hid} className="overflow-hidden rounded-xl border border-gray-line bg-white shadow-sm">
-      {top && <div aria-hidden className="ruler-strip" />}
+    <article aria-labelledby={hid} className="card drop-in relative" style={{ animationDelay: `${(n - 1) * 120}ms` }}>
+      {r.labels.length > 0 && (
+        <p className="absolute -top-4 right-3 z-10 flex gap-2">
+          {r.labels.includes("easiest") && <span className="tag tag-white">Easiest for a first build</span>}
+          {r.labels.includes("cheapest") && <span className="tag">Cheapest</span>}
+        </p>
+      )}
+      <div aria-hidden className="ruler" />
+
       <div className="space-y-4 p-4">
         <header className="space-y-2">
-          {r.labels.length > 0 && (
-            <p className="flex flex-wrap gap-2">
-              {r.labels.includes("cheapest") && (
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-gold px-2.5 py-0.5 text-[15px] font-semibold text-black">
-                  <PiggyBank aria-hidden className="size-4" />
-                  Cheapest
-                </span>
-              )}
-              {r.labels.includes("easiest") && (
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-gold px-2.5 py-0.5 text-[15px] font-semibold text-black">
-                  <Sprout aria-hidden className="size-4" />
-                  Easiest for a first build
-                </span>
-              )}
-            </p>
-          )}
-          <p className="text-[15px] text-gray-text">{of > 1 ? `Way ${n} of ${of}` : "How to build it"}</p>
-          <h2 id={hid} className="text-[22px] font-semibold">{r.process}</h2>
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-            <Link href={`/spaces/${r.space_id}`} className="inline-flex min-h-11 items-center font-semibold text-cardinal underline underline-offset-4">
+          <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 pt-1">
+            <Link href={`/spaces/${r.space_id}`} className="link inline-flex min-h-11 items-center">
               {r.space_name}
             </Link>
             <EligibilityBadge status={r.eligibility.status} />
           </div>
-          {r.eligibility.status !== "open" && r.eligibility.note && <p className="font-semibold">{r.eligibility.note}</p>}
+          <p className="text-[15px] text-gray-text">{of > 1 ? `Way ${n} of ${of}` : "How to build it"}</p>
+          <h2 id={hid} className="text-[22px] font-bold leading-[1.12] tracking-[-0.01em]">{r.process}</h2>
+          {r.eligibility.status !== "open" && r.eligibility.note && <p className="font-bold">{r.eligibility.note}</p>}
           <p>{r.fit_reason}</p>
         </header>
 
         {r.equipment.length > 0 && (
           <Block title="Tools you will use">
-            <ul className="list-disc space-y-1 pl-6">
+            <ul className="grid gap-2">
               {r.equipment.map((e) => (
-                <li key={e.id}>{e.plain_name}</li>
+                <li key={e.id} className="flex items-center gap-2.5">
+                  <span className="ico"><Wrench aria-hidden className="size-5" /></span>
+                  <b>{e.plain_name}</b>
+                </li>
               ))}
             </ul>
           </Block>
@@ -143,11 +148,14 @@ function RouteCard({ route: r, top, n, of, planId, spaceNames }: { route: FinalR
           {r.trainings.length === 0 ? (
             <p>No training is listed for these tools. Ask the staff to be sure.</p>
           ) : (
-            <ul className="space-y-2">
+            <ul className="grid gap-2">
               {r.trainings.map((t) => (
-                <li key={t.id}>
-                  <span className="font-semibold">{t.name}.</span> {t.how_to_sign_up ?? "Ask the staff how to sign up."}
-                  {t.restricted_to && <span className="block text-[15px]">Only for: {t.restricted_to}</span>}
+                <li key={t.id} className="flex items-start gap-2.5">
+                  <span className="ico"><GraduationCap aria-hidden className="size-5" /></span>
+                  <div className="leading-[1.3]">
+                    <b>{t.name}.</b> {t.how_to_sign_up ?? "Ask the staff how to sign up."}
+                    {t.restricted_to && <span className="block text-[15px]">Only for: {t.restricted_to}</span>}
+                  </div>
                 </li>
               ))}
             </ul>
@@ -156,31 +164,34 @@ function RouteCard({ route: r, top, n, of, planId, spaceNames }: { route: FinalR
 
         {r.cost_lines.length > 0 && (
           <Block title="Materials">
-            <ul className="space-y-2">
+            <ul className="grid gap-2">
               {r.cost_lines.map((l, i) => {
                 const free = r.scrap[i] ?? [];
                 return (
-                  <li key={i} className={cn("rounded-lg p-2", free.length > 0 ? "border-l-4 border-gold bg-gold-soft" : "border-l-2 border-gray-line")}>
-                    <p className="flex flex-wrap justify-between gap-x-4 tabular">
-                      <span>
-                        <span className="font-semibold">{l.name}</span>, {quantity(l.quantity_low, l.quantity_high, l.unit)}
-                      </span>
-                      <span>
-                        {free.length > 0
-                          ? "Free with scrap"
-                          : l.low_usd !== null && l.high_usd !== null
-                            ? moneyRange({ low: l.low_usd, high: l.high_usd })
-                            : "Ask staff for the price"}
-                      </span>
-                    </p>
+                  <li key={i} className="space-y-2">
+                    <div className="flex items-center gap-2.5">
+                      <Swatch category={l.category} className="size-[34px]" />
+                      <p className="leading-[1.25] tabular">
+                        <b>{l.name}</b>, {quantity(l.quantity_low, l.quantity_high, l.unit)}
+                        <span className={free.length > 0 ? "block text-[15px] font-bold" : "block text-[15px] text-gray-text"}>
+                          {free.length > 0
+                            ? "Free with scrap"
+                            : l.low_usd !== null && l.high_usd !== null
+                              ? moneyRange({ low: l.low_usd, high: l.high_usd })
+                              : "Ask staff for the price"}
+                        </span>
+                      </p>
+                    </div>
                     {free.map((s) => (
-                      <div key={s.id} className="mt-2 flex flex-wrap items-center gap-3">
-                        {s.photo_url && (
+                      <div key={s.id} className="panel-free flex flex-wrap items-center gap-2.5 p-2.5">
+                        {s.photo_url ? (
                           // eslint-disable-next-line @next/next/no-img-element
-                          <img src={s.photo_url} alt={`Photo of ${s.title}`} loading="lazy" className="size-16 rounded-lg border border-gray-line object-cover" />
+                          <img src={s.photo_url} alt={`Photo of ${s.title}`} loading="lazy" className="size-14 rounded-lg border-[1.5px] border-black object-cover" />
+                        ) : (
+                          <Swatch category={s.material_category} className="size-14" />
                         )}
-                        <p className="min-w-40 flex-1 text-[15px]">
-                          <span className="font-semibold">Free piece: {s.title}</span>
+                        <p className="min-w-40 flex-1 text-[15px] leading-[1.3]">
+                          <b>Free piece: {s.title}</b>
                           {s.size_note ? `. ${s.size_note}` : ""}
                           {s.space_id !== r.space_id ? `. At another space: ${spaceNames[s.space_id] ?? s.space_id}` : ""}
                           {s.restrictions.length > 0 ? `. ${s.restrictions.join(". ")}` : ""}.
@@ -192,48 +203,73 @@ function RouteCard({ route: r, top, n, of, planId, spaceNames }: { route: FinalR
                 );
               })}
             </ul>
-            {r.total ? (
-              <div className="mt-3 space-y-1 tabular">
-                <p className="font-semibold">
-                  Materials: {moneyRange(r.total)}
-                  {r.prices_estimated ? ", estimated prices" : ""}
-                </p>
-                {anyFree && r.with_scrap && <p className="font-semibold">With scrap: {moneyRange(r.with_scrap)}</p>}
-                {r.cost_lines.some((l) => l.low_usd === null) && (
-                  <p className="text-[15px]">Some materials have no listed price and are not in this total.</p>
-                )}
-              </div>
-            ) : (
-              <p className="mt-3 text-[15px]">No prices are listed for these yet. Ask the staff what they cost.</p>
-            )}
           </Block>
         )}
+      </div>
 
-        {r.warnings.length > 0 && (
-          <Block title="Watch out for">
-            <ul className="space-y-2">
-              {r.warnings.map((w) => (
-                <li key={w.issue} className="flex items-start gap-2">
-                  <TriangleAlert aria-hidden className="mt-1 size-5 shrink-0" />
-                  <span>
-                    <span className="font-semibold">{w.issue}.</span> {w.fix}
-                  </span>
+      {r.cost_lines.length > 0 && (
+        <div className="stub space-y-1 px-4 py-3.5">
+          {r.total ? (
+            anyFree && r.with_scrap ? (
+              <>
+                <p>
+                  <span className="block text-[15px]">With free scrap, about</span>
+                  <span className="figure block">{bare(r.with_scrap)}</span>
+                </p>
+                <p className="text-[15px] text-gray-text tabular">Materials: {moneyRange(r.total)} new{est}</p>
+              </>
+            ) : (
+              <>
+                <p>
+                  <span className="block text-[15px]">Materials, about</span>
+                  <span className="figure block">{bare(r.total)}</span>
+                </p>
+                {r.prices_estimated && <p className="text-[15px] text-gray-text">Estimated prices</p>}
+              </>
+            )
+          ) : (
+            <>
+              <p className="text-[22px] font-bold leading-[1.15]">Ask staff for prices</p>
+              <p className="text-[15px] text-gray-text">No prices are listed for these yet. Ask the staff what they cost.</p>
+            </>
+          )}
+          {r.total && r.cost_lines.some((l) => l.low_usd === null) && (
+            <p className="text-[15px]">Some materials have no listed price and are not in this total.</p>
+          )}
+        </div>
+      )}
+
+      <details open={top} className="group border-t-[1.5px] border-black">
+        <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-3 rounded-b-xl px-4 [&::-webkit-details-marker]:hidden">
+          <span className="link">See the steps</span>
+          <ChevronDown aria-hidden className="size-5 group-open:rotate-180" />
+        </summary>
+        <div className="space-y-4 px-4 pb-4">
+          {r.warnings.length > 0 && (
+            <Block title="Watch out for">
+              <ul className="grid gap-2">
+                {r.warnings.map((w) => (
+                  <li key={w.issue} className="flex items-start gap-2.5">
+                    <span className="ico"><TriangleAlert aria-hidden className="size-5" /></span>
+                    <span className="leading-[1.35]">
+                      <b>{w.issue}.</b> {w.fix}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </Block>
+          )}
+          <Block title="Steps">
+            <ol className="steps">
+              {r.steps.map((s) => (
+                <li key={s.title} className="leading-[1.35]">
+                  <b>{s.title}.</b> {s.detail}
                 </li>
               ))}
-            </ul>
+            </ol>
           </Block>
-        )}
-
-        <Block title="Steps">
-          <ol className="list-decimal space-y-2 pl-6">
-            {r.steps.map((s) => (
-              <li key={s.title}>
-                <span className="font-semibold">{s.title}.</span> {s.detail}
-              </li>
-            ))}
-          </ol>
-        </Block>
-      </div>
+        </div>
+      </details>
     </article>
   );
 }
@@ -241,7 +277,7 @@ function RouteCard({ route: r, top, n, of, planId, spaceNames }: { route: FinalR
 function Block({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="space-y-2">
-      <h3 className="text-[18px] font-semibold">{title}</h3>
+      <h3 className="text-[16px] font-bold">{title}</h3>
       {children}
     </div>
   );

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import { Band, Body } from "@/components/page";
 import { PlanView } from "@/components/plan/plan-view";
 import { getPlan } from "@/lib/plans";
 
@@ -23,11 +24,23 @@ async function PlanData({ params }: { params: PageProps<"/plan/[id]">["params"] 
 
 function PlanSkeleton() {
   return (
-    <div aria-busy="true" className="space-y-4">
-      <h1 className="text-[28px] font-bold">Your plan</h1>
-      <p role="status" className="text-gray-text">Loading your plan...</p>
-      <div aria-hidden className="h-48 animate-pulse rounded-xl border border-gray-line" />
-      <div aria-hidden className="h-48 animate-pulse rounded-xl border border-gray-line" />
+    <div aria-busy="true">
+      <Band title="Your plan" />
+      <Body>
+        <p role="status" className="text-gray-text">Loading your plan...</p>
+        {[0, 1].map((k) => (
+          <div key={k} aria-hidden className="card">
+            <div className="ruler" />
+            <div className="space-y-3 p-4">
+              <div className="skeleton h-6 w-2/3" />
+              <div className="skeleton h-4 w-full" />
+            </div>
+            <div className="stub p-4">
+              <div className="skeleton h-9 w-1/3" />
+            </div>
+          </div>
+        ))}
+      </Body>
     </div>
   );
 }

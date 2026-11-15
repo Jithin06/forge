@@ -29,13 +29,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="flex min-h-full flex-col">
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-white focus:px-4 focus:py-3"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:border-2 focus:border-black focus:bg-white focus:px-4 focus:py-3 focus:font-bold"
         >
           Skip to content
         </a>
         <TestBanner />
         <SiteHeader />
-        <main id="main" className="mx-auto w-full max-w-[680px] flex-1 px-4 py-6">
+        <main id="main" className="flex-1">
           {children}
         </main>
         <footer className="mx-auto w-full max-w-[680px] px-4 pb-28 pt-6 text-[15px] text-gray-text md:pb-8">

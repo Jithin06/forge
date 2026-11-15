@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
 import { AudiencePicker, ExperiencePicker } from "@/components/about-you";
 import { useAudience, useExperience } from "@/components/profile-store";
+import { Band, Body, primaryBtn, secondaryBtn } from "@/components/page";
 import { SampleBanner } from "@/components/sample-banner";
 import type { Question, QuestionId } from "@/lib/ai/questions";
 import { cn } from "@/lib/utils";
@@ -35,7 +36,8 @@ type Step =
 
 const DRAFT_KEY = "forge.draft";
 
-export function AskFlow() {
+/** `below` is shown under the form only, not while asking questions or waiting. */
+export function AskFlow({ below }: { below?: React.ReactNode }) {
   const router = useRouter();
   const [audience] = useAudience();
   const [experience] = useExperience();
@@ -176,14 +178,17 @@ export function AskFlow() {
 
   if (step.name === "blocked") {
     return (
-      <section className="space-y-4">
-        <h1 ref={headingRef} tabIndex={-1} className="text-[28px] font-bold outline-none">
-          We cannot help with this one
-        </h1>
-        <p role="alert" className="border-l-4 border-cardinal pl-4">{step.reason}</p>
-        <button type="button" onClick={() => { setText(""); setStep({ name: "form" }); }} className={primaryBtn}>
-          Describe something else
-        </button>
+      <section>
+        <Band title="We cannot help with this one" size="md" headingRef={headingRef} />
+        <Body>
+          <p role="alert" className="alert">
+            <CircleAlert aria-hidden className="size-5" />
+            <span>{step.reason}</span>
+          </p>
+          <button type="button" onClick={() => { setText(""); setStep({ name: "form" }); }} className={primaryBtn}>
+            Describe something else
+          </button>
+        </Body>
       </section>
     );
   }
@@ -195,114 +200,115 @@ export function AskFlow() {
       makePlan(filled, step.summary);
     };
     return (
-      <section className="space-y-6">
-        {step.fixture && <SampleBanner />}
-        <div className="space-y-2">
-          <h1 ref={headingRef} tabIndex={-1} className="text-[28px] font-bold outline-none">
-            A few quick questions
-          </h1>
-          <p aria-live="polite" className="text-[18px]">{step.summary}</p>
-        </div>
-        {step.questions.map((q) => (
-          <QuestionChips
-            key={q.id}
-            q={q}
-            value={answers[q.id] ?? []}
-            onChange={(v) => setAnswers((a) => ({ ...a, [q.id]: v }))}
-          />
-        ))}
-        <div className="flex flex-col gap-3 sm:flex-row">
-          <button type="button" onClick={finish} className={primaryBtn}>Show my plan</button>
-          <button type="button" onClick={() => setStep({ name: "form" })} className={secondaryBtn}>Change my description</button>
-        </div>
+      <section>
+        <Band title="A few quick questions" size="md" headingRef={headingRef} overlap>
+          <p aria-live="polite">{step.summary}</p>
+        </Band>
+        <Body overlap>
+          <div className="card space-y-6 p-4">
+            {step.questions.map((q) => (
+              <QuestionChips
+                key={q.id}
+                q={q}
+                value={answers[q.id] ?? []}
+                onChange={(v) => setAnswers((a) => ({ ...a, [q.id]: v }))}
+              />
+            ))}
+            <button type="button" onClick={finish} className={cn(primaryBtn, "w-full")}>Show my plan</button>
+          </div>
+          <button type="button" onClick={() => setStep({ name: "form" })} className={cn(secondaryBtn, "w-full sm:w-auto")}>Change my description</button>
+          {step.fixture && <SampleBanner />}
+        </Body>
       </section>
     );
   }
 
   return (
-    <form onSubmit={submitIdea} noValidate className="space-y-6">
-      <div className="space-y-3">
-        <h1 className="text-[40px] font-bold leading-[1.15] md:text-[56px]">What do you want to make?</h1>
-        <label htmlFor={textId} className="block text-[18px]">Describe it in your own words</label>
-        <textarea
-          id={textId}
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          rows={4}
-          maxLength={1500}
-          aria-invalid={!!fieldError.text}
-          aria-describedby={fieldError.text ? errId : undefined}
-          placeholder="For example: a small shelf for my plants that hangs on the wall"
-          className="w-full rounded-xl border border-gray-text bg-white p-3 text-[16px] placeholder:text-gray-text"
-        />
-        {fieldError.text && <FieldError id={errId}>{fieldError.text}</FieldError>}
+    <>
+      <Band title="What do you want to make?" size="hero" overlap>
+        <p>Tell us in your own words. We find where at USC to build it, and what you can get for free.</p>
+      </Band>
+      <Body overlap>
+        <form onSubmit={submitIdea} noValidate className="card space-y-5 p-4">
+          <div className="space-y-3">
+            <label htmlFor={textId} className="label">Describe it in your own words</label>
+            <textarea
+              id={textId}
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              rows={3}
+              maxLength={1500}
+              aria-invalid={!!fieldError.text}
+              aria-describedby={fieldError.text ? errId : undefined}
+              placeholder="For example: a small shelf for my plants that hangs on the wall"
+              className="field min-h-[96px]"
+            />
+            {fieldError.text && <FieldError id={errId}>{fieldError.text}</FieldError>}
 
-        <div className="space-y-2">
-          <p className="text-[15px] text-gray-text">Or start from an example:</p>
-          <div className="flex flex-wrap gap-2">
-            {EXAMPLES.map((ex) => (
-              <button
-                key={ex.chip}
-                type="button"
-                onClick={() => { setText(ex.text); setFieldError((f) => ({ ...f, text: undefined })); }}
-                className="min-h-11 rounded-full border border-gray-text bg-white px-4 hover:border-cardinal"
-              >
-                {ex.chip}
+            <div className="space-y-2">
+              <p className="text-[15px] text-gray-text">Or start from an example:</p>
+              <div className="flex flex-wrap gap-2">
+                {EXAMPLES.map((ex) => (
+                  <button
+                    key={ex.chip}
+                    type="button"
+                    onClick={() => { setText(ex.text); setFieldError((f) => ({ ...f, text: undefined })); }}
+                    className="chip"
+                  >
+                    {ex.chip}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-3">
+              <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp" onChange={onPhoto} hidden />
+              <button type="button" onClick={() => fileRef.current?.click()} className="chip">
+                <Camera aria-hidden className="size-5" />
+                {image ? "Change the photo" : "Add a photo or sketch"}
               </button>
-            ))}
+              {image && (
+                <span className="flex items-center gap-2">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={image} alt="Your photo or sketch" className="size-12 rounded-lg border-[1.5px] border-black object-cover" />
+                  <button type="button" onClick={() => { setImage(null); if (fileRef.current) fileRef.current.value = ""; }} className="link flex min-h-11 items-center gap-1">
+                    <X aria-hidden className="size-4" />
+                    Remove photo
+                  </button>
+                </span>
+              )}
+            </div>
+            {fieldError.photo && <FieldError>{fieldError.photo}</FieldError>}
           </div>
-        </div>
 
-        <div className="flex flex-wrap items-center gap-3">
-          <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp" onChange={onPhoto} hidden />
-          <button type="button" onClick={() => fileRef.current?.click()} className={cn(secondaryBtn, "gap-2")}>
-            <Camera aria-hidden className="size-5" />
-            {image ? "Change the photo" : "Add a photo or sketch"}
-          </button>
-          {image && (
-            <span className="flex items-center gap-2">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={image} alt="Your photo or sketch" className="size-12 rounded-lg border border-gray-line object-cover" />
-              <button type="button" onClick={() => { setImage(null); if (fileRef.current) fileRef.current.value = ""; }} className="flex min-h-11 items-center gap-1 text-cardinal underline underline-offset-4">
-                <X aria-hidden className="size-4" />
-                Remove photo
-              </button>
-            </span>
+          <section aria-label="About you" className="space-y-5 border-t-2 border-dashed border-black pt-4">
+            {fieldError.about && (!audience || !experience) && <FieldError>{fieldError.about}</FieldError>}
+            <AudiencePicker />
+            <ExperiencePicker />
+          </section>
+
+          {error && (
+            <div role="alert" className="alert">
+              <CircleAlert aria-hidden className="size-5" />
+              <p>{error} Your description is still here.</p>
+            </div>
           )}
-        </div>
-        {fieldError.photo && <FieldError>{fieldError.photo}</FieldError>}
-      </div>
 
-      <section aria-label="About you" className="space-y-5">
-        {fieldError.about && (!audience || !experience) && <FieldError>{fieldError.about}</FieldError>}
-        <AudiencePicker />
-        <ExperiencePicker />
-      </section>
-
-      {error && (
-        <div role="alert" className="flex items-start gap-2 border-l-4 border-cardinal pl-4">
-          <CircleAlert aria-hidden className="mt-1 size-5 shrink-0" />
-          <p>{error} Your description is still here.</p>
-        </div>
-      )}
-
-      <button type="submit" className={cn(primaryBtn, "w-full sm:w-auto")}>
-        {error ? "Try again" : "Find how to build it"}
-      </button>
-    </form>
+          <button type="submit" className={cn(primaryBtn, "w-full")}>
+            {error ? "Try again" : "Find how to build it"}
+          </button>
+        </form>
+      </Body>
+      {below}
+    </>
   );
 }
 
-const primaryBtn =
-  "inline-flex min-h-12 items-center justify-center rounded-xl bg-cardinal px-6 text-[16px] font-semibold text-white hover:bg-cardinal-pressed";
-const secondaryBtn =
-  "inline-flex min-h-12 items-center justify-center rounded-xl border-[1.5px] border-cardinal bg-white px-5 text-[16px] font-semibold text-cardinal hover:bg-gold-soft";
-
 function FieldError({ id, children }: { id?: string; children: React.ReactNode }) {
   return (
-    <p id={id} role="alert" className="flex items-start gap-2 border-l-4 border-cardinal pl-3">
-      <CircleAlert aria-hidden className="mt-1 size-4 shrink-0" />
-      {children}
+    <p id={id} role="alert" className="alert">
+      <CircleAlert aria-hidden className="size-4" />
+      <span>{children}</span>
     </p>
   );
 }
@@ -316,18 +322,14 @@ function QuestionChips({ q, value, onChange }: { q: Question; value: string[]; o
   };
   return (
     <fieldset className="space-y-2">
-      <legend className="text-[18px] font-semibold">{q.text}</legend>
+      <legend className="text-[17px] font-bold">{q.text}</legend>
       <div className="flex flex-wrap gap-2">
         {q.options.map((o) => {
           const checked = value.includes(o.id);
           return (
             <label
               key={o.id}
-              className={cn(
-                "inline-flex min-h-11 cursor-pointer items-center rounded-full border px-4",
-                "has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-black",
-                checked ? "border-cardinal bg-cardinal font-semibold text-white" : "border-gray-text bg-white hover:border-cardinal",
-              )}
+              className={cn("chip", checked && "chip-on")}
             >
               <input
                 type={q.multi ? "checkbox" : "radio"}
@@ -354,24 +356,38 @@ function Waiting({ lines, summary, idea, onCancel }: { lines: string[]; summary?
     return () => { clearInterval(tick); clearTimeout(late); };
   }, [lines.length]);
   return (
-    <section aria-busy="true" className="space-y-5">
-      <h1 className="text-[28px] font-bold">Working on it</h1>
-      <p className="text-[18px]">{summary ?? idea}</p>
-      <p role="status" className="font-semibold">{lines[i]}...</p>
-      <div aria-hidden className="space-y-3">
-        <div className="h-8 w-1/2 animate-pulse rounded-lg bg-gold-soft" />
-        <div className="h-36 animate-pulse rounded-xl border border-gray-line" />
-        <div className="h-36 animate-pulse rounded-xl border border-gray-line" />
-      </div>
-      {slow && (
-        <div className="space-y-3">
-          <p>This is taking longer than usual. You can keep waiting or start again.</p>
-          <div className="flex gap-3">
-            <button type="button" onClick={() => setSlow(false)} className={secondaryBtn}>Keep waiting</button>
-            <button type="button" onClick={onCancel} className={secondaryBtn}>Try again</button>
-          </div>
+    <section aria-busy="true">
+      <Band title="Working on it" size="lg">
+        <p>{summary ?? idea}</p>
+      </Band>
+      <Body>
+        <p role="status" className="notice font-bold">{lines[i]}...</p>
+        {/* Shaped like the plan that is coming: two build tickets. */}
+        <div aria-hidden className="space-y-6">
+          {[0, 1].map((k) => (
+            <div key={k} className="card">
+              <div className="ruler" />
+              <div className="space-y-3 p-4">
+                <div className="skeleton h-6 w-2/3" />
+                <div className="skeleton h-4 w-full" />
+                <div className="skeleton h-4 w-5/6" />
+              </div>
+              <div className="stub p-4">
+                <div className="skeleton h-9 w-1/3" />
+              </div>
+            </div>
+          ))}
         </div>
-      )}
+        {slow && (
+          <div className="space-y-3">
+            <p>This is taking longer than usual. You can keep waiting or start again.</p>
+            <div className="flex gap-3">
+              <button type="button" onClick={() => setSlow(false)} className={secondaryBtn}>Keep waiting</button>
+              <button type="button" onClick={onCancel} className={secondaryBtn}>Try again</button>
+            </div>
+          </div>
+        )}
+      </Body>
     </section>
   );
 }

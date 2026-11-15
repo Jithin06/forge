@@ -90,19 +90,35 @@ Cardinal is already the brand color, so it cannot also mean "error", and green i
 
 Every badge has text. Color alone never carries meaning.
 
+## Visual energy
+
+Restraint in color does not mean a flat page. The palette is small, so energy comes from scale, contrast, solid shapes and a few workshop motifs. If the project has a reference file at `design/forge-design-reference.html`, open it and match its look, spacing and component shapes. Do not copy its sample text or numbers.
+
+- **Big color fields.** Each main screen opens with a full-width cardinal band holding the wordmark and a large white headline. Give it a pegboard texture: small dots in `--cardinal-pressed` on `--cardinal`, drawn with a repeating radial gradient at about 22 px spacing. Use one black band per page for a single big figure set in gold.
+- **Solid outlines and hard shadows.** Things the user taps or compares get a 2 px black border and a hard offset shadow (`4px 4px 0 #000` for cards, `3px 3px 0 #000` for buttons). No blur, no soft gray shadows. Quiet, non-interactive rows use a 1.5 px black border and no shadow.
+- **Scale.** Headlines are large and tight: 44 to 48 px at weight 700 on phones with slightly negative letter spacing, up to 72 px on desktop. The key figure on a card (a cost, a count) is 40 px or larger with tabular numerals.
+- **Gold does real work.** Gold buttons for the second strongest action ("Claim"), gold step numbers, gold tags, gold-soft rows for anything free.
+- **Tags.** Short labels such as "Cheapest", "Easiest" and "Free" are small gold or white tags with a 2 px black border, rotated 2 to 6 degrees and overlapping the corner of their card. Sentence case, never all caps.
+- **The build ticket.** A route or result card is styled as a workshop job ticket: a gold ruler-tick strip across the top, the body, then a dashed tear line and a stub holding the cost. Use this for the main result cards only.
+- **Pictures of material.** Photos and material swatches (plywood, acrylic, metal, filament) may show their natural colors. Interface chrome may not: buttons, text, borders and backgrounds stay inside the token palette.
+- **Icons.** One style only: simple line icons with a 2.2 px stroke and round caps, inside a small outlined square when they sit in a list.
+- **Motion.** Three moments, no more. Result cards drop in once, staggered by about 120 ms. Buttons press down into their shadow. A success shows a round "stamp" that lands with a slight overshoot. Everything respects the reduced-motion setting.
+
+What stays forbidden: gradients as decoration, soft drop shadows, glass or blur effects, gold text on white, tinted cardinal, a second typeface, stock illustrations, and USC marks.
+
 ## Component recipes
 
-- **Primary button:** cardinal fill, white 600-weight text, 12 px radius, 48 px tall on phones. Hover and pressed use `--cardinal-pressed`. One primary button per screen.
-- **Secondary button:** white fill, 1.5 px cardinal border, cardinal text.
-- **Link:** cardinal, underlined. Do not rely on color alone for links inside text.
-- **Card:** white, 1 px `--gray-line` border, 12 px radius, no shadow or `shadow-sm` at most. Do not put every piece of content in an identical card; reserve cards for things the user compares or taps.
-- **Input:** 1 px `--gray-text` border (the lighter gray fails contrast for control edges), 16 px text so phones do not zoom, label above.
-- **Focus ring:** 2 px black outline with 2 px offset on light surfaces; 2 px gold on cardinal or black surfaces. Never remove outlines.
-- **Spacing:** multiples of 4 px; 16 px page gutter on phones, 24 px between sections.
-
-## One signature detail
-
-Pick a single motif from the project's subject and use it in one place only. For a workshop or maker tool, a thin strip of ruler tick marks in gold along the top edge of the main result card works, drawn with a repeating CSS gradient. Do not repeat it on every card.
+- **Primary button:** cardinal fill, white 700-weight text, 2 px black border, 12 px radius, hard shadow, at least 52 px tall on phones. Pressed: move 2 px down and right and shrink the shadow. One primary button per screen.
+- **Gold button:** gold fill, black text, same border and shadow. For the main action on a repeated card, such as "Claim".
+- **Plain button:** white fill, black text, same border and shadow.
+- **Chip:** white pill with a 1.5 px black border; the selected chip is black with gold text.
+- **Link:** cardinal, weight 700, underlined.
+- **Card:** white, 2 px black border, 14 px radius, hard shadow. Do not wrap every piece of content in one; reserve cards for things the user taps or compares.
+- **Badge:** pill with a 1.5 px border, an icon and words, in the status styles above. Never let it wrap to two lines.
+- **Input:** 1.5 px `--gray-text` border, 16 px text or larger so phones do not zoom, label above in weight 700.
+- **Tab bar:** white with a 2 px black top border; the active tab has black text and a 4 px cardinal bar above it.
+- **Focus ring:** 3 px black outline with 3 px offset on light surfaces; 3 px gold on cardinal or black surfaces. Never remove outlines.
+- **Spacing:** multiples of 4 px; 16 px page gutter on phones, 24 to 28 px between sections.
 
 ## Before you finish
 
@@ -112,3 +128,5 @@ Pick a single motif from the project's subject and use it in one place only. For
 - [ ] No USC marks; footer disclaimer present.
 - [ ] Every status has an icon and words.
 - [ ] Gold has a real job on the screen, not just a hairline.
+- [ ] The screen has a cardinal band, at least one large headline or figure, and hard-shadow cards; it does not look like a plain white form.
+- [ ] No soft shadows, gradients or blur.

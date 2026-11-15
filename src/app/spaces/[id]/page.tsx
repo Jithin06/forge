@@ -1,9 +1,11 @@
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, GraduationCap, HandHelping, Wrench } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { FactChip } from "@/components/badges";
+import { Band, Body } from "@/components/page";
+import { Swatch } from "@/components/swatch";
 import { AccessSection } from "@/components/spaces/access-section";
 import { CAPABILITY_LABELS, WEEKDAY_LABELS, formatDate, formatTime } from "@/lib/labels";
 import { CAPABILITIES, WEEKDAYS, type GroupStatus, type SpaceDoc } from "@/lib/schemas";
@@ -40,25 +42,30 @@ function SpaceView({ space, scrap }: { space: SpaceDoc; scrap: ScrapCard[] }) {
   })).filter((g) => g.items.length > 0);
 
   return (
-    <article className="space-y-8">
-      <header className="space-y-2">
-        <p>
-          <Link href="/spaces" className="inline-flex min-h-11 items-center text-cardinal underline underline-offset-4">
-            All spaces
-          </Link>
-        </p>
-        <h1 className="text-[28px] font-bold">{space.name}</h1>
-        <p className="text-[15px] text-gray-text">
+    <article>
+      <Band
+        title={space.name}
+        size="md"
+        above={
+          <p>
+            <Link href="/spaces" className="inline-flex min-h-11 items-center font-bold text-white underline underline-offset-4">
+              All spaces
+            </Link>
+          </p>
+        }
+      >
+        <p className="text-[16px]">
           {space.school} · {space.location}
         </p>
-        <p className="text-[18px]">{space.blurb}</p>
-      </header>
+      </Band>
+      <Body>
+      <p className="text-[18px]">{space.blurb}</p>
 
       <AccessSection space={space} statusChip={<FactChip status={space.status.access} />} />
 
       {space.access_steps.length > 0 && (
         <Section title="Your first visit" status={space.status.access}>
-          <ol className="list-decimal space-y-2 pl-6">
+          <ol className="steps">
             {space.access_steps.map((step) => (
               <li key={step}>{step}</li>
             ))}
@@ -98,11 +105,13 @@ function SpaceView({ space, scrap }: { space: SpaceDoc; scrap: ScrapCard[] }) {
           <div className="space-y-5">
             {byCapability.map(({ capability, items }) => (
               <div key={capability} className="space-y-2">
-                <h3 className="text-[18px] font-semibold">{CAPABILITY_LABELS[capability]}</h3>
+                <h3 className="text-[18px] font-bold">{CAPABILITY_LABELS[capability]}</h3>
                 <ul className="space-y-3">
                   {items.map((e) => (
-                    <li key={e.id} className="border-l-2 border-gray-line pl-3">
-                      <p className="font-semibold">{e.plain_name}</p>
+                    <li key={e.id} className="panel flex items-start gap-3 p-3">
+                      <span className="ico"><Wrench aria-hidden className="size-5" /></span>
+                      <div>
+                      <p className="font-bold">{e.plain_name}</p>
                       <p className="text-[15px] text-gray-text">{e.name}</p>
                       {e.work_area_note && <p className="text-[15px] tabular">{e.work_area_note}</p>}
                       {e.good_for.length > 0 && <p className="text-[15px]">Works with: {e.good_for.join(", ")}</p>}
@@ -111,6 +120,7 @@ function SpaceView({ space, scrap }: { space: SpaceDoc; scrap: ScrapCard[] }) {
                           Training needed: {e.required_training_ids.map((t) => trainingName.get(t) ?? t).join(", ")}
                         </p>
                       )}
+                      </div>
                     </li>
                   ))}
                 </ul>
@@ -124,9 +134,12 @@ function SpaceView({ space, scrap }: { space: SpaceDoc; scrap: ScrapCard[] }) {
         <Section title="What staff can help with" status={space.status.equipment}>
           <ul className="space-y-3">
             {space.services.map((sv) => (
-              <li key={sv.name} className="border-l-2 border-gray-line pl-3">
-                <p className="font-semibold">{sv.name}</p>
-                <p className="text-[15px]">{sv.how_to_request ?? "Ask the staff how to request this."}</p>
+              <li key={sv.name} className="panel flex items-start gap-3 p-3">
+                <span className="ico"><HandHelping aria-hidden className="size-5" /></span>
+                <div>
+                  <p className="font-bold">{sv.name}</p>
+                  <p className="text-[15px]">{sv.how_to_request ?? "Ask the staff how to request this."}</p>
+                </div>
               </li>
             ))}
           </ul>
@@ -137,10 +150,12 @@ function SpaceView({ space, scrap }: { space: SpaceDoc; scrap: ScrapCard[] }) {
         {space.trainings.length === 0 ? (
           <p>No trainings are listed. Ask the staff what you need before you start.</p>
         ) : (
-          <ul className="space-y-4">
+          <ul className="space-y-3">
             {space.trainings.map((t) => (
-              <li key={t.id} className="space-y-0.5">
-                <p className="font-semibold">{t.name}</p>
+              <li key={t.id} className="panel flex items-start gap-3 p-3">
+                <span className="ico"><GraduationCap aria-hidden className="size-5" /></span>
+                <div className="space-y-0.5">
+                <p className="font-bold">{t.name}</p>
                 <p>{t.covers}</p>
                 {t.prerequisite_ids.length > 0 && (
                   <p className="text-[15px]">
@@ -150,6 +165,7 @@ function SpaceView({ space, scrap }: { space: SpaceDoc; scrap: ScrapCard[] }) {
                 {t.duration_note && <p className="text-[15px]">{t.duration_note}</p>}
                 {t.restricted_to && <p className="text-[15px]">Only for: {t.restricted_to}</p>}
                 <p className="text-[15px]">{t.how_to_sign_up ?? "Ask the staff how to sign up."}</p>
+                </div>
               </li>
             ))}
           </ul>
@@ -164,7 +180,7 @@ function SpaceView({ space, scrap }: { space: SpaceDoc; scrap: ScrapCard[] }) {
           <table className="w-full text-left">
             <caption className="sr-only">Materials and prices</caption>
             <thead>
-              <tr className="border-b border-gray-line text-[15px] text-gray-text">
+              <tr className="border-b-[1.5px] border-black text-[15px] text-gray-text">
                 <th scope="col" className="py-2 pr-4 font-normal">Material</th>
                 <th scope="col" className="py-2 font-normal">Price</th>
               </tr>
@@ -172,7 +188,12 @@ function SpaceView({ space, scrap }: { space: SpaceDoc; scrap: ScrapCard[] }) {
             <tbody>
               {space.materials.map((m) => (
                 <tr key={m.id} className="border-b border-gray-line last:border-0">
-                  <th scope="row" className="py-2 pr-4 font-normal">{m.name}</th>
+                  <th scope="row" className="py-2 pr-4 font-normal">
+                    <span className="flex items-center gap-2.5">
+                      <Swatch category={m.category} className="size-7" />
+                      {m.name}
+                    </span>
+                  </th>
                   <td className="py-2 tabular">
                     {m.unit_price_usd === null ? (
                       <span className="text-gray-text">Ask staff for the price</span>
@@ -189,15 +210,24 @@ function SpaceView({ space, scrap }: { space: SpaceDoc; scrap: ScrapCard[] }) {
 
       {(space.scrap_policy.offers_scrap || scrap.length > 0) && (
         <section aria-labelledby="free-here" className="space-y-3">
-          <h2 id="free-here" className="text-[22px] font-semibold">Free here now</h2>
+          <h2 id="free-here" className="text-[24px] font-bold tracking-[-0.01em]">Free here now</h2>
           {scrap.length === 0 ? (
             <p>No free scrap here right now. Check the Scrap tab later.</p>
           ) : (
-            <ul className="flex gap-3 overflow-x-auto pb-2">
+            <ul className="-mx-4 flex gap-4 overflow-x-auto px-4 pb-3 pt-3">
               {scrap.map((s) => (
-                <li key={s.id} className="w-40 shrink-0 rounded-xl border-l-4 border-gold bg-gold-soft p-3">
-                  <p className="font-semibold">{s.title}</p>
-                  {s.size_note && <p className="text-[15px]">{s.size_note}</p>}
+                <li key={s.id} className="w-[150px] shrink-0">
+                  <Link href={`/scrap?space_id=${space.id}`} className="card relative block h-full p-2">
+                    <span className="tag tag-free">Free</span>
+                    {s.photo_url ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={s.photo_url} alt="" loading="lazy" className="h-[84px] w-full rounded-lg border-[1.5px] border-black object-cover" />
+                    ) : (
+                      <Swatch category={s.material_category} className="h-[84px] w-full" />
+                    )}
+                    <b className="mt-2 block leading-[1.2]">{s.title}</b>
+                    {s.size_note && <span className="block text-[15px] leading-[1.3] text-gray-text">{s.size_note}</span>}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -206,12 +236,12 @@ function SpaceView({ space, scrap }: { space: SpaceDoc; scrap: ScrapCard[] }) {
         </section>
       )}
 
-      <footer className="space-y-2 border-t border-gray-line pt-4">
+      <footer className="space-y-2 border-t-2 border-dashed border-black pt-4">
         <a
           href={space.official_url}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex min-h-11 items-center gap-1.5 font-semibold text-cardinal underline underline-offset-4"
+          className="link inline-flex min-h-11 items-center gap-1.5"
         >
           See the official page
           <ExternalLink aria-hidden className="size-4" />
@@ -222,6 +252,7 @@ function SpaceView({ space, scrap }: { space: SpaceDoc; scrap: ScrapCard[] }) {
           marked Estimated has not been confirmed by staff yet.
         </p>
       </footer>
+      </Body>
     </article>
   );
 }
@@ -231,7 +262,7 @@ function Section({ title, status, children }: { title: string; status: GroupStat
   return (
     <section aria-labelledby={id} className="space-y-3">
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-        <h2 id={id} className="text-[22px] font-semibold">{title}</h2>
+        <h2 id={id} className="text-[24px] font-bold tracking-[-0.01em]">{title}</h2>
         <FactChip status={status} />
       </div>
       {children}
@@ -241,12 +272,16 @@ function Section({ title, status, children }: { title: string; status: GroupStat
 
 function SpaceSkeleton() {
   return (
-    <div aria-busy="true" className="space-y-4">
-      <h1 className="sr-only">Loading this space</h1>
-      <p className="text-gray-text">Loading this space...</p>
-      <div className="h-10 w-2/3 animate-pulse rounded-lg bg-gold-soft" />
-      <div className="h-24 animate-pulse rounded-xl border border-gray-line" />
-      <div className="h-40 animate-pulse rounded-xl border border-gray-line" />
+    <div aria-busy="true">
+      <Band title="Loading this space" size="md" />
+      <Body>
+        <p role="status" className="text-gray-text">Loading this space...</p>
+        <div aria-hidden className="card space-y-3 p-4">
+          <div className="skeleton h-6 w-1/2" />
+          <div className="skeleton h-4 w-5/6" />
+          <div className="skeleton h-4 w-2/3" />
+        </div>
+      </Body>
     </div>
   );
 }

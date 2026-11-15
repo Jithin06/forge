@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, CircleAlert } from "lucide-react";
+import { CircleAlert } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useSession } from "@/components/account/use-session";
@@ -70,20 +70,20 @@ export function ClaimButton({ itemId, title, planId, onGone }: { itemId: string;
 
   if (result.state === "claimed")
     return (
-      <p role="status" className="flex items-start gap-2 rounded-lg bg-black p-3 text-gold on-dark">
-        <Check aria-hidden className="mt-1 size-5 shrink-0" />
+      <p role="status" className="card flex w-full items-center gap-3 bg-gold-soft p-3">
+        <span aria-hidden className="stamp">Held<br />for you</span>
         <span>
-          <strong className="font-semibold">Claimed.</strong> Pick it up at {result.where} by {result.by}.{" "}
+          <strong className="font-bold">Claimed.</strong> Pick it up at {result.where} by {result.by}.{" "}
           {result.pickup ?? "Ask at the front desk for it."} It is also listed under My stuff.
         </span>
       </p>
     );
   if (result.state === "gone")
     return (
-      <p role="status" className="flex items-start gap-2 border-l-4 border-gray-text pl-3">
-        <CircleAlert aria-hidden className="mt-1 size-5 shrink-0" />
+      <p role="status" className="panel flex w-full items-start gap-2 p-3">
+        <CircleAlert aria-hidden className="mt-0.5 size-5 shrink-0" />
         <span>
-          <strong className="font-semibold">Just claimed.</strong> Someone else got this piece a moment ago.
+          <strong className="font-bold">Just claimed.</strong> Someone else got this piece a moment ago.
         </span>
       </p>
     );
@@ -93,14 +93,14 @@ export function ClaimButton({ itemId, title, planId, onGone }: { itemId: string;
         type="button"
         onClick={claim}
         disabled={result.state === "working"}
-        className="inline-flex min-h-12 items-center justify-center rounded-xl bg-cardinal px-5 font-semibold text-white hover:bg-cardinal-pressed disabled:opacity-60"
+        className="btn btn-gold"
       >
         {result.state === "working" ? "Claiming..." : "Claim this piece"}
         <span className="sr-only">: {title}</span>
       </button>
       {result.state === "error" && (
-        <span role="alert" className="flex items-start gap-2 border-l-4 border-cardinal pl-3">
-          <CircleAlert aria-hidden className="mt-1 size-5 shrink-0" />
+        <span role="alert" className="alert">
+          <CircleAlert aria-hidden className="size-5" />
           {result.message}
         </span>
       )}

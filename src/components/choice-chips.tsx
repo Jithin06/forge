@@ -18,7 +18,7 @@ export function ChoiceChips<T extends string>({ legend, hint, options, labels, v
   const hintId = useId();
   return (
     <fieldset className="space-y-2" aria-describedby={hint ? hintId : undefined}>
-      <legend className="text-[18px] font-semibold">{legend}</legend>
+      <legend className="text-[17px] font-bold">{legend}</legend>
       {hint && (
         <p id={hintId} className="text-[15px] text-gray-text">
           {hint}
@@ -30,13 +30,7 @@ export function ChoiceChips<T extends string>({ legend, hint, options, labels, v
           return (
             <label
               key={opt}
-              className={cn(
-                "relative inline-flex min-h-11 cursor-pointer items-center rounded-full border px-4 text-[16px]",
-                "has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-black",
-                checked
-                  ? "border-cardinal bg-cardinal font-semibold text-white"
-                  : "border-gray-text bg-white text-black hover:border-cardinal",
-              )}
+              className={cn("chip relative", checked && "chip-on")}
             >
               <input
                 type="radio"

@@ -2,14 +2,13 @@
 
 import { CircleAlert, FlaskConical } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Band, Body } from "@/components/page";
 import { useAudience, useExperience } from "@/components/profile-store";
 import { useSession } from "./use-session";
 
 const NOT_USC = "Forge is for USC accounts. Use your @usc.edu Google account.";
-const primaryBtn =
-  "inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-cardinal px-6 font-semibold text-white hover:bg-cardinal-pressed sm:w-auto";
-const secondaryBtn =
-  "inline-flex min-h-12 w-full items-center justify-center rounded-xl border-[1.5px] border-cardinal bg-white px-5 font-semibold text-cardinal hover:bg-gold-soft sm:w-auto";
+const primaryBtn = "btn btn-cardinal w-full sm:w-auto";
+const secondaryBtn = "btn btn-plain w-full sm:w-auto";
 
 /** The test picker shows only when the running server says it is in test mode. */
 export function SignInPanel() {
@@ -29,14 +28,16 @@ export function SignInPanel() {
       : "Sign in to save your plans and claim free scrap.";
 
   return (
-    <div className="space-y-5">
-      <h1 className="text-[28px] font-bold">Sign in with your USC Google account</h1>
-      <p className="text-[18px]">{why}</p>
+    <>
+      <Band title="Sign in with your USC Google account" size="md">
+        <p>{why}</p>
+      </Band>
+      <Body>
 
       {params.error && (
-        <p role="alert" className="flex items-start gap-2 border-l-4 border-cardinal pl-4">
-          <CircleAlert aria-hidden className="mt-1 size-5 shrink-0" />
-          {params.error === "not_usc" ? NOT_USC : "Sign-in did not finish. Please try again."}
+        <p role="alert" className="alert">
+          <CircleAlert aria-hidden className="size-5" />
+          <span>{params.error === "not_usc" ? NOT_USC : "Sign-in did not finish. Please try again."}</span>
         </p>
       )}
 
@@ -50,8 +51,8 @@ export function SignInPanel() {
           Sign in with Google
         </a>
       ) : (
-        <section aria-labelledby="test-signin" className="space-y-4 rounded-xl border-l-4 border-gold bg-gold-soft p-4">
-          <h2 id="test-signin" className="flex items-center gap-2 text-[18px] font-semibold">
+        <section aria-labelledby="test-signin" className="card space-y-4 bg-gold-soft p-4">
+          <h2 id="test-signin" className="flex items-center gap-2 text-[22px] font-bold">
             <FlaskConical aria-hidden className="size-5" />
             Test sign-in
           </h2>
@@ -75,6 +76,7 @@ export function SignInPanel() {
           </div>
         </section>
       )}
-    </div>
+      </Body>
+    </>
   );
 }

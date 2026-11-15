@@ -1,8 +1,7 @@
-import { Recycle } from "lucide-react";
 import { connection } from "next/server";
 import { impactCount } from "@/lib/scrap";
 
-/** Pieces of scrap picked up, counted in SQL (rule 5.3.6). */
+/** Pieces of scrap picked up, counted in SQL (rule 5.3.6). The page's one black band. */
 export async function ImpactCounter() {
   await connection();
   let n: number;
@@ -12,13 +11,17 @@ export async function ImpactCounter() {
     return null; // the counter is not worth breaking the page for
   }
   return (
-    <p className="flex items-center gap-2 border-t border-gray-line pt-5 tabular">
-      <Recycle aria-hidden className="size-5 shrink-0" />
-      {n === 0
-        ? "No leftover pieces picked up yet. Yours could be the first."
-        : n === 1
-          ? "1 leftover piece picked up and reused so far."
-          : `${n} leftover pieces picked up and reused so far.`}
-    </p>
+    <div className="band-black">
+      <p className="mx-auto flex max-w-[680px] items-center gap-4 px-5 py-6">
+        <span className="n">{n}</span>
+        <span className="text-[18px] leading-[1.25]">
+          {n === 0
+            ? "leftover pieces picked up yet. Yours could be the first."
+            : n === 1
+              ? "leftover piece picked up and reused so far."
+              : "leftover pieces picked up and reused so far."}
+        </span>
+      </p>
+    </div>
   );
 }

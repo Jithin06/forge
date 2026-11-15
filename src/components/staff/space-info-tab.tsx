@@ -2,12 +2,12 @@
 
 import { CircleAlert } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
-import { primaryBtn, secondaryBtn } from "@/components/account/gate";
+import { secondaryBtn } from "@/components/account/gate";
 import { FactChip } from "@/components/badges";
 import { ACCESS_LABELS, AUDIENCE_LABELS, WEEKDAY_LABELS } from "@/lib/labels";
 import { ACCESS_STATUSES, AUDIENCES, WEEKDAYS, type AccessStatus, type GroupStatus, type SpaceDoc, type StatusGroup, type Weekday } from "@/lib/schemas";
 
-const field = "min-h-12 rounded-lg border border-gray-text bg-white px-3 text-[16px]";
+const field = "field";
 const NEUTRAL: Record<AccessStatus, string> = { open: "Open", ask_first: ACCESS_LABELS.ask_first, not_open: "Not open" };
 
 type GroupProps = {
@@ -24,22 +24,22 @@ type GroupProps = {
 /** One group of facts: its chip, its fields, Save and Confirm. */
 function Group({ id, title, status, note, busy, onSave, onConfirm, children }: GroupProps) {
   return (
-    <section aria-labelledby={`g-${id}`} className="space-y-3 border-t border-gray-line pt-5 first:border-0 first:pt-0">
+    <section aria-labelledby={`g-${id}`} className="card space-y-3 p-4">
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-        <h3 id={`g-${id}`} className="text-[18px] font-semibold">{title}</h3>
+        <h3 id={`g-${id}`} className="text-[22px] font-bold">{title}</h3>
         <FactChip status={status} />
       </div>
       {children}
-      <p role="status" className={note ? (note.ok ? "rounded-lg bg-gold-soft p-3" : "border-l-4 border-cardinal pl-3") : "sr-only"}>
+      <p role="status" className={note ? (note.ok ? "notice" : "alert") : "sr-only"}>
         {note?.text ?? ""}
       </p>
       <div className="flex flex-col gap-3 sm:flex-row">
         {onSave && (
-          <button type="button" disabled={busy} onClick={onSave} className={`${primaryBtn} disabled:opacity-60`}>
+          <button type="button" disabled={busy} onClick={onSave} className={secondaryBtn}>
             Save {title.toLowerCase()}
           </button>
         )}
-        <button type="button" disabled={busy} onClick={onConfirm} className={`${secondaryBtn} disabled:opacity-60`}>
+        <button type="button" disabled={busy} onClick={onConfirm} className="btn btn-gold">
           Confirm {title.toLowerCase()}
         </button>
       </div>
@@ -87,9 +87,9 @@ export function SpaceInfoTab({ spaceId }: { spaceId: string }) {
   if (failed)
     return (
       <div className="space-y-3">
-        <p role="alert" className="flex items-start gap-2 border-l-4 border-cardinal pl-4">
-          <CircleAlert aria-hidden className="mt-1 size-5 shrink-0" />
-          We could not load your space. Check your connection and try again.
+        <p role="alert" className="alert">
+          <CircleAlert aria-hidden className="size-5" />
+          <span>We could not load your space. Check your connection and try again.</span>
         </p>
         <button type="button" onClick={load} className={secondaryBtn}>Try again</button>
       </div>
@@ -120,20 +120,20 @@ export function SpaceInfoTab({ spaceId }: { spaceId: string }) {
             return (
               <li key={d}>
                 <fieldset className="flex flex-wrap items-center gap-x-3 gap-y-2">
-                  <legend className="float-left w-24 pt-3 font-semibold">{WEEKDAY_LABELS[d]}</legend>
+                  <legend className="float-left w-24 pt-3 font-bold">{WEEKDAY_LABELS[d]}</legend>
                   <label className="flex min-h-12 items-center gap-2">
-                    <input type="checkbox" checked={!h} onChange={(e) => setHours(d, e.target.checked ? null : { open: "09:00", close: "17:00" })} className="size-5 accent-cardinal" />
+                    <input type="checkbox" checked={!h} onChange={(e) => setHours(d, e.target.checked ? null : { open: "09:00", close: "17:00" })} className="check" />
                     Not listed
                   </label>
                   {h && (
                     <>
                       <label className="flex items-center gap-2">
                         <span className="sr-only">{WEEKDAY_LABELS[d]} </span>Opens
-                        <input type="time" value={h.open} onChange={(e) => setHours(d, { ...h, open: e.target.value })} className={field} />
+                        <input type="time" value={h.open} onChange={(e) => setHours(d, { ...h, open: e.target.value })} className={`${field} w-auto`} />
                       </label>
                       <label className="flex items-center gap-2">
                         <span className="sr-only">{WEEKDAY_LABELS[d]} </span>Closes
-                        <input type="time" value={h.close} onChange={(e) => setHours(d, { ...h, close: e.target.value })} className={field} />
+                        <input type="time" value={h.close} onChange={(e) => setHours(d, { ...h, close: e.target.value })} className={`${field} w-auto`} />
                       </label>
                     </>
                   )}
@@ -153,7 +153,7 @@ export function SpaceInfoTab({ spaceId }: { spaceId: string }) {
             return (
               <li key={a} className="grid gap-2 sm:grid-cols-[10rem_1fr]">
                 <label className="flex flex-col gap-1">
-                  <span className="font-semibold">{AUDIENCE_LABELS[a]}</span>
+                  <span className="font-bold">{AUDIENCE_LABELS[a]}</span>
                   <select value={entry.status} onChange={(e) => update({ status: e.target.value as AccessStatus })} className={field}>
                     {ACCESS_STATUSES.map((s) => (<option key={s} value={s}>{NEUTRAL[s]}</option>))}
                   </select>
@@ -182,7 +182,7 @@ export function SpaceInfoTab({ spaceId }: { spaceId: string }) {
               return (
                 <li key={m.id}>
                   <fieldset className="grid grid-cols-2 items-end gap-2">
-                    <legend className="mb-1 font-semibold">{m.name}</legend>
+                    <legend className="mb-1 font-bold">{m.name}</legend>
                     <label className="flex flex-col gap-1 text-[15px]">
                       Price in dollars
                       <input

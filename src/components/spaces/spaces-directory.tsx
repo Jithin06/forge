@@ -38,14 +38,14 @@ export function SpacesDirectory({ spaces }: { spaces: SpaceDoc[] }) {
 
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
         <div className="flex flex-col gap-1.5">
-          <label htmlFor={selectId} className="font-semibold">
+          <label htmlFor={selectId} className="label">
             What do you need?
           </label>
           <select
             id={selectId}
             value={capability}
             onChange={(e) => setCapability(e.target.value as Capability | "")}
-            className="min-h-12 rounded-lg border border-gray-text bg-white px-3 text-[16px]"
+            className="field sm:w-64"
           >
             <option value="">Anything</option>
             {offered.map((c) => (
@@ -61,7 +61,7 @@ export function SpacesDirectory({ spaces }: { spaces: SpaceDoc[] }) {
               type="checkbox"
               checked={openOnly}
               onChange={(e) => setOpenOnly(e.target.checked)}
-              className="size-5 accent-cardinal"
+              className="check"
             />
             Only spaces open to me
           </label>
@@ -85,13 +85,13 @@ export function SpacesDirectory({ spaces }: { spaces: SpaceDoc[] }) {
               setCapability("");
               setOpenOnly(false);
             }}
-            className="min-h-12 rounded-xl border-[1.5px] border-cardinal bg-white px-4 font-semibold text-cardinal hover:bg-gold-soft"
+            className="btn btn-plain"
           >
             Show all spaces
           </button>
         </div>
       ) : (
-        <ul className="space-y-4">
+        <ul className="space-y-5">
           {rows.map(({ space, elig }) => (
             <li key={space.id}>
               <SpaceCard space={space} elig={elig} />
@@ -105,9 +105,9 @@ export function SpacesDirectory({ spaces }: { spaces: SpaceDoc[] }) {
 
 function SpaceCard({ space, elig }: { space: SpaceDoc; elig: ReturnType<typeof eligibility> | null }) {
   return (
-    <article className="relative rounded-xl border border-gray-line bg-white p-4 shadow-sm has-[a:hover]:border-cardinal">
+    <article className="card relative p-4 transition-[transform,box-shadow] duration-75 has-[a:active]:translate-x-0.5 has-[a:active]:translate-y-0.5 has-[a:active]:shadow-[2px_2px_0_var(--black)] has-[a:hover]:bg-gold-soft">
       <div className="flex flex-wrap items-start justify-between gap-2">
-        <h2 className="text-[22px] font-semibold">
+        <h2 className="text-[22px] font-bold leading-[1.12] tracking-[-0.01em]">
           <Link
             href={`/spaces/${space.id}`}
             className="text-cardinal underline underline-offset-4 after:absolute after:inset-0 after:rounded-xl"
@@ -119,7 +119,7 @@ function SpaceCard({ space, elig }: { space: SpaceDoc; elig: ReturnType<typeof e
       </div>
       <p className="mt-1 text-[15px] text-gray-text">{space.location}</p>
       {elig && elig.status !== "open" && elig.note && (
-        <p className="mt-2 font-semibold">{elig.note}</p>
+        <p className="mt-2 font-bold">{elig.note}</p>
       )}
       <p className="mt-2">{space.blurb}</p>
       <p className="mt-2 text-[15px] text-gray-text">

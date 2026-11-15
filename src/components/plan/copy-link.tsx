@@ -19,7 +19,7 @@ export function CopyLink() {
       <button
         type="button"
         onClick={copy}
-        className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border-[1.5px] border-cardinal bg-white px-5 font-semibold text-cardinal hover:bg-gold-soft"
+        className="btn btn-plain"
       >
         {state === "copied" ? <Check aria-hidden className="size-5" /> : <Link2 aria-hidden className="size-5" />}
         Copy link

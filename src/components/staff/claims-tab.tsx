@@ -43,9 +43,9 @@ export function ClaimsTab({ spaceId, version }: { spaceId: string; version: numb
   if (failed)
     return (
       <div className="space-y-3">
-        <p role="alert" className="flex items-start gap-2 border-l-4 border-cardinal pl-4">
-          <CircleAlert aria-hidden className="mt-1 size-5 shrink-0" />
-          We could not load the claims. Check your connection and try again.
+        <p role="alert" className="alert">
+          <CircleAlert aria-hidden className="size-5" />
+          <span>We could not load the claims. Check your connection and try again.</span>
         </p>
         <button type="button" onClick={load} className={secondaryBtn}>Try again</button>
       </div>
@@ -55,24 +55,24 @@ export function ClaimsTab({ spaceId, version }: { spaceId: string; version: numb
 
   return (
     <div className="space-y-8">
-      <p role="status" className={notice ? "rounded-lg bg-gold-soft p-3" : "sr-only"}>{notice}</p>
+      <p role="status" className={notice ? "notice" : "sr-only"}>{notice}</p>
       <section aria-labelledby="held" className="space-y-3">
-        <h3 id="held" className="text-[18px] font-semibold">On hold for students</h3>
+        <h3 id="held" className="text-[22px] font-bold">On hold for students</h3>
         {claims.length === 0 ? (
           <p>No pieces are on hold right now. When a student claims one, it shows here with their name.</p>
         ) : (
           <ul className="space-y-4">
             {claims.map((c) => (
-              <li key={c.id} className="space-y-2 border-l-2 border-gray-line pl-3">
-                <p className="font-semibold">{c.item.title}</p>
+              <li key={c.id} className="card space-y-2 p-3">
+                <p className="font-bold">{c.item.title}</p>
                 <p className="text-[15px]">
                   For {c.claimant.name ?? "a student"} ({c.claimant.email ?? "no email"}). Held until {formatWhen(c.hold_until)}.
                 </p>
                 <div className="flex flex-wrap gap-3">
-                  <button type="button" onClick={() => setStatus(c.item.id, "picked_up", "Marked as picked up. Thank you.")} className={secondaryBtn}>
+                  <button type="button" onClick={() => setStatus(c.item.id, "picked_up", "Marked as picked up. Thank you.")} className="btn btn-gold btn-sm">
                     Picked up<span className="sr-only">: {c.item.title}</span>
                   </button>
-                  <button type="button" onClick={() => setStatus(c.item.id, "available", "Released. The piece is back in the bin.")} className={secondaryBtn}>
+                  <button type="button" onClick={() => setStatus(c.item.id, "available", "Released. The piece is back in the bin.")} className={`${secondaryBtn} btn-sm`}>
                     Release<span className="sr-only">: {c.item.title}</span>
                   </button>
                 </div>
@@ -82,18 +82,18 @@ export function ClaimsTab({ spaceId, version }: { spaceId: string; version: numb
         )}
       </section>
       <section aria-labelledby="in-bin" className="space-y-3">
-        <h3 id="in-bin" className="text-[18px] font-semibold">In the bin now</h3>
+        <h3 id="in-bin" className="text-[22px] font-bold">In the bin now</h3>
         {inBin.length === 0 ? (
           <p>Nothing from your space is in the bin. Post a piece from the Post scrap tab.</p>
         ) : (
           <ul className="space-y-3">
             {inBin.map((i) => (
-              <li key={i.id} className="flex flex-wrap items-center justify-between gap-3 border-l-2 border-gray-line pl-3">
+              <li key={i.id} className="panel flex flex-wrap items-center justify-between gap-3 p-3">
                 <span>
-                  <span className="font-semibold">{i.title}</span>
+                  <span className="font-bold">{i.title}</span>
                   <span className="block text-[15px] text-gray-text">{MATERIAL_LABELS[i.material_category]}</span>
                 </span>
-                <button type="button" onClick={() => setStatus(i.id, "removed", "Removed from the bin.")} className={secondaryBtn}>
+                <button type="button" onClick={() => setStatus(i.id, "removed", "Removed from the bin.")} className={`${secondaryBtn} btn-sm`}>
                   Remove<span className="sr-only">: {i.title}</span>
                 </button>
               </li>

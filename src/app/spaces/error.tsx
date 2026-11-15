@@ -1,24 +1,21 @@
 "use client";
 
 import { CircleAlert } from "lucide-react";
+import { Band, Body, primaryBtn } from "@/components/page";
 
 export default function SpacesError({ retry }: { error: unknown; retry: () => void }) {
   return (
-    <div className="space-y-4">
-      <h1 className="text-[28px] font-bold">Spaces</h1>
-      <div role="alert" className="space-y-4 border-l-4 border-cardinal pl-4">
-        <p className="flex items-start gap-2">
-          <CircleAlert aria-hidden className="mt-1 size-5 shrink-0" />
-          We could not load the spaces just now. Check your connection and try again.
+    <>
+      <Band title="Spaces" size="lg" />
+      <Body>
+        <p role="alert" className="alert">
+          <CircleAlert aria-hidden className="size-5" />
+          <span>We could not load the spaces just now. Check your connection and try again.</span>
         </p>
-        <button
-          type="button"
-          onClick={() => retry()}
-          className="min-h-12 rounded-xl bg-cardinal px-5 font-semibold text-white hover:bg-cardinal-pressed"
-        >
+        <button type="button" onClick={() => retry()} className={primaryBtn}>
           Try again
         </button>
-      </div>
-    </div>
+      </Body>
+    </>
   );
 }

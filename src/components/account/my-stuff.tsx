@@ -4,6 +4,7 @@ import { CircleAlert } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { formatDate } from "@/lib/labels";
+import { Band, Body } from "@/components/page";
 import { PageSkeleton, SignInGate, primaryBtn, secondaryBtn } from "./gate";
 
 type Me = {
@@ -53,36 +54,38 @@ export function MyStuff() {
     return <SignInGate title="My stuff" why="Sign in to see the plans you saved and the scrap you claimed." />;
   if (state.status === "error")
     return (
-      <div className="space-y-4">
-        <h1 className="text-[28px] font-bold">My stuff</h1>
-        <p role="alert" className="flex items-start gap-2 border-l-4 border-cardinal pl-4">
-          <CircleAlert aria-hidden className="mt-1 size-5 shrink-0" />
-          We could not load your plans and claims. Check your connection and try again.
-        </p>
-        <button type="button" onClick={load} className={primaryBtn}>Try again</button>
-      </div>
+      <>
+        <Band title="My stuff" />
+        <Body>
+          <p role="alert" className="alert">
+            <CircleAlert aria-hidden className="size-5" />
+            <span>We could not load your plans and claims. Check your connection and try again.</span>
+          </p>
+          <button type="button" onClick={load} className={primaryBtn}>Try again</button>
+        </Body>
+      </>
     );
 
   const { me } = state;
   return (
-    <div className="space-y-8">
-      <header className="space-y-1">
-        <h1 className="text-[28px] font-bold">My stuff</h1>
-        <p className="text-[15px] text-gray-text">Signed in as {me.profile.email}</p>
-      </header>
+    <>
+      <Band title="My stuff">
+        <p className="text-[16px] break-all">Signed in as {me.profile.email}</p>
+      </Band>
+      <Body>
 
       <section aria-labelledby="my-plans" className="space-y-3">
-        <h2 id="my-plans" className="text-[22px] font-semibold">My plans</h2>
+        <h2 id="my-plans" className="text-[24px] font-bold tracking-[-0.01em]">My plans</h2>
         {me.plans.length === 0 ? (
           <div className="space-y-3">
             <p>No plans yet. Describe something you want to make and it will be saved here.</p>
             <Link href="/" className={primaryBtn}>Plan something</Link>
           </div>
         ) : (
-          <ul className="space-y-3">
+          <ul className="space-y-4">
             {me.plans.map((p) => (
-              <li key={p.id} className="border-l-2 border-gray-line pl-3">
-                <Link href={`/plan/${p.id}`} className="inline-flex min-h-11 items-center font-semibold text-cardinal underline underline-offset-4">
+              <li key={p.id} className="card relative p-3 has-[a:hover]:bg-gold-soft">
+                <Link href={`/plan/${p.id}`} className="link after:absolute after:inset-0 after:rounded-xl">
                   {p.summary ?? p.idea_text.slice(0, 80)}
                 </Link>
                 <p className="text-[15px] text-gray-text">Made {formatDate(p.created_at.slice(0, 10))}</p>
@@ -93,8 +96,8 @@ export function MyStuff() {
       </section>
 
       <section aria-labelledby="my-claims" className="space-y-3">
-        <h2 id="my-claims" className="text-[22px] font-semibold">My claims</h2>
-        <p role="status">{notice}</p>
+        <h2 id="my-claims" className="text-[24px] font-bold tracking-[-0.01em]">My claims</h2>
+        <p role="status" className={notice ? "notice" : "sr-only"}>{notice}</p>
         {me.claims.length === 0 ? (
           <div className="space-y-3">
             <p>No claims yet. Free leftover material shows up in your plans and in the Scrap tab.</p>
@@ -103,16 +106,16 @@ export function MyStuff() {
         ) : (
           <ul className="space-y-3">
             {me.claims.map((c) => (
-              <li key={c.id} className="flex flex-wrap items-center justify-between gap-3 border-l-2 border-gray-line pl-3">
+              <li key={c.id} className={`flex flex-wrap items-center justify-between gap-3 p-3 ${c.status === "active" ? "panel-free" : "panel"}`}>
                 <div>
-                  <p className="font-semibold">{c.item?.title ?? "A piece that is no longer listed"}</p>
+                  <p className="font-bold">{c.item?.title ?? "A piece that is no longer listed"}</p>
                   <p className="text-[15px]">
                     {CLAIM_STATUS[c.status]}
                     {c.status === "active" ? `. Pick it up by ${when(c.hold_until)}.` : "."}
                   </p>
                 </div>
                 {c.status === "active" && (
-                  <button type="button" onClick={() => cancel(c.id)} className={secondaryBtn}>
+                  <button type="button" onClick={() => cancel(c.id)} className={`${secondaryBtn} btn-sm`}>
                     Cancel<span className="sr-only"> claim on {c.item?.title}</span>
                   </button>
                 )}
@@ -122,9 +125,10 @@ export function MyStuff() {
         )}
       </section>
 
-      <form method="post" action="/auth/sign-out" className="border-t border-gray-line pt-5">
+      <form method="post" action="/auth/sign-out" className="border-t-2 border-dashed border-black pt-5">
         <button type="submit" className={secondaryBtn}>Sign out</button>
       </form>
-    </div>
+      </Body>
+    </>
   );
 }

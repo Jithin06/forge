@@ -1,9 +1,11 @@
 "use client";
 
-import { CircleAlert, ImageOff, X } from "lucide-react";
+import { CircleAlert, X } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
-import { PageSkeleton, primaryBtn, secondaryBtn } from "@/components/account/gate";
+import { PageSkeleton } from "@/components/account/gate";
+import { Band, Body, primaryBtn, secondaryBtn } from "@/components/page";
+import { Swatch } from "@/components/swatch";
 import { CONDITION_LABELS, MATERIAL_LABELS } from "@/lib/labels";
 import { MATERIAL_CATEGORIES, type MaterialCategory } from "@/lib/schemas";
 import { ClaimButton } from "./claim";
@@ -29,8 +31,8 @@ function Photo({ item, className }: { item: Item; className: string }) {
     // eslint-disable-next-line @next/next/no-img-element
     <img src={item.photo_url} alt={`Photo of ${item.title}`} loading="lazy" className={`${className} object-cover`} />
   ) : (
-    <span className={`${className} flex items-center justify-center bg-gold-soft`}>
-      <ImageOff aria-hidden className="size-6" />
+    <span className={`${className} block`}>
+      <Swatch category={item.material_category} className="size-full" />
       <span className="sr-only">No photo</span>
     </span>
   );
@@ -83,105 +85,112 @@ export function ScrapBin() {
 
   if (failed)
     return (
-      <div className="space-y-4">
-        <h1 className="text-[28px] font-bold">Free scrap</h1>
-        <p role="alert" className="flex items-start gap-2 border-l-4 border-cardinal pl-4">
-          <CircleAlert aria-hidden className="mt-1 size-5 shrink-0" />
-          We could not load the scrap bin. Check your connection and try again.
-        </p>
-        <button type="button" onClick={load} className={primaryBtn}>Try again</button>
-      </div>
+      <>
+        <Band title="Free scrap" />
+        <Body>
+          <p role="alert" className="alert">
+            <CircleAlert aria-hidden className="size-5" />
+            <span>We could not load the scrap bin. Check your connection and try again.</span>
+          </p>
+          <button type="button" onClick={load} className={primaryBtn}>Try again</button>
+        </Body>
+      </>
     );
   if (!data) return <PageSkeleton title="Free scrap" />;
 
   const shown = data.items.filter((i) => (!category || i.material_category === category) && (!space || i.space_id === space));
   const cats = MATERIAL_CATEGORIES.filter((c) => data.items.some((i) => i.material_category === c));
-  const select = "min-h-12 w-full rounded-lg border border-gray-text bg-white px-3 text-[16px]";
 
   return (
-    <div className="space-y-6">
-      <header className="space-y-2">
-        <h1 className="text-[28px] font-bold">Free scrap</h1>
+    <>
+      <Band title="Free scrap">
         <p>Leftover material that campus spaces are giving away. Claim a piece and it is held for you for 48 hours.</p>
-      </header>
-
-      {data.items.length === 0 ? (
-        <div className="space-y-3">
-          <p>The scrap bin is empty right now. Staff add leftovers through the week, so check back soon.</p>
-          <Link href="/" className={secondaryBtn}>Plan something to build</Link>
-        </div>
-      ) : (
-        <>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div className="flex flex-col gap-1.5">
-              <label htmlFor={ids.cat} className="font-semibold">Material</label>
-              <select id={ids.cat} value={category} onChange={(e) => setCategory(e.target.value)} className={select}>
-                <option value="">Any material</option>
-                {cats.map((c) => (
-                  <option key={c} value={c}>{MATERIAL_LABELS[c]}</option>
-                ))}
-              </select>
-            </div>
-            <div className="flex flex-col gap-1.5">
-              <label htmlFor={ids.space} className="font-semibold">Space</label>
-              <select id={ids.space} value={space} onChange={(e) => setSpace(e.target.value)} className={select}>
-                <option value="">Any space</option>
-                {data.spaces.map((s) => (
-                  <option key={s.id} value={s.id}>{s.name}</option>
-                ))}
-              </select>
-            </div>
+      </Band>
+      <Body>
+        {data.items.length === 0 ? (
+          <div className="space-y-4">
+            <p>The scrap bin is empty right now. Staff add leftovers through the week, so check back soon.</p>
+            <Link href="/" className={secondaryBtn}>Plan something to build</Link>
           </div>
-
-          <p aria-live="polite" className="text-[15px] text-gray-text">
-            {goneNote && "Someone just claimed that piece. Here is what is still free. "}
-            {shown.length === 1 ? "1 piece" : `${shown.length} pieces`}
-          </p>
-
-          {shown.length === 0 ? (
-            <div className="space-y-3">
-              <p>Nothing matches those filters right now.</p>
-              <button type="button" onClick={() => { setCategory(""); setSpace(""); }} className={secondaryBtn}>Show all scrap</button>
+        ) : (
+          <>
+            <div className="space-y-4">
+              <fieldset className="min-w-0 space-y-2">
+                <legend className="label">Material</legend>
+                <div className="-mx-4 flex gap-2 overflow-x-auto px-4 py-1.5">
+                  {["", ...cats].map((c) => (
+                    <label key={c || "any"} className={`chip shrink-0 whitespace-nowrap ${category === c ? "chip-on" : ""}`}>
+                      <input type="radio" name={ids.cat} value={c} checked={category === c} onChange={() => setCategory(c)} className="sr-only" />
+                      {c ? MATERIAL_LABELS[c as MaterialCategory] : "Any material"}
+                    </label>
+                  ))}
+                </div>
+              </fieldset>
+              <div className="flex flex-col gap-1.5 sm:max-w-xs">
+                <label htmlFor={ids.space} className="label">Space</label>
+                <select id={ids.space} value={space} onChange={(e) => setSpace(e.target.value)} className="field">
+                  <option value="">Any space</option>
+                  {data.spaces.map((s) => (
+                    <option key={s.id} value={s.id}>{s.name}</option>
+                  ))}
+                </select>
+              </div>
             </div>
-          ) : (
-            <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-              {shown.map((item) => (
-                <li key={item.id}>
-                  <button
-                    type="button"
-                    onClick={() => { setGoneNote(false); setOpen(item); }}
-                    className="flex h-full w-full flex-col overflow-hidden rounded-xl border border-gray-line bg-white text-left hover:border-cardinal"
-                  >
-                    <Photo item={item} className="aspect-[4/3] w-full" />
-                    <span className="flex flex-1 flex-col gap-0.5 p-3">
-                      <span className="font-semibold">{item.title}</span>
-                      <span className="text-[15px] text-gray-text">{MATERIAL_LABELS[item.material_category]}</span>
-                      <span className="text-[15px] text-gray-text">{item.space_name}</span>
-                    </span>
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )}
-        </>
-      )}
+
+            <p aria-live="polite" className="text-[15px] text-gray-text">
+              {goneNote && "Someone just claimed that piece. Here is what is still free. "}
+              {shown.length === 1 ? "1 piece" : `${shown.length} pieces`}
+            </p>
+
+            {shown.length === 0 ? (
+              <div className="space-y-4">
+                <p>Nothing matches those filters right now.</p>
+                <button type="button" onClick={() => { setCategory(""); setSpace(""); }} className={secondaryBtn}>Show all scrap</button>
+              </div>
+            ) : (
+              <ul className="grid grid-cols-2 gap-x-3.5 gap-y-5 sm:grid-cols-3">
+                {shown.map((item) => (
+                  <li key={item.id}>
+                    <button
+                      type="button"
+                      onClick={() => { setGoneNote(false); setOpen(item); }}
+                      className="card group relative flex h-full w-full flex-col p-2 text-left"
+                    >
+                      <span aria-hidden className="tag tag-free">Free</span>
+                      <Photo item={item} className="aspect-[4/3] w-full overflow-hidden rounded-lg border-[1.5px] border-black" />
+                      <span className="flex flex-1 flex-col gap-0.5 px-1 pt-2">
+                        <b className="leading-[1.2]">{item.title}</b>
+                        <span className="text-[15px] leading-[1.3] text-gray-text">
+                          {MATERIAL_LABELS[item.material_category]} · {CONDITION_LABELS[item.condition].toLowerCase()}
+                        </span>
+                        <span className="text-[15px] leading-[1.3] text-gray-text">{item.space_name}</span>
+                      </span>
+                      <span className="btn btn-gold btn-sm mt-2 w-full group-active:translate-x-0.5 group-active:translate-y-0.5">See and claim</span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </>
+        )}
+      </Body>
 
       <dialog
         ref={dialog}
         onClose={() => setOpen(null)}
         aria-labelledby="scrap-item-title"
-        className="m-auto w-[calc(100%-2rem)] max-w-[520px] rounded-xl border border-gray-line p-0 backdrop:bg-black/60"
+        className="m-auto w-[calc(100%-2rem)] max-w-[520px] rounded-[14px] border-2 border-black p-0 shadow-[6px_6px_0_var(--black)] backdrop:bg-black/60"
       >
         {open && (
           <div className="space-y-4 p-4">
             <div className="flex items-start justify-between gap-3">
-              <h2 id="scrap-item-title" className="text-[22px] font-semibold">{open.title}</h2>
-              <button type="button" onClick={() => setOpen(null)} className="flex size-11 shrink-0 items-center justify-center rounded-lg">
+              <h2 id="scrap-item-title" className="text-[24px] font-bold leading-[1.12] tracking-[-0.01em]">{open.title}</h2>
+              <button type="button" onClick={() => setOpen(null)} className="flex size-11 shrink-0 items-center justify-center rounded-lg border-[1.5px] border-black">
                 <X aria-hidden className="size-6" />
                 <span className="sr-only">Close</span>
               </button>
             </div>
-            <Photo item={open} className="aspect-[4/3] w-full rounded-lg" />
+            <Photo item={open} className="aspect-[4/3] w-full overflow-hidden rounded-lg border-[1.5px] border-black" />
             {open.description && <p>{open.description}</p>}
             <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1">
               <dt className="text-gray-text">Material</dt><dd>{MATERIAL_LABELS[open.material_category]}</dd>
@@ -191,7 +200,7 @@ export function ScrapBin() {
             </dl>
             {open.restrictions.length > 0 && (
               <div className="border-l-4 border-cardinal pl-3">
-                <p className="font-semibold">Before you use it</p>
+                <p className="font-bold">Before you use it</p>
                 <ul className="list-disc pl-5">
                   {open.restrictions.map((r) => (<li key={r}>{r}</li>))}
                 </ul>
@@ -202,6 +211,6 @@ export function ScrapBin() {
           </div>
         )}
       </dialog>
-    </div>
+    </>
   );
 }

@@ -3,8 +3,7 @@ import { ACCESS_LABELS, formatDate } from "@/lib/labels";
 import type { AccessStatus, GroupStatus } from "@/lib/schemas";
 import { cn } from "@/lib/utils";
 
-const base =
-  "inline-flex shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[15px] font-semibold leading-6";
+const base = "badge";
 
 const NEUTRAL_LABELS: Record<AccessStatus, string> = { open: "Open", ask_first: "Ask first", not_open: "Not open" };
 
@@ -27,12 +26,12 @@ export function EligibilityBadge({
       className={cn(
         base,
         status === "open" && "border-black bg-black text-gold",
-        status === "ask_first" && "border-gold bg-gold text-black",
+        status === "ask_first" && "bg-gold text-black",
         status === "not_open" && "border-gray-text bg-white text-gray-text",
         className,
       )}
     >
-      <Icon aria-hidden className="size-4" />
+      <Icon aria-hidden className="size-3.5" strokeWidth={3} />
       {neutral ? NEUTRAL_LABELS[status] : ACCESS_LABELS[status]}
     </span>
   );
@@ -42,15 +41,15 @@ export function EligibilityBadge({
 export function FactChip({ status }: { status: GroupStatus }) {
   if (status.state === "confirmed") {
     return (
-      <span className={cn(base, "border-black bg-black font-normal text-gold")}>
-        <Check aria-hidden className="size-4" />
+      <span className={cn(base, "bg-black text-gold")}>
+        <Check aria-hidden className="size-3.5" strokeWidth={3} />
         Confirmed by staff on {formatDate(status.confirmed_on)}
       </span>
     );
   }
   return (
-    <span className={cn(base, "border-gold bg-gold font-normal text-black")}>
-      <CircleQuestionMark aria-hidden className="size-4" />
+    <span className={cn(base, "bg-gold text-black")}>
+      <CircleQuestionMark aria-hidden className="size-3.5" strokeWidth={3} />
       Estimated
     </span>
   );
