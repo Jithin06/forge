@@ -18,7 +18,8 @@
     "check:m3": "tsx --env-file=.env.local scripts/check-m3.mts",
     "check:m4": "tsx --env-file=.env.local scripts/check-m4.mts",
     "race": "tsx --env-file=.env.local scripts/race-test.mts",
-    "clean:test": "tsx --env-file=.env.local scripts/clean-test-data.mts"
+    "clean:test": "tsx --env-file=.env.local scripts/clean-test-data.mts",
+    "check:m5": "tsx --env-file=.env.local scripts/check-m5.mts"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",
