@@ -1,6 +1,6 @@
 import "server-only";
 import { createHash } from "node:crypto";
-import { readdir, readFile } from "node:fs/promises";
+import { appendFile, mkdir, readdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { z } from "zod";
 
@@ -34,7 +34,7 @@ export type ToolResult<T> = {
 
 export class AIError extends Error {
   constructor(
-    public code: "TIMEOUT" | "PROVIDER" | "INVALID_OUTPUT" | "NOT_CONFIGURED",
+    public code: "TIMEOUT" | "PROVIDER" | "INVALID_OUTPUT" | "NOT_CONFIGURED" | "BUSY" | "BUDGET",
     message: string,
     public details: string[] = [],
   ) {
@@ -62,6 +62,7 @@ export async function callTool<T>(req: ToolCall<T>): Promise<ToolResult<T>> {
       parsed.error.issues.map((i) => `${i.path.join(".") || "(root)"}: ${i.message}`),
     );
   }
+  if (p !== "fixture" && process.env.RECORD_FIXTURES === "1") await recordFixture(req.call, req.fixtureKey, parsed.data, raw.model);
   return { input: parsed.data, usage: raw.usage, provider: p, fixture: p === "fixture" };
 }
 
@@ -72,17 +73,17 @@ export function toolInputSchema(schema: z.ZodType): Record<string, unknown> {
   return json;
 }
 
-type Raw = { input: unknown; usage: { input_tokens: number; output_tokens: number } };
+type Raw = { input: unknown; usage: { input_tokens: number; output_tokens: number }; model?: string };
 
 async function rawCall<T>(p: Provider, req: ToolCall<T>): Promise<Raw> {
   switch (p) {
     case "fixture":
       return { input: await fixtureFor(req.call, req.fixtureKey), usage: { input_tokens: 0, output_tokens: 0 } };
+    case "gemini":
+      return geminiCall(req);
     case "replit":
     case "anthropic":
-    case "gemini":
-      // Live adapters arrive in milestone M2b, once credentials exist.
-      throw new AIError("NOT_CONFIGURED", `AI_PROVIDER=${p} is not built yet. Use fixture.`);
+      throw new AIError("NOT_CONFIGURED", `AI_PROVIDER=${p} is not built. Use gemini or fixture.`);
   }
 }
 
@@ -92,6 +93,153 @@ function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
     timer = setTimeout(() => reject(new AIError("TIMEOUT", "The model took too long to answer.")), ms);
   });
   return Promise.race([promise, timeout]).finally(() => clearTimeout(timer));
+}
+
+// -------------------------------------------------------------- gemini
+// Google's Interactions API (aistudio.google.com/docs/interactions), read
+// 2026-11-14. Both models take image input and support structured output.
+
+const GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/interactions";
+
+export function geminiModels(): [string, string] {
+  return [
+    process.env.GEMINI_MODEL_PRIMARY?.trim() || "gemini-3.5-flash-lite",
+    process.env.GEMINI_MODEL_FALLBACK?.trim() || "gemini-3.1-flash-lite",
+  ];
+}
+
+/** Keep only the JSON Schema keywords Google documents as supported. */
+const KEEP = new Set([
+  "type", "description", "properties", "required", "additionalProperties",
+  "enum", "items", "minItems", "maxItems", "minimum", "maximum", "anyOf",
+]);
+export function geminiSchema(node: unknown, isPropertyMap = false): unknown {
+  if (Array.isArray(node)) return node.map((n) => geminiSchema(n));
+  if (!node || typeof node !== "object") return node;
+  const out: Record<string, unknown> = {};
+  for (const [k, v] of Object.entries(node)) {
+    if (isPropertyMap) out[k] = geminiSchema(v);
+    else if (KEEP.has(k)) out[k] = k === "properties" ? geminiSchema(v, true) : k === "enum" || k === "required" ? v : geminiSchema(v);
+  }
+  return out;
+}
+
+async function geminiCall<T>(req: ToolCall<T>): Promise<Raw> {
+  const key = process.env.GEMINI_API_KEY;
+  if (!key) throw new AIError("NOT_CONFIGURED", "GEMINI_API_KEY is not set");
+  const text = req.messages.map((m) => m.content).join("\n\n");
+  const body = {
+    input: [
+      { type: "text", text },
+      ...(req.image ? [{ type: "image", data: req.image.base64, mime_type: req.image.mediaType }] : []),
+    ],
+    system_instruction: req.system,
+    response_format: { type: "text", mime_type: "application/json", schema: geminiSchema(toolInputSchema(req.schema)) },
+    generation_config: { thinking_level: "low", max_output_tokens: 4096 },
+    store: false, // idea text and photos are not kept by the provider
+  };
+
+  for (const model of geminiModels()) {
+    await spendOneCall(); // throws when tonight's budget is used up
+    let res: Response;
+    try {
+      res = await fetch(GEMINI_URL, {
+        method: "POST",
+        headers: { "x-goog-api-key": key, "Content-Type": "application/json" },
+        body: JSON.stringify({ model, ...body }),
+        signal: AbortSignal.timeout(AI_TIMEOUT_MS),
+      });
+    } catch (e) {
+      await logCall({ call: req.call, model, status: "network_error" });
+      if ((e as Error).name === "TimeoutError") throw new AIError("TIMEOUT", "The model took too long to answer.");
+      throw new AIError("PROVIDER", `Could not reach Gemini: ${(e as Error).message}`);
+    }
+    if (res.status === 429) {
+      await logCall({ call: req.call, model, status: 429 });
+      continue; // rate limited: try the fallback model, which has its own quota
+    }
+    const json = (await res.json().catch(() => null)) as GeminiResponse | null;
+    const usage = {
+      input_tokens: json?.usage?.total_input_tokens ?? 0,
+      output_tokens: (json?.usage?.total_output_tokens ?? 0) + (json?.usage?.total_thought_tokens ?? 0),
+    };
+    await logCall({ call: req.call, model, status: res.status, ...usage });
+    if (!res.ok || !json) {
+      throw new AIError("PROVIDER", `Gemini returned ${res.status}: ${json?.error?.message ?? "no body"}`);
+    }
+    const out = json.steps
+      ?.filter((s) => s.type === "model_output")
+      .flatMap((s) => s.content ?? [])
+      .filter((c) => c.type === "text")
+      .map((c) => c.text ?? "")
+      .join("");
+    if (json.status !== "completed" || !out) {
+      throw new AIError("PROVIDER", `Gemini finished with status "${json.status}" and no usable output`);
+    }
+    try {
+      return { input: JSON.parse(out), usage, model };
+    } catch {
+      throw new AIError("INVALID_OUTPUT", "The model's answer was not valid JSON.", ["the answer must be one JSON object matching the schema"]);
+    }
+  }
+  throw new AIError("BUSY", "Both Gemini models are rate limited.");
+}
+
+type GeminiResponse = {
+  status?: string;
+  steps?: { type: string; content?: { type: string; text?: string }[] }[];
+  usage?: { total_input_tokens?: number; total_output_tokens?: number; total_thought_tokens?: number };
+  error?: { message?: string };
+};
+
+// ------------------------------------------------- live call log and budget
+// One line per request sent to a live model, with a running count. The file
+// is the count: it survives restarts. On a read-only host (Vercel) writing
+// fails quietly and the count is per server instance, in the console only.
+
+const callLogPath = () => process.env.AI_CALL_LOG || path.join(process.cwd(), "logs", "ai-calls.jsonl");
+let memoryCount = 0; // used only where the log file cannot be written
+let fileBroken = false;
+
+export async function liveCallCount(): Promise<number> {
+  if (fileBroken) return memoryCount;
+  try {
+    return (await readFile(callLogPath(), "utf8")).split("\n").filter(Boolean).length;
+  } catch {
+    return 0; // no log yet
+  }
+}
+
+async function spendOneCall() {
+  const budget = Number(process.env.AI_CALL_BUDGET);
+  if (!Number.isFinite(budget) || budget <= 0) return;
+  const used = await liveCallCount();
+  if (used >= budget) throw new AIError("BUDGET", `Live AI call budget reached (${used} of ${budget}).`);
+}
+
+async function logCall(entry: Record<string, unknown>) {
+  const n = (await liveCallCount()) + 1;
+  const line = { n, at: new Date().toISOString(), ...entry };
+  console.log(`live AI call #${n}${process.env.AI_CALL_BUDGET ? ` of ${process.env.AI_CALL_BUDGET}` : ""}: ${JSON.stringify(entry)}`);
+  try {
+    await mkdir(path.dirname(callLogPath()), { recursive: true });
+    await appendFile(callLogPath(), JSON.stringify(line) + "\n");
+  } catch {
+    fileBroken = true; // read-only file system: count in memory, log to console
+    memoryCount = n;
+  }
+}
+
+async function recordFixture(call: CallName, key: unknown, output: unknown, model?: string) {
+  try {
+    const dir = path.join(FIXTURE_DIR, call);
+    await mkdir(dir, { recursive: true });
+    const file = path.join(dir, `live-${fixtureHash(call, key).slice(0, 12)}.json`);
+    await writeFile(file, JSON.stringify({ call, recorded: { model, at: new Date().toISOString() }, key, output }, null, 2) + "\n");
+    fixtureIndex = null; // pick the new recording up on the next fixture read
+  } catch (e) {
+    console.error("Could not record fixture:", (e as Error).message);
+  }
 }
 
 // ------------------------------------------------------------ fixtures

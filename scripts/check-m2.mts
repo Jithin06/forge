@@ -41,12 +41,14 @@ const IDEAS = {
 const { data: spaceRows } = await db.from("spaces").select("doc");
 const spaces = spaceRows!.map((r) => parseSpaceDoc(r.doc)).flatMap((r) => (r.ok ? [r.doc] : [])) as SpaceDoc[];
 
+const created: string[] = []; // plan ids made by this run, deleted at the end
 type Route = { space_id: string; process: string; eligibility: { status: string }; total: unknown; labels: string[] };
 const planFor = async (text: string, audience: string, ip: string) => {
   const ask = await post("/api/ask", { text, experience: "never" }, ip);
   const answers = { ...ask.body.prefilled };
   for (const q of ask.body.questions ?? []) answers[q.id] = ["not_sure"];
   const plan = await post("/api/plan", { text, answers, audience, experience: "never" }, ip);
+  if (plan.body?.id) created.push(plan.body.id);
   return { ask, plan };
 };
 
@@ -105,5 +107,8 @@ if (process.env.SKIP_RATE_LIMIT) {
   check(last === 429, `21st AI call in an hour from one address: ${last}`);
 }
 
-console.log(failures === 0 ? "\nAll M2 API checks passed." : `\n${failures} check(s) failed.`);
+const { error: cleanupErr } = await db.from("plans").delete().in("id", created);
+console.log(cleanupErr ? `\nCleanup failed: ${cleanupErr.message}` : `\nCleaned up ${created.length} test plan(s).`);
+
+console.log(failures === 0 ? "All M2 API checks passed." : `\n${failures} check(s) failed.`);
 process.exit(failures === 0 ? 0 : 1);

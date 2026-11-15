@@ -133,6 +133,42 @@ describe("labels", () => {
       ]),
     ).toEqual([["cheapest"], ["easiest"], []]);
   });
+  it("easiest tie on trainings and access goes to the lower with-scrap cost, then to order", () => {
+    expect(
+      assignLabels([
+        { status: "open", withScrapLow: 9, trainingCount: 1 },
+        { status: "open", withScrapLow: 4, trainingCount: 1 },
+      ]),
+    ).toEqual([[], ["cheapest", "easiest"]]);
+    // a known cost beats an unknown one
+    expect(
+      assignLabels([
+        { status: "open", withScrapLow: null, trainingCount: 1 },
+        { status: "open", withScrapLow: 4, trainingCount: 1 },
+      ]),
+    ).toEqual([[], ["easiest"]]);
+    // full tie, or no costs at all: the earlier route
+    expect(
+      assignLabels([
+        { status: "open", withScrapLow: 4, trainingCount: 1 },
+        { status: "open", withScrapLow: 4, trainingCount: 1 },
+      ]),
+    ).toEqual([["cheapest", "easiest"], []]);
+    expect(
+      assignLabels([
+        { status: "open", withScrapLow: null, trainingCount: 1 },
+        { status: "open", withScrapLow: null, trainingCount: 1 },
+      ]),
+    ).toEqual([["easiest"], []]);
+    // access still outranks cost
+    expect(
+      assignLabels([
+        { status: "ask_first", withScrapLow: 1, trainingCount: 1 },
+        { status: "open", withScrapLow: 8, trainingCount: 1 },
+      ]),
+    ).toEqual([["cheapest"], ["easiest"]]);
+  });
+
   it("one route can hold both labels", () => {
     expect(
       assignLabels([
@@ -148,11 +184,12 @@ describe("whole plan", () => {
     // Route A laser at bfms (open): 10.50 to 11.50, 1 training
     // Route B print at bfms (open): 40 to 80 g x $0.05 = 2.00 to 4.00, 1 training
     // Route C laser at BME (ask first): no listed material -> no price, 3 trainings
-    // Cheapest: B (2.00 < 10.50). Easiest: A and B tie on 1 training and both open -> first, A.
+    // Cheapest: B (2.00 < 10.50). Easiest: A and B tie on 1 training and both open,
+    // so the lower with-scrap cost wins: B (2.00 < 10.50).
     const plan = finalize(computeBase(planFixture("phone-stand"), pricedSpaces(), "viterbi_undergrad"), []);
     expect(plan.routes.map((r) => [r.space_id, r.eligibility.status, r.total, r.trainings.length, r.labels])).toEqual([
-      ["bfms", "open", { low: 10.5, high: 11.5 }, 1, ["easiest"]],
-      ["bfms", "open", { low: 2, high: 4 }, 1, ["cheapest"]],
+      ["bfms", "open", { low: 10.5, high: 11.5 }, 1, []],
+      ["bfms", "open", { low: 2, high: 4 }, 1, ["cheapest", "easiest"]],
       ["bme-innovation", "ask_first", null, 3, []],
     ]);
   });

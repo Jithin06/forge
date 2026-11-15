@@ -17,7 +17,8 @@ export type LabelInput = {
  * - "Cheapest": lowest with-scrap low cost, only if at least two of those
  *   routes have a cost. Ties go to the earlier route.
  * - "Easiest for a first build": fewest trainings, ties broken by open
- *   over ask_first, then by order.
+ *   over ask_first, then by lower with-scrap cost (a known cost beats an
+ *   unknown one), then by order.
  */
 export function assignLabels(routes: LabelInput[]): Label[][] {
   const out: Label[][] = routes.map(() => []);
@@ -31,12 +32,14 @@ export function assignLabels(routes: LabelInput[]): Label[][] {
   }
 
   if (eligible.length > 0) {
-    const best = eligible.reduce((a, b) =>
-      b.trainingCount < a.trainingCount ||
-      (b.trainingCount === a.trainingCount && eligibilityRank(b.status) < eligibilityRank(a.status))
-        ? b
-        : a,
-    );
+    const cost = (r: LabelInput) => r.withScrapLow ?? Number.POSITIVE_INFINITY;
+    const easier = (b: LabelInput, a: LabelInput) => {
+      if (b.trainingCount !== a.trainingCount) return b.trainingCount < a.trainingCount;
+      const rank = eligibilityRank(b.status) - eligibilityRank(a.status);
+      if (rank !== 0) return rank < 0;
+      return cost(b) < cost(a); // equal cost keeps the earlier route
+    };
+    const best = eligible.reduce((a, b) => (easier(b, a) ? b : a));
     out[best.i].push("easiest");
   }
   return out;

@@ -32,6 +32,9 @@ export function rateLimited(request: Request): Response | null {
 export function aiFailure(e: unknown): Response {
   if (e instanceof AIError) {
     console.error(`AI ${e.code}: ${e.message}`, e.details);
+    if (e.code === "BUSY" || e.code === "BUDGET") {
+      return apiError(429, "AI_BUSY", "Forge is busy, try again in a minute.", { "Retry-After": "60" });
+    }
     if (e.code === "TIMEOUT") {
       return apiError(502, "AI_TIMEOUT", "This is taking longer than usual. Please try again.");
     }
