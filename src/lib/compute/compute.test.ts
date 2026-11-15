@@ -5,7 +5,7 @@ import { routeCost, sameUnit, withScrapTotal } from "./cost";
 import { firstVisit, hoursSummary, staffService } from "./firstVisit";
 import { groundPlan, missedStaffPrint } from "./grounding";
 import { assignLabels } from "./labels";
-import { computeBase, finalize, forAudience, withoutFileTypes } from "./plan";
+import { computeBase, finalize, staffCharge, forAudience, withoutFileTypes } from "./plan";
 import { matchScrap, type ScrapItem } from "./scrapMatch";
 import { trainingsFor } from "./training";
 import { TYPICAL_PRICES } from "../typical-prices";
@@ -213,8 +213,39 @@ describe("whole plan", () => {
     expect(plan.routes[2].cost_lines[0].typical).toBe(true);
   });
 
+  it("scrap is never matched to a work order's print charge, and still matches what the student uses", () => {
+    const pla = scrap("pla1", "bfms", "pla_filament");
+    const wood = scrap("wood1", "bfms", "solid_wood");
+    const ply = scrap("ply1", "bfms", "plywood");
+    for (const name of Object.keys(PLAN_FIXTURES)) {
+      const plan = finalize(computeBase(planFixture(name), realSeedSpaces(), "usc_undergrad_other"), [pla, wood, ply]);
+      for (const r of plan.routes) {
+        // A staff-made route: no line is matched, and the with-scrap total is the full total.
+        if (r.kind === "staff_fabrication") {
+          expect(r.scrap.every((m) => m.length === 0), `${name} ${r.space_id}`).toBe(true);
+          expect(r.with_scrap, `${name} ${r.space_id}`).toEqual(r.total);
+        }
+        // Where nothing is sold, a line with the space's own price is a staff charge: never matched.
+        r.cost_lines.forEach((l, i) => {
+          if (staffCharge(r, l)) expect(r.scrap[i], `${name} ${r.space_id} ${l.name}`).toEqual([]);
+        });
+      }
+    }
+    expect(staffCharge({ kind: "staff_fabrication" }, { low_usd: null })).toBe(true);
+    expect(staffCharge({ kind: "self_use", bring_your_own: true }, { low_usd: 5 })).toBe(true);
+    // What the student brings or uses themself still matches.
+    expect(staffCharge({ kind: "self_use", bring_your_own: true }, { low_usd: 6, typical: true })).toBe(false);
+    expect(staffCharge({ kind: "self_use", bring_your_own: true }, { low_usd: null })).toBe(false);
+    expect(staffCharge({ kind: "self_use" }, { low_usd: 6 })).toBe(false);
+    const stand = finalize(computeBase(planFixture("phone-stand"), realSeedSpaces(), "viterbi_undergrad"), [pla, wood, ply]);
+    expect(stand.routes.some((r) => r.kind !== "staff_fabrication" && r.scrap.some((m) => m.length > 0))).toBe(true);
+  });
+
   it("scrap never moves the Cheapest label: it follows the price shown, without scrap", () => {
-    const base = computeBase(planFixture("phone-stand"), pricedSpaces(), "viterbi_undergrad");
+    // The test stock is sold here, so its price is a material price, not a charge for staff-made work.
+    const spaces = pricedSpaces();
+    spaces.find((x) => x.id === "bfms")!.sells_materials = true;
+    const base = computeBase(planFixture("phone-stand"), spaces, "viterbi_undergrad");
     const without = finalize(base, []);
     const plan = finalize(base, [scrap("ply1", "bfms", "plywood"), scrap("card1", "bfms", "cardboard_paper")]);
     expect(plan.routes[0].total).toEqual({ low: 10.5, high: 11.5 });

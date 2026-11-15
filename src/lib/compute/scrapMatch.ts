@@ -20,7 +20,8 @@ export type ScrapItem = {
  * for one material only, so it is never counted twice.
  */
 export function matchScrap(
-  materials: { category: MaterialCategory }[],
+  /** `skip` marks a line scrap cannot stand in for, such as a work order's charge; it gets no match. */
+  materials: { category: MaterialCategory; skip?: boolean }[],
   routeSpaceId: string,
   available: ScrapItem[],
   perMaterial = 2,
@@ -32,6 +33,7 @@ export function matchScrap(
       b.posted_at.localeCompare(a.posted_at),
   );
   return materials.map((m) => {
+    if (m.skip) return [];
     const picks = ranked.filter((s) => s.material_category === m.category && !used.has(s.id)).slice(0, perMaterial);
     picks.forEach((p) => used.add(p.id));
     return picks;

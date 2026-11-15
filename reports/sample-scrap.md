@@ -88,3 +88,12 @@ No live calls. Routes and badges did not change.
 4. **SPEC.md:** the scrap-match step, the label rule, the color table row and the M4 checklist line now describe what the app does.
 5. **Ask screen:** "Worked in a workshop"; "USC undergraduate (not Viterbi)" and "USC graduate (not Viterbi)". The same labels show everywhere those levels appear. Stored values are unchanged. The model is still told "Comfortable in a workshop": its wording now lives in `EXPERIENCE_FOR_MODEL`, apart from the chip labels, with a test.
 6. **Checks:** `npm test` 136 of 136; typecheck and lint clean. At 390 px: both plans show "May be free with scrap", the Sample tags and no "$0"; every chip is one line, none wider than the screen ("I am a..." is one chip per line; "I have..." is two lines).
+
+## Final three (Nov 15)
+No live calls.
+
+1. **Scrap and work orders.** Scrap is no longer matched to a charge for staff-made work: no line on a staff-made route is matched, and neither is a line carrying the space's own price at a space that sells no material (which can only be a work-order charge). Material the student brings or uses themself still matches. Compared all 28 recorded plans (7 ideas x 4 audiences, today's bin) and the deck's stored plan before and after: route order, badges, tags and shown prices are identical everywhere. The only change is the intended one: the night light plan's two staff-made print routes (ITS and the Maker Space work order) no longer show the failed prints and the spool. One new test; one existing test's setup adjusted.
+2. **Chips.** "Viterbi undergraduate" and "Viterbi graduate", display text only, everywhere the labels appear. At 390 px every chip is one line and none passes the screen edge.
+3. **Deck.** `deck/` left uncommitted.
+
+`npm test`: 137 of 137. Typecheck and lint clean.

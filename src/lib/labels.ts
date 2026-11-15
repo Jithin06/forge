@@ -1,8 +1,8 @@
 import type { AccessStatus, Audience, Capability, Experience, MaterialCategory, Weekday } from "./schemas";
 
 export const AUDIENCE_LABELS: Record<Audience, string> = {
-  viterbi_undergrad: "Viterbi undergrad",
-  viterbi_grad: "Viterbi grad student",
+  viterbi_undergrad: "Viterbi undergraduate",
+  viterbi_grad: "Viterbi graduate",
   usc_undergrad_other: "USC undergraduate (not Viterbi)",
   usc_grad_other: "USC graduate (not Viterbi)",
 };

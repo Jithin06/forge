@@ -20,7 +20,7 @@ for (const f of (await readdir("data/fixtures/plan")).filter((f) => f.endsWith("
     if (r.status !== 201) { out[`${f} ${audience}`] = [`status ${r.status} ${j?.error?.code ?? ""}`]; continue; }
     if (!j.fixture) throw new Error("Not in sample-data mode.");
     ids.push(j.id);
-    out[`${f} ${audience}`] = j.plan.routes.map((x: { space_id: string; kind?: string; eligibility: { status: string }; labels: string[]; total: { low: number } | null; with_scrap: { low: number } | null }) => `${x.space_id}/${x.kind ?? ""} ${x.eligibility.status} [${x.labels.join(",")}] new ${x.total?.low ?? "-"} scrap ${x.with_scrap?.low ?? "-"}`);
+    out[`${f} ${audience}`] = j.plan.routes.map((x: { space_id: string; kind?: string; eligibility: { status: string }; labels: string[]; total: { low: number } | null; with_scrap: { low: number } | null; scrap: unknown[][]; cost_lines: { name: string }[] }) => `${x.space_id}/${x.kind ?? ""} ${x.eligibility.status} [${x.labels.join(",")}] new ${x.total?.low ?? "-"} | scrap ${x.with_scrap?.low ?? "-"} matches ${x.cost_lines.map((l, i) => `${l.name}:${(x.scrap[i] ?? []).length}`).join(", ")}`);
   }
 }
 if (ids.length) await db.from("plans").delete().in("id", ids);

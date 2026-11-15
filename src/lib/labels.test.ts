@@ -4,6 +4,8 @@ import { AUDIENCE_LABELS, EXPERIENCE_LABELS } from "./labels";
 
 describe("chip labels", () => {
   it('each audience completes the sentence "I am a..."', () => {
+    expect(AUDIENCE_LABELS.viterbi_undergrad).toBe("Viterbi undergraduate");
+    expect(AUDIENCE_LABELS.viterbi_grad).toBe("Viterbi graduate");
     expect(AUDIENCE_LABELS.usc_undergrad_other).toBe("USC undergraduate (not Viterbi)");
     expect(AUDIENCE_LABELS.usc_grad_other).toBe("USC graduate (not Viterbi)");
     expect(Object.values(AUDIENCE_LABELS).some((l) => /^Other/.test(l))).toBe(false);

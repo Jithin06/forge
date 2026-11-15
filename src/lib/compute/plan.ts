@@ -247,9 +247,22 @@ export function forAudience(
   };
 }
 
+/**
+ * True for a line that is the space's charge for something its staff make,
+ * such as a work order's print charge. Leftover prints and filament cannot
+ * pay for a staff-made print, so scrap is never matched to such a line. Two
+ * cases: the whole route is staff-made; or the space sells no material, so a
+ * price of its own on a line can only be a charge for staff-made work.
+ * Scrap still matches what the student brings or uses themself.
+ */
+export function staffCharge(route: Pick<BaseRoute, "kind" | "bring_your_own">, line: Pick<CostLine, "low_usd" | "typical">): boolean {
+  if (route.kind === "staff_fabrication") return true;
+  return !!route.bring_your_own && line.low_usd !== null && !line.typical;
+}
+
 export function finalize(base: BasePlan, availableScrap: ScrapItem[]): FinalPlan {
   const withScrap = base.routes.map((r) => {
-    const scrap = matchScrap(r.cost_lines, r.space_id, availableScrap);
+    const scrap = matchScrap(r.cost_lines.map((l) => ({ category: l.category, skip: staffCharge(r, l) })), r.space_id, availableScrap);
     const free = new Set(scrap.map((s, i) => (s.length ? i : -1)).filter((i) => i >= 0));
     return { r, scrap, with_scrap: withScrapTotal(r.cost_lines, free) };
   });
