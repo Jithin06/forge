@@ -9,7 +9,12 @@ import { CAPABILITY_LABELS, WEEKDAY_LABELS, formatDate, formatTime } from "@/lib
 import { CAPABILITIES, WEEKDAYS, type GroupStatus, type SpaceDoc } from "@/lib/schemas";
 import { getAvailableScrap, getSpace, type ScrapCard } from "@/lib/spaces";
 
-export const metadata: Metadata = { title: "Space" };
+/** The tab title is the space's name, so several open spaces can be told apart. */
+export async function generateMetadata({ params }: PageProps<"/spaces/[id]">): Promise<Metadata> {
+  const { id } = await params;
+  const space = await getSpace(id).catch(() => null);
+  return { title: space?.name ?? "Space" };
+}
 
 export default function SpacePage({ params }: PageProps<"/spaces/[id]">) {
   return (

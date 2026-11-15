@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PageSkeleton, SignInGate, secondaryBtn } from "@/components/account/gate";
 import { useSession } from "@/components/account/use-session";
 import { cn } from "@/lib/utils";
@@ -22,6 +22,13 @@ export function StaffPortal() {
   const [tab, setTab] = useState<TabId>("post");
   const [chosen, setChosen] = useState<string | null>(null);
   const [version, setVersion] = useState(0);
+  const [names, setNames] = useState<Record<string, string>>({});
+  useEffect(() => {
+    fetch("/api/spaces")
+      .then((r) => r.json())
+      .then((d) => setNames(Object.fromEntries(d.spaces.map((s: { id: string; name: string }) => [s.id, s.name]))))
+      .catch(() => {});
+  }, []);
 
   if (!session) return <PageSkeleton title="Staff portal" />;
   if (!session.user) return <SignInGate title="Staff portal" why="This page is for staff of a campus space. Sign in to open it." />;
@@ -38,6 +45,7 @@ export function StaffPortal() {
     );
 
   const spaceId = chosen ?? session.staff_space_ids[0];
+  const spaceName = names[spaceId];
   return (
     <div className="space-y-6">
       <header className="space-y-2">
@@ -46,12 +54,16 @@ export function StaffPortal() {
           <label className="flex flex-col gap-1.5">
             <span className="font-semibold">Space</span>
             <select value={spaceId} onChange={(e) => setChosen(e.target.value)} className="min-h-12 rounded-lg border border-gray-text bg-white px-3">
-              {session.staff_space_ids.map((s) => (<option key={s} value={s}>{s}</option>))}
+              {session.staff_space_ids.map((s) => (<option key={s} value={s}>{names[s] ?? s}</option>))}
             </select>
           </label>
         ) : (
           <p className="text-[15px] text-gray-text">
-            You are staff for <Link href={`/spaces/${spaceId}`} className="inline-flex min-h-11 items-center text-cardinal underline underline-offset-4">this space</Link>.
+            You are staff for{" "}
+            <Link href={`/spaces/${spaceId}`} className="inline-flex min-h-11 items-center text-cardinal underline underline-offset-4">
+              {spaceName ?? "your space"}
+            </Link>
+            .
           </p>
         )}
       </header>
@@ -65,7 +77,18 @@ export function StaffPortal() {
             id={`tab-${t.id}`}
             aria-selected={tab === t.id}
             aria-controls={`panel-${t.id}`}
+            tabIndex={tab === t.id ? 0 : -1}
             onClick={() => setTab(t.id)}
+            onKeyDown={(e) => {
+              // Arrow keys move between tabs, as screen-reader users expect.
+              const dir = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+              if (!dir) return;
+              e.preventDefault();
+              const i = TABS.findIndex((x) => x.id === t.id);
+              const next = TABS[(i + dir + TABS.length) % TABS.length].id;
+              setTab(next);
+              document.getElementById(`tab-${next}`)?.focus();
+            }}
             className={cn(
               "-mb-px min-h-12 border-b-4 px-3 text-[16px]",
               tab === t.id ? "border-cardinal font-semibold text-cardinal" : "border-transparent text-black",
