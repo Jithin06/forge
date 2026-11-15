@@ -1,0 +1,137 @@
+{
+  "call": "plan",
+  "recorded": {
+    "model": "gemini-3.5-flash-lite",
+    "at": "2026-11-15T06:30:22.490Z"
+  },
+  "key": {
+    "text": "I want to record a podcast episode with two friends about campus food. We need microphones and a quiet room.",
+    "experience": "never",
+    "answers": {
+      "quantity": [
+        "one"
+      ]
+    },
+    "image": null
+  },
+  "output": {
+    "summary": "Record a podcast episode with two friends about campus food using microphones and a quiet room.",
+    "needs": [
+      {
+        "capability": "audio_recording",
+        "why": "To record the podcast audio with microphones in a quiet room."
+      }
+    ],
+    "ways_considered": [
+      {
+        "space_id": "ahmanson-lab",
+        "process": "Record using studio microphones and an audio interface",
+        "verdict": "left_out",
+        "reason": "Does not provide a quiet podcast room."
+      },
+      {
+        "space_id": "bfms",
+        "process": "Record at the electronics bench",
+        "verdict": "left_out",
+        "reason": "Does not have audio recording equipment or a podcast room."
+      },
+      {
+        "space_id": "bme-innovation",
+        "process": "Record in the electronics workshop",
+        "verdict": "left_out",
+        "reason": "Does not have audio recording equipment or a podcast room."
+      },
+      {
+        "space_id": "digital-creative-lab",
+        "process": "Record in the podcast studio",
+        "verdict": "offered",
+        "reason": "Provides a dedicated podcast studio with headsets and a recorder."
+      },
+      {
+        "space_id": "iya-hall",
+        "process": "Record in the media capture labs",
+        "verdict": "offered",
+        "reason": "Provides labs for audio capture and editing."
+      },
+      {
+        "space_id": "its-printing",
+        "process": "Record using printing equipment",
+        "verdict": "left_out",
+        "reason": "Only offers printing and 3D printing services."
+      },
+      {
+        "space_id": "roski-shops",
+        "process": "Record in the woodshop",
+        "verdict": "left_out",
+        "reason": "Only offers woodworking and metalworking spaces."
+      },
+      {
+        "space_id": "sda-technical-theatre-lab",
+        "process": "Record in the scene shop",
+        "verdict": "left_out",
+        "reason": "Does not offer audio recording services."
+      }
+    ],
+    "routes": [
+      {
+        "space_id": "digital-creative-lab",
+        "equipment_ids": [
+          "podcast_studios"
+        ],
+        "process": "Record in the podcast studio",
+        "fit_reason": "This route provides a dedicated podcast studio with all necessary microphones and recording equipment. It is ideal for beginners wanting an easy recording space.",
+        "materials": [],
+        "steps": [
+          {
+            "title": "Design the piece",
+            "detail": "Plan your podcast episode outline and talking points about campus food with your friends."
+          },
+          {
+            "title": "Check sizes",
+            "detail": "Confirm that the podcast studio seats four people so you and your two friends will fit comfortably."
+          },
+          {
+            "title": "Ask staff",
+            "detail": "Email spaces@usc.edu or call the ITS Learning Environments team at (213) 821-6601 to reserve the podcast studio."
+          }
+        ],
+        "warnings": [
+          {
+            "issue": "Background noise can ruin the recording.",
+            "fix": "Keep voices steady and close to the headsets during recording."
+          }
+        ]
+      },
+      {
+        "space_id": "iya-hall",
+        "equipment_ids": [],
+        "process": "Record in the audio capture labs",
+        "fit_reason": "This route offers labs for audio capture and editing. It gives you another campus option for recording your discussion.",
+        "materials": [],
+        "steps": [
+          {
+            "title": "Design the piece",
+            "detail": "Plan your podcast episode outline and talking points about campus food with your friends."
+          },
+          {
+            "title": "Check sizes",
+            "detail": "Check with staff to ensure the audio capture lab can accommodate your group size."
+          },
+          {
+            "title": "Ask staff",
+            "detail": "Contact the Academy at iovine-young@usc.edu or (213) 821-6140 to ask who may use the maker spaces and how."
+          }
+        ],
+        "warnings": [
+          {
+            "issue": "Access rules may apply.",
+            "fix": "Ask the Academy staff about who is permitted to use the audio labs."
+          }
+        ]
+      }
+    ],
+    "single_route_reason": null,
+    "clarifying_question": null,
+    "not_supported_reason": null
+  }
+}

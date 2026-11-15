@@ -7,7 +7,7 @@
  *   RECORD_FIXTURES=1 PORT=3123 npm start                (one terminal, AI_PROVIDER=gemini)
  *   BASE=http://localhost:3123 npm run check:quality     (another)
  *
- * What it checks on the phone stand, the night light and the club sign:
+ * What it checks on the six example ideas from the home page:
  *   1. each plan has two or three routes, or one route with a stated reason
  *   2. a detailed idea is asked at most one question
  *   3. no step or warning tells the student how to operate a machine
@@ -65,10 +65,14 @@ const saveFixture = async (call: "ask" | "plan", name: string, key: unknown) => 
   return true;
 };
 
+// The six example ideas on the home page (src/components/ask/ask-flow.tsx). Keep the texts identical.
 const IDEAS: Record<string, string> = {
   "phone-stand": "I want to make a phone stand for my desk out of wood. It should hold my phone at a slight angle, fit in my hand, and I only need one.",
   "night-light": "A small night light for my dorm desk with a warm LED inside and a 3D printed cover. Just one, about the size of my palm.",
   "club-sign": "An engraved acrylic sign with my club's name for our tabling booth, about 12 inches wide. We need one.",
+  podcast: "I want to record a podcast episode with two friends about campus food. We need microphones and a quiet room.",
+  poster: "A printed poster of my research for a poster session, 36 by 48 inches, in color. I have the file ready and need one copy.",
+  "video-interview": "A two-minute video interview with a professor for a class project. I need a camera, a microphone and a quiet place to film.",
 };
 
 /** Phrases that tell someone how to run a machine, rather than what to make. */
@@ -96,6 +100,9 @@ const OPERATING = new RegExp(
 type Step = { title: string; detail: string };
 type Raw = { routes: { space_id: string; equipment_ids: string[]; process: string; fit_reason: string; steps: Step[]; warnings: { issue: string; fix: string }[] }[]; single_route_reason: string | null; ways_considered: unknown[] };
 const created: string[] = [];
+const attempts: Record<string, number> = {};
+const logLines = async () => (await readFile("logs/ai-calls.jsonl", "utf8").catch(() => "")).split("\n").filter(Boolean).map((l) => JSON.parse(l) as { call: string; status: number | string });
+const logAtStart = (await logLines()).length;
 const counts: Record<string, number> = {};
 const examples: Record<string, unknown> = {};
 let recordedCount = 0;
@@ -123,6 +130,7 @@ for (const [name, text] of Object.entries(IDEAS).filter(([n]) => !ONLY || ONLY[0
   }
   const routes = raw.routes;
   counts[name] = routes.length;
+  attempts[name] = Number(data?.plan?.attempts ?? 1);
   examples[name] = { idea: text, audience: "viterbi_undergrad", experience: "never", answers, attempts: data?.plan?.attempts, raw_model_output: raw, computed_plan: plan.body.plan };
 
   check(
@@ -169,8 +177,21 @@ const prev: Report | null = ONLY ? await readFile("reports/plan-quality.json", "
 const ran = Object.keys(IDEAS).filter((n) => results.some((r) => r.check.startsWith(`${n}:`)));
 const keptChecks = (prev?.checks ?? []).filter((c) => !ran.some((n) => c.check.startsWith(`${n}:`)));
 Object.assign(counts, { ...(prev?.route_counts ?? {}), ...counts });
-await writeFile("reports/plan-quality.json", JSON.stringify({ at: new Date().toISOString(), route_counts: counts, checks: [...keptChecks, ...results], examples: { ...(prev?.examples ?? {}), ...examples } }, null, 2) + "\n");
-console.log(`\nRoute counts: ${Object.entries(counts).map(([k, v]) => `${k} ${v}`).join(", ")}`);
+// Model calls per plan: answers the model gave for a plan (2 when it was asked to look again),
+// and separately every plan request this run sent, including ones the provider failed.
+const sent = (await logLines()).slice(logAtStart).filter((l) => l.call === "plan");
+const plansMade = Object.keys(attempts).length;
+const calls = {
+  plans: plansMade,
+  model_answers_per_plan: plansMade ? Math.round((Object.values(attempts).reduce((a, b) => a + b, 0) / plansMade) * 100) / 100 : null,
+  plan_requests_sent: sent.length,
+  plan_requests_failed: sent.filter((l) => l.status !== 200).length,
+  plan_requests_per_plan: plansMade ? Math.round((sent.length / plansMade) * 100) / 100 : null,
+  attempts,
+};
+await writeFile("reports/plan-quality.json", JSON.stringify({ at: new Date().toISOString(), route_counts: counts, calls, checks: [...keptChecks, ...results], examples: { ...(prev?.examples ?? {}), ...examples } }, null, 2) + "\n");
+console.log(`\nModel answers per plan: ${calls.model_answers_per_plan} (${plansMade} plans). Plan requests sent: ${calls.plan_requests_sent}, failed: ${calls.plan_requests_failed}.`);
+console.log(`Route counts: ${Object.entries(counts).map(([k, v]) => `${k} ${v}`).join(", ")}`);
 console.log(`Fixtures re-recorded: ${recordedCount}. Cleaned up ${created.length} test plan(s).`);
 console.log(failures === 0 ? "All plan quality checks passed." : `${failures} check(s) failed.`);
 process.exit(failures === 0 ? 0 : 1);

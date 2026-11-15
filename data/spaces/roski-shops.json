@@ -1,0 +1,127 @@
+{
+  "id": "roski-shops",
+  "name": "Roski sculpture studio and shared woodshop",
+  "school": "USC Roski School of Art and Design",
+  "location": "Watt Hall",
+  "official_url": "https://roski.usc.edu/studios-labs/",
+  "blurb": "The Watt Hall sculpture facility: a wood and metal shop with full-time technical support, a bronze-casting foundry, welding stations and a moldmaking area, plus a woodshop shared by enrolled Roski and Architecture students. The Galen Ceramics Studio with wheels and kilns is next door in Watt Hall 107.",
+  "capabilities": [
+    "woodworking",
+    "metalworking",
+    "hand_tools"
+  ],
+  "hours": null,
+  "hours_note": "Tool crib: Monday to Thursday 9 AM to 9 PM, Friday 9 AM to 5 PM. The page says the studios are accessible 24 hours a day to its students.",
+  "access": [
+    {
+      "audience": "viterbi_undergrad",
+      "status": "ask_first",
+      "note": "The page says the woodshop is open to enrolled Roski and Architecture students. Ask Roski whether you can use it."
+    },
+    {
+      "audience": "viterbi_grad",
+      "status": "ask_first",
+      "note": "The page says the woodshop is open to enrolled Roski and Architecture students. Ask Roski whether you can use it."
+    },
+    {
+      "audience": "usc_undergrad_other",
+      "status": "ask_first",
+      "note": "The page says the woodshop is open to enrolled Roski and Architecture students. Ask Roski whether you can use it."
+    },
+    {
+      "audience": "usc_grad_other",
+      "status": "ask_first",
+      "note": "The page says the woodshop is open to enrolled Roski and Architecture students. Ask Roski whether you can use it."
+    }
+  ],
+  "access_steps": [
+    "Ask at the tool crib, which checks out hand and power tools."
+  ],
+  "trainings": [],
+  "equipment": [
+    {
+      "id": "roski_woodshop",
+      "name": "Shared woodshop: table saw, radial arm saw, band saw, jig saw, panel saw, chop saw, planer, sander and grinder, lathe, shears and drill press",
+      "capability": "woodworking",
+      "plain_name": "Woodshop (saws, sanders and a drill press for cutting and shaping wood)",
+      "required_training_ids": [],
+      "staff_operated": null,
+      "work_area_note": null,
+      "good_for": [],
+      "not_for": []
+    },
+    {
+      "id": "roski_metal",
+      "name": "Wood and metal shop with welding stations (oxy-acetylene, arc and MIG) and plasma cutters",
+      "capability": "metalworking",
+      "plain_name": "Metal shop (cuts and welds steel)",
+      "required_training_ids": [],
+      "staff_operated": null,
+      "work_area_note": "Plasma cutters cut mild steel up to 3/4 in",
+      "good_for": [],
+      "not_for": []
+    },
+    {
+      "id": "roski_tool_crib",
+      "name": "Tool crib: hand and power tools to check out",
+      "capability": "hand_tools",
+      "plain_name": "Hand and power tools to borrow",
+      "required_training_ids": [],
+      "staff_operated": null,
+      "work_area_note": null,
+      "good_for": [],
+      "not_for": []
+    }
+  ],
+  "materials": [],
+  "services": [
+    {
+      "name": "Bronze casting foundry and moldmaking area (plaster, latex, slipcast and silicone molds)",
+      "how_to_request": null
+    },
+    {
+      "name": "Galen Ceramics Studio, Watt Hall 107: electric wheels, a slab roller, extruders, and electric, soda and gas kilns",
+      "how_to_request": null
+    }
+  ],
+  "usage_fee_note": null,
+  "prohibited": [],
+  "scrap_policy": {
+    "offers_scrap": false,
+    "never_offer": [],
+    "pickup_note": null
+  },
+  "estimates": {
+    "basis": "typical for campus workshops",
+    "first_visit": [
+      "You will likely need your USC ID.",
+      "There is likely a short safety orientation before you first use the tools.",
+      "Ask staff which training your tool needs; it typically differs by tool."
+    ],
+    "training_note": "Cutting, power and machine tools likely need an orientation plus training on that tool. Ask staff before you plan around one.",
+    "cost_note": "You likely pay for materials only. Where this space lists no price, cost ranges use the Baum Family Maker Space's prices as typical campus prices."
+  },
+  "source": {
+    "urls": [
+      "https://roski.usc.edu/studios-labs/"
+    ],
+    "checked_on": "2026-11-14"
+  },
+  "status": {
+    "hours": {
+      "state": "estimated"
+    },
+    "access": {
+      "state": "estimated"
+    },
+    "trainings": {
+      "state": "estimated"
+    },
+    "equipment": {
+      "state": "estimated"
+    },
+    "prices": {
+      "state": "estimated"
+    }
+  }
+}

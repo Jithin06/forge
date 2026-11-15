@@ -65,7 +65,7 @@ describe("SPEC 6.5", () => {
     const b = finalize(computeBase(planFixture("night-light"), seedSpaces(), "usc_grad_other"), []);
     const routes = (p: typeof a) => p.routes.map((r) => `${r.space_id}|${r.process}`).sort();
     expect(routes(a)).toEqual(routes(b));
-    expect(a.routes.map((r) => `${r.space_id}:${r.eligibility.status}`)).toEqual(["bme-innovation:ask_first", "bfms:ask_first"]);
+    expect(a.routes.map((r) => `${r.space_id}:${r.eligibility.status}`)).toEqual(["bfms:open", "bme-innovation:ask_first"]);
     expect(b.routes.map((r) => `${r.space_id}:${r.eligibility.status}`)).toEqual(["bfms:ask_first", "bme-innovation:not_open"]);
   });
 
@@ -86,18 +86,19 @@ describe("SPEC 6.5", () => {
 
   it("7. two routes with different costs and trainings: labels match a hand calculation", () => {
     // Test prices: plywood $9.50 a sheet, cardboard $1 a sheet. Maker Space is open to Viterbi undergrads here.
-    // Route A, laser at the Maker Space: 1 x 9.50 + (1 to 2) x 1 = 10.50 to 11.50; trainings: Level 1 = 1.
+    // Route A, laser at the Maker Space: 1 x 9.50 + (1 to 2) x 1 = 10.50 to 11.50; trainings: Level 1, 2, 5 = 3.
     // Route B, machine shop at the Maker Space: no priced material; trainings: Level 1, 2, 5 = 3.
     // Cheapest needs two costed routes, and only A has a cost: no "Cheapest".
-    // Easiest: A has 1 training, B has 3: A.
+    // Easiest: both need 3 trainings and both are open, so the one with a known cost wins: A.
     const model = planFixture("phone-stand");
     model.routes = [model.routes[0], { ...model.routes[0], equipment_ids: ["machine_shop"], materials: [{ category: "aluminum", material_id: null, quantity_low: 1, quantity_high: 1, unit: "bar" }] }];
     const plan = finalize(computeBase(model, pricedSpaces(), "viterbi_undergrad"), []);
     expect(plan.routes.map((r) => [r.total, r.trainings.map((t) => t.id), r.labels])).toEqual([
-      [{ low: 10.5, high: 11.5 }, ["level_1"], ["easiest"]],
+      [{ low: 10.5, high: 11.5 }, ["level_1", "level_2", "level_5"], ["easiest"]],
       [null, ["level_1", "level_2", "level_5"], []],
     ]);
-    // With a second costed route (3D print, 40 to 80 g x $0.05 = 2 to 4), Cheapest appears and goes to the lower one.
+    // With the 3D print route (40 to 80 g x $0.05 = 2 to 4; student workers print it, so 0 trainings),
+    // Cheapest goes to the lower cost and Easiest to the route with nothing to learn: both the print.
     const three = finalize(computeBase(planFixture("phone-stand"), pricedSpaces(), "viterbi_undergrad"), []);
     expect(three.routes.map((r) => r.labels)).toEqual([[], ["cheapest", "easiest"], []]);
   });

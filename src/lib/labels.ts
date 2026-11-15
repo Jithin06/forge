@@ -26,6 +26,7 @@ export const CAPABILITY_LABELS: Record<Capability, string> = {
   video_production: "Video",
   audio_recording: "Audio recording",
   photography: "Photography",
+  large_format_printing: "Poster and large-format printing",
 };
 
 export const ACCESS_LABELS: Record<AccessStatus, string> = {

@@ -4,7 +4,7 @@
   "school": "Viterbi School of Engineering",
   "location": "Ground floor, Science and Engineering Library",
   "official_url": "https://viterbiundergrad.usc.edu/bfms/",
-  "blurb": "A workshop with 3D printers, a laser cutter, hand and power tools, electronics benches and a staffed machine shop. Everyone starts with the Level 1 orientation and safety training.",
+  "blurb": "A workshop with 3D printers run by student workers, a laser cutter, hand and power tools, electronics benches and a staffed machine shop. 3D prints are made for you by work order; using tools yourself starts with the Level 1 orientation and safety training.",
   "capabilities": [
     "fdm_3d_printing",
     "resin_3d_printing",
@@ -44,13 +44,13 @@
   "access": [
     {
       "audience": "viterbi_undergrad",
-      "status": "ask_first",
-      "note": "The Maker Space says it is for Viterbi undergraduates. Confirm at the front desk."
+      "status": "open",
+      "note": null
     },
     {
       "audience": "viterbi_grad",
       "status": "ask_first",
-      "note": "The Maker Space says it is for Viterbi undergraduates. Ask the front desk whether graduate students can use it."
+      "note": "Public pages describe the space as for Viterbi undergraduates; ask staff about graduate access."
     },
     {
       "audience": "usc_undergrad_other",
@@ -64,8 +64,8 @@
     }
   ],
   "access_steps": [
-    "Take the Level 1 orientation and safety training. It lets you use the non-powered hand tools.",
-    "Take the training level for the tools you need: Level 2 for hand tools and handheld drills, Level 3 for power tools, Level 4 for electronics."
+    "Take the Level 1 orientation and safety training first. It lets you use the non-powered hand tools.",
+    "Each tool needs its own level after that. The trainings list shows the order."
   ],
   "trainings": [
     {
@@ -104,7 +104,8 @@
       "name": "Level 4: Electronics",
       "covers": "Electronics such as soldering and test equipment.",
       "prerequisite_ids": [
-        "level_1"
+        "level_1",
+        "level_2"
       ],
       "duration_note": null,
       "how_to_sign_up": null,
@@ -113,14 +114,14 @@
     {
       "id": "level_5",
       "name": "Level 5: Machine tools",
-      "covers": "Machine tools.",
+      "covers": "Machine tools and the laser cutter. Any eligible student can take it after Level 2.",
       "prerequisite_ids": [
         "level_1",
         "level_2"
       ],
       "duration_note": null,
       "how_to_sign_up": null,
-      "restricted_to": "Student workers and designated team members"
+      "restricted_to": null
     }
   ],
   "equipment": [
@@ -129,10 +130,8 @@
       "name": "Prusa MK4 3D printers (6)",
       "capability": "fdm_3d_printing",
       "plain_name": "3D printer",
-      "required_training_ids": [
-        "level_1"
-      ],
-      "staff_operated": null,
+      "required_training_ids": [],
+      "staff_operated": true,
       "work_area_note": "Builds parts up to 9.8 x 8.3 x 8.6 in",
       "good_for": [],
       "not_for": []
@@ -142,10 +141,8 @@
       "name": "Stratasys F900",
       "capability": "fdm_3d_printing",
       "plain_name": "Large industrial 3D printer",
-      "required_training_ids": [
-        "level_1"
-      ],
-      "staff_operated": null,
+      "required_training_ids": [],
+      "staff_operated": true,
       "work_area_note": "Builds parts up to 36 x 24 x 36 in",
       "good_for": [],
       "not_for": []
@@ -155,10 +152,8 @@
       "name": "Stratasys F370",
       "capability": "fdm_3d_printing",
       "plain_name": "Industrial 3D printer",
-      "required_training_ids": [
-        "level_1"
-      ],
-      "staff_operated": null,
+      "required_training_ids": [],
+      "staff_operated": true,
       "work_area_note": "Builds parts up to 14 x 10 x 14 in",
       "good_for": [],
       "not_for": []
@@ -168,10 +163,8 @@
       "name": "FormLabs Form 3L",
       "capability": "resin_3d_printing",
       "plain_name": "Resin 3D printer (very fine detail)",
-      "required_training_ids": [
-        "level_1"
-      ],
-      "staff_operated": null,
+      "required_training_ids": [],
+      "staff_operated": true,
       "work_area_note": "Builds parts up to 13.2 x 7.9 x 11.8 in",
       "good_for": [],
       "not_for": []
@@ -181,10 +174,8 @@
       "name": "Markforged X7",
       "capability": "fdm_3d_printing",
       "plain_name": "Extra-strong 3D printer",
-      "required_training_ids": [
-        "level_1"
-      ],
-      "staff_operated": null,
+      "required_training_ids": [],
+      "staff_operated": true,
       "work_area_note": "Builds parts up to 13 x 10.6 x 7.9 in",
       "good_for": [],
       "not_for": []
@@ -194,10 +185,8 @@
       "name": "Prusa Pro HT90",
       "capability": "fdm_3d_printing",
       "plain_name": "High-temperature 3D printer",
-      "required_training_ids": [
-        "level_1"
-      ],
-      "staff_operated": null,
+      "required_training_ids": [],
+      "staff_operated": true,
       "work_area_note": null,
       "good_for": [],
       "not_for": []
@@ -208,7 +197,7 @@
       "capability": "laser_cutting",
       "plain_name": "Laser cutter (cuts flat sheets precisely)",
       "required_training_ids": [
-        "level_1"
+        "level_5"
       ],
       "staff_operated": null,
       "work_area_note": "Sheets up to 18 x 32 in",
@@ -291,21 +280,172 @@
   "materials": [
     {
       "id": "pla_filament",
-      "name": "PLA filament",
+      "name": "PLA black, Prusa MK4 printers",
       "category": "pla_filament",
-      "unit_price_usd": 0.05,
-      "price_unit": "g",
+      "unit_price_usd": 1.0,
+      "price_unit": "cubic inch",
+      "price_source": "https://viterbiundergrad.usc.edu/bfms/operations/prices/ (printing-cost chart; page last updated 2024-02-21)",
       "stocked": null,
-      "price_source": "coder estimate, unverified"
+      "price_by_audience": {
+        "usc_undergrad_other": 5.0,
+        "usc_grad_other": 5.0
+      }
+    },
+    {
+      "id": "pla_specialty",
+      "name": "PLA specialty colors, Prusa MK4 printers",
+      "category": "pla_filament",
+      "unit_price_usd": 1.25,
+      "price_unit": "cubic inch",
+      "price_source": "https://viterbiundergrad.usc.edu/bfms/operations/prices/ (printing-cost chart; page last updated 2024-02-21)",
+      "stocked": null,
+      "price_by_audience": {
+        "usc_undergrad_other": 5.5,
+        "usc_grad_other": 5.5
+      }
+    },
+    {
+      "id": "pc_blend_cf",
+      "name": "PC Blend CF, Prusa MK4 printers",
+      "category": "other_filament",
+      "unit_price_usd": 2.5,
+      "price_unit": "cubic inch",
+      "price_source": "https://viterbiundergrad.usc.edu/bfms/operations/prices/ (printing-cost chart; page last updated 2024-02-21)",
+      "stocked": null,
+      "price_by_audience": {
+        "usc_undergrad_other": null,
+        "usc_grad_other": null
+      }
+    },
+    {
+      "id": "abs_m30",
+      "name": "ABS M30, Stratasys printers",
+      "category": "other_filament",
+      "unit_price_usd": 3.0,
+      "price_unit": "cubic inch",
+      "price_source": "https://viterbiundergrad.usc.edu/bfms/operations/prices/ (printing-cost chart; page last updated 2024-02-21)",
+      "stocked": null,
+      "price_by_audience": {
+        "usc_undergrad_other": null,
+        "usc_grad_other": null
+      }
+    },
+    {
+      "id": "asa",
+      "name": "ASA, Stratasys printers",
+      "category": "other_filament",
+      "unit_price_usd": 4.0,
+      "price_unit": "cubic inch",
+      "price_source": "https://viterbiundergrad.usc.edu/bfms/operations/prices/ (printing-cost chart; page last updated 2024-02-21)",
+      "stocked": null,
+      "price_by_audience": {
+        "usc_undergrad_other": null,
+        "usc_grad_other": null
+      }
+    },
+    {
+      "id": "tpu_f370",
+      "name": "TPU (flexible), Stratasys F370",
+      "category": "other_filament",
+      "unit_price_usd": 3.0,
+      "price_unit": "cubic inch",
+      "price_source": "https://viterbiundergrad.usc.edu/bfms/operations/prices/ (printing-cost chart; page last updated 2024-02-21)",
+      "stocked": null,
+      "price_by_audience": {
+        "usc_undergrad_other": null,
+        "usc_grad_other": null
+      }
+    },
+    {
+      "id": "nylon_12cf",
+      "name": "Nylon 12CF, Stratasys F900",
+      "category": "other_filament",
+      "unit_price_usd": 5.0,
+      "price_unit": "cubic inch",
+      "price_source": "https://viterbiundergrad.usc.edu/bfms/operations/prices/ (printing-cost chart; page last updated 2024-02-21)",
+      "stocked": null,
+      "price_by_audience": {
+        "usc_undergrad_other": null,
+        "usc_grad_other": null
+      }
+    },
+    {
+      "id": "ultem_1010",
+      "name": "ULTEM 1010, Stratasys F900",
+      "category": "other_filament",
+      "unit_price_usd": 5.0,
+      "price_unit": "cubic inch",
+      "price_source": "https://viterbiundergrad.usc.edu/bfms/operations/prices/ (printing-cost chart; page last updated 2024-02-21)",
+      "stocked": null,
+      "price_by_audience": {
+        "usc_undergrad_other": null,
+        "usc_grad_other": null
+      }
+    },
+    {
+      "id": "st_130",
+      "name": "ST 130, Stratasys F900",
+      "category": "other_filament",
+      "unit_price_usd": 5.0,
+      "price_unit": "cubic inch",
+      "price_source": "https://viterbiundergrad.usc.edu/bfms/operations/prices/ (printing-cost chart; page last updated 2024-02-21)",
+      "stocked": null,
+      "price_by_audience": {
+        "usc_undergrad_other": null,
+        "usc_grad_other": null
+      }
+    },
+    {
+      "id": "stratasys_support",
+      "name": "Dissolvable support material, Stratasys printers",
+      "category": "other_filament",
+      "unit_price_usd": 5.0,
+      "price_unit": "cubic inch",
+      "price_source": "https://viterbiundergrad.usc.edu/bfms/operations/prices/ (printing-cost chart; page last updated 2024-02-21)",
+      "stocked": null,
+      "price_by_audience": {
+        "usc_undergrad_other": null,
+        "usc_grad_other": null
+      }
     },
     {
       "id": "printer_resin",
-      "name": "Resin for the Form 3L",
+      "name": "Resin for the Form 3L (clear, black, castable wax or Tough 2000)",
       "category": "resin",
-      "unit_price_usd": 0.2,
+      "unit_price_usd": 0.5,
       "price_unit": "ml",
+      "price_source": "https://viterbiundergrad.usc.edu/bfms/operations/prices/ (printing-cost chart; page last updated 2024-02-21)",
       "stocked": null,
-      "price_source": "coder estimate, unverified"
+      "price_by_audience": {
+        "usc_undergrad_other": null,
+        "usc_grad_other": null
+      }
+    },
+    {
+      "id": "onyx",
+      "name": "Onyx, Onyx FR, Onyx ESD or TPU, Markforged X7",
+      "category": "other_filament",
+      "unit_price_usd": 0.5,
+      "price_unit": "cubic centimeter",
+      "price_source": "https://viterbiundergrad.usc.edu/bfms/operations/prices/ (printing-cost chart; page last updated 2024-02-21)",
+      "stocked": null,
+      "price_by_audience": {
+        "usc_undergrad_other": null,
+        "usc_grad_other": null
+      }
+    },
+    {
+      "id": "fiber_reinforcement",
+      "name": "Fiber reinforcement (carbon fiber, Kevlar or fiberglass), Markforged X7",
+      "category": "other_filament",
+      "unit_price_usd": 3.0,
+      "price_unit": "cubic centimeter",
+      "price_source": "https://viterbiundergrad.usc.edu/bfms/operations/prices/ (printing-cost chart; page last updated 2024-02-21)",
+      "stocked": null,
+      "price_by_audience": {
+        "usc_undergrad_other": null,
+        "usc_grad_other": null
+      }
     },
     {
       "id": "plywood_sheet",
@@ -353,8 +493,27 @@
       "price_source": "coder estimate, unverified"
     }
   ],
-  "services": [],
-  "usage_fee_note": "For the Stratasys printers, students pay only for material.",
+  "services": [
+    {
+      "name": "3D print work order",
+      "how_to_request": "Submit the request form. Student workers print it and answer your questions. You pay for material only, at pickup, with a USC ID card or USC account.",
+      "url": "https://docs.google.com/forms/u/2/d/e/1FAIpQLSdLfjsy2pTRdiKEvDxOGvLgcNSF4Lf05G-Mg_li9BCrzRpjbQ/viewform",
+      "equipment_ids": [
+        "prusa_mk4",
+        "stratasys_f900",
+        "stratasys_f370",
+        "form_3l",
+        "markforged_x7",
+        "prusa_pro_ht90"
+      ],
+      "steps": [
+        "Submit the 3D print work order form with your file.",
+        "Student workers email you an estimate to approve, then print it. Ask them anything you are unsure about.",
+        "You are emailed when it is ready. Collect it and pay for the material only, with a USC ID card or USC account."
+      ]
+    }
+  ],
+  "usage_fee_note": "3D printing is charged by the model and support material used. The chart lists higher prices for non-Viterbi students, and only for the Prusa printers. Sheet prices below are Forge's own estimates.",
   "prohibited": [],
   "scrap_policy": {
     "offers_scrap": false,
@@ -365,7 +524,8 @@
     "urls": [
       "https://viterbiundergrad.usc.edu/bfms/",
       "https://viterbiundergrad.usc.edu/bfms/facilities/advance-fabrication-lab",
-      "https://viterbiundergrad.usc.edu/bfms/operations/training-levels/"
+      "https://viterbiundergrad.usc.edu/bfms/operations/training-levels/",
+      "https://viterbiundergrad.usc.edu/bfms/operations/prices/"
     ],
     "checked_on": "2026-11-14"
   },

@@ -40,7 +40,11 @@ export function planFixture(name: string): PlanOutput {
 /** The seed spaces with every price removed, for "no price data" cases. */
 export function unpricedSpaces(): SpaceDoc[] {
   const spaces = seedSpaces();
-  for (const s of spaces) for (const m of s.materials) m.unit_price_usd = null;
+  for (const s of spaces)
+    for (const m of s.materials) {
+      m.unit_price_usd = null;
+      delete m.price_by_audience;
+    }
   return spaces;
 }
 
@@ -55,6 +59,7 @@ export function pricedSpaces(): SpaceDoc[] {
     const m = bfms.materials.find((x) => x.id === id)!;
     m.unit_price_usd = usd;
     m.price_unit = unit;
+    delete m.price_by_audience;
   };
   price("plywood_sheet", 9.5, "sheet");
   price("cardboard", 1, "sheet");

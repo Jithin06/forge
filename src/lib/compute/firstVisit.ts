@@ -26,15 +26,31 @@ export function hoursSummary(hours: SpaceDoc["hours"]): string | null {
   return parts.length ? parts.join("; ") : null;
 }
 
-/** Step 8: the "Your first visit" checklist for the top route. */
-export function firstVisit(space: SpaceDoc, trainings: Training[]): string[] {
-  const items: string[] = [];
+type Service = SpaceDoc["services"][number];
+
+/** The service through which staff run this equipment for the student, if every tool on the route is covered by one. */
+export function staffService(space: SpaceDoc, equipmentIds: string[]): Service | null {
+  if (equipmentIds.length === 0) return null;
+  const tools = equipmentIds.map((id) => space.equipment.find((e) => e.id === id));
+  if (!tools.every((e) => e?.staff_operated === true)) return null;
+  return space.services.find((sv) => equipmentIds.every((id) => sv.equipment_ids?.includes(id))) ?? { name: "Ask staff to make it", how_to_request: null };
+}
+
+/**
+ * Step 8: the "Your first visit" checklist for the top route.
+ * When staff make the piece (a work order), the list is the service's own
+ * steps and there is no training to take.
+ */
+export function firstVisit(space: SpaceDoc, trainings: Training[], service: Service | null = null): string[] {
   const hours = hoursSummary(space.hours);
-  items.push(
-    hours
-      ? `Go to ${space.name}, ${space.location}. Listed hours: ${hours}.`
-      : `Go to ${space.name}, ${space.location}. ${space.hours_note ?? "Hours are not listed, so check the official page first."}`,
-  );
+  const where = hours
+    ? `${space.name}, ${space.location}. Listed hours: ${hours}.`
+    : `${space.name}, ${space.location}. ${space.hours_note ?? "Hours are not listed, so check the official page first."}`;
+  if (service) {
+    const steps = service.steps?.length ? service.steps : [service.how_to_request ?? `Ask the staff at ${space.name} how to request this.`];
+    return [...steps, `Pick-up is at ${where}`];
+  }
+  const items: string[] = [`Go to ${where}`];
   items.push(...space.access_steps);
   // Short name: "Level 1: Orientation and safety" -> "level 1".
   const short = (name: string) => name.split(":")[0].trim().toLowerCase();
@@ -50,5 +66,7 @@ export function firstVisit(space: SpaceDoc, trainings: Training[]): string[] {
     if (already) continue;
     items.push(`Take ${t.name}. ${t.how_to_sign_up ?? "Ask the staff how to sign up."}`);
   }
+  // Where the official page is silent: typical practice, worded as likely, never as fact.
+  for (const line of space.estimates?.first_visit ?? []) items.push(line);
   return items;
 }

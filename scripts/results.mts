@@ -48,14 +48,15 @@ if (existsSync("reports/eval-latest.json")) {
 // ---- plan quality on a live model
 out.push("## Plan quality on a live model", "");
 if (existsSync("reports/plan-quality.json")) {
-  const q = JSON.parse(readFileSync("reports/plan-quality.json", "utf8")) as { at: string; route_counts: Record<string, number>; checks: { check: string; ok: boolean }[] };
+  const q = JSON.parse(readFileSync("reports/plan-quality.json", "utf8")) as { at: string; route_counts: Record<string, number>; calls?: { plans: number; model_answers_per_plan: number | null; plan_requests_sent: number; plan_requests_failed: number }; checks: { check: string; ok: boolean }[] };
   const passed = q.checks.filter((c) => c.ok).length;
   out.push(
     `- Last run of \`npm run check:quality\`: ${q.at}. ${passed} of ${q.checks.length} checks passed.`,
     `- Routes per idea: ${Object.entries(q.route_counts).map(([k, v]) => `${k} ${v}`).join(", ") || "no plan came back"}.`,
+    ...(q.calls ? [`- Model calls per plan: ${q.calls.model_answers_per_plan} on average over ${q.calls.plans} plans (1 normally, 2 when the model is asked to look again). Plan requests sent in that run: ${q.calls.plan_requests_sent}, of which the provider failed ${q.calls.plan_requests_failed}.`] : []),
     ...q.checks.filter((c) => !c.ok).map((c) => `- Failed: ${c.check}.`),
     "- Enforced by code on every plan: ids exist and belong to the route's space; no dollar amounts; no two routes with the same space and equipment; a single route must carry a stated reason; the ways the model marks as offered must each become a route.",
-    "- **Not enforced by code:** that steps and warnings do not tell the student how to operate a machine, and that they mention only equipment features found in the space data. These rest on the prompt and on the word-pattern check in `scripts/check-plan-quality.mts`, which reads live plans for three test ideas. Nothing removes such a sentence from a plan a student sees.",
+    "- **Not enforced by code:** that steps and warnings do not tell the student how to operate a machine, and that they mention only equipment features found in the space data. These rest on the prompt and on the word-pattern check in `scripts/check-plan-quality.mts`, which reads live plans for the six example ideas. Nothing removes such a sentence from a plan a student sees.",
     "",
   );
 } else {

@@ -1,9 +1,9 @@
 {
   "call": "plan",
-  "note": "Recorded from the live model by scripts/check-plan-quality.mts.",
+  "note": "Recorded from the live model by scripts/check-plan-quality.mts at 06:26Z on Nov 15, one prompt revision before the final one. Kept as the sample because it shows staff-made 3D print routes; the final-prompt recording for this idea chose two self-use routes and is in data/fixtures/recorded/.",
   "recorded": {
     "model": "gemini-3.5-flash-lite",
-    "at": "2026-11-15T05:20:55.332Z"
+    "at": "2026-11-15T06:26:39.355Z"
   },
   "key": {
     "text": "A small night light for my dorm desk with a warm LED inside and a 3D printed cover. Just one, about the size of my palm.",
@@ -22,131 +22,176 @@
     "image": null
   },
   "output": {
-    "summary": "A small 3D printed night light with an LED inside",
+    "summary": "A small night light with a warm LED and a 3D printed cover",
     "needs": [
       {
         "capability": "fdm_3d_printing",
-        "why": "To make the palm-sized cover for the night light"
-      },
-      {
-        "capability": "electronics",
-        "why": "To wire the warm LED inside the light"
+        "why": "To print the cover for the night light"
       }
     ],
     "ways_considered": [
       {
         "space_id": "ahmanson-lab",
-        "process": "3D print the cover and use an Arduino kit for the electronics",
+        "process": "3D print the cover using the 3D printer",
         "verdict": "offered",
-        "reason": "Has 3D printers and electronics kits suitable for beginners"
+        "reason": "Has a 3D printer for student use"
       },
       {
         "space_id": "bfms",
-        "process": "3D print the cover and assemble the electronics at the bench",
+        "process": "3D print the cover using staff-operated 3D printers",
         "verdict": "offered",
-        "reason": "Has 3D printers and an electronics bench"
+        "reason": "Staff run 3D printers for students via work orders"
       },
       {
         "space_id": "bme-innovation",
-        "process": "3D print the cover and use the electronics workshop",
+        "process": "3D print the cover",
         "verdict": "left_out",
-        "reason": "Restricted to BME-affiliated students only"
+        "reason": "Requires training and reservations, less beginner friendly than other options"
       },
       {
         "space_id": "digital-creative-lab",
-        "process": "Record audio",
+        "process": "3D print the cover",
         "verdict": "left_out",
-        "reason": "Podcast studios do not fit this project"
+        "reason": "Other spaces offer more direct workflows for 3D printing"
+      },
+      {
+        "space_id": "iya-hall",
+        "process": "3D print the cover",
+        "verdict": "left_out",
+        "reason": "Other spaces offer more specific material options"
+      },
+      {
+        "space_id": "its-printing",
+        "process": "3D print the cover by request",
+        "verdict": "offered",
+        "reason": "Staff run 3D printing service makes it easy for beginners"
+      },
+      {
+        "space_id": "roski-shops",
+        "process": "3D print the cover",
+        "verdict": "left_out",
+        "reason": "No 3D printers listed"
+      },
+      {
+        "space_id": "sda-technical-theatre-lab",
+        "process": "Build a set piece",
+        "verdict": "left_out",
+        "reason": "Does not fit a small night light"
       }
     ],
     "routes": [
       {
-        "space_id": "ahmanson-lab",
+        "space_id": "its-printing",
         "equipment_ids": [
-          "ultimaker_s5",
-          "arduino_kits"
+          "its_3d_printing"
         ],
-        "process": "3D print the cover and assemble the light using an electronics kit",
-        "fit_reason": "This route uses beginner-friendly equipment and is open to all students. You can easily make your small night light here.",
+        "process": "Submit a 3D print work order for staff to make the cover",
+        "fit_reason": "This is the easiest route for a beginner since staff operate the printer for you. You just need to submit your file and pick it up.",
         "materials": [
           {
             "category": "pla_filament",
             "material_id": null,
-            "quantity_low": 50,
-            "quantity_high": 100,
-            "unit": "g"
-          },
-          {
-            "category": "electronic_components",
-            "material_id": null,
-            "quantity_low": 1,
-            "quantity_high": 1,
-            "unit": "kit"
+            "quantity_low": 5,
+            "quantity_high": 10,
+            "unit": "cubic inch"
           }
         ],
         "steps": [
           {
-            "title": "Design the cover",
-            "detail": "Design a hollow shape that fits in your hand and can hold an LED."
+            "title": "Prepare the file",
+            "detail": "Design your palm-sized night light cover and check its dimensions."
           },
           {
-            "title": "Ask staff to check the file",
-            "detail": "Show your design to the lab staff before printing."
+            "title": "Submit the work order",
+            "detail": "Email spaces@usc.edu with your request."
           },
           {
-            "title": "Print and assemble",
-            "detail": "Use the 3D printer for the cover and assemble the LED inside."
+            "title": "Collect and pay",
+            "detail": "Pick up your printed cover from the staff."
           }
         ],
         "warnings": [
           {
-            "issue": "The printed cover might be too thick to let the light shine through.",
-            "fix": "Keep the walls thin when designing the cover."
+            "issue": "The cover might be too thick to let light through.",
+            "fix": "Design thin walls for the cover so the light shines through."
           }
         ]
       },
       {
         "space_id": "bfms",
         "equipment_ids": [
-          "prusa_mk4",
-          "electronics_bench"
+          "prusa_mk4"
         ],
-        "process": "3D print the cover on a Prusa printer and solder the LED at the electronics bench",
-        "fit_reason": "This route provides reliable 3D printers and a dedicated electronics workbench. Staff are available to help you through the orientation.",
+        "process": "Submit a 3D print work order for staff to print the cover",
+        "fit_reason": "Staff print the part for you, which is great for beginners. You only pay for the material when you pick it up.",
         "materials": [
           {
             "category": "pla_filament",
             "material_id": "pla_filament",
-            "quantity_low": 50,
-            "quantity_high": 100,
-            "unit": "g"
-          },
-          {
-            "category": "electronic_components",
-            "material_id": null,
-            "quantity_low": 1,
-            "quantity_high": 1,
-            "unit": "pc"
+            "quantity_low": 5,
+            "quantity_high": 10,
+            "unit": "cubic inch"
           }
         ],
         "steps": [
           {
-            "title": "Take the training",
-            "detail": "Complete the required safety training and orientation for the space."
+            "title": "Prepare the file",
+            "detail": "Design your palm-sized night light cover and check its dimensions."
           },
           {
-            "title": "Design the cover",
-            "detail": "Create a palm-sized model for your night light cover."
+            "title": "Submit the work order",
+            "detail": "Submit the request form on their website."
           },
           {
-            "title": "Print and solder",
-            "detail": "Print the cover and use the electronics bench to set up the LED."
+            "title": "Collect and pay",
+            "detail": "Pick up your part from the staff and pay with your USC ID card."
           }
         ],
         "warnings": [
           {
-            "issue": "Soldering requires care around hot tools.",
-            "fix": "Ask staff for guidance if you have never soldered before."
+            "issue": "The cover might be too thick to let light through.",
+            "fix": "Design thin walls for the cover so the light shines through."
+          }
+        ]
+      },
+      {
+        "space_id": "ahmanson-lab",
+        "equipment_ids": [
+          "ultimaker_s5"
+        ],
+        "process": "3D print the cover yourself",
+        "fit_reason": "You can use the 3D printer directly to make your cover. Ask the staff if you need help getting started.",
+        "materials": [
+          {
+            "category": "pla_filament",
+            "material_id": null,
+            "quantity_low": 5,
+            "quantity_high": 10,
+            "unit": "cubic inch"
+          }
+        ],
+        "steps": [
+          {
+            "title": "Design the piece",
+            "detail": "Create a digital model of your palm-sized night light cover."
+          },
+          {
+            "title": "Check sizes",
+            "detail": "Make sure your design fits within the size of your hand and the limits of the 3D printer."
+          },
+          {
+            "title": "Ask staff to check the file",
+            "detail": "Show your file to the lab staff before printing."
+          },
+          {
+            "title": "Assemble and finish",
+            "detail": "Take your printed cover and place your warm LED inside."
+          }
+        ],
+        "warnings": [
+          {
+            "issue": "The cover might be too thick to let light through.",
+            "fix": "Design thin walls for the cover so the light shines through."
           }
         ]
       }

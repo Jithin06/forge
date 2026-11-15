@@ -1,9 +1,90 @@
 {
-  "at": "2026-11-15T05:25:16.108Z",
+  "at": "2026-11-15T06:32:43.463Z",
   "route_counts": {
-    "club-sign": 2
+    "poster": 2,
+    "phone-stand": 3,
+    "night-light": 2,
+    "club-sign": 2,
+    "podcast": 2,
+    "video-interview": 2
+  },
+  "calls": {
+    "note": "Last full run of the six ideas (06:38Z to 06:41Z). The poster was then run again alone after a price-unit fix: 1 plan, 1 answer.",
+    "plans": 6,
+    "model_answers_per_plan": 1.5,
+    "plan_requests_sent": 10,
+    "plan_requests_failed": 1,
+    "plan_requests_per_plan": 1.67,
+    "attempts": {
+      "phone-stand": 2,
+      "night-light": 2,
+      "club-sign": 1,
+      "podcast": 2,
+      "poster": 1,
+      "video-interview": 1
+    }
   },
   "checks": [
+    {
+      "check": "vague idea is asked 1 to 3 questions (asked 3)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "weapon part is blocked",
+      "ok": true,
+      "detail": "Weapons and weapon parts are not allowed."
+    },
+    {
+      "check": "phone-stand: a detailed idea is asked at most one question (asked 0)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "phone-stand: 3 route(s)",
+      "ok": true,
+      "detail": "roski-shops [roski_woodshop]: Cut and shape wood using the woodshop\nbfms [power_tools]: Cut and shape wood using power tools\niya-hall [iya_woodworking]: Cut and shape wood using woodworking machinery"
+    },
+    {
+      "check": "phone-stand: no step or warning tells the student how to operate a machine (12 lines read)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "phone-stand: no explanation in brackets is repeated (0 found in all)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "phone-stand: no dollar amounts in the raw output",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "night-light: a detailed idea is asked at most one question (asked 0)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "night-light: 2 route(s)",
+      "ok": true,
+      "detail": "ahmanson-lab [ultimaker_s5, arduino_kits]: 3D print the cover and use an Arduino starter kit\nbme-innovation [bme_3d_printers, bme_electronics]: 3D print the cover in the print shop and solder the circuit at the electronics workshop"
+    },
+    {
+      "check": "night-light: no step or warning tells the student how to operate a machine (9 lines read)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "night-light: no explanation in brackets is repeated (0 found in all)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "night-light: no dollar amounts in the raw output",
+      "ok": true,
+      "detail": ""
+    },
     {
       "check": "club-sign: a detailed idea is asked at most one question (asked 1)",
       "ok": true,
@@ -12,7 +93,7 @@
     {
       "check": "club-sign: 2 route(s)",
       "ok": true,
-      "detail": "bfms [laser_vls675]: Cut and engrave an acrylic sheet with a laser cutter\nbme-innovation [bme_laser]: Cut and engrave an acrylic sign using a laser cutter"
+      "detail": "bfms [laser_vls675]: Cut and engrave an acrylic sheet using a laser cutter\nbme-innovation [bme_laser]: Cut and engrave an acrylic sheet using a laser cutter"
     },
     {
       "check": "club-sign: no step or warning tells the student how to operate a machine (8 lines read)",
@@ -30,34 +111,79 @@
       "detail": ""
     },
     {
-      "check": "vague idea is asked 1 to 3 questions (asked 3)",
+      "check": "podcast: a detailed idea is asked at most one question (asked 0)",
       "ok": true,
       "detail": ""
     },
     {
-      "check": "weapon part is blocked",
+      "check": "podcast: 2 route(s)",
       "ok": true,
-      "detail": "Weapons and weapon parts are not allowed."
+      "detail": "digital-creative-lab [podcast_studios]: Record in a podcast studio with headsets and a mixer\nahmanson-lab [studio_mics, audio_interface, wireless_mics]: Record using studio microphones and an audio interface"
     },
     {
-      "check": "phone-stand: a detailed idea is asked at most one question (asked 0)",
+      "check": "podcast: no step or warning tells the student how to operate a machine (6 lines read)",
       "ok": true,
       "detail": ""
     },
     {
-      "check": "phone-stand: a live plan came back",
-      "ok": false,
-      "detail": "{\"error\":{\"code\":\"AI_TIMEOUT\",\"message\":\"This is taking longer than usual. Please try again.\"}}"
-    },
-    {
-      "check": "night-light: a detailed idea is asked at most one question (asked 1)",
+      "check": "podcast: no explanation in brackets is repeated (0 found in all)",
       "ok": true,
-      "detail": "What does it need to handle? (pick any)"
+      "detail": ""
     },
     {
-      "check": "night-light: a live plan came back",
-      "ok": false,
-      "detail": "{\"error\":{\"code\":\"AI_TIMEOUT\",\"message\":\"This is taking longer than usual. Please try again.\"}}"
+      "check": "podcast: no dollar amounts in the raw output",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "video-interview: a detailed idea is asked at most one question (asked 0)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "video-interview: 2 route(s)",
+      "ok": true,
+      "detail": "digital-creative-lab [podcast_studios]: Record the interview in a podcast studio\nahmanson-lab [sony_fx3, wireless_mics]: Borrow a camera and microphones to film elsewhere"
+    },
+    {
+      "check": "video-interview: no step or warning tells the student how to operate a machine (8 lines read)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "video-interview: no explanation in brackets is repeated (0 found in all)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "video-interview: no dollar amounts in the raw output",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "poster: a detailed idea is asked at most one question (asked 0)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "poster: 2 route(s)",
+      "ok": true,
+      "detail": "its-printing [its_plotters]: Print a color poster on heavyweight coated paper\ndigital-creative-lab [dcl_plotters]: Print a color poster using plotters"
+    },
+    {
+      "check": "poster: no step or warning tells the student how to operate a machine (8 lines read)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "poster: no explanation in brackets is repeated (0 found in all)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "poster: no dollar amounts in the raw output",
+      "ok": true,
+      "detail": ""
     }
   ],
   "examples": {
@@ -80,7 +206,7 @@
       "raw_model_output": {
         "needs": [
           {
-            "why": "To cut and engrave the acrylic sign.",
+            "why": "To cut and engrave the acrylic sheet precisely.",
             "capability": "laser_cutting"
           }
         ],
@@ -88,24 +214,24 @@
           {
             "steps": [
               {
-                "title": "Design the sign",
-                "detail": "Draw your club name and sign outline in design software."
+                "title": "Design the piece",
+                "detail": "Draw your club name in a digital design tool to the desired size."
               },
               {
                 "title": "Take the training",
-                "detail": "Complete the required safety training for the laser cutter."
+                "detail": "Complete the required safety and equipment training before using the space."
               },
               {
-                "title": "Ask staff for help",
-                "detail": "Ask the space staff to check your design file before cutting."
+                "title": "Make the sign",
+                "detail": "Use the laser cutter to cut and engrave your acrylic sheet."
               }
             ],
-            "process": "Cut and engrave an acrylic sheet with a laser cutter",
+            "process": "Cut and engrave an acrylic sheet using a laser cutter",
             "space_id": "bfms",
             "warnings": [
               {
-                "fix": "Use a clear, bold font for your club name.",
-                "issue": "Fine text might be hard to read when engraved."
+                "fix": "Make sure your engraved text and lines are thick enough to show clearly.",
+                "issue": "Lines too thin"
               }
             ],
             "materials": [
@@ -117,7 +243,7 @@
                 "quantity_high": 1
               }
             ],
-            "fit_reason": "This space has the laser cutter and acrylic sheets you need.",
+            "fit_reason": "This space provides direct access to a laser cutter and suitable acrylic sheets. It is ideal for making a clean, professional sign.",
             "equipment_ids": [
               "laser_vls675"
             ]
@@ -125,24 +251,24 @@
           {
             "steps": [
               {
-                "title": "Design the sign",
-                "detail": "Create your club name layout in design software."
+                "title": "Design the piece",
+                "detail": "Create a file with your club name sized for the sign."
               },
               {
                 "title": "Take the training",
-                "detail": "Complete the required training for the laser cutter."
+                "detail": "Complete the general safety and laser cutter training for the space."
               },
               {
-                "title": "Ask staff for help",
-                "detail": "Ask the space staff to check your file and help you make the sign."
+                "title": "Ask staff to check the file",
+                "detail": "Have the space staff review your file before cutting."
               }
             ],
-            "process": "Cut and engrave an acrylic sign using a laser cutter",
+            "process": "Cut and engrave an acrylic sheet using a laser cutter",
             "space_id": "bme-innovation",
             "warnings": [
               {
-                "fix": "Ask staff what acrylic sheets to bring.",
-                "issue": "This space does not list materials."
+                "fix": "Ensure you use cast acrylic suitable for laser cutting and engraving.",
+                "issue": "Wrong material"
               }
             ],
             "materials": [
@@ -154,37 +280,61 @@
                 "quantity_high": 1
               }
             ],
-            "fit_reason": "This space provides a laser cutter to make your sign.",
+            "fit_reason": "The BME Innovation Space features a laser cutter that handles sheet materials well. Staff are available to guide you through the process.",
             "equipment_ids": [
               "bme_laser"
             ]
           }
         ],
-        "summary": "An engraved acrylic sign for a club tabling booth.",
+        "summary": "An engraved acrylic sign with a club name for a tabling booth.",
         "ways_considered": [
           {
-            "reason": "This space does not have a laser cutter.",
-            "process": "Laser cut acrylic sign",
+            "reason": "Does not cut flat acrylic sheets.",
+            "process": "3D printing",
             "verdict": "left_out",
             "space_id": "ahmanson-lab"
           },
           {
-            "reason": "The space has a laser cutter and acrylic sheets.",
-            "process": "Laser cut and engrave acrylic sheet",
+            "reason": "Cuts and engraves acrylic sheets perfectly.",
+            "process": "Laser cutting acrylic",
             "verdict": "offered",
             "space_id": "bfms"
           },
           {
-            "reason": "The space has a laser cutter for acrylic.",
-            "process": "Laser cut acrylic sign",
+            "reason": "Equipped with a laser cutter for acrylic.",
+            "process": "Laser cutting acrylic",
             "verdict": "offered",
             "space_id": "bme-innovation"
           },
           {
-            "reason": "This space only has podcast studios.",
-            "process": "Laser cut acrylic sign",
+            "reason": "Does not have laser cutting equipment.",
+            "process": "3D printing",
             "verdict": "left_out",
             "space_id": "digital-creative-lab"
+          },
+          {
+            "reason": "CNC router is for wood and sheet material, not laser engraving.",
+            "process": "CNC routing",
+            "verdict": "left_out",
+            "space_id": "iya-hall"
+          },
+          {
+            "reason": "Prints on paper, not acrylic.",
+            "process": "Large format printing",
+            "verdict": "left_out",
+            "space_id": "its-printing"
+          },
+          {
+            "reason": "Woodshop tools cannot engrave acrylic.",
+            "process": "Woodshop cutting",
+            "verdict": "left_out",
+            "space_id": "roski-shops"
+          },
+          {
+            "reason": "Scene shop does not list laser cutting tools.",
+            "process": "Scene shop build",
+            "verdict": "left_out",
+            "space_id": "sda-technical-theatre-lab"
           }
         ],
         "clarifying_question": null,
@@ -192,13 +342,17 @@
         "not_supported_reason": null
       },
       "computed_plan": {
-        "summary": "An engraved acrylic sign for a club tabling booth.",
+        "summary": "An engraved acrylic sign with a club name for a tabling booth.",
         "audience": "viterbi_undergrad",
         "routes": [
           {
             "space_id": "bfms",
             "space_name": "Baum Family Maker Space",
             "space_location": "Ground floor, Science and Engineering Library",
+            "space_url": "https://viterbiundergrad.usc.edu/bfms/",
+            "hours_listed": true,
+            "kind": "self_use",
+            "service": null,
             "equipment": [
               {
                 "id": "laser_vls675",
@@ -207,36 +361,48 @@
                 "explain": true
               }
             ],
-            "process": "Cut and engrave an acrylic sheet with a laser cutter",
-            "fit_reason": "This space has the laser cutter and acrylic sheets you need.",
+            "process": "Cut and engrave an acrylic sheet using a laser cutter",
+            "fit_reason": "This space provides direct access to a laser cutter and suitable acrylic sheets. It is ideal for making a clean, professional sign.",
             "steps": [
               {
-                "title": "Design the sign",
-                "detail": "Draw your club name and sign outline in design software."
+                "title": "Design the piece",
+                "detail": "Draw your club name in a digital design tool to the desired size."
               },
               {
                 "title": "Take the training",
-                "detail": "Complete the required safety training for the laser cutter."
+                "detail": "Complete the required safety and equipment training before using the space."
               },
               {
-                "title": "Ask staff for help",
-                "detail": "Ask the space staff to check your design file before cutting."
+                "title": "Make the sign",
+                "detail": "Use the laser cutter to cut and engrave your acrylic sheet."
               }
             ],
             "warnings": [
               {
-                "issue": "Fine text might be hard to read when engraved.",
-                "fix": "Use a clear, bold font for your club name."
+                "issue": "Lines too thin",
+                "fix": "Make sure your engraved text and lines are thick enough to show clearly."
               }
             ],
             "eligibility": {
-              "status": "ask_first",
-              "note": "The Maker Space says it is for Viterbi undergraduates. Confirm at the front desk."
+              "status": "open",
+              "note": null
             },
             "trainings": [
               {
                 "id": "level_1",
                 "name": "Level 1: Orientation and safety",
+                "how_to_sign_up": null,
+                "restricted_to": null
+              },
+              {
+                "id": "level_2",
+                "name": "Level 2: Basic hand tools",
+                "how_to_sign_up": null,
+                "restricted_to": null
+              },
+              {
+                "id": "level_5",
+                "name": "Level 5: Machine tools",
                 "how_to_sign_up": null,
                 "restricted_to": null
               }
@@ -259,6 +425,8 @@
               "high": 12
             },
             "prices_estimated": true,
+            "typical_from": null,
+            "estimate_notes": null,
             "scrap": [
               []
             ],
@@ -273,7 +441,11 @@
           {
             "space_id": "bme-innovation",
             "space_name": "BME Innovation Space",
-            "space_location": "Denney Research Building",
+            "space_location": "Denney Research Building (DRB), basement rooms B7, B11, B14 and B18",
+            "space_url": "https://bme.usc.edu/innovation/",
+            "hours_listed": true,
+            "kind": "self_use",
+            "service": null,
             "equipment": [
               {
                 "id": "bme_laser",
@@ -282,26 +454,26 @@
                 "explain": false
               }
             ],
-            "process": "Cut and engrave an acrylic sign using a laser cutter",
-            "fit_reason": "This space provides a laser cutter to make your sign.",
+            "process": "Cut and engrave an acrylic sheet using a laser cutter",
+            "fit_reason": "The BME Innovation Space features a laser cutter that handles sheet materials well. Staff are available to guide you through the process.",
             "steps": [
               {
-                "title": "Design the sign",
-                "detail": "Create your club name layout in design software."
+                "title": "Design the piece",
+                "detail": "Create a file with your club name sized for the sign."
               },
               {
                 "title": "Take the training",
-                "detail": "Complete the required training for the laser cutter."
+                "detail": "Complete the general safety and laser cutter training for the space."
               },
               {
-                "title": "Ask staff for help",
-                "detail": "Ask the space staff to check your file and help you make the sign."
+                "title": "Ask staff to check the file",
+                "detail": "Have the space staff review your file before cutting."
               }
             ],
             "warnings": [
               {
-                "issue": "This space does not list materials.",
-                "fix": "Ask staff what acrylic sheets to bring."
+                "issue": "Wrong material",
+                "fix": "Ensure you use cast acrylic suitable for laser cutting and engraving."
               }
             ],
             "eligibility": {
@@ -336,6 +508,302 @@
                 "quantity_low": 1,
                 "quantity_high": 1,
                 "unit": "sheet",
+                "unit_price_usd": 12,
+                "low_usd": 12,
+                "high_usd": 12,
+                "typical": true
+              }
+            ],
+            "total": {
+              "low": 12,
+              "high": 12
+            },
+            "prices_estimated": true,
+            "typical_from": "Baum Family Maker Space",
+            "estimate_notes": {
+              "basis": "typical for campus workshops",
+              "training": null,
+              "cost": "You likely pay for materials only. Where this space lists no price, cost ranges use the Baum Family Maker Space's prices as typical campus prices."
+            },
+            "scrap": [
+              []
+            ],
+            "with_scrap": {
+              "low": 12,
+              "high": 12
+            },
+            "labels": []
+          }
+        ],
+        "first_visit": [
+          "Go to Baum Family Maker Space, Ground floor, Science and Engineering Library. Listed hours: Monday to Friday 11 AM to 10 PM; Saturday 10 AM to 5 PM.",
+          "Take the Level 1 orientation and safety training first. It lets you use the non-powered hand tools.",
+          "Each tool needs its own level after that. The trainings list shows the order.",
+          "Take Level 2: Basic hand tools. Ask the staff how to sign up.",
+          "Take Level 5: Machine tools. Ask the staff how to sign up."
+        ],
+        "clarifying_question": null,
+        "not_supported_reason": null,
+        "single_route_reason": null,
+        "none_open": false
+      }
+    },
+    "phone-stand": {
+      "idea": "I want to make a phone stand for my desk out of wood. It should hold my phone at a slight angle, fit in my hand, and I only need one.",
+      "audience": "viterbi_undergrad",
+      "experience": "never",
+      "answers": {
+        "size": [
+          "hand"
+        ],
+        "quantity": [
+          "one"
+        ]
+      },
+      "attempts": 2,
+      "raw_model_output": {
+        "needs": [
+          {
+            "why": "To cut and shape wood into a phone stand",
+            "capability": "woodworking"
+          }
+        ],
+        "routes": [
+          {
+            "steps": [
+              {
+                "title": "Design the piece",
+                "detail": "Sketch the phone stand and check its sizes to fit your hand."
+              },
+              {
+                "title": "Ask at the tool crib",
+                "detail": "Ask at the tool crib, which checks out hand and power tools."
+              },
+              {
+                "title": "Assemble and finish",
+                "detail": "Sand the wood smooth so it is safe to touch."
+              }
+            ],
+            "process": "Cut and shape wood using the woodshop",
+            "space_id": "roski-shops",
+            "warnings": [
+              {
+                "fix": "Keep the base thick enough to hold the weight of a phone.",
+                "issue": "Wood parts can crack if cut too thin."
+              }
+            ],
+            "materials": [
+              {
+                "unit": "sheet",
+                "category": "solid_wood",
+                "material_id": null,
+                "quantity_low": 1,
+                "quantity_high": 1
+              }
+            ],
+            "fit_reason": "The woodshop has saws and sanders to shape a small wooden stand. It suits a beginner who wants to work with wood.",
+            "equipment_ids": [
+              "roski_woodshop"
+            ]
+          },
+          {
+            "steps": [
+              {
+                "title": "Design the piece",
+                "detail": "Plan the angles and dimensions for your phone stand."
+              },
+              {
+                "title": "Take training",
+                "detail": "Take the Level 1 orientation and safety training first, then the power tools training."
+              },
+              {
+                "title": "Assemble and finish",
+                "detail": "Cut and sand the wood until it is smooth."
+              }
+            ],
+            "process": "Cut and shape wood using power tools",
+            "space_id": "bfms",
+            "warnings": [
+              {
+                "fix": "Use solid pieces for the main structure.",
+                "issue": "Power tools can splinter thin wood."
+              }
+            ],
+            "materials": [
+              {
+                "unit": "sheet",
+                "category": "solid_wood",
+                "material_id": null,
+                "quantity_low": 1,
+                "quantity_high": 1
+              }
+            ],
+            "fit_reason": "The space provides power tools for cutting and sanding wood. It is a good fit for making a small desk stand.",
+            "equipment_ids": [
+              "power_tools"
+            ]
+          },
+          {
+            "steps": [
+              {
+                "title": "Design the piece",
+                "detail": "Draw your phone stand design and measure your phone."
+              },
+              {
+                "title": "Ask staff",
+                "detail": "Contact the Academy to ask who may use the maker spaces and how."
+              },
+              {
+                "title": "Assemble and finish",
+                "detail": "Sand the cut wood pieces to remove sharp edges."
+              }
+            ],
+            "process": "Cut and shape wood using woodworking machinery",
+            "space_id": "iya-hall",
+            "warnings": [
+              {
+                "fix": "Cut a larger block first, then shape it.",
+                "issue": "Small pieces are hard to hold against saws."
+              }
+            ],
+            "materials": [
+              {
+                "unit": "sheet",
+                "category": "solid_wood",
+                "material_id": null,
+                "quantity_low": 1,
+                "quantity_high": 1
+              }
+            ],
+            "fit_reason": "The maker space includes woodworking machinery such as a table saw. This allows you to cut your stand from solid wood.",
+            "equipment_ids": [
+              "iya_woodworking"
+            ]
+          }
+        ],
+        "summary": "A small wooden phone stand for a desk",
+        "ways_considered": [
+          {
+            "reason": "Student asked for wood",
+            "process": "3D printing",
+            "verdict": "left_out",
+            "space_id": "ahmanson-lab"
+          },
+          {
+            "reason": "Has power tools for woodworking",
+            "process": "Cut and shape wood using power tools",
+            "verdict": "offered",
+            "space_id": "bfms"
+          },
+          {
+            "reason": "No woodworking equipment listed",
+            "process": "Woodworking",
+            "verdict": "left_out",
+            "space_id": "bme-innovation"
+          },
+          {
+            "reason": "Student asked for wood",
+            "process": "3D printing",
+            "verdict": "left_out",
+            "space_id": "digital-creative-lab"
+          },
+          {
+            "reason": "Has woodworking machinery including a table saw",
+            "process": "Cut and shape wood using woodworking machinery",
+            "verdict": "offered",
+            "space_id": "iya-hall"
+          },
+          {
+            "reason": "Student asked for wood",
+            "process": "3D printing",
+            "verdict": "left_out",
+            "space_id": "its-printing"
+          },
+          {
+            "reason": "Has a shared woodshop with saws and sanders",
+            "process": "Cut and shape wood using the woodshop",
+            "verdict": "offered",
+            "space_id": "roski-shops"
+          },
+          {
+            "reason": "No equipment listed",
+            "process": "Scene shop building",
+            "verdict": "left_out",
+            "space_id": "sda-technical-theatre-lab"
+          }
+        ],
+        "clarifying_question": null,
+        "single_route_reason": null,
+        "not_supported_reason": null
+      },
+      "computed_plan": {
+        "summary": "A small wooden phone stand for a desk",
+        "audience": "viterbi_undergrad",
+        "routes": [
+          {
+            "space_id": "bfms",
+            "space_name": "Baum Family Maker Space",
+            "space_location": "Ground floor, Science and Engineering Library",
+            "space_url": "https://viterbiundergrad.usc.edu/bfms/",
+            "hours_listed": true,
+            "kind": "self_use",
+            "service": null,
+            "equipment": [
+              {
+                "id": "power_tools",
+                "name": "Drill press, sanders and band saws",
+                "plain_name": "Power tools for cutting and sanding",
+                "explain": true
+              }
+            ],
+            "process": "Cut and shape wood using power tools",
+            "fit_reason": "The space provides power tools for cutting and sanding wood. It is a good fit for making a small desk stand.",
+            "steps": [
+              {
+                "title": "Design the piece",
+                "detail": "Plan the angles and dimensions for your phone stand."
+              },
+              {
+                "title": "Take training",
+                "detail": "Take the Level 1 orientation and safety training first, then the power tools training."
+              },
+              {
+                "title": "Assemble and finish",
+                "detail": "Cut and sand the wood until it is smooth."
+              }
+            ],
+            "warnings": [
+              {
+                "issue": "Power tools can splinter thin wood.",
+                "fix": "Use solid pieces for the main structure."
+              }
+            ],
+            "eligibility": {
+              "status": "open",
+              "note": null
+            },
+            "trainings": [
+              {
+                "id": "level_1",
+                "name": "Level 1: Orientation and safety",
+                "how_to_sign_up": null,
+                "restricted_to": null
+              },
+              {
+                "id": "level_3",
+                "name": "Level 3: Power tools",
+                "how_to_sign_up": null,
+                "restricted_to": null
+              }
+            ],
+            "cost_lines": [
+              {
+                "category": "solid_wood",
+                "material_id": null,
+                "name": "Solid wood",
+                "quantity_low": 1,
+                "quantity_high": 1,
+                "unit": "sheet",
                 "unit_price_usd": null,
                 "low_usd": null,
                 "high_usd": null
@@ -343,6 +811,150 @@
             ],
             "total": null,
             "prices_estimated": true,
+            "typical_from": null,
+            "estimate_notes": null,
+            "scrap": [
+              []
+            ],
+            "with_scrap": null,
+            "labels": []
+          },
+          {
+            "space_id": "roski-shops",
+            "space_name": "Roski sculpture studio and shared woodshop",
+            "space_location": "Watt Hall",
+            "space_url": "https://roski.usc.edu/studios-labs/",
+            "hours_listed": false,
+            "kind": "self_use",
+            "service": null,
+            "equipment": [
+              {
+                "id": "roski_woodshop",
+                "name": "Shared woodshop: table saw, radial arm saw, band saw, jig saw, panel saw, chop saw, planer, sander and grinder, lathe, shears and drill press",
+                "plain_name": "Woodshop (saws, sanders and a drill press for cutting and shaping wood)",
+                "explain": true
+              }
+            ],
+            "process": "Cut and shape wood using the woodshop",
+            "fit_reason": "The woodshop has saws and sanders to shape a small wooden stand. It suits a beginner who wants to work with wood.",
+            "steps": [
+              {
+                "title": "Design the piece",
+                "detail": "Sketch the phone stand and check its sizes to fit your hand."
+              },
+              {
+                "title": "Ask at the tool crib",
+                "detail": "Ask at the tool crib, which checks out hand and power tools."
+              },
+              {
+                "title": "Assemble and finish",
+                "detail": "Sand the wood smooth so it is safe to touch."
+              }
+            ],
+            "warnings": [
+              {
+                "issue": "Wood parts can crack if cut too thin.",
+                "fix": "Keep the base thick enough to hold the weight of a phone."
+              }
+            ],
+            "eligibility": {
+              "status": "ask_first",
+              "note": "The page says the woodshop is open to enrolled Roski and Architecture students. Ask Roski whether you can use it."
+            },
+            "trainings": [],
+            "cost_lines": [
+              {
+                "category": "solid_wood",
+                "material_id": null,
+                "name": "Solid wood",
+                "quantity_low": 1,
+                "quantity_high": 1,
+                "unit": "sheet",
+                "unit_price_usd": null,
+                "low_usd": null,
+                "high_usd": null
+              }
+            ],
+            "total": null,
+            "prices_estimated": true,
+            "typical_from": null,
+            "estimate_notes": {
+              "basis": "typical for campus workshops",
+              "training": "Cutting, power and machine tools likely need an orientation plus training on that tool. Ask staff before you plan around one.",
+              "cost": "You likely pay for materials only. Where this space lists no price, cost ranges use the Baum Family Maker Space's prices as typical campus prices."
+            },
+            "scrap": [
+              []
+            ],
+            "with_scrap": null,
+            "labels": [
+              "easiest"
+            ]
+          },
+          {
+            "space_id": "iya-hall",
+            "space_name": "Iovine and Young Hall maker spaces",
+            "space_location": "Iovine and Young Hall, 3780 Watt Way",
+            "space_url": "https://iovine-young.usc.edu/discover/spaces-that-drive-innovation",
+            "hours_listed": false,
+            "kind": "self_use",
+            "service": null,
+            "equipment": [
+              {
+                "id": "iya_woodworking",
+                "name": "Woodworking machinery, including a table saw",
+                "plain_name": "Woodworking machines",
+                "explain": true
+              }
+            ],
+            "process": "Cut and shape wood using woodworking machinery",
+            "fit_reason": "The maker space includes woodworking machinery such as a table saw. This allows you to cut your stand from solid wood.",
+            "steps": [
+              {
+                "title": "Design the piece",
+                "detail": "Draw your phone stand design and measure your phone."
+              },
+              {
+                "title": "Ask staff",
+                "detail": "Contact the Academy to ask who may use the maker spaces and how."
+              },
+              {
+                "title": "Assemble and finish",
+                "detail": "Sand the cut wood pieces to remove sharp edges."
+              }
+            ],
+            "warnings": [
+              {
+                "issue": "Small pieces are hard to hold against saws.",
+                "fix": "Cut a larger block first, then shape it."
+              }
+            ],
+            "eligibility": {
+              "status": "ask_first",
+              "note": "The page says Academy majors and minors work here. Ask the Academy whether you can use it."
+            },
+            "trainings": [],
+            "cost_lines": [
+              {
+                "category": "solid_wood",
+                "material_id": null,
+                "name": "Solid wood",
+                "quantity_low": 1,
+                "quantity_high": 1,
+                "unit": "sheet",
+                "unit_price_usd": null,
+                "low_usd": null,
+                "high_usd": null
+              }
+            ],
+            "total": null,
+            "prices_estimated": true,
+            "typical_from": null,
+            "estimate_notes": {
+              "basis": "typical for campus workshops",
+              "training": "Cutting, power and machine tools likely need an orientation plus training on that tool. Ask staff before you plan around one.",
+              "cost": "You likely pay for materials only. Where this space lists no price, cost ranges use the Baum Family Maker Space's prices as typical campus prices."
+            },
             "scrap": [
               []
             ],
@@ -352,15 +964,1269 @@
         ],
         "first_visit": [
           "Go to Baum Family Maker Space, Ground floor, Science and Engineering Library. Listed hours: Monday to Friday 11 AM to 10 PM; Saturday 10 AM to 5 PM.",
-          "Take the Level 1 orientation and safety training. It lets you use the non-powered hand tools.",
-          "Take the training level for the tools you need: Level 2 for hand tools and handheld drills, Level 3 for power tools, Level 4 for electronics."
+          "Take the Level 1 orientation and safety training first. It lets you use the non-powered hand tools.",
+          "Each tool needs its own level after that. The trainings list shows the order.",
+          "Take Level 3: Power tools. Ask the staff how to sign up."
         ],
         "clarifying_question": null,
         "not_supported_reason": null,
         "single_route_reason": null,
-        "none_open": true
+        "none_open": false
+      }
+    },
+    "night-light": {
+      "idea": "A small night light for my dorm desk with a warm LED inside and a 3D printed cover. Just one, about the size of my palm.",
+      "audience": "viterbi_undergrad",
+      "experience": "never",
+      "answers": {
+        "size": [
+          "hand"
+        ],
+        "quantity": [
+          "one"
+        ],
+        "demands": [
+          "looks",
+          "electronics"
+        ]
+      },
+      "attempts": 2,
+      "raw_model_output": {
+        "needs": [
+          {
+            "why": "To print the outer cover of the night light",
+            "capability": "fdm_3d_printing"
+          },
+          {
+            "why": "To add the warm LED and circuit inside",
+            "capability": "electronics"
+          }
+        ],
+        "routes": [
+          {
+            "steps": [
+              {
+                "title": "Design the cover",
+                "detail": "Draw a hollow shape for your night light cover that fits in your hand."
+              },
+              {
+                "title": "Check the sizes",
+                "detail": "Make sure your cover leaves enough space inside for the warm LED and circuit."
+              },
+              {
+                "title": "Ask staff for help",
+                "detail": "Email lvy@usc.edu to ask what you can use and when."
+              }
+            ],
+            "process": "3D print the cover and use an Arduino starter kit",
+            "space_id": "ahmanson-lab",
+            "warnings": [
+              {
+                "fix": "Make the walls thick enough so they do not break easily.",
+                "issue": "Walls too thin"
+              }
+            ],
+            "materials": [
+              {
+                "unit": "cubic inch",
+                "category": "pla_filament",
+                "material_id": null,
+                "quantity_low": 5,
+                "quantity_high": 15
+              },
+              {
+                "unit": "other",
+                "category": "electronic_components",
+                "material_id": null,
+                "quantity_low": 1,
+                "quantity_high": 1
+              }
+            ],
+            "fit_reason": "This route is simple for a beginner using available 3D printing and electronics kits. Ask staff for help to start.",
+            "equipment_ids": [
+              "ultimaker_s5",
+              "arduino_kits"
+            ]
+          },
+          {
+            "steps": [
+              {
+                "title": "Take safety training",
+                "detail": "Take the General Shop Safety Training on TrojanLearn and email the certificate to the shop manager."
+              },
+              {
+                "title": "Do the space orientation",
+                "detail": "Complete the Innovation Space orientation by video or in person by appointment."
+              },
+              {
+                "title": "Take machine training",
+                "detail": "Take the machine-specific training for the 3D printers and the electronics workshop."
+              },
+              {
+                "title": "Reserve equipment",
+                "detail": "Reserve equipment on the space reservation page."
+              }
+            ],
+            "process": "3D print the cover in the print shop and solder the circuit at the electronics workshop",
+            "space_id": "bme-innovation",
+            "warnings": [
+              {
+                "fix": "Complete all required safety and machine trainings before using the tools.",
+                "issue": "Missing training"
+              }
+            ],
+            "materials": [
+              {
+                "unit": "cubic inch",
+                "category": "pla_filament",
+                "material_id": null,
+                "quantity_low": 5,
+                "quantity_high": 15
+              },
+              {
+                "unit": "other",
+                "category": "electronic_components",
+                "material_id": null,
+                "quantity_low": 1,
+                "quantity_high": 1
+              }
+            ],
+            "fit_reason": "This space provides 3D printers and an electronics workshop with soldering irons. Follow the training steps before you begin.",
+            "equipment_ids": [
+              "bme_3d_printers",
+              "bme_electronics"
+            ]
+          }
+        ],
+        "summary": "A small palm-sized night light with a 3D printed cover and an LED inside",
+        "ways_considered": [
+          {
+            "reason": "Has a 3D printer and electronics kits",
+            "process": "3D print the cover and use an Arduino starter kit for the electronics",
+            "verdict": "offered",
+            "space_id": "ahmanson-lab"
+          },
+          {
+            "reason": "Requires staff-operated printers and training",
+            "process": "3D print the cover and use the electronics bench",
+            "verdict": "left_out",
+            "space_id": "bfms"
+          },
+          {
+            "reason": "Has 3D printers and an electronics workshop",
+            "process": "3D print the cover using the 3D print shop and build the circuit at the electronics workshop",
+            "verdict": "offered",
+            "space_id": "bme-innovation"
+          },
+          {
+            "reason": "Lacks electronics equipment",
+            "process": "3D print the cover",
+            "verdict": "left_out",
+            "space_id": "digital-creative-lab"
+          },
+          {
+            "reason": "Lacks electronics equipment",
+            "process": "3D print the cover",
+            "verdict": "left_out",
+            "space_id": "iya-hall"
+          },
+          {
+            "reason": "Lacks electronics equipment",
+            "process": "Request a 3D print",
+            "verdict": "left_out",
+            "space_id": "its-printing"
+          }
+        ],
+        "clarifying_question": null,
+        "single_route_reason": null,
+        "not_supported_reason": null
+      },
+      "computed_plan": {
+        "summary": "A small palm-sized night light with a 3D printed cover and an LED inside",
+        "audience": "viterbi_undergrad",
+        "routes": [
+          {
+            "space_id": "ahmanson-lab",
+            "space_name": "Ahmanson Lab",
+            "space_location": "Leavey Library, room 301",
+            "space_url": "https://libraries.usc.edu/locations/leavey-library/rooms/lvl-301-ahmanson-lab",
+            "hours_listed": false,
+            "kind": "self_use",
+            "service": null,
+            "equipment": [
+              {
+                "id": "ultimaker_s5",
+                "name": "Ultimaker S5",
+                "plain_name": "3D printer",
+                "explain": true
+              },
+              {
+                "id": "arduino_kits",
+                "name": "Elegoo UNO Arduino starter kits",
+                "plain_name": "Small programmable circuit board kit",
+                "explain": true
+              }
+            ],
+            "process": "3D print the cover and use an Arduino starter kit",
+            "fit_reason": "This route is simple for a beginner using available 3D printing and electronics kits. Ask staff for help to start.",
+            "steps": [
+              {
+                "title": "Design the cover",
+                "detail": "Draw a hollow shape for your night light cover that fits in your hand."
+              },
+              {
+                "title": "Check the sizes",
+                "detail": "Make sure your cover leaves enough space inside for the warm LED and circuit."
+              },
+              {
+                "title": "Ask staff for help",
+                "detail": "Email lvy@usc.edu to ask what you can use and when."
+              }
+            ],
+            "warnings": [
+              {
+                "issue": "Walls too thin",
+                "fix": "Make the walls thick enough so they do not break easily."
+              }
+            ],
+            "eligibility": {
+              "status": "open",
+              "note": null
+            },
+            "trainings": [],
+            "cost_lines": [
+              {
+                "category": "pla_filament",
+                "material_id": null,
+                "name": "Pla filament",
+                "quantity_low": 5,
+                "quantity_high": 15,
+                "unit": "cubic inch",
+                "unit_price_usd": 1,
+                "low_usd": 5,
+                "high_usd": 15,
+                "typical": true
+              },
+              {
+                "category": "electronic_components",
+                "material_id": null,
+                "name": "Electronic components",
+                "quantity_low": 1,
+                "quantity_high": 1,
+                "unit": "other",
+                "unit_price_usd": null,
+                "low_usd": null,
+                "high_usd": null
+              }
+            ],
+            "total": {
+              "low": 5,
+              "high": 15
+            },
+            "prices_estimated": true,
+            "typical_from": "Baum Family Maker Space",
+            "estimate_notes": {
+              "basis": "typical for campus workshops",
+              "training": "3D printing here is likely by request: staff typically run the printer for you, so you would need no training. Ask to be sure.",
+              "cost": "You likely pay for materials only. Where this space lists no price, cost ranges use the Baum Family Maker Space's prices as typical campus prices."
+            },
+            "scrap": [
+              [],
+              []
+            ],
+            "with_scrap": {
+              "low": 5,
+              "high": 15
+            },
+            "labels": [
+              "easiest"
+            ]
+          },
+          {
+            "space_id": "bme-innovation",
+            "space_name": "BME Innovation Space",
+            "space_location": "Denney Research Building (DRB), basement rooms B7, B11, B14 and B18",
+            "space_url": "https://bme.usc.edu/innovation/",
+            "hours_listed": true,
+            "kind": "self_use",
+            "service": null,
+            "equipment": [
+              {
+                "id": "bme_3d_printers",
+                "name": "3D print shop (DRB B14): several 3D printers",
+                "plain_name": "3D printers",
+                "explain": true
+              },
+              {
+                "id": "bme_electronics",
+                "name": "Electronics workshop (DRB B18): soldering irons, a resistance welder, electronic components and test equipment",
+                "plain_name": "Electronics bench (soldering and testing circuits)",
+                "explain": true
+              }
+            ],
+            "process": "3D print the cover in the print shop and solder the circuit at the electronics workshop",
+            "fit_reason": "This space provides 3D printers and an electronics workshop with soldering irons. Follow the training steps before you begin.",
+            "steps": [
+              {
+                "title": "Take safety training",
+                "detail": "Take the General Shop Safety Training on TrojanLearn and email the certificate to the shop manager."
+              },
+              {
+                "title": "Do the space orientation",
+                "detail": "Complete the Innovation Space orientation by video or in person by appointment."
+              },
+              {
+                "title": "Take machine training",
+                "detail": "Take the machine-specific training for the 3D printers and the electronics workshop."
+              },
+              {
+                "title": "Reserve equipment",
+                "detail": "Reserve equipment on the space reservation page."
+              }
+            ],
+            "warnings": [
+              {
+                "issue": "Missing training",
+                "fix": "Complete all required safety and machine trainings before using the tools."
+              }
+            ],
+            "eligibility": {
+              "status": "ask_first",
+              "note": "BME-affiliated only"
+            },
+            "trainings": [
+              {
+                "id": "shop_safety",
+                "name": "General shop safety",
+                "how_to_sign_up": null,
+                "restricted_to": "BME-affiliated students, staff and faculty"
+              },
+              {
+                "id": "orientation",
+                "name": "Orientation",
+                "how_to_sign_up": null,
+                "restricted_to": "BME-affiliated students, staff and faculty"
+              },
+              {
+                "id": "printer_training",
+                "name": "3D printer training",
+                "how_to_sign_up": null,
+                "restricted_to": "BME-affiliated students, staff and faculty"
+              }
+            ],
+            "cost_lines": [
+              {
+                "category": "pla_filament",
+                "material_id": null,
+                "name": "Pla filament",
+                "quantity_low": 5,
+                "quantity_high": 15,
+                "unit": "cubic inch",
+                "unit_price_usd": 1,
+                "low_usd": 5,
+                "high_usd": 15,
+                "typical": true
+              },
+              {
+                "category": "electronic_components",
+                "material_id": null,
+                "name": "Electronic components",
+                "quantity_low": 1,
+                "quantity_high": 1,
+                "unit": "other",
+                "unit_price_usd": null,
+                "low_usd": null,
+                "high_usd": null
+              }
+            ],
+            "total": {
+              "low": 5,
+              "high": 15
+            },
+            "prices_estimated": true,
+            "typical_from": "Baum Family Maker Space",
+            "estimate_notes": {
+              "basis": "typical for campus workshops",
+              "training": null,
+              "cost": "You likely pay for materials only. Where this space lists no price, cost ranges use the Baum Family Maker Space's prices as typical campus prices."
+            },
+            "scrap": [
+              [],
+              []
+            ],
+            "with_scrap": {
+              "low": 5,
+              "high": 15
+            },
+            "labels": []
+          }
+        ],
+        "first_visit": [
+          "Go to Ahmanson Lab, Leavey Library, room 301. The Leavey Library page lists 9 AM to 9 PM and does not say which days. The lab's own site says staff hold regular lab hours for drop-ins, but lists no times.",
+          "Email the lab at lvy@usc.edu to ask what you can use and when.",
+          "Staff hold regular lab hours so you can drop by and learn about 3D printing, microcontrollers and more. The times are not listed, so ask before you go.",
+          "The lab's own site sends questions to Curtis Fletcher at cfletche@usc.edu.",
+          "You will likely need your USC ID.",
+          "There is likely a short introduction before you first use the equipment."
+        ],
+        "clarifying_question": null,
+        "not_supported_reason": null,
+        "single_route_reason": null,
+        "none_open": false
+      }
+    },
+    "podcast": {
+      "idea": "I want to record a podcast episode with two friends about campus food. We need microphones and a quiet room.",
+      "audience": "viterbi_undergrad",
+      "experience": "never",
+      "answers": {
+        "quantity": [
+          "one"
+        ]
+      },
+      "attempts": 2,
+      "raw_model_output": {
+        "needs": [
+          {
+            "why": "Need microphones and a quiet room to record the podcast episode.",
+            "capability": "audio_recording"
+          }
+        ],
+        "routes": [
+          {
+            "steps": [
+              {
+                "title": "Prepare the file",
+                "detail": "Plan your podcast topics about campus food and check your recording plan."
+              },
+              {
+                "title": "Reserve the studio",
+                "detail": "Email spaces@usc.edu or call the ITS Learning Environments team at (213) 821-6601 to reserve the podcast studio."
+              },
+              {
+                "title": "Record your episode",
+                "detail": "Go to the digital creative lab in Leavey Library at your scheduled time and use the podcast studio equipment."
+              }
+            ],
+            "process": "Record in a podcast studio with headsets and a mixer",
+            "space_id": "digital-creative-lab",
+            "warnings": [],
+            "materials": [],
+            "fit_reason": "This route provides a dedicated podcast studio with seats for four people, matching your need for a quiet room and microphones. It is simple to use since no training is required.",
+            "equipment_ids": [
+              "podcast_studios"
+            ]
+          },
+          {
+            "steps": [
+              {
+                "title": "Prepare the file",
+                "detail": "Plan what you will say about campus food and check your recording equipment needs."
+              },
+              {
+                "title": "Contact the lab",
+                "detail": "Email the lab at lvy@usc.edu to ask what you can use and when."
+              },
+              {
+                "title": "Collect and record",
+                "detail": "Visit Ahmanson Lab during lab hours to get the microphones and record your episode."
+              }
+            ],
+            "process": "Record using studio microphones and an audio interface",
+            "space_id": "ahmanson-lab",
+            "warnings": [],
+            "materials": [],
+            "fit_reason": "This route gives you professional microphones and audio equipment to record your conversation. It is a straightforward option for capturing clear sound.",
+            "equipment_ids": [
+              "studio_mics",
+              "audio_interface",
+              "wireless_mics"
+            ]
+          }
+        ],
+        "summary": "Record a podcast episode with two friends about campus food using microphones and a quiet room.",
+        "ways_considered": [
+          {
+            "reason": "Listed equipment can record audio.",
+            "process": "Record using studio microphones and an audio interface",
+            "verdict": "offered",
+            "space_id": "ahmanson-lab"
+          },
+          {
+            "reason": "Listed equipment cannot do the job.",
+            "process": "Record using woodworking or hand tools",
+            "verdict": "left_out",
+            "space_id": "bfms"
+          },
+          {
+            "reason": "Listed equipment cannot do the job.",
+            "process": "Record using electronics or 3D printers",
+            "verdict": "left_out",
+            "space_id": "bme-innovation"
+          },
+          {
+            "reason": "Listed equipment can do the job.",
+            "process": "Record in a podcast studio with headsets and a mixer",
+            "verdict": "offered",
+            "space_id": "digital-creative-lab"
+          },
+          {
+            "reason": "Listed equipment cannot do the job.",
+            "process": "Record using woodworking or CNC equipment",
+            "verdict": "left_out",
+            "space_id": "iya-hall"
+          },
+          {
+            "reason": "Listed equipment cannot do the job.",
+            "process": "Record using plotters or 3D printers",
+            "verdict": "left_out",
+            "space_id": "its-printing"
+          },
+          {
+            "reason": "Listed equipment cannot do the job.",
+            "process": "Record using woodshop or metal shop tools",
+            "verdict": "left_out",
+            "space_id": "roski-shops"
+          },
+          {
+            "reason": "Listed equipment cannot do the job.",
+            "process": "Record using scene shop equipment",
+            "verdict": "left_out",
+            "space_id": "sda-technical-theatre-lab"
+          }
+        ],
+        "clarifying_question": null,
+        "single_route_reason": null,
+        "not_supported_reason": null
+      },
+      "computed_plan": {
+        "summary": "Record a podcast episode with two friends about campus food using microphones and a quiet room.",
+        "audience": "viterbi_undergrad",
+        "routes": [
+          {
+            "space_id": "digital-creative-lab",
+            "space_name": "Digital Creative Lab",
+            "space_location": "Leavey Library, lower level",
+            "space_url": "https://itservices.usc.edu/digital-creative-lab/",
+            "hours_listed": false,
+            "kind": "self_use",
+            "service": null,
+            "equipment": [
+              {
+                "id": "podcast_studios",
+                "name": "Podcast studio: 4 Shure headsets, a Rode mixer, a Huddly camera, an Epiphan recorder and a DTEN for Zoom",
+                "plain_name": "Podcast studio (a room for recording audio)",
+                "explain": true
+              }
+            ],
+            "process": "Record in a podcast studio with headsets and a mixer",
+            "fit_reason": "This route provides a dedicated podcast studio with seats for four people, matching your need for a quiet room and microphones. It is simple to use since no training is required.",
+            "steps": [
+              {
+                "title": "Prepare the file",
+                "detail": "Plan your podcast topics about campus food and check your recording plan."
+              },
+              {
+                "title": "Reserve the studio",
+                "detail": "Email spaces@usc.edu or call the ITS Learning Environments team at (213) 821-6601 to reserve the podcast studio."
+              },
+              {
+                "title": "Record your episode",
+                "detail": "Go to the digital creative lab in Leavey Library at your scheduled time and use the podcast studio equipment."
+              }
+            ],
+            "warnings": [],
+            "eligibility": {
+              "status": "open",
+              "note": null
+            },
+            "trainings": [],
+            "cost_lines": [],
+            "total": null,
+            "prices_estimated": true,
+            "typical_from": null,
+            "estimate_notes": {
+              "basis": "typical for campus workshops",
+              "training": null,
+              "cost": "You likely pay for materials only. Where this space lists no price, cost ranges use the Baum Family Maker Space's prices as typical campus prices."
+            },
+            "scrap": [],
+            "with_scrap": null,
+            "labels": [
+              "easiest"
+            ]
+          },
+          {
+            "space_id": "ahmanson-lab",
+            "space_name": "Ahmanson Lab",
+            "space_location": "Leavey Library, room 301",
+            "space_url": "https://libraries.usc.edu/locations/leavey-library/rooms/lvl-301-ahmanson-lab",
+            "hours_listed": false,
+            "kind": "self_use",
+            "service": null,
+            "equipment": [
+              {
+                "id": "studio_mics",
+                "name": "Audio-Technica AT2020 studio microphones (2) with boom arms and pop filters",
+                "plain_name": "Studio microphones",
+                "explain": true
+              },
+              {
+                "id": "audio_interface",
+                "name": "Behringer 4-channel USB audio interface",
+                "plain_name": "Audio interface (connects microphones to a computer)",
+                "explain": true
+              },
+              {
+                "id": "wireless_mics",
+                "name": "DJI Mic 2 and Wireless GO II wireless microphone systems",
+                "plain_name": "Wireless microphones",
+                "explain": true
+              }
+            ],
+            "process": "Record using studio microphones and an audio interface",
+            "fit_reason": "This route gives you professional microphones and audio equipment to record your conversation. It is a straightforward option for capturing clear sound.",
+            "steps": [
+              {
+                "title": "Prepare the file",
+                "detail": "Plan what you will say about campus food and check your recording equipment needs."
+              },
+              {
+                "title": "Contact the lab",
+                "detail": "Email the lab at lvy@usc.edu to ask what you can use and when."
+              },
+              {
+                "title": "Collect and record",
+                "detail": "Visit Ahmanson Lab during lab hours to get the microphones and record your episode."
+              }
+            ],
+            "warnings": [],
+            "eligibility": {
+              "status": "open",
+              "note": null
+            },
+            "trainings": [],
+            "cost_lines": [],
+            "total": null,
+            "prices_estimated": true,
+            "typical_from": null,
+            "estimate_notes": {
+              "basis": "typical for campus workshops",
+              "training": null,
+              "cost": "You likely pay for materials only. Where this space lists no price, cost ranges use the Baum Family Maker Space's prices as typical campus prices."
+            },
+            "scrap": [],
+            "with_scrap": null,
+            "labels": []
+          }
+        ],
+        "first_visit": [
+          "Go to Digital Creative Lab, Leavey Library, lower level. Podcast studio, fall and spring: Monday to Friday 9 AM to 7 PM, Saturday and Sunday 9 AM to 5 PM. Summer hours differ; see the official page. Hours for the rest of the lab are not listed.",
+          "Email spaces@usc.edu to reserve the podcast studio, or call the ITS Learning Environments team at (213) 821-6601.",
+          "The e-sports lab is by reservation. The page does not say how to use the production studio, plotters or 3D printer, so ask the same team.",
+          "You will likely need your USC ID."
+        ],
+        "clarifying_question": null,
+        "not_supported_reason": null,
+        "single_route_reason": null,
+        "none_open": false
+      }
+    },
+    "poster": {
+      "idea": "A printed poster of my research for a poster session, 36 by 48 inches, in color. I have the file ready and need one copy.",
+      "audience": "viterbi_undergrad",
+      "experience": "never",
+      "answers": {
+        "size": [
+          "bigger"
+        ],
+        "quantity": [
+          "one"
+        ]
+      },
+      "attempts": 1,
+      "raw_model_output": {
+        "needs": [
+          {
+            "why": "To print a large 36 by 48 inch poster.",
+            "capability": "large_format_printing"
+          }
+        ],
+        "routes": [
+          {
+            "steps": [
+              {
+                "title": "Prepare the file",
+                "detail": "Save your poster design as a PDF file and check that the longest side measures 48 inches."
+              },
+              {
+                "title": "Load your card",
+                "detail": "Load discretionary funds on your USC Card to pay for the printing."
+              },
+              {
+                "title": "Bring the file",
+                "detail": "Bring your file to the Leavey computing center and ask ITS staff on site for help printing."
+              }
+            ],
+            "process": "Print a color poster on heavyweight coated paper",
+            "space_id": "its-printing",
+            "warnings": [
+              {
+                "fix": "Check that all images and figures in your file are high resolution before printing.",
+                "issue": "The poster might look pixelated if images in your file have low resolution."
+              }
+            ],
+            "materials": [
+              {
+                "unit": "inch of the longest side",
+                "category": "cardboard_paper",
+                "material_id": "poster_matte",
+                "quantity_low": 48,
+                "quantity_high": 48
+              }
+            ],
+            "fit_reason": "This route is ideal because staff are on site to assist with printing large formats directly from your file. You can easily pay using your USC Card.",
+            "equipment_ids": [
+              "its_plotters"
+            ]
+          },
+          {
+            "steps": [
+              {
+                "title": "Prepare the file",
+                "detail": "Save your poster in a standard print format and verify its dimensions."
+              },
+              {
+                "title": "Contact staff",
+                "detail": "Ask the ITS Learning Environments team how to submit your file to the plotters."
+              },
+              {
+                "title": "Collect the poster",
+                "detail": "Pick up your printed poster from the lab once it is complete."
+              }
+            ],
+            "process": "Print a color poster using plotters",
+            "space_id": "digital-creative-lab",
+            "warnings": [
+              {
+                "fix": "Ask the space's staff for guidance on file requirements and submission.",
+                "issue": "The page does not list specific instructions for using the plotters."
+              }
+            ],
+            "materials": [
+              {
+                "unit": "sheet",
+                "category": "cardboard_paper",
+                "material_id": null,
+                "quantity_low": 48,
+                "quantity_high": 48
+              }
+            ],
+            "fit_reason": "This space provides plotters for printing large sheets. Ask the ITS Learning Environments team for assistance with your print job.",
+            "equipment_ids": [
+              "dcl_plotters"
+            ]
+          }
+        ],
+        "summary": "A printed research poster, 36 by 48 inches, in color.",
+        "ways_considered": [
+          {
+            "reason": "Has plotters for large poster printing.",
+            "process": "Print on a large format plotter",
+            "verdict": "offered",
+            "space_id": "digital-creative-lab"
+          },
+          {
+            "reason": "Offers large-format plotters and matte or gloss poster paper.",
+            "process": "Print on large-format plotters",
+            "verdict": "offered",
+            "space_id": "its-printing"
+          }
+        ],
+        "clarifying_question": null,
+        "single_route_reason": null,
+        "not_supported_reason": null
+      },
+      "computed_plan": {
+        "summary": "A printed research poster, 36 by 48 inches, in color.",
+        "audience": "viterbi_undergrad",
+        "routes": [
+          {
+            "space_id": "its-printing",
+            "space_name": "ITS Printing Services at Leavey",
+            "space_location": "Ahmanson Information Commons, Leavey Library (LVL)",
+            "space_url": "https://itservices.usc.edu/learning-environments-services/usc-computing-center-printing-services/",
+            "hours_listed": false,
+            "training_unknown": true,
+            "kind": "self_use",
+            "service": null,
+            "equipment": [
+              {
+                "id": "its_plotters",
+                "name": "Large-format plotters",
+                "plain_name": "Plotter (prints posters and large sheets)",
+                "explain": true
+              }
+            ],
+            "process": "Print a color poster on heavyweight coated paper",
+            "fit_reason": "This route is ideal because staff are on site to assist with printing large formats directly from your file. You can easily pay using your USC Card.",
+            "steps": [
+              {
+                "title": "Prepare the file",
+                "detail": "Save your poster design as a PDF file and check that the longest side measures 48 inches."
+              },
+              {
+                "title": "Load your card",
+                "detail": "Load discretionary funds on your USC Card to pay for the printing."
+              },
+              {
+                "title": "Bring the file",
+                "detail": "Bring your file to the Leavey computing center and ask ITS staff on site for help printing."
+              }
+            ],
+            "warnings": [
+              {
+                "issue": "The poster might look pixelated if images in your file have low resolution.",
+                "fix": "Check that all images and figures in your file are high resolution before printing."
+              }
+            ],
+            "eligibility": {
+              "status": "open",
+              "note": null
+            },
+            "trainings": [],
+            "cost_lines": [
+              {
+                "category": "cardboard_paper",
+                "material_id": "poster_matte",
+                "name": "Poster print on heavyweight coated (matte) paper",
+                "quantity_low": 48,
+                "quantity_high": 48,
+                "unit": "inch of the longest side",
+                "unit_price_usd": 1,
+                "low_usd": 48,
+                "high_usd": 48
+              }
+            ],
+            "total": {
+              "low": 48,
+              "high": 48
+            },
+            "prices_estimated": true,
+            "typical_from": null,
+            "estimate_notes": {
+              "basis": "typical for campus workshops",
+              "training": null,
+              "cost": null
+            },
+            "scrap": [
+              []
+            ],
+            "with_scrap": {
+              "low": 48,
+              "high": 48
+            },
+            "labels": [
+              "easiest"
+            ]
+          },
+          {
+            "space_id": "digital-creative-lab",
+            "space_name": "Digital Creative Lab",
+            "space_location": "Leavey Library, lower level",
+            "space_url": "https://itservices.usc.edu/digital-creative-lab/",
+            "hours_listed": false,
+            "training_unknown": true,
+            "kind": "self_use",
+            "service": null,
+            "equipment": [
+              {
+                "id": "dcl_plotters",
+                "name": "Plotters",
+                "plain_name": "Plotter (prints posters and large sheets)",
+                "explain": false
+              }
+            ],
+            "process": "Print a color poster using plotters",
+            "fit_reason": "This space provides plotters for printing large sheets. Ask the ITS Learning Environments team for assistance with your print job.",
+            "steps": [
+              {
+                "title": "Prepare the file",
+                "detail": "Save your poster in a standard print format and verify its dimensions."
+              },
+              {
+                "title": "Contact staff",
+                "detail": "Ask the ITS Learning Environments team how to submit your file to the plotters."
+              },
+              {
+                "title": "Collect the poster",
+                "detail": "Pick up your printed poster from the lab once it is complete."
+              }
+            ],
+            "warnings": [
+              {
+                "issue": "The page does not list specific instructions for using the plotters.",
+                "fix": "Ask the space's staff for guidance on file requirements and submission."
+              }
+            ],
+            "eligibility": {
+              "status": "open",
+              "note": null
+            },
+            "trainings": [],
+            "cost_lines": [
+              {
+                "category": "cardboard_paper",
+                "material_id": null,
+                "name": "Cardboard paper",
+                "quantity_low": 48,
+                "quantity_high": 48,
+                "unit": "sheet",
+                "unit_price_usd": null,
+                "low_usd": null,
+                "high_usd": null
+              }
+            ],
+            "total": null,
+            "prices_estimated": true,
+            "typical_from": null,
+            "estimate_notes": {
+              "basis": "typical for campus workshops",
+              "training": null,
+              "cost": "You likely pay for materials only. Where this space lists no price, cost ranges use the Baum Family Maker Space's prices as typical campus prices."
+            },
+            "scrap": [
+              []
+            ],
+            "with_scrap": null,
+            "labels": []
+          }
+        ],
+        "first_visit": [
+          "Go to ITS Printing Services at Leavey, Ahmanson Information Commons, Leavey Library (LVL). Hours are not listed on the printing page. Check the ITS computing centers page.",
+          "Load discretionary funds on your USC Card: printing is paid for with the card before the job prints.",
+          "For a poster, bring your file to the Leavey computing center. ITS staff are on site during opening hours.",
+          "For a 3D print, email spaces@usc.edu with your request."
+        ],
+        "clarifying_question": null,
+        "not_supported_reason": null,
+        "single_route_reason": null,
+        "none_open": false
+      }
+    },
+    "video-interview": {
+      "idea": "A two-minute video interview with a professor for a class project. I need a camera, a microphone and a quiet place to film.",
+      "audience": "viterbi_undergrad",
+      "experience": "never",
+      "answers": {},
+      "attempts": 1,
+      "raw_model_output": {
+        "needs": [
+          {
+            "why": "Need a camera to film the interview.",
+            "capability": "video_production"
+          },
+          {
+            "why": "Need a microphone for clear audio.",
+            "capability": "audio_recording"
+          }
+        ],
+        "routes": [
+          {
+            "steps": [
+              {
+                "title": "Plan your interview",
+                "detail": "Write down your interview questions and check how long your two-minute video will take."
+              },
+              {
+                "title": "Reserve the studio",
+                "detail": "Email spaces@usc.edu to reserve the podcast studio, or call the ITS Learning Environments team at (213) 821-6601."
+              },
+              {
+                "title": "Record the interview",
+                "detail": "Go to the Digital Creative Lab in Leavey Library at your reserved time and use the studio equipment to record."
+              }
+            ],
+            "process": "Record the interview in a podcast studio",
+            "space_id": "digital-creative-lab",
+            "warnings": [
+              {
+                "fix": "Practice reading your questions beforehand to keep the interview concise.",
+                "issue": "Running over the two-minute time limit"
+              }
+            ],
+            "materials": [
+              {
+                "unit": "session",
+                "category": "other",
+                "material_id": null,
+                "quantity_low": 1,
+                "quantity_high": 1
+              }
+            ],
+            "fit_reason": "This quiet studio provides built-in microphones and video recording equipment ideal for beginners. You can easily reserve the space by following the instructions.",
+            "equipment_ids": [
+              "podcast_studios"
+            ]
+          },
+          {
+            "steps": [
+              {
+                "title": "Plan your interview",
+                "detail": "Prepare your interview questions and find a quiet room to use for filming."
+              },
+              {
+                "title": "Contact the lab",
+                "detail": "Email the lab at lvy@usc.edu to ask what you can use and when."
+              },
+              {
+                "title": "Collect the equipment",
+                "detail": "Visit Ahmanson Lab in Leavey Library to pick up the camera and microphones."
+              }
+            ],
+            "process": "Borrow a camera and microphones to film elsewhere",
+            "space_id": "ahmanson-lab",
+            "warnings": [
+              {
+                "fix": "Choose a small, quiet room with soft furnishings to reduce echo.",
+                "issue": "Background noise in a normal room"
+              }
+            ],
+            "materials": [
+              {
+                "unit": "kit",
+                "category": "other",
+                "material_id": null,
+                "quantity_low": 1,
+                "quantity_high": 1
+              }
+            ],
+            "fit_reason": "You can check out a professional camera and wireless microphones to film in a quiet location of your choice. Email the lab staff to arrange equipment pickup.",
+            "equipment_ids": [
+              "sony_fx3",
+              "wireless_mics"
+            ]
+          }
+        ],
+        "summary": "A two-minute video interview using a camera, microphone, and quiet studio space.",
+        "ways_considered": [
+          {
+            "reason": "Provides cameras and microphones to check out.",
+            "process": "Borrow a cinema camera, tripod, and wireless microphones to record",
+            "verdict": "offered",
+            "space_id": "ahmanson-lab"
+          },
+          {
+            "reason": "Space lacks cameras and audio equipment.",
+            "process": "Build a video setup",
+            "verdict": "left_out",
+            "space_id": "bfms"
+          },
+          {
+            "reason": "Space lacks video and audio equipment.",
+            "process": "Build a video setup",
+            "verdict": "left_out",
+            "space_id": "bme-innovation"
+          },
+          {
+            "reason": "Provides a quiet studio equipped with microphones and video recording tools.",
+            "process": "Record in a dedicated podcast studio",
+            "verdict": "offered",
+            "space_id": "digital-creative-lab"
+          },
+          {
+            "reason": "Official page does not list how to access the capture labs.",
+            "process": "Use media capture labs",
+            "verdict": "left_out",
+            "space_id": "iya-hall"
+          },
+          {
+            "reason": "Space only offers printing and 3D printing.",
+            "process": "Print video files",
+            "verdict": "left_out",
+            "space_id": "its-printing"
+          },
+          {
+            "reason": "Space lacks cameras and audio equipment.",
+            "process": "Use sculpture studio",
+            "verdict": "left_out",
+            "space_id": "roski-shops"
+          },
+          {
+            "reason": "Space is for scene and costume shops.",
+            "process": "Build sets",
+            "verdict": "left_out",
+            "space_id": "sda-technical-theatre-lab"
+          }
+        ],
+        "clarifying_question": null,
+        "single_route_reason": null,
+        "not_supported_reason": null
+      },
+      "computed_plan": {
+        "summary": "A two-minute video interview using a camera, microphone, and quiet studio space.",
+        "audience": "viterbi_undergrad",
+        "routes": [
+          {
+            "space_id": "digital-creative-lab",
+            "space_name": "Digital Creative Lab",
+            "space_location": "Leavey Library, lower level",
+            "space_url": "https://itservices.usc.edu/digital-creative-lab/",
+            "hours_listed": false,
+            "kind": "self_use",
+            "service": null,
+            "equipment": [
+              {
+                "id": "podcast_studios",
+                "name": "Podcast studio: 4 Shure headsets, a Rode mixer, a Huddly camera, an Epiphan recorder and a DTEN for Zoom",
+                "plain_name": "Podcast studio (a room for recording audio)",
+                "explain": true
+              }
+            ],
+            "process": "Record the interview in a podcast studio",
+            "fit_reason": "This quiet studio provides built-in microphones and video recording equipment ideal for beginners. You can easily reserve the space by following the instructions.",
+            "steps": [
+              {
+                "title": "Plan your interview",
+                "detail": "Write down your interview questions and check how long your two-minute video will take."
+              },
+              {
+                "title": "Reserve the studio",
+                "detail": "Email spaces@usc.edu to reserve the podcast studio, or call the ITS Learning Environments team at (213) 821-6601."
+              },
+              {
+                "title": "Record the interview",
+                "detail": "Go to the Digital Creative Lab in Leavey Library at your reserved time and use the studio equipment to record."
+              }
+            ],
+            "warnings": [
+              {
+                "issue": "Running over the two-minute time limit",
+                "fix": "Practice reading your questions beforehand to keep the interview concise."
+              }
+            ],
+            "eligibility": {
+              "status": "open",
+              "note": null
+            },
+            "trainings": [],
+            "cost_lines": [
+              {
+                "category": "other",
+                "material_id": null,
+                "name": "Other",
+                "quantity_low": 1,
+                "quantity_high": 1,
+                "unit": "session",
+                "unit_price_usd": null,
+                "low_usd": null,
+                "high_usd": null
+              }
+            ],
+            "total": null,
+            "prices_estimated": true,
+            "typical_from": null,
+            "estimate_notes": {
+              "basis": "typical for campus workshops",
+              "training": null,
+              "cost": "You likely pay for materials only. Where this space lists no price, cost ranges use the Baum Family Maker Space's prices as typical campus prices."
+            },
+            "scrap": [
+              []
+            ],
+            "with_scrap": null,
+            "labels": [
+              "easiest"
+            ]
+          },
+          {
+            "space_id": "ahmanson-lab",
+            "space_name": "Ahmanson Lab",
+            "space_location": "Leavey Library, room 301",
+            "space_url": "https://libraries.usc.edu/locations/leavey-library/rooms/lvl-301-ahmanson-lab",
+            "hours_listed": false,
+            "kind": "self_use",
+            "service": null,
+            "equipment": [
+              {
+                "id": "sony_fx3",
+                "name": "Sony FX3 cinema camera with tripod, headphones and shotgun microphone",
+                "plain_name": "Video camera",
+                "explain": true
+              },
+              {
+                "id": "wireless_mics",
+                "name": "DJI Mic 2 and Wireless GO II wireless microphone systems",
+                "plain_name": "Wireless microphones",
+                "explain": true
+              }
+            ],
+            "process": "Borrow a camera and microphones to film elsewhere",
+            "fit_reason": "You can check out a professional camera and wireless microphones to film in a quiet location of your choice. Email the lab staff to arrange equipment pickup.",
+            "steps": [
+              {
+                "title": "Plan your interview",
+                "detail": "Prepare your interview questions and find a quiet room to use for filming."
+              },
+              {
+                "title": "Contact the lab",
+                "detail": "Email the lab at lvy@usc.edu to ask what you can use and when."
+              },
+              {
+                "title": "Collect the equipment",
+                "detail": "Visit Ahmanson Lab in Leavey Library to pick up the camera and microphones."
+              }
+            ],
+            "warnings": [
+              {
+                "issue": "Background noise in a normal room",
+                "fix": "Choose a small, quiet room with soft furnishings to reduce echo."
+              }
+            ],
+            "eligibility": {
+              "status": "open",
+              "note": null
+            },
+            "trainings": [],
+            "cost_lines": [
+              {
+                "category": "other",
+                "material_id": null,
+                "name": "Other",
+                "quantity_low": 1,
+                "quantity_high": 1,
+                "unit": "kit",
+                "unit_price_usd": null,
+                "low_usd": null,
+                "high_usd": null
+              }
+            ],
+            "total": null,
+            "prices_estimated": true,
+            "typical_from": null,
+            "estimate_notes": {
+              "basis": "typical for campus workshops",
+              "training": null,
+              "cost": "You likely pay for materials only. Where this space lists no price, cost ranges use the Baum Family Maker Space's prices as typical campus prices."
+            },
+            "scrap": [
+              []
+            ],
+            "with_scrap": null,
+            "labels": []
+          }
+        ],
+        "first_visit": [
+          "Go to Digital Creative Lab, Leavey Library, lower level. Podcast studio, fall and spring: Monday to Friday 9 AM to 7 PM, Saturday and Sunday 9 AM to 5 PM. Summer hours differ; see the official page. Hours for the rest of the lab are not listed.",
+          "Email spaces@usc.edu to reserve the podcast studio, or call the ITS Learning Environments team at (213) 821-6601.",
+          "The e-sports lab is by reservation. The page does not say how to use the production studio, plotters or 3D printer, so ask the same team.",
+          "You will likely need your USC ID."
+        ],
+        "clarifying_question": null,
+        "not_supported_reason": null,
+        "single_route_reason": null,
+        "none_open": false
       }
     }
-  },
-  "note": "Rows for the phone stand and the night light were restored by hand from the 05:25Z run's printed output, after a later run against a fixture-mode server overwrote them by mistake."
+  }
 }

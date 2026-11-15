@@ -2,54 +2,219 @@
   "id": "bme-innovation",
   "name": "BME Innovation Space",
   "school": "Viterbi School of Engineering, Biomedical Engineering",
-  "location": "Denney Research Building",
+  "location": "Denney Research Building (DRB), basement rooms B7, B11, B14 and B18",
   "official_url": "https://bme.usc.edu/innovation/",
   "blurb": "A machine shop, 3D print shop, electronics workshop and computer lab run by Biomedical Engineering. It is only for BME-affiliated students, staff and faculty.",
-  "capabilities": ["metalworking", "fdm_3d_printing", "laser_cutting", "electronics"],
+  "capabilities": [
+    "electronics",
+    "fdm_3d_printing",
+    "laser_cutting",
+    "metalworking"
+  ],
   "hours": {
-    "mon": { "open": "09:00", "close": "17:00" },
-    "tue": { "open": "09:00", "close": "17:00" },
-    "wed": { "open": "09:00", "close": "17:00" },
-    "thu": { "open": "09:00", "close": "17:00" },
-    "fri": { "open": "09:00", "close": "17:00" },
+    "mon": {
+      "open": "09:00",
+      "close": "17:00"
+    },
+    "tue": {
+      "open": "09:00",
+      "close": "17:00"
+    },
+    "wed": {
+      "open": "09:00",
+      "close": "17:00"
+    },
+    "thu": {
+      "open": "09:00",
+      "close": "17:00"
+    },
+    "fri": {
+      "open": "09:00",
+      "close": "17:00"
+    },
     "sat": null,
     "sun": null
   },
   "access": [
-    { "audience": "viterbi_undergrad", "status": "ask_first", "note": "BME-affiliated only" },
-    { "audience": "viterbi_grad", "status": "ask_first", "note": "BME-affiliated only" },
-    { "audience": "usc_undergrad_other", "status": "not_open", "note": "BME-affiliated only" },
-    { "audience": "usc_grad_other", "status": "not_open", "note": "BME-affiliated only" }
+    {
+      "audience": "viterbi_undergrad",
+      "status": "ask_first",
+      "note": "BME-affiliated only"
+    },
+    {
+      "audience": "viterbi_grad",
+      "status": "ask_first",
+      "note": "BME-affiliated only"
+    },
+    {
+      "audience": "usc_undergrad_other",
+      "status": "not_open",
+      "note": "BME-affiliated only"
+    },
+    {
+      "audience": "usc_grad_other",
+      "status": "not_open",
+      "note": "BME-affiliated only"
+    }
   ],
   "access_steps": [
-    "Take the general shop safety training.",
-    "Attend an orientation.",
-    "Take the training for the machine you need: 3D printers, the laser cutter or machine shop tools."
+    "Take the General Shop Safety Training on TrojanLearn and email the certificate to the shop manager.",
+    "Do the Innovation Space orientation, in person by appointment or by video.",
+    "Take the machine-specific training for the 3D printers, the laser cutter or any machine shop equipment. Other tools need no extra training.",
+    "Reserve equipment on the space's reservation page. The shop manager's contact is at the bottom of the official page."
   ],
   "trainings": [
-    { "id": "shop_safety", "name": "General shop safety", "covers": "How to work safely in the shop.", "prerequisite_ids": [], "duration_note": null, "how_to_sign_up": null, "restricted_to": "BME-affiliated students, staff and faculty" },
-    { "id": "orientation", "name": "Orientation", "covers": "An introduction to the space.", "prerequisite_ids": [], "duration_note": null, "how_to_sign_up": null, "restricted_to": "BME-affiliated students, staff and faculty" },
-    { "id": "printer_training", "name": "3D printer training", "covers": "Using the 3D printers.", "prerequisite_ids": [], "duration_note": null, "how_to_sign_up": null, "restricted_to": "BME-affiliated students, staff and faculty" },
-    { "id": "laser_training", "name": "Laser cutter training", "covers": "Using the laser cutter.", "prerequisite_ids": [], "duration_note": null, "how_to_sign_up": null, "restricted_to": "BME-affiliated students, staff and faculty" },
-    { "id": "machine_shop_training", "name": "Machine shop training", "covers": "Using the machine shop tools.", "prerequisite_ids": [], "duration_note": null, "how_to_sign_up": null, "restricted_to": "BME-affiliated students, staff and faculty" }
+    {
+      "id": "shop_safety",
+      "name": "General shop safety",
+      "covers": "How to work safely in the shop.",
+      "prerequisite_ids": [],
+      "duration_note": null,
+      "how_to_sign_up": null,
+      "restricted_to": "BME-affiliated students, staff and faculty"
+    },
+    {
+      "id": "orientation",
+      "name": "Orientation",
+      "covers": "An introduction to the space.",
+      "prerequisite_ids": [],
+      "duration_note": null,
+      "how_to_sign_up": null,
+      "restricted_to": "BME-affiliated students, staff and faculty"
+    },
+    {
+      "id": "printer_training",
+      "name": "3D printer training",
+      "covers": "Using the 3D printers.",
+      "prerequisite_ids": [],
+      "duration_note": null,
+      "how_to_sign_up": null,
+      "restricted_to": "BME-affiliated students, staff and faculty"
+    },
+    {
+      "id": "laser_training",
+      "name": "Laser cutter training",
+      "covers": "Using the laser cutter.",
+      "prerequisite_ids": [],
+      "duration_note": null,
+      "how_to_sign_up": null,
+      "restricted_to": "BME-affiliated students, staff and faculty"
+    },
+    {
+      "id": "machine_shop_training",
+      "name": "Machine shop training",
+      "covers": "Using the machine shop tools.",
+      "prerequisite_ids": [],
+      "duration_note": null,
+      "how_to_sign_up": null,
+      "restricted_to": "BME-affiliated students, staff and faculty"
+    }
   ],
   "equipment": [
-    { "id": "bme_3d_printers", "name": "3D print shop", "capability": "fdm_3d_printing", "plain_name": "3D printers", "required_training_ids": ["shop_safety", "orientation", "printer_training"], "staff_operated": null, "work_area_note": null, "good_for": [], "not_for": [] },
-    { "id": "bme_laser", "name": "Laser cutter", "capability": "laser_cutting", "plain_name": "Laser cutter (cuts flat sheets precisely)", "required_training_ids": ["shop_safety", "orientation", "laser_training"], "staff_operated": null, "work_area_note": null, "good_for": [], "not_for": [] },
-    { "id": "bme_machine_shop", "name": "Machine shop", "capability": "metalworking", "plain_name": "Machine shop (cuts and shapes metal)", "required_training_ids": ["shop_safety", "orientation", "machine_shop_training"], "staff_operated": null, "work_area_note": null, "good_for": [], "not_for": [] },
-    { "id": "bme_electronics", "name": "Electronics workshop", "capability": "electronics", "plain_name": "Electronics bench (soldering and testing circuits)", "required_training_ids": ["shop_safety", "orientation"], "staff_operated": null, "work_area_note": null, "good_for": [], "not_for": [] }
+    {
+      "id": "bme_3d_printers",
+      "name": "3D print shop (DRB B14): several 3D printers",
+      "capability": "fdm_3d_printing",
+      "plain_name": "3D printers",
+      "required_training_ids": [
+        "shop_safety",
+        "orientation",
+        "printer_training"
+      ],
+      "staff_operated": null,
+      "work_area_note": "Reservations are required.",
+      "good_for": [],
+      "not_for": []
+    },
+    {
+      "id": "bme_laser",
+      "name": "Laser cutter",
+      "capability": "laser_cutting",
+      "plain_name": "Laser cutter (cuts flat sheets precisely)",
+      "required_training_ids": [
+        "shop_safety",
+        "orientation",
+        "laser_training"
+      ],
+      "staff_operated": null,
+      "work_area_note": null,
+      "good_for": [],
+      "not_for": []
+    },
+    {
+      "id": "bme_machine_shop",
+      "name": "Machine shop (DRB B7): drill presses, grinders, saws and a numerically controlled mill",
+      "capability": "metalworking",
+      "plain_name": "Machine shop (cuts and shapes metal)",
+      "required_training_ids": [
+        "shop_safety",
+        "orientation",
+        "machine_shop_training"
+      ],
+      "staff_operated": null,
+      "work_area_note": null,
+      "good_for": [],
+      "not_for": []
+    },
+    {
+      "id": "bme_electronics",
+      "name": "Electronics workshop (DRB B18): soldering irons, a resistance welder, electronic components and test equipment",
+      "capability": "electronics",
+      "plain_name": "Electronics bench (soldering and testing circuits)",
+      "required_training_ids": [
+        "shop_safety",
+        "orientation"
+      ],
+      "staff_operated": null,
+      "work_area_note": null,
+      "good_for": [],
+      "not_for": []
+    }
   ],
   "materials": [],
-  "services": [],
+  "services": [
+    {
+      "name": "Computer lab (DRB B4) with engineering software, including SolidWorks and Altium Designer",
+      "how_to_request": null
+    }
+  ],
   "usage_fee_note": null,
   "prohibited": [],
-  "scrap_policy": { "offers_scrap": false, "never_offer": [], "pickup_note": null },
-  "source": { "urls": ["https://bme.usc.edu/innovation/"], "checked_on": "2026-11-14" },
+  "scrap_policy": {
+    "offers_scrap": false,
+    "never_offer": [],
+    "pickup_note": null
+  },
+  "source": {
+    "urls": [
+      "https://bme.usc.edu/innovation/"
+    ],
+    "checked_on": "2026-11-14"
+  },
   "status": {
-    "hours": { "state": "estimated" },
-    "access": { "state": "estimated" },
-    "trainings": { "state": "estimated" },
-    "equipment": { "state": "estimated" },
-    "prices": { "state": "estimated" }
+    "hours": {
+      "state": "estimated"
+    },
+    "access": {
+      "state": "estimated"
+    },
+    "trainings": {
+      "state": "estimated"
+    },
+    "equipment": {
+      "state": "estimated"
+    },
+    "prices": {
+      "state": "estimated"
+    }
+  },
+  "hours_note": "Extended hours are available on request.",
+  "estimates": {
+    "basis": "typical for campus workshops",
+    "first_visit": [
+      "You will likely need your USC ID."
+    ],
+    "training_note": null,
+    "cost_note": "You likely pay for materials only. Where this space lists no price, cost ranges use the Baum Family Maker Space's prices as typical campus prices."
   }
 }

@@ -1,0 +1,135 @@
+{
+  "id": "iya-hall",
+  "name": "Iovine and Young Hall maker spaces",
+  "school": "USC Iovine and Young Academy",
+  "location": "Iovine and Young Hall, 3780 Watt Way",
+  "official_url": "https://iovine-young.usc.edu/discover/spaces-that-drive-innovation",
+  "blurb": "About 10,000 square feet of maker spaces in the Academy's main building, with labs for fabrication, printing, and photo, audio and video capture and editing. The page describes them as where Academy majors and minors work.",
+  "capabilities": [
+    "fdm_3d_printing",
+    "cnc_machining",
+    "woodworking",
+    "metalworking"
+  ],
+  "hours": null,
+  "hours_note": "Hours are not listed on the official page.",
+  "access": [
+    {
+      "audience": "viterbi_undergrad",
+      "status": "ask_first",
+      "note": "The page says Academy majors and minors work here. Ask the Academy whether you can use it."
+    },
+    {
+      "audience": "viterbi_grad",
+      "status": "ask_first",
+      "note": "The page says Academy majors and minors work here. Ask the Academy whether you can use it."
+    },
+    {
+      "audience": "usc_undergrad_other",
+      "status": "ask_first",
+      "note": "The page says Academy majors and minors work here. Ask the Academy whether you can use it."
+    },
+    {
+      "audience": "usc_grad_other",
+      "status": "ask_first",
+      "note": "The page says Academy majors and minors work here. Ask the Academy whether you can use it."
+    }
+  ],
+  "access_steps": [
+    "Contact the Academy at iovine-young@usc.edu or (213) 821-6140 to ask who may use the maker spaces and how."
+  ],
+  "trainings": [],
+  "equipment": [
+    {
+      "id": "iya_3d_printing",
+      "name": "3D printing",
+      "capability": "fdm_3d_printing",
+      "plain_name": "3D printer",
+      "required_training_ids": [],
+      "staff_operated": null,
+      "work_area_note": null,
+      "good_for": [],
+      "not_for": []
+    },
+    {
+      "id": "iya_cnc",
+      "name": "CNC ShopBot",
+      "capability": "cnc_machining",
+      "plain_name": "CNC router (a computer-guided cutter for wood and sheet material)",
+      "required_training_ids": [],
+      "staff_operated": null,
+      "work_area_note": null,
+      "good_for": [],
+      "not_for": []
+    },
+    {
+      "id": "iya_woodworking",
+      "name": "Woodworking machinery, including a table saw",
+      "capability": "woodworking",
+      "plain_name": "Woodworking machines",
+      "required_training_ids": [],
+      "staff_operated": null,
+      "work_area_note": null,
+      "good_for": [],
+      "not_for": []
+    },
+    {
+      "id": "iya_welding",
+      "name": "Welding",
+      "capability": "metalworking",
+      "plain_name": "Welding (joins metal with heat)",
+      "required_training_ids": [],
+      "staff_operated": null,
+      "work_area_note": null,
+      "good_for": [],
+      "not_for": []
+    }
+  ],
+  "materials": [],
+  "services": [
+    {
+      "name": "Labs for photo, audio and video capture and editing",
+      "how_to_request": null
+    }
+  ],
+  "usage_fee_note": null,
+  "prohibited": [],
+  "scrap_policy": {
+    "offers_scrap": false,
+    "never_offer": [],
+    "pickup_note": null
+  },
+  "estimates": {
+    "basis": "typical for campus workshops",
+    "first_visit": [
+      "You will likely need your USC ID.",
+      "There is likely a short safety orientation before you first use the tools.",
+      "Ask staff which training your tool needs; it typically differs by tool."
+    ],
+    "training_note": "Cutting, power and machine tools likely need an orientation plus training on that tool. Ask staff before you plan around one.",
+    "cost_note": "You likely pay for materials only. Where this space lists no price, cost ranges use the Baum Family Maker Space's prices as typical campus prices."
+  },
+  "source": {
+    "urls": [
+      "https://iovine-young.usc.edu/discover/spaces-that-drive-innovation"
+    ],
+    "checked_on": "2026-11-14"
+  },
+  "status": {
+    "hours": {
+      "state": "estimated"
+    },
+    "access": {
+      "state": "estimated"
+    },
+    "trainings": {
+      "state": "estimated"
+    },
+    "equipment": {
+      "state": "estimated"
+    },
+    "prices": {
+      "state": "estimated"
+    }
+  }
+}

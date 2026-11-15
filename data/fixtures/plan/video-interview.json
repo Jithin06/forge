@@ -1,0 +1,157 @@
+{
+  "call": "plan",
+  "note": "Recorded from the live model by scripts/check-plan-quality.mts.",
+  "recorded": {
+    "at": "2026-11-15T06:30:58.456Z",
+    "attempts": 1
+  },
+  "key": {
+    "text": "A two-minute video interview with a professor for a class project. I need a camera, a microphone and a quiet place to film.",
+    "experience": "never",
+    "answers": {},
+    "image": null
+  },
+  "output": {
+    "needs": [
+      {
+        "why": "Need a camera to film the interview.",
+        "capability": "video_production"
+      },
+      {
+        "why": "Need a microphone for clear audio.",
+        "capability": "audio_recording"
+      }
+    ],
+    "routes": [
+      {
+        "steps": [
+          {
+            "title": "Plan your interview",
+            "detail": "Write down your interview questions and check how long your two-minute video will take."
+          },
+          {
+            "title": "Reserve the studio",
+            "detail": "Email spaces@usc.edu to reserve the podcast studio, or call the ITS Learning Environments team at (213) 821-6601."
+          },
+          {
+            "title": "Record the interview",
+            "detail": "Go to the Digital Creative Lab in Leavey Library at your reserved time and use the studio equipment to record."
+          }
+        ],
+        "process": "Record the interview in a podcast studio",
+        "space_id": "digital-creative-lab",
+        "warnings": [
+          {
+            "fix": "Practice reading your questions beforehand to keep the interview concise.",
+            "issue": "Running over the two-minute time limit"
+          }
+        ],
+        "materials": [
+          {
+            "unit": "session",
+            "category": "other",
+            "material_id": null,
+            "quantity_low": 1,
+            "quantity_high": 1
+          }
+        ],
+        "fit_reason": "This quiet studio provides built-in microphones and video recording equipment ideal for beginners. You can easily reserve the space by following the instructions.",
+        "equipment_ids": [
+          "podcast_studios"
+        ]
+      },
+      {
+        "steps": [
+          {
+            "title": "Plan your interview",
+            "detail": "Prepare your interview questions and find a quiet room to use for filming."
+          },
+          {
+            "title": "Contact the lab",
+            "detail": "Email the lab at lvy@usc.edu to ask what you can use and when."
+          },
+          {
+            "title": "Collect the equipment",
+            "detail": "Visit Ahmanson Lab in Leavey Library to pick up the camera and microphones."
+          }
+        ],
+        "process": "Borrow a camera and microphones to film elsewhere",
+        "space_id": "ahmanson-lab",
+        "warnings": [
+          {
+            "fix": "Choose a small, quiet room with soft furnishings to reduce echo.",
+            "issue": "Background noise in a normal room"
+          }
+        ],
+        "materials": [
+          {
+            "unit": "kit",
+            "category": "other",
+            "material_id": null,
+            "quantity_low": 1,
+            "quantity_high": 1
+          }
+        ],
+        "fit_reason": "You can check out a professional camera and wireless microphones to film in a quiet location of your choice. Email the lab staff to arrange equipment pickup.",
+        "equipment_ids": [
+          "sony_fx3",
+          "wireless_mics"
+        ]
+      }
+    ],
+    "summary": "A two-minute video interview using a camera, microphone, and quiet studio space.",
+    "ways_considered": [
+      {
+        "reason": "Provides cameras and microphones to check out.",
+        "process": "Borrow a cinema camera, tripod, and wireless microphones to record",
+        "verdict": "offered",
+        "space_id": "ahmanson-lab"
+      },
+      {
+        "reason": "Space lacks cameras and audio equipment.",
+        "process": "Build a video setup",
+        "verdict": "left_out",
+        "space_id": "bfms"
+      },
+      {
+        "reason": "Space lacks video and audio equipment.",
+        "process": "Build a video setup",
+        "verdict": "left_out",
+        "space_id": "bme-innovation"
+      },
+      {
+        "reason": "Provides a quiet studio equipped with microphones and video recording tools.",
+        "process": "Record in a dedicated podcast studio",
+        "verdict": "offered",
+        "space_id": "digital-creative-lab"
+      },
+      {
+        "reason": "Official page does not list how to access the capture labs.",
+        "process": "Use media capture labs",
+        "verdict": "left_out",
+        "space_id": "iya-hall"
+      },
+      {
+        "reason": "Space only offers printing and 3D printing.",
+        "process": "Print video files",
+        "verdict": "left_out",
+        "space_id": "its-printing"
+      },
+      {
+        "reason": "Space lacks cameras and audio equipment.",
+        "process": "Use sculpture studio",
+        "verdict": "left_out",
+        "space_id": "roski-shops"
+      },
+      {
+        "reason": "Space is for scene and costume shops.",
+        "process": "Build sets",
+        "verdict": "left_out",
+        "space_id": "sda-technical-theatre-lab"
+      }
+    ],
+    "clarifying_question": null,
+    "single_route_reason": null,
+    "not_supported_reason": null
+  }
+}

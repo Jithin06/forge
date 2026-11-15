@@ -2,7 +2,7 @@ import type { PlanOutput } from "../ai/schemas";
 import type { AccessStatus, Audience, SpaceDoc } from "../schemas";
 import { routeCost, withScrapTotal, type CostLine } from "./cost";
 import { eligibility, eligibilityRank } from "./eligibility";
-import { firstVisit } from "./firstVisit";
+import { firstVisit, staffService } from "./firstVisit";
 import { assignLabels, type Label } from "./labels";
 import { matchScrap, type ScrapItem } from "./scrapMatch";
 import { trainingsFor } from "./training";
@@ -30,7 +30,38 @@ export type BaseRoute = {
   cost_lines: CostLine[];
   total: { low: number; high: number } | null;
   prices_estimated: boolean;
+  /** Fields below are absent on plans stored before Nov 15. */
+  /** "staff_fabrication": staff make the piece from a request; the student uses no machine and needs no training. */
+  kind?: "self_use" | "staff_fabrication";
+  /** The request the student makes, for a staff_fabrication route. */
+  service?: { name: string; how_to_request: string | null; url: string | null } | null;
+  /** The space whose prices stand in as typical campus prices on this route, if any. */
+  typical_from?: string | null;
+  /** Typical-practice notes for a space whose page is silent. Worded as likely, shown as estimated. */
+  estimate_notes?: { basis: string; training: string | null; cost: string | null } | null;
+  space_url?: string;
+  hours_listed?: boolean;
+  /** True when the student would run tools at a space that lists no trainings, so what is needed is not known. */
+  training_unknown?: boolean;
 };
+
+/** The space whose stored prices are used, labelled typical, where another space lists none. */
+export const REFERENCE_SPACE_ID = "bfms";
+
+/** What the student does when staff make the piece. Titles are fixed; details come from the space's service. */
+const FAB_TITLES = ["Prepare the file", "Submit the work order", "Collect and pay"] as const;
+function fabricationSteps(model: { title: string; detail: string }[], service: { how_to_request: string | null; steps?: string[] }, spaceName: string) {
+  const norm = (t: string) => t.trim().toLowerCase().replace(/[.\s]+$/, "");
+  // The model was asked for exactly these three; keep its wording when it complied.
+  if (model.length === 3 && model.every((st, i) => norm(st.title) === FAB_TITLES[i].toLowerCase())) return model;
+  const design = model[0]?.detail ?? "Make or find a 3D model of your piece and check its size.";
+  const [submit, , collect] = service.steps ?? [];
+  return [
+    { title: FAB_TITLES[0], detail: design },
+    { title: FAB_TITLES[1], detail: submit ?? service.how_to_request ?? `Ask the staff at ${spaceName} how to send your request.` },
+    { title: FAB_TITLES[2], detail: collect ?? `Collect the piece at ${spaceName} when staff tell you it is ready, and pay for the material.` },
+  ];
+}
 
 export type BasePlan = {
   summary: string;
@@ -57,24 +88,52 @@ export type FinalPlan = Omit<BasePlan, "routes"> & {
   none_open: boolean;
 };
 
+/** A borrowed price is typical only for work the reference space also does (a laser cut, a 3D print), not for a poster or a recording. */
+function comparable(space: SpaceDoc, equipmentIds: string[], reference?: SpaceDoc): boolean {
+  if (!reference || equipmentIds.length === 0) return false;
+  return equipmentIds.every((id) => {
+    const cap = space.equipment.find((e) => e.id === id)?.capability;
+    return !!cap && reference.capabilities.includes(cap);
+  });
+}
+
+/** The space's typical-practice training note may be about some kinds of equipment only. */
+function noteApplies(space: SpaceDoc, equipmentIds: string[]): boolean {
+  const only = space.estimates?.training_note_for;
+  if (!only?.length) return true;
+  return equipmentIds.some((id) => only.includes(space.equipment.find((e) => e.id === id)!.capability));
+}
+
+const firstVisitFor = (space: SpaceDoc, equipmentIds: string[]) =>
+  firstVisit(space, trainingsFor(space, equipmentIds), staffService(space, equipmentIds));
+
 export function computeBase(model: PlanOutput, spaces: SpaceDoc[], audience: Audience): BasePlan {
   const byId = new Map(spaces.map((s) => [s.id, s]));
 
+  const reference = byId.get(REFERENCE_SPACE_ID);
   const routes: BaseRoute[] = model.routes.map((r) => {
     const space = byId.get(r.space_id)!;
+    const service = staffService(space, r.equipment_ids);
     const trainings = trainingsFor(space, r.equipment_ids);
-    const cost = routeCost(space, r.materials);
+    const cost = routeCost(space, r.materials, audience, reference, comparable(space, r.equipment_ids, reference));
+    const selfUse = r.equipment_ids.some((id) => space.equipment.find((e) => e.id === id)?.staff_operated !== true);
+    const est = space.estimates;
     return {
       space_id: space.id,
       space_name: space.name,
       space_location: space.location,
+      space_url: space.official_url,
+      hours_listed: !!space.hours,
+      training_unknown: !service && selfUse && space.trainings.length === 0,
+      kind: service ? "staff_fabrication" : "self_use",
+      service: service ? { name: service.name, how_to_request: service.how_to_request, url: service.url ?? null } : null,
       equipment: r.equipment_ids.map((id) => {
         const e = space.equipment.find((x) => x.id === id)!;
         return { id, name: e.name, plain_name: e.plain_name };
       }),
       process: r.process,
       fit_reason: r.fit_reason,
-      steps: r.steps,
+      steps: service ? fabricationSteps(r.steps, service, space.name) : r.steps,
       warnings: r.warnings,
       eligibility: eligibility(space, audience),
       trainings: trainings.map((t) => ({
@@ -86,6 +145,18 @@ export function computeBase(model: PlanOutput, spaces: SpaceDoc[], audience: Aud
       cost_lines: cost.lines,
       total: cost.total,
       prices_estimated: cost.prices_estimated,
+      typical_from: cost.typical_from,
+      estimate_notes: est
+        ? {
+            basis: est.basis,
+            // Only where the space lists no training of its own for tools the student would run.
+            training:
+              trainings.length === 0 && r.equipment_ids.length > 0 && !service && selfUse && noteApplies(space, r.equipment_ids)
+                ? est.training_note
+                : null,
+            cost: cost.typical_from || cost.total === null ? est.cost_note : null,
+          }
+        : null,
     };
   });
 
@@ -99,7 +170,7 @@ export function computeBase(model: PlanOutput, spaces: SpaceDoc[], audience: Aud
   const top = ordered[0];
   const topSpace = top ? byId.get(top.space_id)! : null;
   const first_visit =
-    top && topSpace ? firstVisit(topSpace, trainingsFor(topSpace, top.equipment.map((e) => e.id))) : [];
+    top && topSpace ? firstVisitFor(topSpace, top.equipment.map((e) => e.id)) : [];
 
   return {
     summary: model.summary,
@@ -114,8 +185,9 @@ export function computeBase(model: PlanOutput, spaces: SpaceDoc[], audience: Aud
 
 /**
  * The same stored plan, seen by a different audience: badges, order and the
- * first-visit list are worked out again from the space data. Routes, steps,
- * materials and costs are not touched. `modelOrder` is the order the model
+ * first-visit list are worked out again from the space data, and materials
+ * are priced again because a space may charge audiences differently. Routes,
+ * steps and quantities are not touched. `modelOrder` is the order the model
  * gave the routes in, so the result matches a plan made for that audience.
  */
 export function forAudience(
@@ -133,7 +205,15 @@ export function forAudience(
   const routes = base.routes
     .map((r, i) => {
       const space = byId.get(r.space_id);
-      return { r: space ? { ...r, eligibility: eligibility(space, audience) } : r, i, o: original(r) };
+      if (!space) return { r, i, o: original(r) };
+      // Prices can differ by audience, so the cost lines are priced again from the same quantities.
+      const ref = byId.get(REFERENCE_SPACE_ID);
+      const cost = routeCost(space, r.cost_lines, audience, ref, comparable(space, r.equipment.map((e) => e.id), ref));
+      return {
+        r: { ...r, eligibility: eligibility(space, audience), cost_lines: cost.lines, total: cost.total, prices_estimated: cost.prices_estimated, typical_from: cost.typical_from },
+        i,
+        o: original(r),
+      };
     })
     .sort((a, b) => eligibilityRank(a.r.eligibility.status) - eligibilityRank(b.r.eligibility.status) || a.o - b.o || a.i - b.i)
     .map(({ r }) => r);
@@ -143,7 +223,7 @@ export function forAudience(
     ...base,
     audience,
     routes,
-    first_visit: top && topSpace ? firstVisit(topSpace, trainingsFor(topSpace, top.equipment.map((e) => e.id))) : base.first_visit,
+    first_visit: top && topSpace ? firstVisitFor(topSpace, top.equipment.map((e) => e.id)) : base.first_visit,
   };
 }
 
@@ -157,8 +237,11 @@ export function finalize(base: BasePlan, availableScrap: ScrapItem[]): FinalPlan
   const labels = assignLabels(
     withScrap.map(({ r, with_scrap }) => ({
       status: r.eligibility.status,
-      withScrapLow: with_scrap?.low ?? null,
+      // A price borrowed from another space cannot win "Cheapest".
+      withScrapLow: r.typical_from ? null : (with_scrap?.low ?? null),
       trainingCount: r.trainings.length,
+      staffMade: r.kind === "staff_fabrication",
+      trainingUnknown: !!r.training_unknown,
     })),
   );
 

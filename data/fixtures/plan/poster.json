@@ -1,0 +1,123 @@
+{
+  "call": "plan",
+  "note": "Recorded from the live model by scripts/check-plan-quality.mts.",
+  "recorded": {
+    "at": "2026-11-15T06:32:43.297Z",
+    "attempts": 1
+  },
+  "key": {
+    "text": "A printed poster of my research for a poster session, 36 by 48 inches, in color. I have the file ready and need one copy.",
+    "experience": "never",
+    "answers": {
+      "size": [
+        "bigger"
+      ],
+      "quantity": [
+        "one"
+      ]
+    },
+    "image": null
+  },
+  "output": {
+    "needs": [
+      {
+        "why": "To print a large 36 by 48 inch poster.",
+        "capability": "large_format_printing"
+      }
+    ],
+    "routes": [
+      {
+        "steps": [
+          {
+            "title": "Prepare the file",
+            "detail": "Save your poster design as a PDF file and check that the longest side measures 48 inches."
+          },
+          {
+            "title": "Load your card",
+            "detail": "Load discretionary funds on your USC Card to pay for the printing."
+          },
+          {
+            "title": "Bring the file",
+            "detail": "Bring your file to the Leavey computing center and ask ITS staff on site for help printing."
+          }
+        ],
+        "process": "Print a color poster on heavyweight coated paper",
+        "space_id": "its-printing",
+        "warnings": [
+          {
+            "fix": "Check that all images and figures in your file are high resolution before printing.",
+            "issue": "The poster might look pixelated if images in your file have low resolution."
+          }
+        ],
+        "materials": [
+          {
+            "unit": "inch of the longest side",
+            "category": "cardboard_paper",
+            "material_id": "poster_matte",
+            "quantity_low": 48,
+            "quantity_high": 48
+          }
+        ],
+        "fit_reason": "This route is ideal because staff are on site to assist with printing large formats directly from your file. You can easily pay using your USC Card.",
+        "equipment_ids": [
+          "its_plotters"
+        ]
+      },
+      {
+        "steps": [
+          {
+            "title": "Prepare the file",
+            "detail": "Save your poster in a standard print format and verify its dimensions."
+          },
+          {
+            "title": "Contact staff",
+            "detail": "Ask the ITS Learning Environments team how to submit your file to the plotters."
+          },
+          {
+            "title": "Collect the poster",
+            "detail": "Pick up your printed poster from the lab once it is complete."
+          }
+        ],
+        "process": "Print a color poster using plotters",
+        "space_id": "digital-creative-lab",
+        "warnings": [
+          {
+            "fix": "Ask the space's staff for guidance on file requirements and submission.",
+            "issue": "The page does not list specific instructions for using the plotters."
+          }
+        ],
+        "materials": [
+          {
+            "unit": "sheet",
+            "category": "cardboard_paper",
+            "material_id": null,
+            "quantity_low": 48,
+            "quantity_high": 48
+          }
+        ],
+        "fit_reason": "This space provides plotters for printing large sheets. Ask the ITS Learning Environments team for assistance with your print job.",
+        "equipment_ids": [
+          "dcl_plotters"
+        ]
+      }
+    ],
+    "summary": "A printed research poster, 36 by 48 inches, in color.",
+    "ways_considered": [
+      {
+        "reason": "Has plotters for large poster printing.",
+        "process": "Print on a large format plotter",
+        "verdict": "offered",
+        "space_id": "digital-creative-lab"
+      },
+      {
+        "reason": "Offers large-format plotters and matte or gloss poster paper.",
+        "process": "Print on large-format plotters",
+        "verdict": "offered",
+        "space_id": "its-printing"
+      }
+    ],
+    "clarifying_question": null,
+    "single_route_reason": null,
+    "not_supported_reason": null
+  }
+}

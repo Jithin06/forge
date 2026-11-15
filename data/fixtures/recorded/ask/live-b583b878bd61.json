@@ -1,0 +1,18 @@
+{
+  "call": "ask",
+  "recorded": {
+    "model": "gemini-3.5-flash-lite",
+    "at": "2026-11-15T06:30:49.094Z"
+  },
+  "key": {
+    "text": "A two-minute video interview with a professor for a class project. I need a camera, a microphone and a quiet place to film.",
+    "experience": "never",
+    "image": null
+  },
+  "output": {
+    "summary": "You want to record a two-minute video interview with a professor for a class project using a camera, microphone, and a quiet space.",
+    "question_ids": [],
+    "prefilled": [],
+    "blocked_reason": null
+  }
+}

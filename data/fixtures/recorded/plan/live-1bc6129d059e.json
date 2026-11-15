@@ -1,0 +1,147 @@
+{
+  "call": "plan",
+  "recorded": {
+    "model": "gemini-3.5-flash-lite",
+    "at": "2026-11-15T06:27:47.654Z"
+  },
+  "key": {
+    "text": "A two-minute video interview with a professor for a class project. I need a camera, a microphone and a quiet place to film.",
+    "experience": "never",
+    "answers": {
+      "quantity": [
+        "one"
+      ],
+      "demands": [
+        "looks"
+      ]
+    },
+    "image": null
+  },
+  "output": {
+    "summary": "A two-minute video interview with a professor using a camera and a microphone.",
+    "needs": [
+      {
+        "capability": "video_production",
+        "why": "To film the interview"
+      },
+      {
+        "capability": "audio_recording",
+        "why": "To capture clear sound for the interview"
+      }
+    ],
+    "ways_considered": [
+      {
+        "space_id": "ahmanson-lab",
+        "process": "Borrow a video camera and wireless microphones and film in a quiet spot",
+        "verdict": "offered",
+        "reason": "Has both a video camera and wireless microphones available to borrow."
+      },
+      {
+        "space_id": "bfms",
+        "process": "Build a camera mount",
+        "verdict": "left_out",
+        "reason": "Does not provide video production equipment."
+      },
+      {
+        "space_id": "bme-innovation",
+        "process": "Make a video setup",
+        "verdict": "left_out",
+        "reason": "Lacks video production capabilities."
+      },
+      {
+        "space_id": "digital-creative-lab",
+        "process": "Record in the podcast or production studio",
+        "verdict": "offered",
+        "reason": "Has a podcast and production studio suited for recording video and audio."
+      },
+      {
+        "space_id": "iya-hall",
+        "process": "Use capture labs for video",
+        "verdict": "left_out",
+        "reason": "No specific equipment listed for this request."
+      },
+      {
+        "space_id": "its-printing",
+        "process": "Print video stills",
+        "verdict": "left_out",
+        "reason": "Only offers printing services."
+      },
+      {
+        "space_id": "roski-shops",
+        "process": "Build a wooden video frame",
+        "verdict": "left_out",
+        "reason": "Does not offer cameras or microphones."
+      },
+      {
+        "space_id": "sda-technical-theatre-lab",
+        "process": "Build set for video",
+        "verdict": "left_out",
+        "reason": "Scene shop builds theatre sets, not for recording video interviews."
+      }
+    ],
+    "routes": [
+      {
+        "space_id": "digital-creative-lab",
+        "equipment_ids": [
+          "podcast_studios"
+        ],
+        "process": "Record the interview in the podcast studio",
+        "fit_reason": "This space provides a quiet room with built-in cameras and microphones for recording. It is ideal for a beginner needing an all-in-one setup.",
+        "materials": [],
+        "steps": [
+          {
+            "title": "Prepare the plan",
+            "detail": "Write down your interview questions and check what time you want to record."
+          },
+          {
+            "title": "Reserve the studio",
+            "detail": "Contact the staff to book the podcast studio."
+          },
+          {
+            "title": "Record the interview",
+            "detail": "Show up with your professor and use the studio equipment to record your video."
+          }
+        ],
+        "warnings": [
+          {
+            "issue": "The podcast studio seats only 4 people.",
+            "fix": "Keep your crew and guests to four people or fewer."
+          }
+        ]
+      },
+      {
+        "space_id": "ahmanson-lab",
+        "equipment_ids": [
+          "sony_fx3",
+          "wireless_mics"
+        ],
+        "process": "Check out a video camera and microphones to film the interview",
+        "fit_reason": "You can borrow the exact camera and microphones needed and film in any quiet location. This lets you choose your own filming spot.",
+        "materials": [],
+        "steps": [
+          {
+            "title": "Prepare your plan",
+            "detail": "List your interview questions and plan a quiet place to film."
+          },
+          {
+            "title": "Contact staff",
+            "detail": "Email the staff to arrange equipment checkout."
+          },
+          {
+            "title": "Collect and film",
+            "detail": "Pick up the camera and microphones, record your interview, and return the gear."
+          }
+        ],
+        "warnings": [
+          {
+            "issue": "Background noise can ruin interview audio.",
+            "fix": "Choose a very quiet room away from traffic and air conditioners."
+          }
+        ]
+      }
+    ],
+    "single_route_reason": null,
+    "clarifying_question": null,
+    "not_supported_reason": null
+  }
+}

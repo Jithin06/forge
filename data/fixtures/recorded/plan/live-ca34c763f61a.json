@@ -1,0 +1,134 @@
+{
+  "call": "plan",
+  "recorded": {
+    "model": "gemini-3.5-flash-lite",
+    "at": "2026-11-15T06:30:25.728Z"
+  },
+  "key": {
+    "text": "I want to record a podcast episode with two friends about campus food. We need microphones and a quiet room.",
+    "experience": "never",
+    "answers": {
+      "quantity": [
+        "one"
+      ]
+    },
+    "image": null,
+    "retry": [
+      "space \"ahmanson-lab\" also lists equipment for audio_recording, the same as your route at \"digital-creative-lab\", but it is not a route. Add it as a route. Leave it out only if its listed equipment cannot do this job, and then say so in ways_considered (and in single_route_reason if one route remains). Who may use a space is never a reason"
+    ]
+  },
+  "output": {
+    "summary": "Record a podcast episode with two friends about campus food using microphones and a quiet room.",
+    "needs": [
+      {
+        "capability": "audio_recording",
+        "why": "Need microphones and a quiet room to record the podcast episode."
+      }
+    ],
+    "ways_considered": [
+      {
+        "space_id": "ahmanson-lab",
+        "process": "Record using studio microphones and an audio interface",
+        "verdict": "offered",
+        "reason": "Listed equipment can record audio."
+      },
+      {
+        "space_id": "bfms",
+        "process": "Record using woodworking or hand tools",
+        "verdict": "left_out",
+        "reason": "Listed equipment cannot do the job."
+      },
+      {
+        "space_id": "bme-innovation",
+        "process": "Record using electronics or 3D printers",
+        "verdict": "left_out",
+        "reason": "Listed equipment cannot do the job."
+      },
+      {
+        "space_id": "digital-creative-lab",
+        "process": "Record in a podcast studio with headsets and a mixer",
+        "verdict": "offered",
+        "reason": "Listed equipment can do the job."
+      },
+      {
+        "space_id": "iya-hall",
+        "process": "Record using woodworking or CNC equipment",
+        "verdict": "left_out",
+        "reason": "Listed equipment cannot do the job."
+      },
+      {
+        "space_id": "its-printing",
+        "process": "Record using plotters or 3D printers",
+        "verdict": "left_out",
+        "reason": "Listed equipment cannot do the job."
+      },
+      {
+        "space_id": "roski-shops",
+        "process": "Record using woodshop or metal shop tools",
+        "verdict": "left_out",
+        "reason": "Listed equipment cannot do the job."
+      },
+      {
+        "space_id": "sda-technical-theatre-lab",
+        "process": "Record using scene shop equipment",
+        "verdict": "left_out",
+        "reason": "Listed equipment cannot do the job."
+      }
+    ],
+    "routes": [
+      {
+        "space_id": "digital-creative-lab",
+        "equipment_ids": [
+          "podcast_studios"
+        ],
+        "process": "Record in a podcast studio with headsets and a mixer",
+        "fit_reason": "This route provides a dedicated podcast studio with seats for four people, matching your need for a quiet room and microphones. It is simple to use since no training is required.",
+        "materials": [],
+        "steps": [
+          {
+            "title": "Prepare the file",
+            "detail": "Plan your podcast topics about campus food and check your recording plan."
+          },
+          {
+            "title": "Reserve the studio",
+            "detail": "Email spaces@usc.edu or call the ITS Learning Environments team at (213) 821-6601 to reserve the podcast studio."
+          },
+          {
+            "title": "Record your episode",
+            "detail": "Go to the digital creative lab in Leavey Library at your scheduled time and use the podcast studio equipment."
+          }
+        ],
+        "warnings": []
+      },
+      {
+        "space_id": "ahmanson-lab",
+        "equipment_ids": [
+          "studio_mics",
+          "audio_interface",
+          "wireless_mics"
+        ],
+        "process": "Record using studio microphones and an audio interface",
+        "fit_reason": "This route gives you professional microphones and audio equipment to record your conversation. It is a straightforward option for capturing clear sound.",
+        "materials": [],
+        "steps": [
+          {
+            "title": "Prepare the file",
+            "detail": "Plan what you will say about campus food and check your recording equipment needs."
+          },
+          {
+            "title": "Contact the lab",
+            "detail": "Email the lab at lvy@usc.edu to ask what you can use and when."
+          },
+          {
+            "title": "Collect and record",
+            "detail": "Visit Ahmanson Lab during lab hours to get the microphones and record your episode."
+          }
+        ],
+        "warnings": []
+      }
+    ],
+    "single_route_reason": null,
+    "clarifying_question": null,
+    "not_supported_reason": null
+  }
+}

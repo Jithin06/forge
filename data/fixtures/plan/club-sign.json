@@ -2,7 +2,7 @@
   "call": "plan",
   "note": "Recorded from the live model by scripts/check-plan-quality.mts.",
   "recorded": {
-    "at": "2026-11-15T05:24:52.547Z",
+    "at": "2026-11-15T06:30:07.901Z",
     "attempts": 1
   },
   "key": {
@@ -24,7 +24,7 @@
   "output": {
     "needs": [
       {
-        "why": "To cut and engrave the acrylic sign.",
+        "why": "To cut and engrave the acrylic sheet precisely.",
         "capability": "laser_cutting"
       }
     ],
@@ -32,24 +32,24 @@
       {
         "steps": [
           {
-            "title": "Design the sign",
-            "detail": "Draw your club name and sign outline in design software."
+            "title": "Design the piece",
+            "detail": "Draw your club name in a digital design tool to the desired size."
           },
           {
             "title": "Take the training",
-            "detail": "Complete the required safety training for the laser cutter."
+            "detail": "Complete the required safety and equipment training before using the space."
           },
           {
-            "title": "Ask staff for help",
-            "detail": "Ask the space staff to check your design file before cutting."
+            "title": "Make the sign",
+            "detail": "Use the laser cutter to cut and engrave your acrylic sheet."
           }
         ],
-        "process": "Cut and engrave an acrylic sheet with a laser cutter",
+        "process": "Cut and engrave an acrylic sheet using a laser cutter",
         "space_id": "bfms",
         "warnings": [
           {
-            "fix": "Use a clear, bold font for your club name.",
-            "issue": "Fine text might be hard to read when engraved."
+            "fix": "Make sure your engraved text and lines are thick enough to show clearly.",
+            "issue": "Lines too thin"
           }
         ],
         "materials": [
@@ -61,7 +61,7 @@
             "quantity_high": 1
           }
         ],
-        "fit_reason": "This space has the laser cutter and acrylic sheets you need.",
+        "fit_reason": "This space provides direct access to a laser cutter and suitable acrylic sheets. It is ideal for making a clean, professional sign.",
         "equipment_ids": [
           "laser_vls675"
         ]
@@ -69,24 +69,24 @@
       {
         "steps": [
           {
-            "title": "Design the sign",
-            "detail": "Create your club name layout in design software."
+            "title": "Design the piece",
+            "detail": "Create a file with your club name sized for the sign."
           },
           {
             "title": "Take the training",
-            "detail": "Complete the required training for the laser cutter."
+            "detail": "Complete the general safety and laser cutter training for the space."
           },
           {
-            "title": "Ask staff for help",
-            "detail": "Ask the space staff to check your file and help you make the sign."
+            "title": "Ask staff to check the file",
+            "detail": "Have the space staff review your file before cutting."
           }
         ],
-        "process": "Cut and engrave an acrylic sign using a laser cutter",
+        "process": "Cut and engrave an acrylic sheet using a laser cutter",
         "space_id": "bme-innovation",
         "warnings": [
           {
-            "fix": "Ask staff what acrylic sheets to bring.",
-            "issue": "This space does not list materials."
+            "fix": "Ensure you use cast acrylic suitable for laser cutting and engraving.",
+            "issue": "Wrong material"
           }
         ],
         "materials": [
@@ -98,37 +98,61 @@
             "quantity_high": 1
           }
         ],
-        "fit_reason": "This space provides a laser cutter to make your sign.",
+        "fit_reason": "The BME Innovation Space features a laser cutter that handles sheet materials well. Staff are available to guide you through the process.",
         "equipment_ids": [
           "bme_laser"
         ]
       }
     ],
-    "summary": "An engraved acrylic sign for a club tabling booth.",
+    "summary": "An engraved acrylic sign with a club name for a tabling booth.",
     "ways_considered": [
       {
-        "reason": "This space does not have a laser cutter.",
-        "process": "Laser cut acrylic sign",
+        "reason": "Does not cut flat acrylic sheets.",
+        "process": "3D printing",
         "verdict": "left_out",
         "space_id": "ahmanson-lab"
       },
       {
-        "reason": "The space has a laser cutter and acrylic sheets.",
-        "process": "Laser cut and engrave acrylic sheet",
+        "reason": "Cuts and engraves acrylic sheets perfectly.",
+        "process": "Laser cutting acrylic",
         "verdict": "offered",
         "space_id": "bfms"
       },
       {
-        "reason": "The space has a laser cutter for acrylic.",
-        "process": "Laser cut acrylic sign",
+        "reason": "Equipped with a laser cutter for acrylic.",
+        "process": "Laser cutting acrylic",
         "verdict": "offered",
         "space_id": "bme-innovation"
       },
       {
-        "reason": "This space only has podcast studios.",
-        "process": "Laser cut acrylic sign",
+        "reason": "Does not have laser cutting equipment.",
+        "process": "3D printing",
         "verdict": "left_out",
         "space_id": "digital-creative-lab"
+      },
+      {
+        "reason": "CNC router is for wood and sheet material, not laser engraving.",
+        "process": "CNC routing",
+        "verdict": "left_out",
+        "space_id": "iya-hall"
+      },
+      {
+        "reason": "Prints on paper, not acrylic.",
+        "process": "Large format printing",
+        "verdict": "left_out",
+        "space_id": "its-printing"
+      },
+      {
+        "reason": "Woodshop tools cannot engrave acrylic.",
+        "process": "Woodshop cutting",
+        "verdict": "left_out",
+        "space_id": "roski-shops"
+      },
+      {
+        "reason": "Scene shop does not list laser cutting tools.",
+        "process": "Scene shop build",
+        "verdict": "left_out",
+        "space_id": "sda-technical-theatre-lab"
       }
     ],
     "clarifying_question": null,

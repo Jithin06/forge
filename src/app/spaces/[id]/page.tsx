@@ -7,8 +7,8 @@ import { FactChip } from "@/components/badges";
 import { Band, Body } from "@/components/page";
 import { Swatch } from "@/components/swatch";
 import { AccessSection } from "@/components/spaces/access-section";
-import { CAPABILITY_LABELS, WEEKDAY_LABELS, formatDate, formatTime } from "@/lib/labels";
-import { CAPABILITIES, WEEKDAYS, type GroupStatus, type SpaceDoc } from "@/lib/schemas";
+import { AUDIENCE_LABELS, CAPABILITY_LABELS, WEEKDAY_LABELS, formatDate, formatTime } from "@/lib/labels";
+import { AUDIENCES, CAPABILITIES, WEEKDAYS, type GroupStatus, type Material, type SpaceDoc } from "@/lib/schemas";
 import { getAvailableScrap, getSpace, type ScrapCard } from "@/lib/spaces";
 
 /** The tab title is the space's name, so several open spaces can be told apart. */
@@ -63,13 +63,17 @@ function SpaceView({ space, scrap }: { space: SpaceDoc; scrap: ScrapCard[] }) {
 
       <AccessSection space={space} statusChip={<FactChip status={space.status.access} />} />
 
-      {space.access_steps.length > 0 && (
+      {(space.access_steps.length > 0 || (space.estimates?.first_visit.length ?? 0) > 0) && (
         <Section title="Your first visit" status={space.status.access}>
           <ol className="steps">
             {space.access_steps.map((step) => (
               <li key={step}>{step}</li>
             ))}
+            {space.estimates?.first_visit.map((step) => (
+              <li key={step}>{step}</li>
+            ))}
           </ol>
+          {(space.estimates?.first_visit.length ?? 0) > 0 && <Typical basis={space.estimates!.basis} />}
         </Section>
       )}
 
@@ -94,7 +98,13 @@ function SpaceView({ space, scrap }: { space: SpaceDoc; scrap: ScrapCard[] }) {
             </tbody>
           </table>
         ) : (
-          <p>{space.hours_note ?? "Hours are not listed. Check the official page before you go."}</p>
+          <p>
+            {space.hours_note ?? "Hours are not listed."}{" "}
+            <a href={space.official_url} target="_blank" rel="noopener noreferrer" className="link">
+              Check the official page<span className="sr-only"> (opens in a new tab)</span>
+            </a>{" "}
+            before you go.
+          </p>
         )}
       </Section>
 
@@ -139,6 +149,13 @@ function SpaceView({ space, scrap }: { space: SpaceDoc; scrap: ScrapCard[] }) {
                 <div>
                   <p className="font-bold">{sv.name}</p>
                   <p className="text-[15px]">{sv.how_to_request ?? "Ask the staff how to request this."}</p>
+                  {sv.url && (
+                    <a href={sv.url} target="_blank" rel="noopener noreferrer" className="link inline-flex min-h-11 items-center gap-1.5">
+                      Open the request form
+                      <ExternalLink aria-hidden className="size-4" />
+                      <span className="sr-only">(opens in a new tab)</span>
+                    </a>
+                  )}
                 </div>
               </li>
             ))}
@@ -148,7 +165,15 @@ function SpaceView({ space, scrap }: { space: SpaceDoc; scrap: ScrapCard[] }) {
 
       <Section title="Trainings" status={space.status.trainings}>
         {space.trainings.length === 0 ? (
-          <p>No trainings are listed. Ask the staff what you need before you start.</p>
+          <>
+            <p>No trainings are listed. Ask the staff what you need before you start.</p>
+            {space.estimates?.training_note && (
+              <>
+                <p className="mt-2">{space.estimates.training_note}</p>
+                <Typical basis={space.estimates.basis} />
+              </>
+            )}
+          </>
         ) : (
           <ul className="space-y-3">
             {space.trainings.map((t) => (
@@ -175,7 +200,15 @@ function SpaceView({ space, scrap }: { space: SpaceDoc; scrap: ScrapCard[] }) {
       <Section title="Material prices" status={space.status.prices}>
         {space.usage_fee_note && <p className="mb-3">{space.usage_fee_note}</p>}
         {space.materials.length === 0 ? (
-          <p>No materials are listed. Ask the staff what they sell and what to bring.</p>
+          <>
+            <p>No materials are listed. Ask the staff what they sell and what to bring.</p>
+            {space.estimates?.cost_note && (
+              <>
+                <p className="mt-2">{space.estimates.cost_note}</p>
+                <Typical basis={space.estimates.basis} />
+              </>
+            )}
+          </>
         ) : (
           <table className="w-full text-left">
             <caption className="sr-only">Materials and prices</caption>
@@ -200,6 +233,9 @@ function SpaceView({ space, scrap }: { space: SpaceDoc; scrap: ScrapCard[] }) {
                     ) : (
                       `$${m.unit_price_usd.toFixed(2)}${m.price_unit ? ` per ${m.price_unit}` : ""}`
                     )}
+                    {otherPrices(m).map((line) => (
+                      <span key={line} className="block text-[15px] text-gray-text">{line}</span>
+                    ))}
                   </td>
                 </tr>
               ))}
@@ -248,13 +284,33 @@ function SpaceView({ space, scrap }: { space: SpaceDoc; scrap: ScrapCard[] }) {
           <span className="sr-only">(opens in a new tab)</span>
         </a>
         <p className="text-[15px] text-gray-text">
-          Facts come from the space&apos;s official pages, checked on {formatDate(space.source.checked_on)}. Anything
-          marked Estimated has not been confirmed by staff yet.
+          Facts come from the space&apos;s official pages, checked on {formatDate(space.source.checked_on)}. Only
+          details marked &ldquo;Confirmed by staff&rdquo; have been checked by the people who run the space.
         </p>
       </footer>
       </Body>
     </article>
   );
+}
+
+/** Marks a line as typical practice, not a fact about this space. */
+function Typical({ basis }: { basis: string }) {
+  return <p className="mt-1 text-[14px] text-gray-text">Not from this space&apos;s page: {basis}.</p>;
+}
+
+/** Lines for audiences that pay a different price, e.g. "Other USC undergrad: $5.00 per cubic inch". */
+function otherPrices(m: Material): string[] {
+  const special = m.price_by_audience;
+  if (!special) return [];
+  const unit = m.price_unit ? ` per ${m.price_unit}` : "";
+  const groups = new Map<string, string[]>();
+  for (const a of AUDIENCES) {
+    if (!(a in special)) continue;
+    const p = special[a];
+    const text = p == null ? "no price listed" : `$${p.toFixed(2)}${unit}`;
+    groups.set(text, [...(groups.get(text) ?? []), AUDIENCE_LABELS[a]]);
+  }
+  return [...groups].map(([text, who]) => `${who.join(", ")}: ${text}`);
 }
 
 function Section({ title, status, children }: { title: string; status: GroupStatus; children: React.ReactNode }) {

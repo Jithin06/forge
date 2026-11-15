@@ -1,0 +1,149 @@
+{
+  "id": "its-printing",
+  "name": "ITS Printing Services at Leavey",
+  "school": "USC Information Technology Services",
+  "location": "Ahmanson Information Commons, Leavey Library (LVL)",
+  "official_url": "https://itservices.usc.edu/learning-environments-services/usc-computing-center-printing-services/",
+  "blurb": "Poster and large-format printing on plotters, and 3D printing by request, run by ITS. Ordinary page printing is also at King Hall and Waite Phillips Hall; large-format printing is at Leavey only.",
+  "capabilities": [
+    "large_format_printing",
+    "fdm_3d_printing"
+  ],
+  "hours": null,
+  "hours_note": "Hours are not listed on the printing page. Check the ITS computing centers page.",
+  "access": [
+    {
+      "audience": "viterbi_undergrad",
+      "status": "open",
+      "note": null
+    },
+    {
+      "audience": "viterbi_grad",
+      "status": "open",
+      "note": null
+    },
+    {
+      "audience": "usc_undergrad_other",
+      "status": "open",
+      "note": null
+    },
+    {
+      "audience": "usc_grad_other",
+      "status": "open",
+      "note": null
+    }
+  ],
+  "access_steps": [
+    "Load discretionary funds on your USC Card: printing is paid for with the card before the job prints.",
+    "For a poster, bring your file to the Leavey computing center. ITS staff are on site during opening hours.",
+    "For a 3D print, email spaces@usc.edu with your request."
+  ],
+  "trainings": [],
+  "equipment": [
+    {
+      "id": "its_plotters",
+      "name": "Large-format plotters",
+      "capability": "large_format_printing",
+      "plain_name": "Plotter (prints posters and large sheets)",
+      "required_training_ids": [],
+      "staff_operated": null,
+      "work_area_note": "Prints 10 to 48 in wide, up to 100 in long, in color or black and white",
+      "good_for": [
+        "posters",
+        "large drawings"
+      ],
+      "not_for": []
+    },
+    {
+      "id": "its_3d_printing",
+      "name": "3D printing by request",
+      "capability": "fdm_3d_printing",
+      "plain_name": "3D printer",
+      "required_training_ids": [],
+      "staff_operated": true,
+      "work_area_note": null,
+      "good_for": [],
+      "not_for": []
+    }
+  ],
+  "materials": [
+    {
+      "id": "poster_matte",
+      "name": "Poster print on heavyweight coated (matte) paper",
+      "category": "cardboard_paper",
+      "unit_price_usd": 1.0,
+      "price_unit": "inch of the longest side",
+      "price_source": "https://itservices.usc.edu/learning-environments-services/usc-computing-center-printing-services/ (read 2026-11-14): $1 per inch of the longest dimension",
+      "stocked": true
+    },
+    {
+      "id": "poster_gloss_small",
+      "name": "Poster print on gloss photo paper, under 36 in",
+      "category": "cardboard_paper",
+      "unit_price_usd": 1.05,
+      "price_unit": "inch of the longest side",
+      "price_source": "https://itservices.usc.edu/learning-environments-services/usc-computing-center-printing-services/ (read 2026-11-14): per inch of the longest dimension",
+      "stocked": true
+    },
+    {
+      "id": "poster_gloss_large",
+      "name": "Poster print on gloss photo paper, 36 in and over",
+      "category": "cardboard_paper",
+      "unit_price_usd": 1.3,
+      "price_unit": "inch of the longest side",
+      "price_source": "https://itservices.usc.edu/learning-environments-services/usc-computing-center-printing-services/ (read 2026-11-14): per inch of the longest dimension",
+      "stocked": true
+    }
+  ],
+  "services": [
+    {
+      "name": "3D printing by request",
+      "how_to_request": "Email spaces@usc.edu with your request.",
+      "equipment_ids": [
+        "its_3d_printing"
+      ],
+      "steps": [
+        "Email spaces@usc.edu with your file and what you need.",
+        "ITS staff reply about whether and when they can print it. The page lists no price for 3D printing, so ask.",
+        "Collect it when they tell you it is ready."
+      ]
+    }
+  ],
+  "usage_fee_note": "Printing is paid for with a valid USC Card before the job prints. Posters are priced per inch of the longest side.",
+  "prohibited": [],
+  "scrap_policy": {
+    "offers_scrap": false,
+    "never_offer": [],
+    "pickup_note": null
+  },
+  "estimates": {
+    "basis": "typical for campus workshops",
+    "first_visit": [],
+    "training_note": null,
+    "cost_note": "3D printing likely costs materials only; the page lists no price. Where no price is listed, cost ranges use the Baum Family Maker Space's prices as typical campus prices."
+  },
+  "source": {
+    "urls": [
+      "https://itservices.usc.edu/learning-environments-services/usc-computing-center-printing-services/",
+      "https://itservices.usc.edu/how-to-usc-computing-center-printing-services-2/"
+    ],
+    "checked_on": "2026-11-14"
+  },
+  "status": {
+    "hours": {
+      "state": "estimated"
+    },
+    "access": {
+      "state": "estimated"
+    },
+    "trainings": {
+      "state": "estimated"
+    },
+    "equipment": {
+      "state": "estimated"
+    },
+    "prices": {
+      "state": "estimated"
+    }
+  }
+}

@@ -14,11 +14,14 @@ import type { Question, QuestionId } from "@/lib/ai/questions";
 import { cn } from "@/lib/utils";
 import { resizeToJpeg } from "./resize-image";
 
+// Six ideas the listed spaces can route, half of them not engineering. Each has a recorded sample in data/fixtures.
 const EXAMPLES = [
   { chip: "A phone stand", text: "I want to make a phone stand for my desk out of wood. It should hold my phone at a slight angle, fit in my hand, and I only need one." },
   { chip: "A night light", text: "A small night light for my dorm desk with a warm LED inside and a 3D printed cover. Just one, about the size of my palm." },
   { chip: "A club sign", text: "An engraved acrylic sign with my club's name for our tabling booth, about 12 inches wide. We need one." },
-  { chip: "Not sure yet", text: "something cool for my room" },
+  { chip: "A podcast", text: "I want to record a podcast episode with two friends about campus food. We need microphones and a quiet room." },
+  { chip: "A research poster", text: "A printed poster of my research for a poster session, 36 by 48 inches, in color. I have the file ready and need one copy." },
+  { chip: "A video interview", text: "A two-minute video interview with a professor for a class project. I need a camera, a microphone and a quiet place to film." },
 ];
 
 const ASK_STATUS = ["Reading your idea", "Checking which details matter"];

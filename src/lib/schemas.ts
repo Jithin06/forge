@@ -27,6 +27,7 @@ export const CAPABILITIES = [
   "video_production",
   "audio_recording",
   "photography",
+  "large_format_printing",
 ] as const;
 export type Capability = (typeof CAPABILITIES)[number];
 
@@ -82,8 +83,11 @@ const groupStatus = z.discriminatedUnion("state", [
   z.object({ state: z.literal("estimated") }),
   z.object({
     state: z.literal("confirmed"),
-    confirmed_by: text,
+    /** Who confirmed. Stored, used by the server, and never sent to a student (see lib/spaces.ts). */
+    confirmed_by: text.optional(),
     confirmed_on: z.iso.date(),
+    /** Set by the server when a test account made the confirmation (test sign-in mode only). */
+    test: z.boolean().optional(),
   }),
 ]);
 
@@ -123,6 +127,12 @@ export const materialSchema = z.object({
   price_unit: z.string().nullable(),
   /** Where the price came from, e.g. an official page, staff, or "coder estimate, unverified". */
   price_source: z.string().nullable().optional(),
+  /**
+   * A different price for some audiences, when the space publishes one (the
+   * Maker Space charges non-Viterbi students more). A null entry means the
+   * space publishes no price for that audience.
+   */
+  price_by_audience: z.partialRecord(z.enum(AUDIENCES), z.number().nonnegative().nullable()).optional(),
   /** null means we do not know whether the space stocks it. */
   stocked: z.boolean().nullable(),
 });
@@ -145,7 +155,32 @@ export const spaceDocSchema = z
     trainings: z.array(trainingSchema),
     equipment: z.array(equipmentSchema),
     materials: z.array(materialSchema),
-    services: z.array(z.object({ name: text, how_to_request: z.string().nullable() })),
+    services: z.array(
+      z.object({
+        name: text,
+        how_to_request: z.string().nullable(),
+        /** A form or page where the request is made. */
+        url: z.url().optional(),
+        /** Equipment that staff run for the student through this service. */
+        equipment_ids: z.array(id).optional(),
+        /** What the student does, in order, e.g. submit the form, wait for the estimate, collect and pay. */
+        steps: z.array(text).optional(),
+      }),
+    ),
+    /**
+     * Guidance for where the official page is silent. Never a fact about this
+     * space: each line is worded "likely" or "typically" and shown as estimated.
+     */
+    estimates: z
+      .object({
+        basis: text,
+        first_visit: z.array(text),
+        training_note: z.string().nullable(),
+        /** When set, the training note is about these kinds of equipment only. */
+        training_note_for: z.array(vocab("capability", CAPABILITIES)).optional(),
+        cost_note: z.string().nullable(),
+      })
+      .optional(),
     usage_fee_note: z.string().nullable(),
     prohibited: z.array(text),
     scrap_policy: z.object({
@@ -193,6 +228,13 @@ export const spaceDocSchema = z
     const trainingIds = unique("trainings", doc.trainings.map((t) => t.id));
     unique("equipment", doc.equipment.map((e) => e.id));
     unique("materials", doc.materials.map((m) => m.id));
+    const equipmentIds = new Set(doc.equipment.map((e) => e.id));
+    doc.services.forEach((sv, i) =>
+      sv.equipment_ids?.forEach((e) => {
+        if (!equipmentIds.has(e))
+          ctx.addIssue({ code: "custom", path: ["services", i, "equipment_ids"], message: `equipment "${e}" is not in this space` });
+      }),
+    );
 
     doc.trainings.forEach((t, i) =>
       t.prerequisite_ids.forEach((p) => {
@@ -213,6 +255,12 @@ export const spaceDocSchema = z
             message: `training "${t}" is not a training in this space`,
           });
       });
+      if (e.staff_operated === true && e.required_training_ids.length > 0)
+        ctx.addIssue({
+          code: "custom",
+          path: ["equipment", i, "required_training_ids"],
+          message: "staff-operated equipment cannot require student training",
+        });
       if (!doc.capabilities.includes(e.capability))
         ctx.addIssue({
           code: "custom",

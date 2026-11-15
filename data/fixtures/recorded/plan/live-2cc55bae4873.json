@@ -1,0 +1,199 @@
+{
+  "call": "plan",
+  "recorded": {
+    "model": "gemini-3.5-flash-lite",
+    "at": "2026-11-15T06:29:32.773Z"
+  },
+  "key": {
+    "text": "I want to make a phone stand for my desk out of wood. It should hold my phone at a slight angle, fit in my hand, and I only need one.",
+    "experience": "never",
+    "answers": {
+      "size": [
+        "hand"
+      ],
+      "quantity": [
+        "one"
+      ]
+    },
+    "image": null,
+    "retry": [
+      "space \"bfms\" also lists equipment for woodworking, the same as your route at \"roski-shops\", but it is not a route. Add it as a route. Leave it out only if its listed equipment cannot do this job, and then say so in ways_considered (and in single_route_reason if one route remains). Who may use a space is never a reason",
+      "space \"iya-hall\" also lists equipment for woodworking, the same as your route at \"roski-shops\", but it is not a route. Add it as a route. Leave it out only if its listed equipment cannot do this job, and then say so in ways_considered (and in single_route_reason if one route remains). Who may use a space is never a reason"
+    ]
+  },
+  "output": {
+    "summary": "A small wooden phone stand for a desk",
+    "needs": [
+      {
+        "capability": "woodworking",
+        "why": "To cut and shape wood into a phone stand"
+      }
+    ],
+    "ways_considered": [
+      {
+        "space_id": "ahmanson-lab",
+        "process": "3D printing",
+        "verdict": "left_out",
+        "reason": "Student asked for wood"
+      },
+      {
+        "space_id": "bfms",
+        "process": "Cut and shape wood using power tools",
+        "verdict": "offered",
+        "reason": "Has power tools for woodworking"
+      },
+      {
+        "space_id": "bme-innovation",
+        "process": "Woodworking",
+        "verdict": "left_out",
+        "reason": "No woodworking equipment listed"
+      },
+      {
+        "space_id": "digital-creative-lab",
+        "process": "3D printing",
+        "verdict": "left_out",
+        "reason": "Student asked for wood"
+      },
+      {
+        "space_id": "iya-hall",
+        "process": "Cut and shape wood using woodworking machinery",
+        "verdict": "offered",
+        "reason": "Has woodworking machinery including a table saw"
+      },
+      {
+        "space_id": "its-printing",
+        "process": "3D printing",
+        "verdict": "left_out",
+        "reason": "Student asked for wood"
+      },
+      {
+        "space_id": "roski-shops",
+        "process": "Cut and shape wood using the woodshop",
+        "verdict": "offered",
+        "reason": "Has a shared woodshop with saws and sanders"
+      },
+      {
+        "space_id": "sda-technical-theatre-lab",
+        "process": "Scene shop building",
+        "verdict": "left_out",
+        "reason": "No equipment listed"
+      }
+    ],
+    "routes": [
+      {
+        "space_id": "roski-shops",
+        "equipment_ids": [
+          "roski_woodshop"
+        ],
+        "process": "Cut and shape wood using the woodshop",
+        "fit_reason": "The woodshop has saws and sanders to shape a small wooden stand. It suits a beginner who wants to work with wood.",
+        "materials": [
+          {
+            "category": "solid_wood",
+            "material_id": null,
+            "quantity_low": 1,
+            "quantity_high": 1,
+            "unit": "sheet"
+          }
+        ],
+        "steps": [
+          {
+            "title": "Design the piece",
+            "detail": "Sketch the phone stand and check its sizes to fit your hand."
+          },
+          {
+            "title": "Ask at the tool crib",
+            "detail": "Ask at the tool crib, which checks out hand and power tools."
+          },
+          {
+            "title": "Assemble and finish",
+            "detail": "Sand the wood smooth so it is safe to touch."
+          }
+        ],
+        "warnings": [
+          {
+            "issue": "Wood parts can crack if cut too thin.",
+            "fix": "Keep the base thick enough to hold the weight of a phone."
+          }
+        ]
+      },
+      {
+        "space_id": "bfms",
+        "equipment_ids": [
+          "power_tools"
+        ],
+        "process": "Cut and shape wood using power tools",
+        "fit_reason": "The space provides power tools for cutting and sanding wood. It is a good fit for making a small desk stand.",
+        "materials": [
+          {
+            "category": "solid_wood",
+            "material_id": null,
+            "quantity_low": 1,
+            "quantity_high": 1,
+            "unit": "sheet"
+          }
+        ],
+        "steps": [
+          {
+            "title": "Design the piece",
+            "detail": "Plan the angles and dimensions for your phone stand."
+          },
+          {
+            "title": "Take training",
+            "detail": "Take the Level 1 orientation and safety training first, then the power tools training."
+          },
+          {
+            "title": "Assemble and finish",
+            "detail": "Cut and sand the wood until it is smooth."
+          }
+        ],
+        "warnings": [
+          {
+            "issue": "Power tools can splinter thin wood.",
+            "fix": "Use solid pieces for the main structure."
+          }
+        ]
+      },
+      {
+        "space_id": "iya-hall",
+        "equipment_ids": [
+          "iya_woodworking"
+        ],
+        "process": "Cut and shape wood using woodworking machinery",
+        "fit_reason": "The maker space includes woodworking machinery such as a table saw. This allows you to cut your stand from solid wood.",
+        "materials": [
+          {
+            "category": "solid_wood",
+            "material_id": null,
+            "quantity_low": 1,
+            "quantity_high": 1,
+            "unit": "sheet"
+          }
+        ],
+        "steps": [
+          {
+            "title": "Design the piece",
+            "detail": "Draw your phone stand design and measure your phone."
+          },
+          {
+            "title": "Ask staff",
+            "detail": "Contact the Academy to ask who may use the maker spaces and how."
+          },
+          {
+            "title": "Assemble and finish",
+            "detail": "Sand the cut wood pieces to remove sharp edges."
+          }
+        ],
+        "warnings": [
+          {
+            "issue": "Small pieces are hard to hold against saws.",
+            "fix": "Cut a larger block first, then shape it."
+          }
+        ]
+      }
+    ],
+    "single_route_reason": null,
+    "clarifying_question": null,
+    "not_supported_reason": null
+  }
+}

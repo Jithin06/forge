@@ -1,21 +1,34 @@
 import "server-only";
+import { authMode } from "./auth";
 import { db } from "./db";
+import { publicSpace } from "./public-space";
 import { parseSpaceDoc, type SpaceDoc } from "./schemas";
 
-/** Every stored space that passes validation. Invalid ones are logged and left out. */
+/**
+ * Every stored space that passes validation, in its public form: no staff
+ * names, and test confirmations handled (see public-space.ts). Invalid ones
+ * are logged and left out.
+ */
 export async function getSpaces(): Promise<SpaceDoc[]> {
   const { data, error } = await db().from("spaces").select("id, doc").order("id");
   if (error) throw new Error(`Could not load spaces: ${error.message}`);
   const docs: SpaceDoc[] = [];
   for (const row of data) {
     const r = parseSpaceDoc(row.doc);
-    if (r.ok) docs.push(r.doc);
+    if (r.ok) docs.push(publicSpace(r.doc, authMode()));
     else console.error(`Space ${row.id} failed validation:\n  ${r.errors.join("\n  ")}`);
   }
   return docs.sort((a, b) => a.name.localeCompare(b.name));
 }
 
+/** One space in its public form. */
 export async function getSpace(id: string): Promise<SpaceDoc | null> {
+  const raw = await getSpaceRaw(id);
+  return raw ? publicSpace(raw, authMode()) : null;
+}
+
+/** The stored document, with who confirmed what. Only for the staff route that writes it back. */
+export async function getSpaceRaw(id: string): Promise<SpaceDoc | null> {
   const { data, error } = await db().from("spaces").select("doc").eq("id", id).maybeSingle();
   if (error) throw new Error(`Could not load space ${id}: ${error.message}`);
   if (!data) return null;

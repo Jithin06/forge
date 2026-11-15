@@ -39,9 +39,10 @@ describe("eligibility", () => {
     for (const a of AUDIENCES) expect(eligibility(bme, a).note).toBe("BME-affiliated only");
   });
 
-  it("Maker Space: ask first for all four audiences until staff set access", () => {
+  it("Maker Space: open to Viterbi undergraduates, ask first for everyone else", () => {
     const bfms = seed("bfms");
-    for (const a of AUDIENCES) expect(eligibility(bfms, a).status).toBe("ask_first");
+    expect(AUDIENCES.map((a) => eligibility(bfms, a).status)).toEqual(["open", "ask_first", "ask_first", "ask_first"]);
+    expect(eligibility(bfms, "viterbi_grad").note).toMatch(/ask staff about graduate access/);
   });
 
   it("falls back to ask first, never open, when an audience is missing", () => {

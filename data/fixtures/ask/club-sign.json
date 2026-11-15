@@ -3,7 +3,7 @@
   "note": "Recorded from the live model by scripts/check-plan-quality.mts.",
   "recorded": {
     "model": "gemini-3.5-flash-lite",
-    "at": "2026-11-15T05:24:40.756Z"
+    "at": "2026-11-15T06:29:59.109Z"
   },
   "key": {
     "text": "An engraved acrylic sign with my club's name for our tabling booth, about 12 inches wide. We need one.",
@@ -11,7 +11,7 @@
     "image": null
   },
   "output": {
-    "summary": "An engraved acrylic sign with a club name for a tabling booth.",
+    "summary": "You want to make an engraved acrylic sign for your club's tabling booth.",
     "question_ids": [
       "demands"
     ],

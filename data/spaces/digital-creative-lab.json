@@ -1,15 +1,18 @@
 {
   "id": "digital-creative-lab",
   "name": "Digital Creative Lab",
-  "school": "Leavey Library",
-  "location": "Leavey Library, basement",
-  "official_url": "https://itservices.usc.edu/?p=24117",
-  "blurb": "Podcast studios that students and faculty are welcome to use. The official page gives no hours, cost or way to book.",
+  "school": "USC Information Technology Services",
+  "location": "Leavey Library, lower level",
+  "official_url": "https://itservices.usc.edu/digital-creative-lab/",
+  "blurb": "An ITS lab with podcast studios, a production studio, an e-sports lab, plotters, a 3D printer, classrooms and study spaces. The podcast studio is booked by email.",
   "capabilities": [
-    "audio_recording"
+    "audio_recording",
+    "video_production",
+    "fdm_3d_printing",
+    "large_format_printing"
   ],
   "hours": null,
-  "hours_note": null,
+  "hours_note": "Podcast studio, fall and spring: Monday to Friday 9 AM to 7 PM, Saturday and Sunday 9 AM to 5 PM. Summer hours differ; see the official page. Hours for the rest of the lab are not listed.",
   "access": [
     {
       "audience": "viterbi_undergrad",
@@ -33,15 +36,49 @@
     }
   ],
   "access_steps": [
-    "The official page does not say how to book a studio. Check it for updates before you go."
+    "Email spaces@usc.edu to reserve the podcast studio, or call the ITS Learning Environments team at (213) 821-6601.",
+    "The e-sports lab is by reservation. The page does not say how to use the production studio, plotters or 3D printer, so ask the same team."
   ],
   "trainings": [],
   "equipment": [
     {
       "id": "podcast_studios",
-      "name": "Podcast studios",
+      "name": "Podcast studio: 4 Shure headsets, a Rode mixer, a Huddly camera, an Epiphan recorder and a DTEN for Zoom",
       "capability": "audio_recording",
       "plain_name": "Podcast studio (a room for recording audio)",
+      "required_training_ids": [],
+      "staff_operated": null,
+      "work_area_note": "Seats 4",
+      "good_for": [],
+      "not_for": []
+    },
+    {
+      "id": "production_studio",
+      "name": "Production studio",
+      "capability": "video_production",
+      "plain_name": "Production studio (a room for recording video)",
+      "required_training_ids": [],
+      "staff_operated": null,
+      "work_area_note": null,
+      "good_for": [],
+      "not_for": []
+    },
+    {
+      "id": "dcl_plotters",
+      "name": "Plotters",
+      "capability": "large_format_printing",
+      "plain_name": "Plotter (prints posters and large sheets)",
+      "required_training_ids": [],
+      "staff_operated": null,
+      "work_area_note": null,
+      "good_for": [],
+      "not_for": []
+    },
+    {
+      "id": "dcl_3d_printer",
+      "name": "3D printer",
+      "capability": "fdm_3d_printing",
+      "plain_name": "3D printer",
       "required_training_ids": [],
       "staff_operated": null,
       "work_area_note": null,
@@ -50,7 +87,12 @@
     }
   ],
   "materials": [],
-  "services": [],
+  "services": [
+    {
+      "name": "Technology orientation: instruction on specific equipment, on request",
+      "how_to_request": "Submit a Request for Technology Orientation on the ITS Service Portal."
+    }
+  ],
   "usage_fee_note": null,
   "prohibited": [],
   "scrap_policy": {
@@ -60,7 +102,8 @@
   },
   "source": {
     "urls": [
-      "https://itservices.usc.edu/?p=24117"
+      "https://itservices.usc.edu/digital-creative-lab/",
+      "https://itservices.usc.edu/learning-environments-services/usc-computing-center-printing-services/"
     ],
     "checked_on": "2026-11-14"
   },
@@ -80,5 +123,17 @@
     "prices": {
       "state": "estimated"
     }
+  },
+  "estimates": {
+    "basis": "typical for campus workshops",
+    "first_visit": [
+      "You will likely need your USC ID."
+    ],
+    "training_note": "3D printing here is likely by request: staff typically run the printer for you, so you would need no training. Ask to be sure.",
+    "cost_note": "You likely pay for materials only. Where this space lists no price, cost ranges use the Baum Family Maker Space's prices as typical campus prices.",
+    "training_note_for": [
+      "fdm_3d_printing",
+      "resin_3d_printing"
+    ]
   }
 }

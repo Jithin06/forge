@@ -107,7 +107,7 @@ export function MyStuff() {
                 <Link href={`/plan/${p.id}`} className="link after:absolute after:inset-0 after:rounded-xl">
                   {p.summary ?? p.idea_text.slice(0, 80)}
                 </Link>
-                <p className="text-[15px] text-gray-text">Made {formatDate(p.created_at.slice(0, 10))}</p>
+                <p className="text-[15px]">Made {formatDate(p.created_at.slice(0, 10))}</p>
               </li>
             ))}
           </ul>

@@ -1,0 +1,108 @@
+{
+  "call": "plan",
+  "recorded": {
+    "model": "gemini-3.5-flash-lite",
+    "at": "2026-11-15T06:27:19.680Z"
+  },
+  "key": {
+    "text": "I want to record a podcast episode with two friends about campus food. We need microphones and a quiet room.",
+    "experience": "never",
+    "answers": {
+      "quantity": [
+        "one"
+      ],
+      "size": [
+        "backpack"
+      ]
+    },
+    "image": null
+  },
+  "output": {
+    "summary": "Record a podcast episode with two friends about campus food using a quiet room and microphones.",
+    "needs": [
+      {
+        "capability": "audio_recording",
+        "why": "You need microphones and a quiet room to record the podcast."
+      }
+    ],
+    "ways_considered": [
+      {
+        "space_id": "ahmanson-lab",
+        "process": "Borrow wireless and studio microphones with an audio interface",
+        "verdict": "offered",
+        "reason": "The lab has microphones and recording gear you can check out."
+      },
+      {
+        "space_id": "digital-creative-lab",
+        "process": "Reserve and use the podcast studio",
+        "verdict": "offered",
+        "reason": "The lab has a dedicated podcast studio with headsets and a mixer."
+      }
+    ],
+    "routes": [
+      {
+        "space_id": "digital-creative-lab",
+        "equipment_ids": [
+          "podcast_studios"
+        ],
+        "process": "Reserve and record in the podcast studio",
+        "fit_reason": "This is the easiest option because the room comes fully equipped with multiple microphones and recording gear.",
+        "materials": [],
+        "steps": [
+          {
+            "title": "Prepare the plan",
+            "detail": "Write down your questions and what you want to talk about with your friends."
+          },
+          {
+            "title": "Reserve the room",
+            "detail": "Contact the staff to book the podcast studio."
+          },
+          {
+            "title": "Record your episode",
+            "detail": "Go to the studio with your friends and record your conversation."
+          }
+        ],
+        "warnings": [
+          {
+            "issue": "The podcast studio seats four people.",
+            "fix": "Make sure your group does not exceed four people."
+          }
+        ]
+      },
+      {
+        "space_id": "ahmanson-lab",
+        "equipment_ids": [
+          "wireless_mics",
+          "studio_mics",
+          "audio_interface"
+        ],
+        "process": "Check out microphones and recording equipment",
+        "fit_reason": "This allows you to record your podcast in a quiet location of your choice using portable microphones.",
+        "materials": [],
+        "steps": [
+          {
+            "title": "Prepare your request",
+            "detail": "List the microphones you need for your group."
+          },
+          {
+            "title": "Contact staff",
+            "detail": "Email the staff to arrange equipment checkout."
+          },
+          {
+            "title": "Collect and use",
+            "detail": "Pick up the gear, record your episode, and return the equipment on time."
+          }
+        ],
+        "warnings": [
+          {
+            "issue": "Portable equipment must be returned after use.",
+            "fix": "Keep track of all cables and microphones so nothing gets lost."
+          }
+        ]
+      }
+    ],
+    "single_route_reason": null,
+    "clarifying_question": null,
+    "not_supported_reason": null
+  }
+}

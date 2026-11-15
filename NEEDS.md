@@ -4,16 +4,8 @@ Each item says what, why, and exactly where to put it. Newest blockers first.
 
 ## Live AI
 
-### 0. Let me finish Part 1's live run (about 6 calls)
-- **What:** allow, or run yourself: `npx next build`, then `RECORD_FIXTURES=1 npx next start -p 3123`, then in another terminal `ONLY=phone-stand,night-light CALL_CAP=60 BASE=http://localhost:3123 npm run check:quality`, then `npm run results`.
-- **Why:** the phone stand and night light have no live plan on the final prompt (Gemini answered 503 twice, then my next live run was refused by the permission system). Their sample recordings are from an earlier prompt, and the phone stand one states a wrong reason for having one route. 19 of Part 1's 30 calls are used; the cap stops the run at 30.
-
-### 0b. The Maker Space equipment is marked "Confirmed by staff" by the test account
-- **What:** decide whether that is intended. To undo it, re-seed that one space from its file with `npm run seed -- --force --dir FOLDER`, where FOLDER holds only a copy of `data/spaces/bfms.json`. That also resets any other staff edits to the Maker Space.
-- **Why:** it shows to every student as confirmed by forge-test-staff@usc.edu on Nov 14. I did not do it and did not change it.
-
 ### 1. Gemini API key in `.env.local`: done
-The key works. 49 live calls made so far, logged in `logs/ai-calls.jsonl`. Local cap: 150.
+The key works. 80 live calls made so far, logged in `logs/ai-calls.jsonl`. Local cap: 150.
 
 ### 2. Put the live site on Gemini
 - **What:** set the variables listed in `docs/production-settings.md` in Vercel and redeploy. In short: `AI_PROVIDER=gemini`, `GEMINI_API_KEY`, `GEMINI_MODEL_PRIMARY=gemini-3.5-flash-lite`, `GEMINI_MODEL_FALLBACK=gemini-3.1-flash-lite`, `AI_DAILY_BUDGET=450`, `AUTH_MODE=test`. Do **not** set `AI_CALL_BUDGET` there.
@@ -51,32 +43,44 @@ The key works. 49 live calls made so far, logged in `logs/ai-calls.jsonl`. Local
 - **Why:** the seed says `offers_scrap: false`, `never_offer: []`, `pickup_note: null`. Without your supervisor's yes, present the scrap exchange as a proposed pilot.
 - **Where:** `scrap_policy` in `data/spaces/bfms.json`, then `npm run seed -- --force`. (From M5 on, staff can also edit space facts in the Staff portal, but not the scrap policy.)
 
-### 7. Correct my estimated Makerspace prices
-All seven are my guesses, saved with `price_source: "coder estimate, unverified"`, and the price group is marked Estimated. Sheet sizes are guesses too. Correct them in `data/spaces/bfms.json` (then `npm run seed -- --force`) or in the Staff portal's Space info tab.
+### 7. Maker Space prices: five sheet prices are still my guesses
+3D printing prices now come from the official chart (page last updated Feb 21, 2024). These five are still marked `coder estimate, unverified`. Correct them in `data/spaces/bfms.json`, or in the Staff portal's Space info tab.
 
 | Material | My estimate | Per |
 | --- | --- | --- |
-| PLA filament | $0.05 | g |
-| Resin for the Form 3L | $0.20 | ml |
 | Plywood sheet (about 12 x 24 in) | $6.00 | sheet |
 | MDF sheet (about 12 x 24 in) | $4.00 | sheet |
 | Acrylic sheet (about 12 x 24 in) | $12.00 | sheet |
 | PETG sheet (about 12 x 24 in) | $10.00 | sheet |
 | Cardboard sheet | $1.00 | sheet |
 
-### 8. Makerspace access, trainings and first-visit details
-- **What:** access for each of the four audiences (all four are still "Ask first"), which training each machine really needs (I assumed Level 1 for the printers and the laser cutter), how to sign up for each level, and how long each takes.
-- **Where:** `access`, `equipment[].required_training_ids`, `trainings[].how_to_sign_up` and `duration_note` in `data/spaces/bfms.json`.
+These five also stand in as "typical campus prices" on routes at spaces that list no prices (BME, Iovine and Young, Roski), so they matter more now.
+
+### 7b. Two things the price chart leaves open
+- The chart gives non-Viterbi prices for the Prusa printers only. For every other printer, a non-Viterbi student sees "Ask staff for the price". Tell me if non-Viterbi students cannot use those printers at all.
+- The chart is in cubic inches and cubic centimeters. The model estimates the volume of the part, which is rough. Tell me a typical volume for a small print if you want a better starting point.
+
+### 8. Maker Space details still missing
+- How to sign up for each training level, and how long each takes (all say "Ask the staff how to sign up").
+- Level 3 (power tools): I left it as "after Level 1". You said Level 1 then Level 2; tell me if Level 3 also needs Level 2.
+- Confirm each group in the Staff portal with your real account once Google sign-in works. Until then everything shows as estimated.
+
+### 8b. The four new spaces: what the official pages did not say
+- **Iovine and Young Hall, Roski shops, Dramatic Arts scene shop:** who may use them is not stated for students outside those schools, so all four audiences are "Ask first". If you know the rule, tell me.
+- **Iovine and Young Hall:** the page calls it Iovine and Young Hall maker spaces, not "the Garage". Welding and the table saw come from photo descriptions on that page, not body text.
+- **Dramatic Arts scene shop:** the page lists no equipment, so the planner can only send someone there to ask.
+- **Cinematic Arts:** not added. Its pages describe cameras, sound gear and stages for its own student productions and mention no shop.
+- **Digital Creative Lab:** the page lists "Plotters" and "3D Printer" with no prices or booking steps.
 
 ## Proof
 
-### 9. Review the eval cases: ready for you
-- **What:** `data/eval-cases.json` has 15 cases across the four spaces. For each, `accept_space_ids` is the set of spaces I think a knowledgeable person would accept as the top route for that student; an empty list means the right answer is no route. Correct them from what you know, then change `"status"` at the top of the file to say you reviewed them.
-- **Why:** the spec says you write these. I will not run the eval until you say so. It costs 15 calls, up to 30 with retries.
-- **Look hardest at:** the three audio cases and the workshop case (they rest on one sentence each from the Leavey pages), and `podcast-and-sign`, which accepts either space.
+### 9. Review the eval cases again: they predate the new spaces
+- **What:** `data/eval-cases.json` has 15 cases written when there were four spaces. There are now eight, the Maker Space is open to Viterbi undergraduates, and its 3D prints need no training. I did not revise the accepted sets. Correct them, then change `"status"` at the top of the file.
+- **Why:** the eval scores the top route against these sets. Run as they are, several cases would be marked wrong for good answers (for example a poster or a podcast now has two valid spaces).
 
 ### 10. Live checks still to run, when you say so
-- `npm run eval` (15 to 30 calls), then `npm run results` to rewrite `RESULTS.md`.
+- `npm run check:quality` is done for the six home-page ideas (see RESULTS.md).
+- `npm run eval` (15 to 30 calls, more when the model is asked to look again), then `npm run results` to rewrite `RESULTS.md`.
 - `npm run check:live` (about 8 calls): the section 6.5 rows that depend on a live model.
 - M2b's scrap-draft check, once there is a real photo.
 - Each needs a local server on live Gemini: `RECORD_FIXTURES=1 PORT=3123 npm start`.

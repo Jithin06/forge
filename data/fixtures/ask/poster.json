@@ -1,0 +1,32 @@
+{
+  "call": "ask",
+  "note": "Recorded from the live model by scripts/check-plan-quality.mts.",
+  "recorded": {
+    "model": "gemini-3.5-flash-lite",
+    "at": "2026-11-15T06:32:23.939Z"
+  },
+  "key": {
+    "text": "A printed poster of my research for a poster session, 36 by 48 inches, in color. I have the file ready and need one copy.",
+    "experience": "never",
+    "image": null
+  },
+  "output": {
+    "summary": "You want to print a 36 by 48 inch research poster in color for a poster session.",
+    "question_ids": [],
+    "prefilled": [
+      {
+        "question_id": "size",
+        "option_ids": [
+          "bigger"
+        ]
+      },
+      {
+        "question_id": "quantity",
+        "option_ids": [
+          "one"
+        ]
+      }
+    ],
+    "blocked_reason": null
+  }
+}

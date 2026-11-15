@@ -1,0 +1,132 @@
+{
+  "call": "plan",
+  "note": "Recorded from the live model by scripts/check-plan-quality.mts.",
+  "recorded": {
+    "at": "2026-11-15T06:30:26.252Z",
+    "attempts": 2
+  },
+  "key": {
+    "text": "I want to record a podcast episode with two friends about campus food. We need microphones and a quiet room.",
+    "experience": "never",
+    "answers": {
+      "quantity": [
+        "one"
+      ]
+    },
+    "image": null
+  },
+  "output": {
+    "needs": [
+      {
+        "why": "Need microphones and a quiet room to record the podcast episode.",
+        "capability": "audio_recording"
+      }
+    ],
+    "routes": [
+      {
+        "steps": [
+          {
+            "title": "Prepare the file",
+            "detail": "Plan your podcast topics about campus food and check your recording plan."
+          },
+          {
+            "title": "Reserve the studio",
+            "detail": "Email spaces@usc.edu or call the ITS Learning Environments team at (213) 821-6601 to reserve the podcast studio."
+          },
+          {
+            "title": "Record your episode",
+            "detail": "Go to the digital creative lab in Leavey Library at your scheduled time and use the podcast studio equipment."
+          }
+        ],
+        "process": "Record in a podcast studio with headsets and a mixer",
+        "space_id": "digital-creative-lab",
+        "warnings": [],
+        "materials": [],
+        "fit_reason": "This route provides a dedicated podcast studio with seats for four people, matching your need for a quiet room and microphones. It is simple to use since no training is required.",
+        "equipment_ids": [
+          "podcast_studios"
+        ]
+      },
+      {
+        "steps": [
+          {
+            "title": "Prepare the file",
+            "detail": "Plan what you will say about campus food and check your recording equipment needs."
+          },
+          {
+            "title": "Contact the lab",
+            "detail": "Email the lab at lvy@usc.edu to ask what you can use and when."
+          },
+          {
+            "title": "Collect and record",
+            "detail": "Visit Ahmanson Lab during lab hours to get the microphones and record your episode."
+          }
+        ],
+        "process": "Record using studio microphones and an audio interface",
+        "space_id": "ahmanson-lab",
+        "warnings": [],
+        "materials": [],
+        "fit_reason": "This route gives you professional microphones and audio equipment to record your conversation. It is a straightforward option for capturing clear sound.",
+        "equipment_ids": [
+          "studio_mics",
+          "audio_interface",
+          "wireless_mics"
+        ]
+      }
+    ],
+    "summary": "Record a podcast episode with two friends about campus food using microphones and a quiet room.",
+    "ways_considered": [
+      {
+        "reason": "Listed equipment can record audio.",
+        "process": "Record using studio microphones and an audio interface",
+        "verdict": "offered",
+        "space_id": "ahmanson-lab"
+      },
+      {
+        "reason": "Listed equipment cannot do the job.",
+        "process": "Record using woodworking or hand tools",
+        "verdict": "left_out",
+        "space_id": "bfms"
+      },
+      {
+        "reason": "Listed equipment cannot do the job.",
+        "process": "Record using electronics or 3D printers",
+        "verdict": "left_out",
+        "space_id": "bme-innovation"
+      },
+      {
+        "reason": "Listed equipment can do the job.",
+        "process": "Record in a podcast studio with headsets and a mixer",
+        "verdict": "offered",
+        "space_id": "digital-creative-lab"
+      },
+      {
+        "reason": "Listed equipment cannot do the job.",
+        "process": "Record using woodworking or CNC equipment",
+        "verdict": "left_out",
+        "space_id": "iya-hall"
+      },
+      {
+        "reason": "Listed equipment cannot do the job.",
+        "process": "Record using plotters or 3D printers",
+        "verdict": "left_out",
+        "space_id": "its-printing"
+      },
+      {
+        "reason": "Listed equipment cannot do the job.",
+        "process": "Record using woodshop or metal shop tools",
+        "verdict": "left_out",
+        "space_id": "roski-shops"
+      },
+      {
+        "reason": "Listed equipment cannot do the job.",
+        "process": "Record using scene shop equipment",
+        "verdict": "left_out",
+        "space_id": "sda-technical-theatre-lab"
+      }
+    ],
+    "clarifying_question": null,
+    "single_route_reason": null,
+    "not_supported_reason": null
+  }
+}

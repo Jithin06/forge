@@ -1,0 +1,90 @@
+{
+  "id": "sda-technical-theatre-lab",
+  "name": "Technical Theatre Lab (Scene Shop)",
+  "school": "USC School of Dramatic Arts",
+  "location": "1020 Bloom Walk",
+  "official_url": "https://dramaticarts.usc.edu/about/theatres/technical-theatre-lab/",
+  "blurb": "A teaching space and studio area that houses the Scene Shop, where sets, scenery and props are built. The School's Costume Shop is in the Physical Education Building, 3560 Watt Way. The official pages list no equipment and do not say who may use the shops.",
+  "capabilities": [],
+  "hours": null,
+  "hours_note": "Hours are not listed on the official page.",
+  "access": [
+    {
+      "audience": "viterbi_undergrad",
+      "status": "ask_first",
+      "note": "The page does not say who may use the shop. Ask the School of Dramatic Arts."
+    },
+    {
+      "audience": "viterbi_grad",
+      "status": "ask_first",
+      "note": "The page does not say who may use the shop. Ask the School of Dramatic Arts."
+    },
+    {
+      "audience": "usc_undergrad_other",
+      "status": "ask_first",
+      "note": "The page does not say who may use the shop. Ask the School of Dramatic Arts."
+    },
+    {
+      "audience": "usc_grad_other",
+      "status": "ask_first",
+      "note": "The page does not say who may use the shop. Ask the School of Dramatic Arts."
+    }
+  ],
+  "access_steps": [
+    "Call the School of Dramatic Arts at 213-740-8686 to ask who may use the Scene Shop and how."
+  ],
+  "trainings": [],
+  "equipment": [],
+  "materials": [],
+  "services": [
+    {
+      "name": "Scene Shop: where sets, scenery and props are built",
+      "how_to_request": "Call the School of Dramatic Arts at 213-740-8686."
+    },
+    {
+      "name": "Costume Shop (Physical Education Building, 3560 Watt Way)",
+      "how_to_request": "Call the School of Dramatic Arts at 213-740-8686."
+    }
+  ],
+  "usage_fee_note": null,
+  "prohibited": [],
+  "scrap_policy": {
+    "offers_scrap": false,
+    "never_offer": [],
+    "pickup_note": null
+  },
+  "estimates": {
+    "basis": "typical for campus workshops",
+    "first_visit": [
+      "You will likely need your USC ID.",
+      "There is likely a short safety orientation before you first use the tools.",
+      "Ask staff which training your tool needs; it typically differs by tool."
+    ],
+    "training_note": "Cutting, power and machine tools likely need an orientation plus training on that tool. Ask staff before you plan around one.",
+    "cost_note": "You likely pay for materials only. Where this space lists no price, cost ranges use the Baum Family Maker Space's prices as typical campus prices."
+  },
+  "source": {
+    "urls": [
+      "https://dramaticarts.usc.edu/about/theatres/technical-theatre-lab/",
+      "https://dramaticarts.usc.edu/about/theatres/physical-education-building/"
+    ],
+    "checked_on": "2026-11-14"
+  },
+  "status": {
+    "hours": {
+      "state": "estimated"
+    },
+    "access": {
+      "state": "estimated"
+    },
+    "trainings": {
+      "state": "estimated"
+    },
+    "equipment": {
+      "state": "estimated"
+    },
+    "prices": {
+      "state": "estimated"
+    }
+  }
+}

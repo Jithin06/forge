@@ -4,7 +4,9 @@ import { NO_STORE, apiError, readJson, zodMessage } from "@/lib/api";
 import { requireStaff } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { STATUS_GROUPS, accessEntrySchema, parseSpaceDoc, spaceDocSchema } from "@/lib/schemas";
-import { getSpace } from "@/lib/spaces";
+import { authMode } from "@/lib/auth";
+import { publicSpace } from "@/lib/public-space";
+import { getSpaceRaw } from "@/lib/spaces";
 
 const body = z
   .object({
@@ -31,7 +33,7 @@ export async function PATCH(request: Request, ctx: RouteContext<"/api/staff/spac
   if (staff instanceof Response) return staff;
   const parsed = body.safeParse(await readJson(request));
   if (!parsed.success) return apiError(400, "BAD_REQUEST", zodMessage(parsed.error.issues));
-  const space = await getSpace(id);
+  const space = await getSpaceRaw(id);
   if (!space) return apiError(404, "NOT_FOUND", "No space with that id.");
 
   const next = structuredClone(space);
@@ -57,5 +59,5 @@ export async function PATCH(request: Request, ctx: RouteContext<"/api/staff/spac
   const { error } = await db().from("spaces").update({ doc: valid.doc, updated_at: new Date().toISOString(), updated_by: staff.email }).eq("id", id);
   if (error) throw new Error(error.message);
   invalidateSpaceContext();
-  return Response.json({ space: valid.doc }, { headers: NO_STORE });
+  return Response.json({ space: publicSpace(valid.doc, authMode()) }, { headers: NO_STORE });
 }

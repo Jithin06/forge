@@ -92,6 +92,20 @@ export function PlanView({ data, whoFor }: { data: PlanData; whoFor?: React.Reac
                 <li key={item}>{item}</li>
               ))}
             </ol>
+            {plan.routes[0].hours_listed === false && plan.routes[0].space_url && (
+              <p className="text-[15px]">
+                Opening hours are not known.{" "}
+                <a href={plan.routes[0].space_url} target="_blank" rel="noopener noreferrer" className="link">
+                  Check the space&apos;s own page<span className="sr-only"> (opens in a new tab)</span>
+                </a>{" "}
+                before you go.
+              </p>
+            )}
+            {plan.routes[0].estimate_notes && (
+              <p className="text-[14px] text-gray-text">
+                Lines that say &ldquo;likely&rdquo; or &ldquo;typically&rdquo; are not from this space&apos;s page: {plan.routes[0].estimate_notes.basis}.
+              </p>
+            )}
           </section>
         )}
 
@@ -134,7 +148,10 @@ function RouteCard({ route: r, top, n, of, planId, spaceNames }: { route: FinalR
             </Link>
             <EligibilityBadge status={r.eligibility.status} />
           </div>
-          <p className="text-[15px] text-gray-text">{of > 1 ? `Way ${n} of ${of}` : "How to build it"}</p>
+          <p className="text-[15px] text-gray-text">
+            {of > 1 ? `Way ${n} of ${of}` : "How to build it"}
+            {r.kind === "staff_fabrication" ? ". Staff make it for you" : ""}
+          </p>
           <h2 id={hid} className="text-[22px] font-bold leading-[1.12] tracking-[-0.01em]">{r.process}</h2>
           {r.eligibility.status !== "open" && r.eligibility.note && <p className="font-bold">{r.eligibility.note}</p>}
           <p>{r.fit_reason}</p>
@@ -157,8 +174,31 @@ function RouteCard({ route: r, top, n, of, planId, spaceNames }: { route: FinalR
         )}
 
         <Block title="Training you need first">
-          {r.trainings.length === 0 ? (
-            <p>No training is listed for these tools. Ask the staff to be sure.</p>
+          {r.kind === "staff_fabrication" ? (
+            <div className="space-y-1">
+              <p>
+                <b>None.</b> Staff make this for you, so you do not use the machine yourself.
+              </p>
+              {r.service && (
+                <p className="text-[15px]">
+                  <b>{r.service.name}.</b> {r.service.how_to_request}
+                </p>
+              )}
+              {r.service?.url && (
+                <a href={r.service.url} target="_blank" rel="noopener noreferrer" className="link inline-flex min-h-11 items-center">
+                  Open the request form<span className="sr-only"> (opens in a new tab)</span>
+                </a>
+              )}
+            </div>
+          ) : r.trainings.length === 0 ? (
+            <div className="space-y-1">
+              <p>No training is listed for these tools. Ask the staff to be sure.</p>
+              {r.estimate_notes?.training && (
+                <p className="text-[15px] text-gray-text">
+                  {r.estimate_notes.training} (Not from this space&apos;s page: {r.estimate_notes.basis}.)
+                </p>
+              )}
+            </div>
           ) : (
             <ul className="grid gap-2">
               {r.trainings.map((t) => (
@@ -189,7 +229,7 @@ function RouteCard({ route: r, top, n, of, planId, spaceNames }: { route: FinalR
                           {free.length > 0
                             ? "Free with scrap"
                             : l.low_usd !== null && l.high_usd !== null
-                              ? moneyRange({ low: l.low_usd, high: l.high_usd })
+                              ? `${moneyRange({ low: l.low_usd, high: l.high_usd })}${l.typical ? ", typical campus price" : ""}`
                               : "Ask staff for the price"}
                         </span>
                       </p>
@@ -236,7 +276,7 @@ function RouteCard({ route: r, top, n, of, planId, spaceNames }: { route: FinalR
                   <span className="block text-[15px]">Materials, about</span>
                   <span className="figure block">{bare(r.total)}</span>
                 </p>
-                {r.prices_estimated && <p className="text-[15px] text-gray-text">Estimated prices</p>}
+                {r.prices_estimated && !r.typical_from && <p className="text-[15px] text-gray-text">Estimated prices</p>}
               </>
             )
           ) : (
@@ -245,6 +285,12 @@ function RouteCard({ route: r, top, n, of, planId, spaceNames }: { route: FinalR
               <p className="text-[15px] text-gray-text">No prices are listed for these yet. Ask the staff what they cost.</p>
             </>
           )}
+          {r.typical_from && (
+            <p className="text-[15px] text-gray-text">
+              This space lists no prices. These are typical campus prices, taken from the {r.typical_from}; what you pay here may differ.
+            </p>
+          )}
+          {r.estimate_notes?.cost && !r.typical_from && <p className="text-[15px] text-gray-text">{r.estimate_notes.cost}</p>}
           {r.total && r.cost_lines.some((l) => l.low_usd === null) && (
             <p className="text-[15px]">Some materials have no listed price and are not in this total.</p>
           )}

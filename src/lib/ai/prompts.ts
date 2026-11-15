@@ -1,5 +1,6 @@
 import "server-only";
 import { EXPERIENCE_LABELS } from "../labels";
+import { REFERENCE_SPACE_ID } from "../compute/plan";
 import type { Experience, SpaceDoc } from "../schemas";
 import { getSpaces } from "../spaces";
 import { QUESTIONS, QUESTION_IDS } from "./questions";
@@ -16,6 +17,7 @@ function spaceForModel(s: SpaceDoc) {
     name: s.name,
     location: s.location,
     hours_note: s.hours_note ?? null,
+    how_to_start: s.access_steps,
     capabilities: s.capabilities,
     equipment: s.equipment.map((e) => ({
       id: e.id,
@@ -29,9 +31,17 @@ function spaceForModel(s: SpaceDoc) {
       needs_training: e.required_training_ids.length > 0,
     })),
     materials: s.materials.map((m) => ({ id: m.id, name: m.name, category: m.category, price_unit: m.price_unit })),
-    services: s.services,
+    services: s.services.map((sv) => ({ name: sv.name, how_to_request: sv.how_to_request, staff_run_equipment_ids: sv.equipment_ids ?? [] })),
     prohibited: s.prohibited,
   };
+}
+
+/** The unit each kind of material is sold in at the reference space, so quantities can be priced as typical campus prices. */
+function typicalUnits(spaces: SpaceDoc[]): Record<string, string> {
+  const ref = spaces.find((s) => s.id === REFERENCE_SPACE_ID);
+  const out: Record<string, string> = {};
+  for (const m of ref?.materials ?? []) if (m.price_unit && !(m.category in out)) out[m.category] = m.price_unit;
+  return out;
 }
 
 // Rebuilt at most once a minute so staff edits show up quickly (SPEC 6.1).
@@ -39,7 +49,7 @@ let cache: { at: number; spaces: SpaceDoc[]; json: string } | null = null;
 export async function spaceContext(): Promise<{ spaces: SpaceDoc[]; json: string }> {
   if (cache && Date.now() - cache.at < 60_000) return cache;
   const spaces = await getSpaces();
-  cache = { at: Date.now(), spaces, json: JSON.stringify(spaces.map(spaceForModel), null, 1) };
+  cache = { at: Date.now(), spaces, json: JSON.stringify({ spaces: spaces.map(spaceForModel), units_when_a_space_lists_no_material: typicalUnits(spaces) }, null, 1) };
   return cache;
 }
 
@@ -80,7 +90,7 @@ export function planSystem(spacesJson: string): string {
   return `You are a patient workshop mentor at USC advising a student who may never have built anything. Plan how they could make their idea using only the spaces, equipment and materials below.
 
 Rules:
-- Use only space, equipment and material ids that appear in the space documents. Each route's equipment and materials must belong to that route's space. If no listed material fits, set material_id to null and give the category.
+- Use only space, equipment and material ids that appear in the space documents. Each route's equipment and materials must belong to that route's space. If the space lists no material that fits, set material_id to null, give the category, and use the unit that units_when_a_space_lists_no_material gives for that category.
 - First fill ways_considered. Go through every space in turn, and every kind of equipment in it, and list each real way this idea could be built there. One space can give more than one way. Two ways are different when the process is different (for example cutting flat pieces instead of 3D printing) or when the space is different and has the equipment for it. Mark each way "offered" or "left_out" and say why in a few words.
 - Then give up to 3 routes: the offered ways, with the best fit for this student first. Most ideas can be built more than one way, so one route should be rare.
 - No two routes may use the same space and the same equipment.
@@ -94,9 +104,12 @@ Rules:
 - Give design advice and choose the process. Never tell the student how to operate a machine: no loading material, focusing, settings, starting or stopping. They learn that in training. Steps are what a beginner does around the machine: design the piece, check sizes, take the training, make a small test, ask staff to check the file, assemble and finish.
 - Warnings are about the design or the material (a part too thin, the wrong material for the process), not about running the machine.
 - About any machine, steps and warnings may state only what its entry in the space data says: its name, work_area_note, good_for, not_for and staff_operated. Do not mention any other feature, part, setting, speed, accuracy or behavior of a machine, and do not say what software or file type it needs. If the student needs to know more, the step says to ask the space's staff.
-- Estimate material quantities conservatively, as a range. Use the material's price_unit as the unit when it has one.
+- Estimate material quantities conservatively, as a range. Use the material's price_unit as the unit when it has one, copied exactly. The quantity is how many of that unit the piece needs: a poster 48 inches on its longest side, priced per inch of the longest side, is 48.
 - Never state a price, cost or dollar amount. Costs are calculated separately from stored prices.
 - If the space data lacks something you need, say so and point the student to the space's staff. Never guess specifications.
+- Equipment with staff_operated true is run by staff, not by the student. A route that uses only such equipment is a request to staff: it needs no training, and it has exactly three steps, titled "Prepare the file", "Submit the work order" and "Collect and pay". The first says what to design and check; the other two follow the space's service for that equipment. Never tell the student to take a training or to use the machine on such a route. Use those three titles on no other kind of route.
+- How to book, reserve, request or pay: say only what the space's how_to_start, services and hours_note say. If they do not say, the step tells the student to ask the space's staff. Never invent an email, a form or a booking step. For someone who has never built anything this is usually the easiest way, so offer it whenever the idea can be made that way.
+- staff_operated null means it is not known who runs the machine. Do not say staff will run it and do not say the student will. Say to ask the space's staff how it works there.
 - A space that lists no equipment can be a route only for what its listed services cover; use an empty equipment list and tell the student to ask its staff. Do not assume it has any particular tool.
 - If a photo is provided, describe only what bears on building the object. Do not identify or describe people.
 - Use clarifying_question only if nothing useful can be said without it. Use not_supported_reason when no space fits.

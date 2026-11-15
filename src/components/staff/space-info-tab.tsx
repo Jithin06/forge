@@ -56,7 +56,7 @@ export function SpaceInfoTab({ spaceId }: { spaceId: string }) {
   const [note, setNote] = useState<{ group: string; ok: boolean; text: string } | null>(null);
   const [busy, setBusy] = useState(false);
   const [confirming, setConfirming] = useState<{ id: StatusGroup; title: string } | null>(null);
-  const email = useSession()?.user?.email ?? null;
+  const isTest = /^forge-test(-[a-z]+)?@/i.test(useSession()?.user?.email ?? "");
 
   const load = useCallback(async () => {
     try {
@@ -115,7 +115,7 @@ export function SpaceInfoTab({ spaceId }: { spaceId: string }) {
 
   return (
     <div className="space-y-6">
-      <p>Fix anything that is wrong, then confirm each group. Students see “Estimated” until you confirm. Leave a price blank if you do not know it.</p>
+      <p>Fix anything that is wrong, then confirm each group. Students see a small “Estimated” note until you confirm. Leave a price blank if you do not know it.</p>
 
       <Group {...group("hours", "Hours", () => patch("hours", { hours: space.hours }, "Hours saved."))}>
         <ul className="space-y-3">
@@ -224,15 +224,21 @@ export function SpaceInfoTab({ spaceId }: { spaceId: string }) {
         tone="gold"
         onConfirm={() =>
           confirming
-            ? patch(confirming.id, { confirm: confirming.id }, `Confirmed. Students now see "Confirmed by staff" next to ${confirming.title.toLowerCase()}.`)
+            ? patch(confirming.id, { confirm: confirming.id }, `Confirmed. Students now see "${isTest ? "Test confirmation" : "Confirmed by staff"}" next to ${confirming.title.toLowerCase()}.`)
             : undefined
         }
         onClose={() => setConfirming(null)}
       >
         <p>
-          This will show as <strong className="font-bold">“Confirmed by staff”</strong> to every student, in place of “Estimated”, under your name
-          {email ? ` (${email})` : ""} and today&apos;s date ({new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}).
+          This will show to every student as <strong className="font-bold">&ldquo;Confirmed by staff&rdquo;</strong> with today&apos;s date (
+          {new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}).
         </p>
+        <p>Your name is recorded but not shown.</p>
+        {isTest && (
+          <p>
+            You are signed in with a test account, so students will see &ldquo;Test confirmation&rdquo; instead, and it will not count once real sign-in is on.
+          </p>
+        )}
         <p>Confirm only what you have checked yourself. Students will rely on it.</p>
         <p>Changes you have typed but not saved are not included. Save them first.</p>
       </ConfirmDialog>
