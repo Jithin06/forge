@@ -1,0 +1,134 @@
+{
+  "call": "plan",
+  "key": {
+    "text": "A small night light for my dorm desk with a warm LED inside and a 3D printed cover. Just one, about the size of my palm.",
+    "experience": "never",
+    "answers": {
+      "size": [
+        "hand"
+      ],
+      "quantity": [
+        "one"
+      ],
+      "demands": [
+        "electronics"
+      ]
+    },
+    "image": null
+  },
+  "output": {
+    "summary": "A palm-sized night light with a warm LED inside a 3D printed cover.",
+    "needs": [
+      {
+        "capability": "electronics",
+        "why": "Wire the LED to a small battery or USB power"
+      },
+      {
+        "capability": "fdm_3d_printing",
+        "why": "Print the cover"
+      }
+    ],
+    "routes": [
+      {
+        "space_id": "bme-innovation",
+        "equipment_ids": [
+          "bme_electronics",
+          "bme_3d_printers"
+        ],
+        "process": "Solder a small LED circuit and print a cover that fits over it.",
+        "fit_reason": "This space has an electronics workshop and 3D printers in one place. It suits a student in Biomedical Engineering.",
+        "materials": [
+          {
+            "category": "electronic_components",
+            "material_id": null,
+            "quantity_low": 1,
+            "quantity_high": 1,
+            "unit": "LED kit"
+          },
+          {
+            "category": "pla_filament",
+            "material_id": null,
+            "quantity_low": 30,
+            "quantity_high": 60,
+            "unit": "g"
+          }
+        ],
+        "steps": [
+          {
+            "title": "Choose a simple LED kit",
+            "detail": "Pick a warm white LED with a battery holder or USB plug. Ask staff which parts they have."
+          },
+          {
+            "title": "Take the trainings",
+            "detail": "Complete the general shop safety training and the orientation."
+          },
+          {
+            "title": "Build and test the circuit",
+            "detail": "Solder (join wires with melted metal) the LED to its power and check it lights."
+          },
+          {
+            "title": "Print the cover",
+            "detail": "Print a light-colored cover with thin walls so light passes through."
+          }
+        ],
+        "warnings": [
+          {
+            "issue": "LED gets warm inside a closed cover",
+            "fix": "Leave a small vent hole and use a low-power LED."
+          }
+        ]
+      },
+      {
+        "space_id": "bfms",
+        "equipment_ids": [
+          "electronics_bench",
+          "prusa_mk4"
+        ],
+        "process": "Solder a small LED circuit and print a cover that fits over it.",
+        "fit_reason": "The Maker Space has soldering benches and several 3D printers. You will need the Level 4 electronics training for the soldering.",
+        "materials": [
+          {
+            "category": "electronic_components",
+            "material_id": null,
+            "quantity_low": 1,
+            "quantity_high": 1,
+            "unit": "LED kit"
+          },
+          {
+            "category": "pla_filament",
+            "material_id": "pla_filament",
+            "quantity_low": 30,
+            "quantity_high": 60,
+            "unit": "g"
+          }
+        ],
+        "steps": [
+          {
+            "title": "Choose a simple LED kit",
+            "detail": "Pick a warm white LED with a battery holder or USB plug. Ask staff which parts they have."
+          },
+          {
+            "title": "Take the trainings",
+            "detail": "Complete Level 1, then Level 4 electronics."
+          },
+          {
+            "title": "Build and test the circuit",
+            "detail": "Solder (join wires with melted metal) the LED to its power and check it lights."
+          },
+          {
+            "title": "Print the cover",
+            "detail": "Print a light-colored cover with thin walls so light passes through."
+          }
+        ],
+        "warnings": [
+          {
+            "issue": "LED gets warm inside a closed cover",
+            "fix": "Leave a small vent hole and use a low-power LED."
+          }
+        ]
+      }
+    ],
+    "clarifying_question": null,
+    "not_supported_reason": null
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "call": "plan",
+  "key": {
+    "text": "something cool for my room",
+    "experience": "never",
+    "answers": {
+      "size": [
+        "not_sure"
+      ],
+      "demands": [
+        "not_sure"
+      ],
+      "quantity": [
+        "not_sure"
+      ]
+    },
+    "image": null
+  },
+  "output": {
+    "summary": "Something cool for your room.",
+    "needs": [],
+    "routes": [],
+    "clarifying_question": "What would you like it to do or look like? For example, a shelf, a lamp, a sign or a decoration.",
+    "not_supported_reason": null
+  }
+}

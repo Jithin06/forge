@@ -1,0 +1,28 @@
+{
+  "call": "ask",
+  "note": "Detailed idea.",
+  "key": {
+    "text": "An engraved acrylic sign with my club's name for our tabling booth, about 12 inches wide. We need one.",
+    "experience": "never",
+    "image": null
+  },
+  "output": {
+    "summary": "An engraved acrylic sign with your club's name, about 12 inches wide.",
+    "question_ids": [],
+    "prefilled": [
+      {
+        "question_id": "quantity",
+        "option_ids": [
+          "one"
+        ]
+      },
+      {
+        "question_id": "demands",
+        "option_ids": [
+          "looks"
+        ]
+      }
+    ],
+    "blocked_reason": null
+  }
+}

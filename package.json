@@ -12,7 +12,8 @@
     "check:secrets": "bash scripts/check-secrets.sh",
     "seed": "tsx --env-file-if-exists=.env.local scripts/seed.mts",
     "test": "vitest run",
-    "check:seed": "tsx --env-file=.env.local scripts/check-seed.mts"
+    "check:seed": "tsx --env-file=.env.local scripts/check-seed.mts",
+    "check:m2": "tsx --env-file=.env.local scripts/check-m2.mts"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",

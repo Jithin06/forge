@@ -1,0 +1,19 @@
+{
+  "call": "ask",
+  "note": "Vague idea: three questions.",
+  "key": {
+    "text": "something cool for my room",
+    "experience": "never",
+    "image": null
+  },
+  "output": {
+    "summary": "Something to make for your room. A few quick answers will help narrow it down.",
+    "question_ids": [
+      "size",
+      "demands",
+      "quantity"
+    ],
+    "prefilled": [],
+    "blocked_reason": null
+  }
+}

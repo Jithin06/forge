@@ -1,0 +1,70 @@
+{
+  "call": "plan",
+  "key": {
+    "text": "An engraved acrylic sign with my club's name for our tabling booth, about 12 inches wide. We need one.",
+    "experience": "never",
+    "answers": {
+      "quantity": [
+        "one"
+      ],
+      "demands": [
+        "looks"
+      ]
+    },
+    "image": null
+  },
+  "output": {
+    "summary": "An engraved acrylic sign with your club's name, about 12 inches wide.",
+    "needs": [
+      {
+        "capability": "laser_cutting",
+        "why": "Cut the acrylic and engrave the name"
+      }
+    ],
+    "routes": [
+      {
+        "space_id": "bfms",
+        "equipment_ids": [
+          "laser_vls675"
+        ],
+        "process": "Cut the sign shape from acrylic and engrave the letters with the laser cutter.",
+        "fit_reason": "The laser cutter (cuts flat sheets very precisely) can cut and engrave in one job. A 12 inch sign fits on its bed.",
+        "materials": [
+          {
+            "category": "acrylic",
+            "material_id": "acrylic_sheet",
+            "quantity_low": 1,
+            "quantity_high": 1,
+            "unit": "sheet"
+          }
+        ],
+        "steps": [
+          {
+            "title": "Design the sign",
+            "detail": "Type the club name in a bold font and draw the outline at 12 inches wide."
+          },
+          {
+            "title": "Take Level 1 training",
+            "detail": "Do the Level 1 orientation and safety training before using the laser cutter."
+          },
+          {
+            "title": "Test on scrap",
+            "detail": "Engrave one letter on a small scrap piece to check depth and look."
+          },
+          {
+            "title": "Cut the sign",
+            "detail": "Run the engrave and cut job, then peel the protective film."
+          }
+        ],
+        "warnings": [
+          {
+            "issue": "Thin letters can melt together",
+            "fix": "Use a bold font and letters at least half an inch tall."
+          }
+        ]
+      }
+    ],
+    "clarifying_question": null,
+    "not_supported_reason": null
+  }
+}

@@ -114,3 +114,16 @@
 @utility tabular {
   font-variant-numeric: tabular-nums;
 }
+
+/* Signature detail (usc-theme): ruler tick marks along the top of the main
+   result card. Used in one place only. */
+@utility ruler-strip {
+  height: 10px;
+  background-color: var(--black);
+  background-image:
+    repeating-linear-gradient(90deg, var(--gold) 0 2px, transparent 2px 40px),
+    repeating-linear-gradient(90deg, var(--gold) 0 1px, transparent 1px 8px);
+  background-size: 100% 100%, 100% 50%;
+  background-repeat: no-repeat;
+  background-position: top left, bottom left;
+}

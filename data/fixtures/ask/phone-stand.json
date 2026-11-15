@@ -1,0 +1,34 @@
+{
+  "call": "ask",
+  "note": "Detailed idea: no questions needed.",
+  "key": {
+    "text": "I want to make a phone stand for my desk out of wood. It should hold my phone at a slight angle, fit in my hand, and I only need one.",
+    "experience": "never",
+    "image": null
+  },
+  "output": {
+    "summary": "A small wooden stand that holds your phone at an angle on your desk.",
+    "question_ids": [],
+    "prefilled": [
+      {
+        "question_id": "size",
+        "option_ids": [
+          "hand"
+        ]
+      },
+      {
+        "question_id": "quantity",
+        "option_ids": [
+          "one"
+        ]
+      },
+      {
+        "question_id": "demands",
+        "option_ids": [
+          "looks"
+        ]
+      }
+    ],
+    "blocked_reason": null
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "call": "ask",
+  "note": "Mostly detailed: size and quantity given, nothing else changes the route.",
+  "key": {
+    "text": "A small night light for my dorm desk with a warm LED inside and a 3D printed cover. Just one, about the size of my palm.",
+    "experience": "never",
+    "image": null
+  },
+  "output": {
+    "summary": "A palm-sized desk night light with an LED inside a 3D printed cover.",
+    "question_ids": [],
+    "prefilled": [
+      {
+        "question_id": "size",
+        "option_ids": [
+          "hand"
+        ]
+      },
+      {
+        "question_id": "quantity",
+        "option_ids": [
+          "one"
+        ]
+      },
+      {
+        "question_id": "demands",
+        "option_ids": [
+          "electronics"
+        ]
+      }
+    ],
+    "blocked_reason": null
+  }
+}
