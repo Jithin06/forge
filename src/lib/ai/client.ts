@@ -108,11 +108,13 @@ export function geminiModels(): [string, string] {
   ];
 }
 
-/** Keep only the JSON Schema keywords Google documents as supported. */
-const KEEP = new Set([
-  "type", "description", "properties", "required", "additionalProperties",
-  "enum", "items", "minItems", "maxItems", "minimum", "maximum", "anyOf",
-]);
+/**
+ * Keep only the structural JSON Schema keywords. Array-length and number-range
+ * limits are left out on purpose: with nested arrays Gemini answers 400
+ * "schema produces a constraint that has too many states" (seen live,
+ * 2026-11-14). The prompt states those limits, and zod enforces them on the reply.
+ */
+const KEEP = new Set(["type", "description", "properties", "required", "additionalProperties", "enum", "items", "anyOf"]);
 export function geminiSchema(node: unknown, isPropertyMap = false): unknown {
   if (Array.isArray(node)) return node.map((n) => geminiSchema(n));
   if (!node || typeof node !== "object") return node;
@@ -232,11 +234,12 @@ async function logCall(entry: Record<string, unknown>) {
 
 async function recordFixture(call: CallName, key: unknown, output: unknown, model?: string) {
   try {
-    const dir = path.join(FIXTURE_DIR, call);
+    // Kept apart from the fixtures that fixture mode and the tests load, so a
+    // recording never silently changes what a test sees.
+    const dir = path.join(FIXTURE_DIR, "recorded", call);
     await mkdir(dir, { recursive: true });
     const file = path.join(dir, `live-${fixtureHash(call, key).slice(0, 12)}.json`);
     await writeFile(file, JSON.stringify({ call, recorded: { model, at: new Date().toISOString() }, key, output }, null, 2) + "\n");
-    fixtureIndex = null; // pick the new recording up on the next fixture read
   } catch (e) {
     console.error("Could not record fixture:", (e as Error).message);
   }

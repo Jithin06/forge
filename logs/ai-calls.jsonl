@@ -1,0 +1,18 @@
+{"n": 1, "at": "2026-11-15T02:32:26.709489Z", "call": "key-test", "model": "gemini-3.5-flash-lite", "status": 200, "input_tokens": 19, "output_tokens": 5}
+{"n":2,"at":"2026-11-15T02:36:16.873Z","call":"ask","model":"gemini-3.5-flash-lite","status":200,"input_tokens":2921,"output_tokens":131}
+{"n":3,"at":"2026-11-15T02:36:22.167Z","call":"plan","model":"gemini-3.5-flash-lite","status":400,"input_tokens":0,"output_tokens":0}
+{"n":4,"at":"2026-11-15T02:36:58.814Z","call":"plan","model":"gemini-3.5-flash-lite","status":200,"input_tokens":3049,"output_tokens":357}
+{"n":5,"at":"2026-11-15T02:37:00.602Z","call":"plan","model":"gemini-3.5-flash-lite","status":200,"input_tokens":3078,"output_tokens":400}
+{"n":6,"at":"2026-11-15T02:37:27.091Z","call":"ask","model":"gemini-3.5-flash-lite","status":200,"input_tokens":2925,"output_tokens":125}
+{"n":7,"at":"2026-11-15T02:37:33.506Z","call":"plan","model":"gemini-3.5-flash-lite","status":200,"input_tokens":3077,"output_tokens":411}
+{"n":8,"at":"2026-11-15T02:37:41.842Z","call":"ask","model":"gemini-3.5-flash-lite","status":200,"input_tokens":2921,"output_tokens":945}
+{"n":9,"at":"2026-11-15T02:37:48.134Z","call":"plan","model":"gemini-3.5-flash-lite","status":200,"input_tokens":3073,"output_tokens":481}
+{"n":10,"at":"2026-11-15T02:37:50.068Z","call":"plan","model":"gemini-3.5-flash-lite","status":200,"input_tokens":3102,"output_tokens":502}
+{"n":11,"at":"2026-11-15T02:37:56.272Z","call":"ask","model":"gemini-3.5-flash-lite","status":200,"input_tokens":2917,"output_tokens":158}
+{"n":12,"at":"2026-11-15T02:38:02.724Z","call":"plan","model":"gemini-3.5-flash-lite","status":200,"input_tokens":3068,"output_tokens":354}
+{"n":13,"at":"2026-11-15T02:38:04.467Z","call":"plan","model":"gemini-3.5-flash-lite","status":200,"input_tokens":3097,"output_tokens":393}
+{"n":14,"at":"2026-11-15T02:38:12.097Z","call":"ask","model":"gemini-3.5-flash-lite","status":200,"input_tokens":3993,"output_tokens":156}
+{"n":15,"at":"2026-11-15T02:38:18.497Z","call":"plan","model":"gemini-3.5-flash-lite","status":200,"input_tokens":4146,"output_tokens":412}
+{"n":16,"at":"2026-11-15T02:38:57.709Z","call":"ask","model":"gemini-3.5-flash-lite","status":200,"input_tokens":2952,"output_tokens":122}
+{"n":17,"at":"2026-11-15T02:39:04.548Z","call":"plan","model":"gemini-3.5-flash-lite","status":200,"input_tokens":3091,"output_tokens":455}
+{"n":18,"at":"2026-11-15T02:40:13.537Z","call":"plan","model":"gemini-3.5-flash-lite","status":200,"input_tokens":3188,"output_tokens":434}

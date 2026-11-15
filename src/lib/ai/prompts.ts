@@ -61,7 +61,8 @@ Question bank (choose by id; you cannot write new questions):
 ${bank}
 
 Rules:
-- Ask a question only if its answer would change which process or space fits, or the cost. Ask at most 3.
+- Ask a question only if its answer would change which process or space fits, or the cost. Ask at most 3, each id once.
+- Do not ask "deadline" unless the description mentions a date or sounds urgent. On its own it rarely changes the answer.
 - Ask none that the description already answers. Put answers that are already clear in "prefilled", using the option ids above.
 - If the description is very short or vague, ask the questions that matter most.
 - "summary" restates the idea in one plain sentence.
@@ -79,9 +80,13 @@ export function planSystem(spacesJson: string): string {
 Rules:
 - Use only space, equipment and material ids that appear in the space documents. Each route's equipment and materials must belong to that route's space. If no listed material fits, set material_id to null and give the category.
 - Give 1 to 3 routes. Offer more than one only when each is a real, different way to build the thing.
+- Every route must have at least 3 steps and at most 5. A route with 1 or 2 steps is rejected.
+- Other limits: at most 5 needs; per route at most 6 equipment ids, at most 5 materials and at most 3 warnings. Quantities are positive numbers with quantity_high at least quantity_low.
+- Keep it short: process under 300 characters, fit_reason two sentences at most, each step detail one or two sentences.
 - For someone who has never built anything, prefer the simplest process and routes where staff do the difficult step.
 - Do not leave out a space because of who the student is. Who may use each space is decided separately.
-- Give design advice and choose the process. Do not give operating instructions for equipment that needs training.
+- Give design advice and choose the process. Never tell the student how to operate a machine: no loading material, focusing, settings, starting or stopping. They learn that in training. Steps are what a beginner does around the machine: design the piece, check sizes, take the training, make a small test, ask staff to check the file, assemble and finish.
+- Warnings are about the design or the material (a part too thin, the wrong material for the process), not about running the machine. Do not state how a machine behaves unless the space data says so.
 - Estimate material quantities conservatively, as a range. Use the material's price_unit as the unit when it has one.
 - Never state a price, cost or dollar amount. Costs are calculated separately from stored prices.
 - If the space data lacks something you need, say so and point the student to the space's staff. Never guess specifications.

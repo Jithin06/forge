@@ -65,6 +65,7 @@ export async function askFollowUps(
     } catch (e) {
       if (e instanceof AIError && e.code === "INVALID_OUTPUT" && attempt === 1) {
         feedback = e.details;
+        console.warn(`ask retry, the answer did not match the expected shape: ${feedback.join("; ")}`);
         continue;
       }
       throw e;

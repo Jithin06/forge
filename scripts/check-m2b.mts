@@ -5,7 +5,7 @@
  *   AI_PROVIDER=gemini RECORD_FIXTURES=1 PORT=3123 npm start     (one terminal)
  *   BASE=http://localhost:3123 npm run check:m2b                 (another)
  */
-import { readFile } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 import { createClient } from "@supabase/supabase-js";
 import { planOutputSchema } from "../src/lib/ai/schemas";
 import { groundPlan } from "../src/lib/compute/grounding";
@@ -55,11 +55,15 @@ for (const [name, text] of Object.entries(IDEAS)) {
   const grounded = zod.success && groundPlan(zod.data, spaces).ok;
   raws.push(JSON.stringify(raw));
   allLive &&= ask.body?.fixture === false && plan?.body?.fixture === false;
-  if (name === "stand") standRoutes = plan?.body?.plan.routes ?? [];
+  if (name === "stand") standRoutes = plan?.body?.plan?.routes ?? [];
+  if (name === "sign" && plan?.status === 201) {
+    // One complete live example for the report: what went in, what the model said, what code made of it.
+    await writeFile("reports/m2b-live-example.json", JSON.stringify({ idea: text, audience: "viterbi_undergrad", experience: "never", ask: ask.body, raw_model_output: raw, computed_plan: plan.body.plan }, null, 2) + "\n");
+  }
   check(
-    plan?.status === 201 && zod.success && grounded && (plan.body.plan.routes.length > 0),
+    plan?.status === 201 && zod.success && grounded && plan.body.plan.routes.length > 0,
     `${name}: status ${plan?.status}, zod ${zod.success}, grounded ${grounded}, questions asked ${ask.body?.questions?.length}`,
-    (plan?.body?.plan.routes as R[] | undefined)?.map((r) => `${r.space_id}: ${r.process}`).join("\n      ") ?? JSON.stringify(plan?.body ?? ask.body),
+    (plan?.body?.plan?.routes as R[] | undefined)?.map((r) => `${r.space_id}: ${r.process}`).join("\n      ") ?? JSON.stringify(plan?.body ?? ask.body),
   );
 }
 
@@ -68,9 +72,9 @@ const sketch = `data:image/jpeg;base64,${(await readFile("data/samples/sketch-ph
 const withSketch = await livePlan(IDEAS.stand, sketch);
 const sig = (rs: R[]) => rs.map((r) => `${r.space_id}|${r.equipment.map((e) => e.id).join("+")}|${r.cost_lines.map((c) => c.category).join("+")}`).join(" ; ");
 const a = sig(standRoutes);
-const b = sig(withSketch.plan?.body?.plan.routes ?? []);
+const b = sig(withSketch.plan?.body?.plan?.routes ?? []);
 raws.push(JSON.stringify(withSketch.raw));
-check(withSketch.plan?.status === 201 && a !== b, "routes, tools or materials differ with the sketch (the sketch says clear acrylic; the text says wood)", `without: ${a}\n      with:    ${b}\n      summary with sketch: ${withSketch.plan?.body?.plan.summary}`);
+check(withSketch.plan?.status === 201 && a !== b, "routes, tools or materials differ with the sketch (the sketch says clear acrylic; the text says wood)", `without: ${a}\n      with:    ${b}\n      summary with sketch: ${withSketch.plan?.body?.plan?.summary}`);
 
 console.log("\n3. Raw live output contains no dollar amounts");
 check(raws.every((r) => !/\$|dollar|usd/i.test(r)), `scanned ${raws.length} raw outputs, ${raws.join("").length} characters`);

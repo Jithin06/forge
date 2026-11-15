@@ -1,0 +1,78 @@
+{
+  "call": "plan",
+  "recorded": {
+    "model": "gemini-3.5-flash-lite",
+    "at": "2026-11-15T02:39:04.551Z"
+  },
+  "key": {
+    "text": "I want to make a phone stand for my desk out of wood. It should hold my phone at a slight angle, fit in my hand, and I only need one.",
+    "experience": "never",
+    "answers": {
+      "size": [
+        "hand"
+      ],
+      "quantity": [
+        "one"
+      ],
+      "demands": [
+        "looks"
+      ]
+    },
+    "image": null
+  },
+  "output": {
+    "summary": "You are making a small wooden phone stand for your desk.",
+    "needs": [
+      {
+        "capability": "woodworking",
+        "why": "You need to cut and shape wood for the stand."
+      },
+      {
+        "capability": "laser_cutting",
+        "why": "A laser cutter (cuts flat sheets very precisely) can cut out wooden parts cleanly."
+      }
+    ],
+    "routes": [
+      {
+        "space_id": "bfms",
+        "equipment_ids": [
+          "laser_vls675",
+          "power_tools"
+        ],
+        "process": "Cut wooden pieces using a laser cutter and glue them together.",
+        "fit_reason": "The Baum Family Maker Space has all the wood and cutting tools you need. This is a very simple project for your first build.",
+        "materials": [
+          {
+            "category": "plywood",
+            "material_id": "plywood_sheet",
+            "quantity_low": 1,
+            "quantity_high": 1,
+            "unit": "sheet"
+          }
+        ],
+        "steps": [
+          {
+            "title": "Draw your design",
+            "detail": "Sketch the pieces for your phone stand on a computer."
+          },
+          {
+            "title": "Cut the wood",
+            "detail": "Use the laser cutter (cuts flat sheets very precisely) to cut your wooden parts."
+          },
+          {
+            "title": "Assemble the stand",
+            "detail": "Glue the cut pieces together to form your phone stand."
+          }
+        ],
+        "warnings": [
+          {
+            "issue": "You need safety training before using the equipment.",
+            "fix": "Complete the Level 1 orientation at the maker space first."
+          }
+        ]
+      }
+    ],
+    "clarifying_question": null,
+    "not_supported_reason": null
+  }
+}

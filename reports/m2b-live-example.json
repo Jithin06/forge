@@ -1,0 +1,329 @@
+{
+  "idea": "An engraved acrylic sign with my club's name for our tabling booth, about 12 inches wide. We need one.",
+  "audience": "viterbi_undergrad",
+  "experience": "never",
+  "ask": {
+    "summary": "You want to make an engraved acrylic sign for your club's tabling booth.",
+    "questions": [
+      {
+        "id": "deadline",
+        "text": "When do you need it?",
+        "multi": false,
+        "options": [
+          {
+            "id": "week",
+            "label": "This week"
+          },
+          {
+            "id": "month",
+            "label": "This month"
+          },
+          {
+            "id": "no_rush",
+            "label": "No rush"
+          },
+          {
+            "id": "not_sure",
+            "label": "Not sure"
+          }
+        ]
+      }
+    ],
+    "prefilled": {
+      "size": [
+        "shoebox"
+      ],
+      "demands": [
+        "looks"
+      ],
+      "quantity": [
+        "one"
+      ]
+    },
+    "blocked_reason": null,
+    "fixture": false
+  },
+  "raw_model_output": {
+    "needs": [
+      {
+        "why": "To cut and engrave the acrylic sheet.",
+        "capability": "laser_cutting"
+      }
+    ],
+    "routes": [
+      {
+        "steps": [
+          {
+            "title": "Design the sign",
+            "detail": "Draw your club name in design software for the laser cutter (cuts flat sheets very precisely)."
+          },
+          {
+            "title": "Prepare the machine",
+            "detail": "Place the acrylic sheet inside the laser cutter and focus the beam."
+          },
+          {
+            "title": "Run the job",
+            "detail": "Start the machine to engrave your text and cut out the sign."
+          }
+        ],
+        "process": "Laser cut and engrave an acrylic sheet.",
+        "space_id": "bfms",
+        "warnings": [
+          {
+            "fix": "Wait for the lid to unlock before opening.",
+            "issue": "Laser cutting creates fumes."
+          }
+        ],
+        "materials": [
+          {
+            "unit": "sheet",
+            "category": "acrylic",
+            "material_id": "acrylic_sheet",
+            "quantity_low": 1,
+            "quantity_high": 1
+          }
+        ],
+        "fit_reason": "The Baum Family Maker Space has a laser cutter that cuts and etches acrylic cleanly.",
+        "equipment_ids": [
+          "laser_vls675"
+        ]
+      }
+    ],
+    "summary": "An engraved acrylic sign for a club tabling booth.",
+    "clarifying_question": null,
+    "not_supported_reason": null
+  },
+  "computed_plan": {
+    "summary": "An engraved acrylic sign for a club tabling booth.",
+    "audience": "viterbi_undergrad",
+    "routes": [
+      {
+        "space_id": "bfms",
+        "space_name": "Baum Family Maker Space",
+        "space_location": "Ground floor, Science and Engineering Library",
+        "equipment": [
+          {
+            "id": "laser_vls675",
+            "name": "Universal VLS6.75 laser cutter",
+            "plain_name": "Laser cutter (cuts flat sheets precisely)"
+          }
+        ],
+        "process": "Laser cut and engrave an acrylic sheet.",
+        "fit_reason": "The Baum Family Maker Space has a laser cutter that cuts and etches acrylic cleanly.",
+        "steps": [
+          {
+            "title": "Design the sign",
+            "detail": "Draw your club name in design software for the laser cutter (cuts flat sheets very precisely)."
+          },
+          {
+            "title": "Prepare the machine",
+            "detail": "Place the acrylic sheet inside the laser cutter and focus the beam."
+          },
+          {
+            "title": "Run the job",
+            "detail": "Start the machine to engrave your text and cut out the sign."
+          }
+        ],
+        "warnings": [
+          {
+            "issue": "Laser cutting creates fumes.",
+            "fix": "Wait for the lid to unlock before opening."
+          }
+        ],
+        "eligibility": {
+          "status": "ask_first",
+          "note": "The Maker Space says it is for Viterbi undergraduates. Confirm at the front desk."
+        },
+        "trainings": [
+          {
+            "id": "level_1",
+            "name": "Level 1: Orientation and safety",
+            "how_to_sign_up": null,
+            "restricted_to": null
+          }
+        ],
+        "cost_lines": [
+          {
+            "category": "acrylic",
+            "material_id": "acrylic_sheet",
+            "name": "Acrylic sheet (about 12 x 24 in)",
+            "quantity_low": 1,
+            "quantity_high": 1,
+            "unit": "sheet",
+            "unit_price_usd": 12,
+            "low_usd": 12,
+            "high_usd": 12
+          }
+        ],
+        "total": {
+          "low": 12,
+          "high": 12
+        },
+        "prices_estimated": true,
+        "scrap": [
+          []
+        ],
+        "with_scrap": {
+          "low": 12,
+          "high": 12
+        },
+        "labels": []
+      }
+    ],
+    "first_visit": [
+      "Go to Baum Family Maker Space, Ground floor, Science and Engineering Library. Listed hours: Monday to Friday 11 AM to 10 PM; Saturday 10 AM to 5 PM.",
+      "Take the Level 1 orientation and safety training. It lets you use the non-powered hand tools.",
+      "Take the training level for the tools you need: Level 2 for hand tools and handheld drills, Level 3 for power tools, Level 4 for electronics."
+    ],
+    "clarifying_question": null,
+    "not_supported_reason": null,
+    "none_open": true
+  },
+  "after_prompt_fix": {
+    "raw_model_output": {
+      "needs": [
+        {
+          "why": "To cut and engrave the acrylic sheet.",
+          "capability": "laser_cutting"
+        }
+      ],
+      "routes": [
+        {
+          "steps": [
+            {
+              "title": "Design the sign",
+              "detail": "Draw your club name using design software."
+            },
+            {
+              "title": "Take training",
+              "detail": "Complete the required safety training for the laser cutter (cuts flat sheets very precisely)."
+            },
+            {
+              "title": "Ask staff to check",
+              "detail": "Have staff review your digital file before cutting."
+            },
+            {
+              "title": "Make the sign",
+              "detail": "Use the laser cutter (cuts flat sheets very precisely) to cut and engrave your acrylic sheet."
+            }
+          ],
+          "process": "Cut and engrave an acrylic sheet using a laser cutter (cuts flat sheets very precisely).",
+          "space_id": "bfms",
+          "warnings": [
+            {
+              "fix": "Use a bold font for your club name.",
+              "issue": "Fine text may be hard to read on clear acrylic."
+            }
+          ],
+          "materials": [
+            {
+              "unit": "sheet",
+              "category": "acrylic",
+              "material_id": "acrylic_sheet",
+              "quantity_low": 1,
+              "quantity_high": 1
+            }
+          ],
+          "fit_reason": "The laser cutter handles acrylic sheets easily and creates clean engraved text.",
+          "equipment_ids": [
+            "laser_vls675"
+          ]
+        }
+      ],
+      "summary": "An engraved acrylic sign for a club tabling booth.",
+      "clarifying_question": null,
+      "not_supported_reason": null
+    },
+    "computed_plan": {
+      "summary": "An engraved acrylic sign for a club tabling booth.",
+      "audience": "viterbi_undergrad",
+      "routes": [
+        {
+          "space_id": "bfms",
+          "space_name": "Baum Family Maker Space",
+          "space_location": "Ground floor, Science and Engineering Library",
+          "equipment": [
+            {
+              "id": "laser_vls675",
+              "name": "Universal VLS6.75 laser cutter",
+              "plain_name": "Laser cutter (cuts flat sheets precisely)"
+            }
+          ],
+          "process": "Cut and engrave an acrylic sheet using a laser cutter (cuts flat sheets very precisely).",
+          "fit_reason": "The laser cutter handles acrylic sheets easily and creates clean engraved text.",
+          "steps": [
+            {
+              "title": "Design the sign",
+              "detail": "Draw your club name using design software."
+            },
+            {
+              "title": "Take training",
+              "detail": "Complete the required safety training for the laser cutter (cuts flat sheets very precisely)."
+            },
+            {
+              "title": "Ask staff to check",
+              "detail": "Have staff review your digital file before cutting."
+            },
+            {
+              "title": "Make the sign",
+              "detail": "Use the laser cutter (cuts flat sheets very precisely) to cut and engrave your acrylic sheet."
+            }
+          ],
+          "warnings": [
+            {
+              "issue": "Fine text may be hard to read on clear acrylic.",
+              "fix": "Use a bold font for your club name."
+            }
+          ],
+          "eligibility": {
+            "status": "ask_first",
+            "note": "The Maker Space says it is for Viterbi undergraduates. Confirm at the front desk."
+          },
+          "trainings": [
+            {
+              "id": "level_1",
+              "name": "Level 1: Orientation and safety",
+              "how_to_sign_up": null,
+              "restricted_to": null
+            }
+          ],
+          "cost_lines": [
+            {
+              "category": "acrylic",
+              "material_id": "acrylic_sheet",
+              "name": "Acrylic sheet (about 12 x 24 in)",
+              "quantity_low": 1,
+              "quantity_high": 1,
+              "unit": "sheet",
+              "unit_price_usd": 12,
+              "low_usd": 12,
+              "high_usd": 12
+            }
+          ],
+          "total": {
+            "low": 12,
+            "high": 12
+          },
+          "prices_estimated": true,
+          "scrap": [
+            []
+          ],
+          "with_scrap": {
+            "low": 12,
+            "high": 12
+          },
+          "labels": []
+        }
+      ],
+      "first_visit": [
+        "Go to Baum Family Maker Space, Ground floor, Science and Engineering Library. Listed hours: Monday to Friday 11 AM to 10 PM; Saturday 10 AM to 5 PM.",
+        "Take the Level 1 orientation and safety training. It lets you use the non-powered hand tools.",
+        "Take the training level for the tools you need: Level 2 for hand tools and handheld drills, Level 3 for power tools, Level 4 for electronics."
+      ],
+      "clarifying_question": null,
+      "not_supported_reason": null,
+      "none_open": true
+    },
+    "attempts": 1
+  }
+}

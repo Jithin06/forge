@@ -1,0 +1,77 @@
+{
+  "call": "plan",
+  "recorded": {
+    "model": "gemini-3.5-flash-lite",
+    "at": "2026-11-15T02:37:33.509Z"
+  },
+  "key": {
+    "text": "I want to make a phone stand for my desk out of wood. It should hold my phone at a slight angle, fit in my hand, and I only need one.",
+    "experience": "never",
+    "answers": {
+      "size": [
+        "hand"
+      ],
+      "quantity": [
+        "one"
+      ],
+      "demands": [
+        "not_sure"
+      ],
+      "deadline": [
+        "not_sure"
+      ]
+    },
+    "image": null
+  },
+  "output": {
+    "summary": "You are making a wooden phone stand for your desk.",
+    "needs": [
+      {
+        "capability": "woodworking",
+        "why": "To cut and shape the wood for the stand."
+      }
+    ],
+    "routes": [
+      {
+        "space_id": "bfms",
+        "equipment_ids": [
+          "power_tools",
+          "hand_tools"
+        ],
+        "process": "Cut pieces from a plywood sheet and glue them together at an angle.",
+        "fit_reason": "This uses basic woodworking tools available at the maker space. It is a simple build for a beginner.",
+        "materials": [
+          {
+            "category": "plywood",
+            "material_id": "plywood_sheet",
+            "quantity_low": 1,
+            "quantity_high": 1,
+            "unit": "sheet"
+          }
+        ],
+        "steps": [
+          {
+            "title": "Cut the wood",
+            "detail": "Use power tools to cut small pieces of plywood for the base and back."
+          },
+          {
+            "title": "Sand the edges",
+            "detail": "Use sanders (machines that smooth surfaces) to make the edges smooth."
+          },
+          {
+            "title": "Assemble the stand",
+            "detail": "Glue the pieces together so your phone rests at a slight angle."
+          }
+        ],
+        "warnings": [
+          {
+            "issue": "Power tools can be dangerous if you rush.",
+            "fix": "Ask staff for help before using any saw or sander."
+          }
+        ]
+      }
+    ],
+    "clarifying_question": null,
+    "not_supported_reason": null
+  }
+}

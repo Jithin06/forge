@@ -1,0 +1,39 @@
+{
+  "call": "ask",
+  "recorded": {
+    "model": "gemini-3.5-flash-lite",
+    "at": "2026-11-15T02:38:12.098Z"
+  },
+  "key": {
+    "text": "I want to make a phone stand for my desk out of wood. It should hold my phone at a slight angle, fit in my hand, and I only need one.",
+    "experience": "never",
+    "image": "a671a404819110a65d5653c5957ef483f2f1d13b1ace7dee1df670af0cc69aeb"
+  },
+  "output": {
+    "summary": "You want to build a small desk stand to hold a phone at an angle.",
+    "question_ids": [
+      "deadline"
+    ],
+    "prefilled": [
+      {
+        "question_id": "size",
+        "option_ids": [
+          "hand"
+        ]
+      },
+      {
+        "question_id": "quantity",
+        "option_ids": [
+          "one"
+        ]
+      },
+      {
+        "question_id": "demands",
+        "option_ids": [
+          "looks"
+        ]
+      }
+    ],
+    "blocked_reason": null
+  }
+}

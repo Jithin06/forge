@@ -106,8 +106,7 @@ describe("gemini adapter", () => {
 
   it("sends only schema keywords Google supports", () => {
     const sent = JSON.stringify(geminiSchema(toolInputSchema(planOutputSchema)));
-    expect(sent).not.toMatch(/exclusiveMinimum|minLength|maxLength|\$schema/);
-    expect(sent).toMatch(/"maxItems":3/);
+    expect(sent).not.toMatch(/exclusiveMinimum|minLength|maxLength|minItems|maxItems|"minimum"|"maximum"|\$schema/);
     expect(sent).toMatch(/"enum":\["fdm_3d_printing"/);
     // a property that happens to be called "description" or "type" must survive
     const s = geminiSchema({ type: "object", properties: { type: { type: "string", minLength: 2 }, title: { type: "string" } } });

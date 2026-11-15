@@ -65,6 +65,7 @@ export async function planBuild(
     } catch (e) {
       if (e instanceof AIError && e.code === "INVALID_OUTPUT" && attempt === 1) {
         feedback = e.details;
+        console.warn(`plan retry, the answer did not match the expected shape: ${feedback.join("; ")}`);
         continue;
       }
       throw e;
@@ -78,6 +79,7 @@ export async function planBuild(
       throw new AIError("INVALID_OUTPUT", "The plan referred to things that are not in the space data.", grounded.errors);
     }
     feedback = grounded.errors;
+    console.warn(`plan retry, grounding failed: ${feedback.join("; ")}`);
   }
   throw new AIError("INVALID_OUTPUT", "unreachable");
 }
