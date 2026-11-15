@@ -104,6 +104,10 @@ for (const [name, text] of Object.entries(IDEAS).filter(([n]) => !ONLY || ONLY[0
   console.log(`\n${name}`);
   const askKey = { text, experience: "never", image: null };
   const ask = await post("/api/ask", { text, experience: "never" });
+  if (ask.body?.fixture === true) {
+    console.log("STOP  this server is in fixture mode. Start it with AI_PROVIDER=gemini. Nothing was written.");
+    process.exit(2);
+  }
   const asked = ask.body?.questions?.length ?? -1;
   check(ask.status === 200 && ask.body.fixture === false && asked >= 0 && asked <= 1, `${name}: a detailed idea is asked at most one question (asked ${asked})`, (ask.body?.questions ?? []).map((q: { text: string }) => q.text).join(" / "));
 

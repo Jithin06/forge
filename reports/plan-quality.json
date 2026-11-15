@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-15T05:29:12.252Z",
+  "at": "2026-11-15T05:25:16.108Z",
   "route_counts": {
     "club-sign": 2
   },
@@ -41,23 +41,23 @@
     },
     {
       "check": "phone-stand: a detailed idea is asked at most one question (asked 0)",
-      "ok": false,
+      "ok": true,
       "detail": ""
     },
     {
       "check": "phone-stand: a live plan came back",
       "ok": false,
-      "detail": "{\"id\":\"5sde4Z37dF\",\"plan\":{\"summary\":\"Make a wooden phone stand for a desk\",\"audience\":\"viterbi_undergrad\",\"routes\":[{\"space_id\":\"bfms\",\"space_name\":\"Baum Family Maker Space\",\"space_location\":\"Ground floor, Science and Engineering Library\",\"equipment\":[{\"id\":\"laser_vls675\",\"name\":\"Universal VLS6.75 laser cutter\",\"plain_name\":\"Laser cutter (cuts flat sheets precisely)\",\"explain\":true},{\"id\":\"hand_t"
+      "detail": "{\"error\":{\"code\":\"AI_TIMEOUT\",\"message\":\"This is taking longer than usual. Please try again.\"}}"
     },
     {
       "check": "night-light: a detailed idea is asked at most one question (asked 1)",
-      "ok": false,
+      "ok": true,
       "detail": "What does it need to handle? (pick any)"
     },
     {
       "check": "night-light: a live plan came back",
       "ok": false,
-      "detail": "{\"id\":\"7n27tJFKzg\",\"plan\":{\"summary\":\"A small 3D printed night light with an LED inside\",\"audience\":\"viterbi_undergrad\",\"routes\":[{\"space_id\":\"ahmanson-lab\",\"space_name\":\"Ahmanson Lab\",\"space_location\":\"Leavey Library, room 301\",\"equipment\":[{\"id\":\"ultimaker_s5\",\"name\":\"Ultimaker S5\",\"plain_name\":\"3D printer\",\"explain\":true},{\"id\":\"arduino_kits\",\"name\":\"Elegoo UNO Arduino starter kits\",\"plain_name"
+      "detail": "{\"error\":{\"code\":\"AI_TIMEOUT\",\"message\":\"This is taking longer than usual. Please try again.\"}}"
     }
   ],
   "examples": {
@@ -361,5 +361,6 @@
         "none_open": true
       }
     }
-  }
+  },
+  "note": "Rows for the phone stand and the night light were restored by hand from the 05:25Z run's printed output, after a later run against a fixture-mode server overwrote them by mistake."
 }

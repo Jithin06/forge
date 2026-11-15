@@ -4,8 +4,16 @@ Each item says what, why, and exactly where to put it. Newest blockers first.
 
 ## Live AI
 
+### 0. Let me finish Part 1's live run (about 6 calls)
+- **What:** allow, or run yourself: `npx next build`, then `RECORD_FIXTURES=1 npx next start -p 3123`, then in another terminal `ONLY=phone-stand,night-light CALL_CAP=60 BASE=http://localhost:3123 npm run check:quality`, then `npm run results`.
+- **Why:** the phone stand and night light have no live plan on the final prompt (Gemini answered 503 twice, then my next live run was refused by the permission system). Their sample recordings are from an earlier prompt, and the phone stand one states a wrong reason for having one route. 19 of Part 1's 30 calls are used; the cap stops the run at 30.
+
+### 0b. The Maker Space equipment is marked "Confirmed by staff" by the test account
+- **What:** decide whether that is intended. To undo it, re-seed that one space from its file with `npm run seed -- --force --dir FOLDER`, where FOLDER holds only a copy of `data/spaces/bfms.json`. That also resets any other staff edits to the Maker Space.
+- **Why:** it shows to every student as confirmed by forge-test-staff@usc.edu on Nov 14. I did not do it and did not change it.
+
 ### 1. Gemini API key in `.env.local`: done
-The key works. 18 live calls made so far, logged in `logs/ai-calls.jsonl`. Local cap: 150.
+The key works. 49 live calls made so far, logged in `logs/ai-calls.jsonl`. Local cap: 150.
 
 ### 2. Put the live site on Gemini
 - **What:** set the variables listed in `docs/production-settings.md` in Vercel and redeploy. In short: `AI_PROVIDER=gemini`, `GEMINI_API_KEY`, `GEMINI_MODEL_PRIMARY=gemini-3.5-flash-lite`, `GEMINI_MODEL_FALLBACK=gemini-3.1-flash-lite`, `AI_DAILY_BUDGET=450`, `AUTH_MODE=test`. Do **not** set `AI_CALL_BUDGET` there.
