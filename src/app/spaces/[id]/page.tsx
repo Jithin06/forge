@@ -3,11 +3,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import { EstimatedNote, FactChip } from "@/components/badges";
+import { EstimatedNote, FactChip, SampleTag } from "@/components/badges";
 import { Band, Body } from "@/components/page";
 import { Swatch } from "@/components/swatch";
 import { AccessSection } from "@/components/spaces/access-section";
 import { AUDIENCE_LABELS, CAPABILITY_LABELS, WEEKDAY_LABELS, formatDate, formatTime } from "@/lib/labels";
+import { isSample } from "@/lib/sample";
 import { AUDIENCES, CAPABILITIES, WEEKDAYS, type GroupStatus, type Material, type SpaceDoc } from "@/lib/schemas";
 import { getAvailableScrap, getSpace, type ScrapCard } from "@/lib/spaces";
 import { TYPICAL_PRICES, TYPICAL_PRICES_LABEL } from "@/lib/typical-prices";
@@ -290,6 +291,7 @@ function SpaceView({ space, scrap }: { space: SpaceDoc; scrap: ScrapCard[] }) {
                       <Swatch category={s.material_category} className="h-[84px] w-full" />
                     )}
                     <b className="mt-2 block leading-[1.2]">{s.title}</b>
+                    {isSample(s.description) && <span className="block"><SampleTag /></span>}
                     {s.size_note && <span className="block text-[15px] leading-[1.3] text-gray-text">{s.size_note}</span>}
                   </Link>
                 </li>

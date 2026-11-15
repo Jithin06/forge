@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { connection } from "next/server";
+import { SampleTag } from "@/components/badges";
 import { Body } from "@/components/page";
 import { Swatch } from "@/components/swatch";
+import { isSample } from "@/lib/sample";
 import { listAvailable } from "@/lib/scrap";
 
 export function HowItWorks() {
@@ -54,6 +56,7 @@ export async function FreeNow() {
                   <Swatch category={item.material_category} className="h-[84px] w-full" />
                 )}
                 <b className="mt-2 block leading-[1.2]">{item.title}</b>
+                {isSample(item.description) && <span className="block"><SampleTag /></span>}
                 {item.size_note && <span className="block text-[15px] leading-[1.3] text-gray-text">{item.size_note}</span>}
               </Link>
             </li>

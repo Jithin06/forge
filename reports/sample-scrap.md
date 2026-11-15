@@ -68,3 +68,13 @@ I did not press "Claim", so no hold was made.
 - `npm test`: 125 of 125. Typecheck and lint clean.
 - Not re-run: the full UI review at three widths, and axe. Only the four screens above were looked at, at 390 px.
 - Three plans made by my failed first attempts at the screenshot script were deleted.
+
+## Last fixes (Nov 15, later)
+Wording and data only. No live calls. How plans and scrap matches are made did not change.
+
+1. **Scrap total.** A plan no longer shows a with-scrap dollar figure. The stub shows the price of the materials new, then "Could cost less with free scrap. Check the piece is big enough." The plan view was the only place a with-scrap total appeared. The number is still computed, and still decides the "Cheapest" tag, as before. Tests: `src/components/plan/cost-stub.test.ts` (6 new).
+2. **Sample tag.** A small gray "Sample" tag shows on Scrap tab cards, the Maker Space "Free here now" strip, the home page "Free right now" strip, and scrap matches inside plans. An item is a sample when its description ends with the sample sentence. The opened item still shows the full sentence.
+3. **Listings fixed in the database** (`scripts/fix-sample-scrap.mts`): PVC warning removed from the plywood and the red strip; the red strip's description says "red acrylic"; the "uncertain of material safety" warning removed from the clear acrylic; failed prints read "Failed PLA prints, about 10 pieces"; "on a wooden spool" removed from the spool.
+4. **Check at 390 px**, sample-data mode, production build: club sign plan shows $12, the new sentence, no "$0", and both pieces tagged; phone stand plan shows the pine piece tagged; Scrap tab shows 10 cards, each tagged, no sideways scroll. `npm test`: 131 of 131. Typecheck and lint clean. The screenshots in `reports/sample-scrap/` are the new ones.
+
+Left alone, for you to decide: the material line above a matched piece still reads "Free with scrap"; the deck's plan-cost screenshot still shows "$0"; SPEC.md still describes the with-scrap total.

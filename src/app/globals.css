@@ -262,6 +262,19 @@
     background: var(--white);
     transform: rotate(-2deg);
   }
+  .tag-sample {
+    display: inline-block;
+    white-space: nowrap;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.3;
+    padding: 0 7px;
+    border: 1.5px solid var(--gray-text);
+    border-radius: 6px;
+    background: var(--white);
+    color: var(--gray-text);
+    vertical-align: 1px;
+  }
   .tag-free {
     position: absolute;
     top: -8px;

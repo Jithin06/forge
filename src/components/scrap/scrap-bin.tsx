@@ -8,6 +8,8 @@ import { Band, Body, primaryBtn, secondaryBtn } from "@/components/page";
 import { Swatch } from "@/components/swatch";
 import { CONDITION_LABELS, MATERIAL_LABELS } from "@/lib/labels";
 import { MATERIAL_CATEGORIES, type MaterialCategory } from "@/lib/schemas";
+import { SampleTag } from "@/components/badges";
+import { isSample } from "@/lib/sample";
 import { ClaimButton } from "./claim";
 
 type Item = {
@@ -160,6 +162,7 @@ export function ScrapBin() {
                       <Photo item={item} className="aspect-[4/3] w-full overflow-hidden rounded-lg border-[1.5px] border-black" />
                       <span className="flex flex-1 flex-col gap-0.5 px-1 pt-2">
                         <b className="leading-[1.2]">{item.title}</b>
+                        {isSample(item.description) && <span><SampleTag /></span>}
                         <span className="text-[15px] leading-[1.3] text-gray-text">
                           {MATERIAL_LABELS[item.material_category]} · {CONDITION_LABELS[item.condition].toLowerCase()}
                         </span>

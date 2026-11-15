@@ -28,7 +28,7 @@ const shots: [string, string, string][] = [
   ["plan-club-sign", `/plan/${sign.id}`, "usc_undergrad_other"],
   ["plan-phone-stand", `/plan/${stand.id}`, "viterbi_undergrad"],
 ];
-for (const [name, path, audience] of shots) {
+for (const [name, path, audience] of shots.filter((x) => !process.env.ONLY || process.env.ONLY.split(",").includes(x[0]))) {
   const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
   await ctx.addInitScript((a) => { localStorage.setItem("forge.audience", a); localStorage.setItem("forge.experience", "never"); }, audience);
   const p = await ctx.newPage();
@@ -53,7 +53,7 @@ for (const [name, path, audience] of shots) {
     const claim = first.getByRole("button", { name: /claim/i }).or(first.getByRole("link", { name: /claim/i })).first();
     if (await claim.count()) {
       await claim.scrollIntoViewIfNeeded();
-      await p.evaluate(() => scrollBy(0, 250));
+      await p.evaluate(() => scrollBy(0, 330));
       await p.waitForTimeout(500);
       await p.screenshot({ path: `${OUT}/${name}-scrap-match-390.png` });
     }
@@ -65,6 +65,8 @@ for (const [name, path, audience] of shots) {
     await p.screenshot({ path: `${OUT}/scrap-item-sheet-390.png` });
     console.log(`  item sheet: sample line shown ${await p.getByText("Generated photo, not real Maker Space stock").count()}`);
   }
+  const text = await p.locator("main").innerText();
+  console.log(`${name}: "Sample" tags ${await p.locator(".tag-sample").count()}, "$0" shown ${/\$0(?![.\d])/.test(text)}, "With free scrap, about" shown ${text.includes("With free scrap, about")}, new sentence shown ${(text.match(/Could cost less with free scrap\. Check the piece is big enough\./g) ?? []).length}`);
   console.log(`${name}: sideways scroll ${sideways}, broken images ${broken}, "Claim" controls ${claims}, sample line shown ${await p.getByText("Generated photo, not real Maker Space stock").count()}`);
   await ctx.close();
 }

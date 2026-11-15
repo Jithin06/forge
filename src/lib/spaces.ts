@@ -43,6 +43,7 @@ export async function getSpaceRaw(id: string): Promise<SpaceDoc | null> {
 export type ScrapCard = {
   id: string;
   title: string;
+  description: string | null;
   material_category: string;
   size_note: string | null;
   condition: string;
@@ -53,7 +54,7 @@ export type ScrapCard = {
 export async function getAvailableScrap(spaceId: string): Promise<ScrapCard[]> {
   const { data, error } = await db()
     .from("scrap_items")
-    .select("id, title, material_category, size_note, condition, photo_url")
+    .select("id, title, description, material_category, size_note, condition, photo_url")
     .eq("space_id", spaceId)
     .eq("status", "available")
     .gt("expires_at", new Date().toISOString())

@@ -1,11 +1,13 @@
 import { ChevronDown, CircleAlert, GraduationCap, TriangleAlert, Wrench } from "lucide-react";
 import Link from "next/link";
-import { EligibilityBadge } from "@/components/badges";
+import { EligibilityBadge, SampleTag } from "@/components/badges";
 import { Band, Body, primaryBtn, secondaryBtn } from "@/components/page";
 import { SampleBanner } from "@/components/sample-banner";
 import { Swatch } from "@/components/swatch";
 import type { FinalRoute } from "@/lib/compute/plan";
 import { moneyRange, quantity } from "@/lib/format";
+import { isSample } from "@/lib/sample";
+import { SCRAP_TOTAL_NOTE, costStub } from "./cost-stub";
 import type { PlanView as PlanData } from "@/lib/plans";
 import { CopyLink } from "./copy-link";
 import { PlanClaim } from "./plan-claim";
@@ -123,8 +125,6 @@ function uniqueSpaces(routes: FinalRoute[]): FinalRoute[] {
   return routes.filter((r) => (seen.has(r.space_id) ? false : (seen.add(r.space_id), true)));
 }
 
-const bare = (r: { low: number; high: number }) => moneyRange(r).replace(/^about /, "");
-
 /** "about $6" for a listed price; for the general table, who buys it is spelled out. */
 function costText(l: { low_usd: number | null; high_usd: number | null; typical?: boolean }, bringYourOwn: boolean): string {
   const range = moneyRange({ low: l.low_usd!, high: l.high_usd! });
@@ -136,7 +136,7 @@ function costText(l: { low_usd: number | null; high_usd: number | null; typical?
 function RouteCard({ route: r, top, n, of, planId, spaceNames }: { route: FinalRoute; top: boolean; n: number; of: number; planId: string; spaceNames: Record<string, string> }) {
   const hid = `route-${n}`;
   const anyFree = r.scrap.some((s) => s.length > 0);
-  const est = r.prices_estimated ? ", estimated prices" : "";
+  const stub = costStub(r, anyFree);
   return (
     <article aria-labelledby={hid} className="card drop-in relative" style={{ animationDelay: `${(n - 1) * 120}ms` }}>
       {r.labels.length > 0 && (
@@ -253,6 +253,7 @@ function RouteCard({ route: r, top, n, of, planId, spaceNames }: { route: FinalR
                         )}
                         <p className="min-w-40 flex-1 text-[15px] leading-[1.3]">
                           <b>Free piece: {s.title}</b>
+                          {isSample(s.description) && <> <SampleTag /></>}
                           {s.size_note ? `. ${s.size_note}` : ""}
                           {s.space_id !== r.space_id ? `. At another space: ${spaceNames[s.space_id] ?? s.space_id}` : ""}
                           {s.restrictions.length > 0 ? `. ${s.restrictions.join(". ")}` : ""}.
@@ -270,24 +271,16 @@ function RouteCard({ route: r, top, n, of, planId, spaceNames }: { route: FinalR
 
       {r.cost_lines.length > 0 && (
         <div className="stub space-y-1 px-4 py-3.5">
-          {r.total ? (
-            anyFree && r.with_scrap ? (
-              <>
-                <p>
-                  <span className="block text-[15px]">With free scrap, about</span>
-                  <span className="figure block">{bare(r.with_scrap)}</span>
-                </p>
-                <p className="text-[15px] text-gray-text tabular">Materials: {moneyRange(r.total)} new{est}</p>
-              </>
-            ) : (
-              <>
-                <p>
-                  <span className="block text-[15px]">{r.typical_from ? (r.bring_your_own ? "Bring your own material. To buy it, about" : "Materials, if you buy them yourself, about") : "Materials, about"}</span>
-                  <span className="figure block">{bare(r.total)}</span>
-                </p>
-                {r.prices_estimated && !r.typical_from && <p className="text-[15px] text-gray-text">Estimated prices</p>}
-              </>
-            )
+          {stub ? (
+            <>
+              <p>
+                <span className="block text-[15px]">{stub.label}</span>
+                <span className="figure block">{stub.figure}</span>
+              </p>
+              {stub.notes.map((n) => (
+                <p key={n} className={n === SCRAP_TOTAL_NOTE ? "text-[15px] font-bold" : "text-[15px] text-gray-text"}>{n}</p>
+              ))}
+            </>
           ) : (
             <>
               <p className="text-[22px] font-bold leading-[1.15]">{r.bring_your_own ? "Bring your own material" : "Ask staff for prices"}</p>

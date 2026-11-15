@@ -70,3 +70,8 @@ export function EstimatedNote({ label = "Estimated" }: { label?: string }) {
     </details>
   );
 }
+
+/** Marks a demo sample item in the scrap bin, wherever the item is shown. */
+export function SampleTag() {
+  return <span className="tag-sample">Sample</span>;
+}

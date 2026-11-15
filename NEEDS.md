@@ -37,12 +37,12 @@ The `ai_usage` table exists in your Supabase project (checked Nov 15), so the li
 - **Why:** everything so far uses one drawn stand-in (`data/samples/scrap-standin.jpg`). The M4 check "a real offcut photo yields a sensible draft" and M2b's scrap check need real photos, and the demo needs real pieces in the bin.
 - **Where:** save them in `data/samples/real/` (any names), or post them yourself: sign in as staff, Staff portal, Post scrap.
 
-### 5b. Sample scrap is in the bin: four things to decide
-Ten sample items made from generated photos are published at the Maker Space (see `reports/sample-scrap.md`).
-- **The club sign plan shows "$0 with free scrap"** because two acrylic pieces match by material. Both are far smaller than the 12-inch sign. The app matches scrap by kind of material, never by size. I did not change that, because it is part of how plans are made. Decide whether to demo that plan as it is, or remove the two acrylic items.
-- **The sample sentence shows only when a piece is opened**, not on the Scrap tab cards, the Maker Space strip or the plan. Say if you want it somewhere more visible.
-- **Two drafted warnings are wrong** ("Do not laser cut PVC" on the plywood and the red acrylic). I left the model's words alone. You can edit or remove the items in the staff portal.
-- **Before real use, remove them:** `KEEP_SAMPLES=0 npm run clean:test`. Without that setting the cleanup keeps them.
+### 5b. Sample scrap is in the bin: what is left for you
+Ten sample items made from generated photos are published at the Maker Space (see `reports/sample-scrap.md`). The "$0" total, the Sample tag and the five listing fixes are done.
+- **The deck still shows the old wording.** `deck/assets/plan-cost.png` and its alt text in `deck/index.html` show "$0 with free scrap". I did not touch the deck. Say if you want the screenshot retaken.
+- **SPEC.md still describes the old behaviour** (section on scrap matches, and the M4 checklist line "its with-scrap total drops"). The number is still computed and still decides "Cheapest"; it is just no longer shown.
+- **A material line still reads "Free with scrap"** above a matched piece. You asked only about the total, so I left it.
+- **Before real use, remove the samples:** `KEEP_SAMPLES=0 npm run clean:test`. Without that setting the cleanup keeps them.
 
 ### 6. Confirm the scrap lists in the portal
 Your supervisor has approved the scrap exchange, so it is no longer described as a proposed pilot. The may-post and never-post lists still show as estimated until you confirm them with your real account.

@@ -5,6 +5,8 @@ export type ScrapItem = {
   space_id: string;
   material_category: string;
   title: string;
+  /** Carried through for display only; matching never reads it. */
+  description?: string;
   size_note: string | null;
   condition: string;
   restrictions: string[];
