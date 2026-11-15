@@ -37,7 +37,17 @@ if (existsSync("reports/eval-latest.json")) {
     `- Top route in the accepted set: **${e.top_in_accepted} of ${e.cases}**.`,
     `- Badges correct: **${e.badges_correct} of ${e.badges_total}**.`,
     `- Cases that errored: ${e.errors}.`,
-    `- Run at ${e.ran_at} with a live model (\`npm run eval\`).`,
+    `- Average model calls per plan: ${e.model_answers_per_plan ?? "not recorded"} (1 normally, 2 when the model is asked to look again).`,
+    `- Rule checks on every plan (open work orders, no "Cheapest" on a general price, bring your own): ${e.rule_breaks?.length ? e.rule_breaks.join("; ") : "none broken"}.`,
+    `- Run at ${e.ran_at} with a live model (\`npm run eval\`). Run once; prompts were not changed afterwards.`,
+    "",
+    "| Case | Student | Result | Top route | Accepted | Routes and badges | Calls |",
+    "| --- | --- | --- | --- | --- | --- | --- |",
+    ...(e.results as { id: string; audience?: string; top?: string | null; accepted?: string[]; top_ok?: boolean; routes?: string[]; model_answers?: number; error?: string }[]).map((r) =>
+      r.error
+        ? `| ${r.id} | | **Error** | ${r.error} | | | |`
+        : `| ${r.id} | ${r.audience} | ${r.top_ok ? "Pass" : "**Fail**"} | ${r.top ?? "no route"} | ${r.accepted?.join(", ") || "no route"} | ${r.routes?.join("; ") || "none"} | ${r.model_answers ?? ""} |`,
+    ),
     "",
   );
 } else {

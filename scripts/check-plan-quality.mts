@@ -93,6 +93,7 @@ const OPERATING = new RegExp(
     "\\b(open|close) the (lid|door|cover)\\b",
     "\\b(send|upload) (the|your) (file|design|model) to the (printer|laser|machine|cutter)",
     "\\bselect the (material|power|speed) (setting|profile)",
+    "\\b(verify|check|adjust|change|choose|tune|test) the settings\\b",
   ].join("|"),
   "i",
 );

@@ -5,7 +5,7 @@ Each item says what, why, and exactly where to put it. Newest blockers first.
 ## Live AI
 
 ### 1. Gemini API key in `.env.local`: done
-The key works. 91 live calls made so far (5 of them, on Nov 15 around 06:38Z, were not mine), logged in `logs/ai-calls.jsonl`. Local cap: 150.
+The key works. 127 live calls made so far (5 of them, on Nov 15 around 06:38Z, were not mine), logged in `logs/ai-calls.jsonl`. Local cap: 150.
 
 ### 2. Put the live site on Gemini
 - **What:** set the variables listed in `docs/production-settings.md` in Vercel and redeploy. In short: `AI_PROVIDER=gemini`, `GEMINI_API_KEY`, `GEMINI_MODEL_PRIMARY=gemini-3.5-flash-lite`, `GEMINI_MODEL_FALLBACK=gemini-3.1-flash-lite`, `AI_DAILY_BUDGET=450`, `AUTH_MODE=test`. Do **not** set `AI_CALL_BUDGET` there.
@@ -58,17 +58,13 @@ Prices now come from the staff quote sheet you showed (Nov 14), which is newer t
 
 ## Proof
 
-### 9. Approve the proposed eval-case changes
-- **What:** `reports/eval-cases-proposal.md` lists a proposed change for each of the 15 cases, 6 new cases and one risk to decide (the guitar pedal). Nothing is applied. Mark what you accept; I will edit `data/eval-cases.json` and wait for your word before running the eval.
+### 9. Decide on the eval's one failure and one over-strict check
+The eval ran once on Nov 14, 11:15 PM Pacific: 20 of 21 cases, 45 of 45 badges. See RESULTS.md. Prompts were not changed and it was not re-run.
+- **tote-bag failed.** You decided "no route is right"; the model sent the student to the Dramatic Arts scene shop (ask first), because that space lists a Costume Shop as a service. Options: accept that space for this case; remove the Costume Shop line from that space's data; or leave it as an honest miss.
+- **A check I added flagged two plans** (night light, Pi enclosure): a Maker Space route showed a Maker Space price although the space sells no material. Both are routes where staff print a part and the student also works at the electronics bench, so the price is the work order's print charge, which is right. I think the check is too strict, not the plans wrong. Say if you want the check narrowed, or such routes split.
 
-### 10. Live checks still to run, when you say so
-- `npm run check:quality` is done for the six home-page ideas (see RESULTS.md).
-- `npm run eval` (15 to 30 calls, more when the model is asked to look again), then `npm run results` to rewrite `RESULTS.md`.
-- `npm run check:live` (about 8 calls): the section 6.5 rows that depend on a live model.
-- M2b's scrap-draft check, once there is a real photo.
-- Each needs a local server on live Gemini: `RECORD_FIXTURES=1 PORT=3123 npm start`.
-
-## Submission materials (all first drafts)
+### 10. Local call budget
+`AI_CALL_BUDGET=150` in `.env.local` is our own fixed total and never resets. 127 are used, 23 are left. Raise the number there if you want more local live runs. It has no effect on the live site, whose cap is 450 a Pacific day.
 
 ### 11. Your problem story
 - **What:** one true story from working at the Maker Space: one student, one idea, where they got stuck. About 25 words for the slide, about 55 spoken.

@@ -1,0 +1,357 @@
+{
+  "ran_at": "2026-11-15T07:18:37.132Z",
+  "cases": 21,
+  "cases_status": "reviewed and approved by Jithin on Nov 15, 2026 (proposal in reports/eval-cases-proposal.md applied in full)",
+  "top_in_accepted": 20,
+  "badges_correct": 45,
+  "badges_total": 45,
+  "errors": 0,
+  "model_answers_per_plan": 1.52,
+  "rule_breaks": [
+    "night-light: bfms sells no material but a line shows its own price",
+    "pi-enclosure: bfms sells no material but a line shows its own price"
+  ],
+  "results": [
+    {
+      "id": "phone-stand-wood",
+      "audience": "viterbi_undergrad",
+      "top": "bfms",
+      "accepted": [
+        "bfms"
+      ],
+      "top_ok": true,
+      "model_answers": 2,
+      "routes": [
+        "bfms:open",
+        "roski-shops:ask_first",
+        "iya-hall:ask_first"
+      ],
+      "badges_ok": "3/3"
+    },
+    {
+      "id": "club-sign-acrylic",
+      "audience": "usc_undergrad_other",
+      "top": "bfms",
+      "accepted": [
+        "bfms"
+      ],
+      "top_ok": true,
+      "model_answers": 1,
+      "routes": [
+        "bfms:ask_first",
+        "bme-innovation:not_open"
+      ],
+      "badges_ok": "2/2"
+    },
+    {
+      "id": "night-light",
+      "audience": "viterbi_grad",
+      "top": "ahmanson-lab",
+      "accepted": [
+        "bfms",
+        "bme-innovation",
+        "ahmanson-lab",
+        "its-printing"
+      ],
+      "top_ok": true,
+      "model_answers": 2,
+      "routes": [
+        "ahmanson-lab:open",
+        "bfms:ask_first",
+        "bme-innovation:ask_first"
+      ],
+      "badges_ok": "3/3"
+    },
+    {
+      "id": "pi-enclosure",
+      "audience": "viterbi_undergrad",
+      "top": "bfms",
+      "accepted": [
+        "bfms",
+        "bme-innovation",
+        "ahmanson-lab",
+        "its-printing"
+      ],
+      "top_ok": true,
+      "model_answers": 2,
+      "routes": [
+        "bfms:open",
+        "bme-innovation:ask_first"
+      ],
+      "badges_ok": "2/2"
+    },
+    {
+      "id": "cardboard-model",
+      "audience": "usc_grad_other",
+      "top": "bfms",
+      "accepted": [
+        "bfms"
+      ],
+      "top_ok": true,
+      "model_answers": 1,
+      "routes": [
+        "bfms:ask_first",
+        "bme-innovation:not_open"
+      ],
+      "badges_ok": "2/2"
+    },
+    {
+      "id": "tiny-figurine",
+      "audience": "viterbi_undergrad",
+      "top": "bfms",
+      "accepted": [
+        "bfms"
+      ],
+      "top_ok": true,
+      "model_answers": 1,
+      "routes": [
+        "bfms:open"
+      ],
+      "badges_ok": "1/1"
+    },
+    {
+      "id": "plant-shelf",
+      "audience": "usc_undergrad_other",
+      "top": "roski-shops",
+      "accepted": [
+        "bfms",
+        "roski-shops",
+        "iya-hall"
+      ],
+      "top_ok": true,
+      "model_answers": 2,
+      "routes": [
+        "roski-shops:ask_first",
+        "iya-hall:ask_first"
+      ],
+      "badges_ok": "2/2"
+    },
+    {
+      "id": "metal-bracket",
+      "audience": "viterbi_undergrad",
+      "top": "bfms",
+      "accepted": [
+        "bfms",
+        "bme-innovation"
+      ],
+      "top_ok": true,
+      "model_answers": 2,
+      "routes": [
+        "bfms:open",
+        "bme-innovation:ask_first",
+        "iya-hall:ask_first"
+      ],
+      "badges_ok": "3/3"
+    },
+    {
+      "id": "guitar-pedal",
+      "audience": "usc_grad_other",
+      "top": "bfms",
+      "accepted": [
+        "bfms"
+      ],
+      "top_ok": true,
+      "model_answers": 2,
+      "routes": [
+        "bfms:ask_first",
+        "bme-innovation:not_open"
+      ],
+      "badges_ok": "2/2"
+    },
+    {
+      "id": "podcast",
+      "audience": "usc_undergrad_other",
+      "top": "digital-creative-lab",
+      "accepted": [
+        "digital-creative-lab",
+        "ahmanson-lab"
+      ],
+      "top_ok": true,
+      "model_answers": 2,
+      "routes": [
+        "digital-creative-lab:open",
+        "ahmanson-lab:open"
+      ],
+      "badges_ok": "2/2"
+    },
+    {
+      "id": "oral-history",
+      "audience": "usc_grad_other",
+      "top": "digital-creative-lab",
+      "accepted": [
+        "digital-creative-lab",
+        "ahmanson-lab"
+      ],
+      "top_ok": true,
+      "model_answers": 1,
+      "routes": [
+        "digital-creative-lab:open",
+        "ahmanson-lab:open"
+      ],
+      "badges_ok": "2/2"
+    },
+    {
+      "id": "audio-drama",
+      "audience": "usc_undergrad_other",
+      "top": "digital-creative-lab",
+      "accepted": [
+        "digital-creative-lab",
+        "ahmanson-lab"
+      ],
+      "top_ok": true,
+      "model_answers": 1,
+      "routes": [
+        "digital-creative-lab:open",
+        "ahmanson-lab:open"
+      ],
+      "badges_ok": "2/2"
+    },
+    {
+      "id": "tech-workshop",
+      "audience": "usc_undergrad_other",
+      "top": "ahmanson-lab",
+      "accepted": [
+        "ahmanson-lab"
+      ],
+      "top_ok": true,
+      "model_answers": 1,
+      "routes": [
+        "ahmanson-lab:open",
+        "digital-creative-lab:open"
+      ],
+      "badges_ok": "2/2"
+    },
+    {
+      "id": "podcast-and-sign",
+      "audience": "viterbi_undergrad",
+      "top": "digital-creative-lab",
+      "accepted": [
+        "digital-creative-lab",
+        "bfms",
+        "ahmanson-lab"
+      ],
+      "top_ok": true,
+      "model_answers": 2,
+      "routes": [
+        "digital-creative-lab:open",
+        "bfms:open"
+      ],
+      "badges_ok": "2/2"
+    },
+    {
+      "id": "tote-bag",
+      "audience": "usc_undergrad_other",
+      "top": "sda-technical-theatre-lab",
+      "accepted": [],
+      "top_ok": false,
+      "model_answers": 1,
+      "routes": [
+        "sda-technical-theatre-lab:ask_first"
+      ],
+      "badges_ok": "1/1"
+    },
+    {
+      "id": "research-poster",
+      "audience": "usc_undergrad_other",
+      "top": "its-printing",
+      "accepted": [
+        "its-printing",
+        "digital-creative-lab"
+      ],
+      "top_ok": true,
+      "model_answers": 2,
+      "routes": [
+        "its-printing:open",
+        "digital-creative-lab:open"
+      ],
+      "badges_ok": "2/2"
+    },
+    {
+      "id": "video-interview",
+      "audience": "usc_grad_other",
+      "top": "digital-creative-lab",
+      "accepted": [
+        "ahmanson-lab",
+        "digital-creative-lab"
+      ],
+      "top_ok": true,
+      "model_answers": 1,
+      "routes": [
+        "digital-creative-lab:open",
+        "ahmanson-lab:open"
+      ],
+      "badges_ok": "2/2"
+    },
+    {
+      "id": "keychain-print",
+      "audience": "usc_undergrad_other",
+      "top": "bfms",
+      "accepted": [
+        "bfms",
+        "its-printing",
+        "ahmanson-lab",
+        "digital-creative-lab"
+      ],
+      "top_ok": true,
+      "model_answers": 1,
+      "routes": [
+        "bfms:open",
+        "ahmanson-lab:open",
+        "digital-creative-lab:open"
+      ],
+      "badges_ok": "3/3"
+    },
+    {
+      "id": "grad-laser",
+      "audience": "viterbi_grad",
+      "top": "bfms",
+      "accepted": [
+        "bfms",
+        "bme-innovation"
+      ],
+      "top_ok": true,
+      "model_answers": 1,
+      "routes": [
+        "bfms:ask_first",
+        "bme-innovation:ask_first"
+      ],
+      "badges_ok": "2/2"
+    },
+    {
+      "id": "steel-sculpture",
+      "audience": "usc_undergrad_other",
+      "top": "roski-shops",
+      "accepted": [
+        "roski-shops",
+        "iya-hall",
+        "bfms"
+      ],
+      "top_ok": true,
+      "model_answers": 2,
+      "routes": [
+        "roski-shops:ask_first",
+        "iya-hall:ask_first"
+      ],
+      "badges_ok": "2/2"
+    },
+    {
+      "id": "stage-flat",
+      "audience": "usc_undergrad_other",
+      "top": "roski-shops",
+      "accepted": [
+        "sda-technical-theatre-lab",
+        "roski-shops",
+        "iya-hall",
+        "bfms"
+      ],
+      "top_ok": true,
+      "model_answers": 2,
+      "routes": [
+        "roski-shops:ask_first",
+        "bfms:ask_first",
+        "iya-hall:ask_first"
+      ],
+      "badges_ok": "3/3"
+    }
+  ]
+}

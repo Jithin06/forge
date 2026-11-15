@@ -1,11 +1,15 @@
 {
-  "status": "drafted by coder, awaiting Jithin's review",
+  "status": "reviewed and approved by Jithin on Nov 15, 2026 (proposal in reports/eval-cases-proposal.md applied in full)",
   "note": "Each case lists the space ids a knowledgeable person would accept as the TOP route for that student. An empty list means the right answer is no route at all. The accepted sets are the coder's judgment from the space documents; Jithin should correct them from what he knows of the spaces. Remember that code sorts routes that are open to the student ahead of ask-first ones, so the top route depends on the audience. Nov 15: the Ahmanson Lab now lists equipment from its own equipment page (a 3D printer, Arduino and Raspberry Pi kits, cameras, microphones) and is open to all four audiences, so it was added to the accepted set of three cases; see each case's why. Later on Nov 15: four spaces were added (ITS printing, Iovine and Young Hall, the Roski shops, the Dramatic Arts scene shop), the Maker Space is now open to Viterbi undergraduates, its 3D prints are staff-made with no training, and its laser cutter needs Level 5. The accepted sets below were written before those changes and have NOT been revised for them. Review every case before running the eval.",
   "spaces_at_time_of_writing": [
     "ahmanson-lab",
     "bfms",
     "bme-innovation",
-    "digital-creative-lab"
+    "digital-creative-lab",
+    "its-printing",
+    "iya-hall",
+    "roski-shops",
+    "sda-technical-theatre-lab"
   ],
   "cases": [
     {
@@ -63,9 +67,10 @@
       "accept_space_ids": [
         "bfms",
         "bme-innovation",
-        "ahmanson-lab"
+        "ahmanson-lab",
+        "its-printing"
       ],
-      "why": "Electronics plus 3D printing; both spaces have both. Nov 15: the Ahmanson Lab's equipment page lists a 3D printer and Arduino and Raspberry Pi kits, and it is open to this student, so it is accepted too."
+      "why": "Electronics plus 3D printing; both spaces have both. Nov 15: the Ahmanson Lab's equipment page lists a 3D printer and Arduino and Raspberry Pi kits, and it is open to this student, so it is accepted too. ITS prints by request and is open; a Maker Space work order is open to everyone."
     },
     {
       "id": "pi-enclosure",
@@ -85,9 +90,10 @@
       "accept_space_ids": [
         "bfms",
         "bme-innovation",
-        "ahmanson-lab"
+        "ahmanson-lab",
+        "its-printing"
       ],
-      "why": "3D printed or laser-cut box plus soldering. Nov 15: the Ahmanson Lab's equipment page lists a 3D printer and Arduino and Raspberry Pi kits, and it is open to this student, so it is accepted too."
+      "why": "3D printed or laser-cut box plus soldering. Nov 15: the Ahmanson Lab's equipment page lists a 3D printer and Arduino and Raspberry Pi kits, and it is open to this student, so it is accepted too. The box can be a staff-made print at ITS."
     },
     {
       "id": "cardboard-model",
@@ -145,9 +151,11 @@
       },
       "audience": "usc_undergrad_other",
       "accept_space_ids": [
-        "bfms"
+        "bfms",
+        "roski-shops",
+        "iya-hall"
       ],
-      "why": "Wood cut with power tools or the laser cutter at the Maker Space."
+      "why": "Wood cut with power tools or the laser cutter at the Maker Space. Roski and Iovine and Young also list woodworking; all three are ask first for this student."
     },
     {
       "id": "metal-bracket",
@@ -189,7 +197,7 @@
       "accept_space_ids": [
         "bfms"
       ],
-      "why": "Soldering. BME is not open to this student, so the Maker Space must be first."
+      "why": "Soldering. BME is not open to this student, so the Maker Space must be first. Decided by Jithin on Nov 15: a top route at the Ahmanson Lab is a failure, because its page lists kits but no soldering iron."
     },
     {
       "id": "podcast",
@@ -197,9 +205,10 @@
       "answers": {},
       "audience": "usc_undergrad_other",
       "accept_space_ids": [
-        "digital-creative-lab"
+        "digital-creative-lab",
+        "ahmanson-lab"
       ],
-      "why": "Non-engineering idea. The Digital Creative Lab's page lists podcast studios open to students."
+      "why": "Non-engineering idea. The Digital Creative Lab's page lists podcast studios open to students. The Ahmanson Lab's equipment page lists microphones and an audio interface."
     },
     {
       "id": "oral-history",
@@ -207,9 +216,10 @@
       "answers": {},
       "audience": "usc_grad_other",
       "accept_space_ids": [
-        "digital-creative-lab"
+        "digital-creative-lab",
+        "ahmanson-lab"
       ],
-      "why": "Non-engineering idea. Audio recording: the podcast studios."
+      "why": "Non-engineering idea. Audio recording: the podcast studios. The Ahmanson Lab's equipment page lists microphones and an audio interface."
     },
     {
       "id": "audio-drama",
@@ -221,9 +231,10 @@
       },
       "audience": "usc_undergrad_other",
       "accept_space_ids": [
-        "digital-creative-lab"
+        "digital-creative-lab",
+        "ahmanson-lab"
       ],
-      "why": "Non-engineering idea. Audio recording: the podcast studios."
+      "why": "Non-engineering idea. Audio recording: the podcast studios. The Ahmanson Lab's equipment page lists microphones and an audio interface."
     },
     {
       "id": "tech-workshop",
@@ -246,9 +257,10 @@
       "audience": "viterbi_undergrad",
       "accept_space_ids": [
         "digital-creative-lab",
-        "bfms"
+        "bfms",
+        "ahmanson-lab"
       ],
-      "why": "Two needs. Either the studio or the laser cutter is acceptable as the top route, as long as both needs are covered."
+      "why": "Two needs. Either the studio or the laser cutter is acceptable as the top route, as long as both needs are covered. The Ahmanson Lab is accepted for the recording half."
     },
     {
       "id": "tote-bag",
@@ -263,7 +275,78 @@
       },
       "audience": "usc_undergrad_other",
       "accept_space_ids": [],
-      "why": "No listed space has sewing equipment. The right answer is no route, with a reason."
+      "why": "No listed space has sewing equipment. The right answer is no route, with a reason. Decided by Jithin on Nov 15: keep 'no route is right'."
+    },
+    {
+      "id": "research-poster",
+      "idea": "A printed poster of my research for a poster session, 36 by 48 inches, in color. I have the file ready and need one copy.",
+      "answers": {},
+      "audience": "usc_undergrad_other",
+      "accept_space_ids": [
+        "its-printing",
+        "digital-creative-lab"
+      ],
+      "why": "Non-engineering idea with a real listed price."
+    },
+    {
+      "id": "video-interview",
+      "idea": "A two-minute video interview with a professor for a class project. I need a camera, a microphone and a quiet place to film.",
+      "answers": {},
+      "audience": "usc_grad_other",
+      "accept_space_ids": [
+        "ahmanson-lab",
+        "digital-creative-lab"
+      ],
+      "why": "Video; both spaces are open."
+    },
+    {
+      "id": "keychain-print",
+      "idea": "A small 3D printed keychain with my initials on it. Just one.",
+      "answers": {},
+      "audience": "usc_undergrad_other",
+      "accept_space_ids": [
+        "bfms",
+        "its-printing",
+        "ahmanson-lab",
+        "digital-creative-lab"
+      ],
+      "why": "The work order must show Open to you for a non-Viterbi student."
+    },
+    {
+      "id": "grad-laser",
+      "idea": "A laser-cut plywood box with finger joints to hold my desk supplies, about shoebox size.",
+      "answers": {},
+      "audience": "viterbi_grad",
+      "accept_space_ids": [
+        "bfms",
+        "bme-innovation"
+      ],
+      "why": "The Maker Space route must read Ask first for a graduate student; material is bring your own."
+    },
+    {
+      "id": "steel-sculpture",
+      "idea": "A small welded steel sculpture, about a foot tall, for an art class.",
+      "answers": {},
+      "audience": "usc_undergrad_other",
+      "accept_space_ids": [
+        "roski-shops",
+        "iya-hall",
+        "bfms"
+      ],
+      "why": "A school shop that is ask first for everyone."
+    },
+    {
+      "id": "stage-flat",
+      "idea": "A painted plywood flat, four by eight feet, as scenery for a student play.",
+      "answers": {},
+      "audience": "usc_undergrad_other",
+      "accept_space_ids": [
+        "sda-technical-theatre-lab",
+        "roski-shops",
+        "iya-hall",
+        "bfms"
+      ],
+      "why": "A space with no listed equipment: the route should say to ask its staff."
     }
   ]
 }

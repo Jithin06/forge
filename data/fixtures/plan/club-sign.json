@@ -1,6 +1,6 @@
 {
   "call": "plan",
-  "note": "Recorded from the live model by scripts/check-plan-quality.mts.",
+  "note": "Recorded from the live model by scripts/check-plan-quality.mts. Edited by hand on Nov 15 at Jithin's request: BME's step 'Run a small test cut to verify the settings.' now reads 'Ask staff to check your file.'",
   "recorded": {
     "at": "2026-11-15T06:54:55.710Z",
     "attempts": 1
@@ -82,7 +82,7 @@
           },
           {
             "title": "Make a small test",
-            "detail": "Run a small test cut to verify the settings."
+            "detail": "Ask staff to check your file."
           },
           {
             "title": "Assemble and finish",
