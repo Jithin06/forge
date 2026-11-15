@@ -21,6 +21,7 @@ const TABLES = [
   "scrap_items",
   "scrap_claims",
   "impact",
+  "ai_usage",
 ];
 
 const anon = createClient(url, anonKey, { auth: { persistSession: false } });

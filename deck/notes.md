@@ -29,7 +29,7 @@ Forge launches with estimates, each one labelled. A space's own staff sign in, f
 A professor can hand a first-year class one link. Planning needs no account.
 
 ## Slide 5. What exists today (2:30 to 2:45, about 30 words)
-Two spaces are listed today. Everything about them is marked estimated until their staff confirm it. [Say the reuse number from RESULTS.md, even if it is zero.]
+Four spaces are listed today, in two schools and the library. Everything about them is marked estimated until their staff confirm it. [Say the reuse number from RESULTS.md, even if it is zero.]
 
 ## Slide 6. Ask (2:45 to 3:00, about 35 words)
 We are asking for three things. One pilot semester with the Maker Space and one intro course. USC single sign-on. And introductions to the people who run the other spaces.

@@ -3,6 +3,7 @@ import { createHash } from "node:crypto";
 import { appendFile, mkdir, readdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { z } from "zod";
+import { BudgetReached, spendDailyCall } from "./budget";
 
 /**
  * The only file that talks to an AI provider (SPEC.md section 4.1).
@@ -212,11 +213,29 @@ export async function liveCallCount(): Promise<number> {
   }
 }
 
+/**
+ * Called before every request to a live model.
+ * - AI_CALL_BUDGET set (local work): a fixed total that never resets.
+ * - Otherwise (the live site): a daily cap, counted in the database. See budget.ts.
+ */
 async function spendOneCall() {
   const budget = Number(process.env.AI_CALL_BUDGET);
-  if (!Number.isFinite(budget) || budget <= 0) return;
-  const used = await liveCallCount();
-  if (used >= budget) throw new AIError("BUDGET", `Live AI call budget reached (${used} of ${budget}).`);
+  if (Number.isFinite(budget) && budget > 0) {
+    const used = await liveCallCount();
+    if (used >= budget) throw new AIError("BUDGET", `Live AI call budget reached (${used} of ${budget}).`);
+    return;
+  }
+  try {
+    const { db } = await import("../db");
+    const r = await spendDailyCall(async (day, limit) => {
+      const { data, error } = await db().rpc("spend_ai_call", { p_day: day, p_limit: limit });
+      return { data: data as number | null, error };
+    });
+    console.log(`live AI call ${r.count} of ${r.limit} for ${r.day} Pacific${r.shared ? "" : " (this server copy only)"}`);
+  } catch (e) {
+    if (e instanceof BudgetReached) throw new AIError("BUDGET", e.message);
+    throw e;
+  }
 }
 
 async function logCall(entry: Record<string, unknown>) {

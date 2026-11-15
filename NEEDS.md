@@ -2,19 +2,18 @@
 
 Each item says what, why, and exactly where to put it. Newest blockers first.
 
-## Blocking live AI (M2b and everything that uses a live model)
+## Live AI
 
-### 1. Gemini API key in `.env.local`
-- **What:** `GEMINI_API_KEY` is empty in `/Users/jithinrajan/Desktop/forge/.env.local`. The line is there, with nothing after the `=`.
-- **Why:** no live call can be made without it. The adapter, the automatic fallback from `gemini-3.5-flash-lite` to `gemini-3.1-flash-lite`, the call log and the 150-call budget are built and unit-tested with a mocked network, but have never touched the real API.
-- **Where:** open `.env.local` in an editor and paste the key after `GEMINI_API_KEY=`. Do not paste it in chat. Then tell me, or run:
-  1. `AI_PROVIDER=gemini RECORD_FIXTURES=1 PORT=3123 npm start`
-  2. in another terminal: `BASE=http://localhost:3123 npm run check:m2b` (about 10 live calls)
+### 1. Gemini API key in `.env.local`: done
+The key works. 18 live calls made so far, logged in `logs/ai-calls.jsonl`. Local cap: 150.
 
-### 2. Switch the live site to Gemini (after item 1 passes)
-- **What:** in Vercel, Settings, Environment Variables, set `AI_PROVIDER=gemini`, `GEMINI_MODEL_PRIMARY=gemini-3.5-flash-lite`, `GEMINI_MODEL_FALLBACK=gemini-3.1-flash-lite`, and confirm `GEMINI_API_KEY` is there. Redeploy.
-- **Why:** I cannot change settings in your Vercel account. Until then the live site keeps showing sample data with the banner.
-- **Note:** on Vercel the call count is per server instance and only in the logs, because its file system is read-only. My own 150-call budget is counted in `logs/ai-calls.jsonl` on this machine.
+### 2. Put the live site on Gemini
+- **What:** set the variables listed in `docs/production-settings.md` in Vercel and redeploy. In short: `AI_PROVIDER=gemini`, `GEMINI_API_KEY`, `GEMINI_MODEL_PRIMARY=gemini-3.5-flash-lite`, `GEMINI_MODEL_FALLBACK=gemini-3.1-flash-lite`, `AI_DAILY_BUDGET=450`, `AUTH_MODE=test`. Do **not** set `AI_CALL_BUDGET` there.
+- **Why:** I cannot change settings in your Vercel account. Until then the live site shows sample data with the banner.
+
+### 2b. Run the updated schema once, for an exact daily cap
+- **What:** Supabase, SQL Editor: paste and run the whole of `supabase/schema.sql` again. It adds one table (`ai_usage`) and one function (`spend_ai_call`) and touches nothing else.
+- **Why:** the live site's daily cap is counted in the database so all server copies share it. Without this step the cap is counted per server copy and is only approximate.
 
 ## Sign-in
 
@@ -63,17 +62,16 @@ All seven are my guesses, saved with `price_source: "coder estimate, unverified"
 
 ## Proof
 
-### 9. Review the eval cases
-- **What:** `data/eval-cases.json` has 15 cases I drafted. For each, `accept_space_ids` is the set of spaces I think a knowledgeable person would accept as the top route. Correct them from what you know, then change `"status"` at the top of the file to say you reviewed them.
-- **Why:** the spec says you write these. Until you review them the score is checked against my judgment, and `RESULTS.md` says so.
+### 9. Review the eval cases: ready for you
+- **What:** `data/eval-cases.json` has 15 cases across the four spaces. For each, `accept_space_ids` is the set of spaces I think a knowledgeable person would accept as the top route for that student; an empty list means the right answer is no route. Correct them from what you know, then change `"status"` at the top of the file to say you reviewed them.
+- **Why:** the spec says you write these. I will not run the eval until you say so. It costs 15 calls, up to 30 with retries.
+- **Look hardest at:** the three audio cases and the workshop case (they rest on one sentence each from the Leavey pages), and `podcast-and-sign`, which accepts either space.
 
-### 10. Once the Gemini key is in (item 1), run these in order
-1. `AI_PROVIDER=gemini RECORD_FIXTURES=1 AUTH_MODE=test PORT=3123 npm start` (leave running)
-2. `BASE=http://localhost:3123 npm run check:m2b` (about 10 calls)
-3. `BASE=http://localhost:3123 npm run check:live` (about 8 calls)
-4. `BASE=http://localhost:3123 npm run eval` (15 to 30 calls)
-5. `npm run results` (rewrites `RESULTS.md` with the eval score and tokens per plan)
-- Or tell me the key is in and I will run them and fix whatever the first real responses turn up. `logs/ai-calls.jsonl` shows the running count; the budget stops calls at 150.
+### 10. Live checks still to run, when you say so
+- `npm run eval` (15 to 30 calls), then `npm run results` to rewrite `RESULTS.md`.
+- `npm run check:live` (about 8 calls): the section 6.5 rows that depend on a live model.
+- M2b's scrap-draft check, once there is a real photo.
+- Each needs a local server on live Gemini: `RECORD_FIXTURES=1 PORT=3123 npm start`.
 
 ## Submission materials (all first drafts)
 

@@ -42,7 +42,7 @@ if (existsSync("reports/eval-latest.json")) {
   );
 } else {
   const cases = JSON.parse(readFileSync("data/eval-cases.json", "utf8"));
-  out.push(`**Not run.** No live AI provider is connected, and sample data is never used for the eval. ${cases.cases.length} cases are written (${cases.status}). Run \`npm run eval\` once a provider works.`, "");
+  out.push(`**Not run.** ${cases.cases.length} cases are written (${cases.status}). The eval runs only on a live model, with \`npm run eval\`, after the cases are reviewed.`, "");
 }
 
 // ---- live AI usage
@@ -56,7 +56,7 @@ if (calls.length === 0) {
   const plans = ok.filter((c) => c.call === "plan");
   const avg = (xs: number[]) => (xs.length ? Math.round(xs.reduce((a, b) => a + b, 0) / xs.length) : 0);
   out.push(
-    `- Requests sent to a live model: ${calls.length} (${ok.length} answered, ${calls.filter((c) => c.status === 429).length} rate-limited).`,
+    `- Requests sent to a live model: ${calls.length} (${ok.length} answered, ${calls.filter((c) => c.status === 429).length} rate-limited, ${calls.filter((c) => c.status !== 200 && c.status !== 429).length} rejected or failed).`,
     `- By model: ${[...new Set(calls.map((c) => c.model))].map((m) => `${m}: ${calls.filter((c) => c.model === m).length}`).join("; ")}.`,
     plans.length
       ? `- Average tokens per plan call (${plans.length} calls): ${avg(plans.map((c) => c.input_tokens))} in, ${avg(plans.map((c) => c.output_tokens))} out.`

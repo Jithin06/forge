@@ -1,6 +1,6 @@
 # Devpost description (first draft)
 
-Follows SPEC.md section 9.3. Bracketed parts need Jithin. Numbers must be copied from `RESULTS.md` on the day of submission; the ones here are from the run on Nov 14, 2026, 6:04 PM PT.
+Follows SPEC.md section 9.3. Bracketed parts need Jithin. Numbers must be copied from `RESULTS.md` on the day of submission; the ones here are from the run on the evening of Nov 14, 2026.
 
 ## Forge
 
@@ -29,15 +29,15 @@ The model proposes; code verifies. The model reads the idea and suggests routes.
 
 ## What is measured
 
-- 70 of 70 automated tests pass, including the ten AI safety cases in the spec.
+- 79 of 79 automated tests pass, including the ten AI safety cases in the spec.
 - Race test: 5 simultaneous claims from 5 users on one item: 1 succeeded, 4 got ALREADY_CLAIMED.
 - [Eval: not run yet. After `npm run eval`, write: "Top route in the accepted set: X of 15 test ideas. Badges correct: Y of Z." and say who wrote the cases.]
-- [Tokens per plan: not measured yet. Copy the line from RESULTS.md after the first live run.]
+- Average tokens per plan call (10 live calls): 3197 in, 420 out. [Re-copy from RESULTS.md at submission.]
 - Scrap pieces posted by real staff: 0. Picked up: 0.
 
 ## What is estimated
 
-Two spaces are listed: the Baum Family Maker Space and the BME Innovation Space. **Every fact about both is marked "Estimated"** and none has been confirmed by staff. Hours, equipment and training levels come from each space's official pages, read on Nov 14, 2026. Access for the Maker Space is shown as "Ask first" for everyone because it has not been confirmed. **Material prices at the Maker Space are the coder's own unverified estimates**, labelled as estimates in the app. [Jithin: update this paragraph after you correct the data.]
+Four spaces are listed: the Baum Family Maker Space, the BME Innovation Space, the Ahmanson Lab and the Digital Creative Lab. **Every fact about all four is marked "Estimated"** and none has been confirmed by staff. Hours, equipment and training levels come from each space's official pages, read on Nov 14, 2026. The two Leavey Library spaces list very little on their pages, so Forge shows very little and tells students to ask. Access for the Maker Space is shown as "Ask first" for everyone because it has not been confirmed. **Material prices at the Maker Space are the coder's own unverified estimates**, labelled as estimates in the app. [Jithin: update this paragraph after you correct the data.]
 
 Sign-in in the prototype [uses a test account picker / uses Google sign-in limited to usc.edu accounts: keep the one that is true at submission]. USC single sign-on is the production path.
 

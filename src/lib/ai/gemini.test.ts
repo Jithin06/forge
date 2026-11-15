@@ -36,7 +36,9 @@ beforeEach(() => {
   vi.stubEnv("GEMINI_MODEL_PRIMARY", "primary-model");
   vi.stubEnv("GEMINI_MODEL_FALLBACK", "fallback-model");
   vi.stubEnv("AI_CALL_LOG", log);
-  vi.stubEnv("AI_CALL_BUDGET", "");
+  // A fixed local cap, so these tests never reach for the database's daily counter
+  // (the fake network below would intercept that call).
+  vi.stubEnv("AI_CALL_BUDGET", "100000");
   vi.stubEnv("RECORD_FIXTURES", "");
 });
 afterEach(() => {

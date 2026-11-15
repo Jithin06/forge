@@ -7,12 +7,12 @@ Headlines:
   2. Describe your idea. Forge shows where to build it and the cost.
   3. The model proposes. Code decides access, training, cost and labels.
   4. Each space's own staff keep its page true, in minutes.
-  5. Two spaces are listed today, and every fact is labelled.
+  5. Four spaces are listed today, and every fact is labelled.
   6. We ask for one pilot semester.
 Numbers used and their source lines in RESULTS.md:
-  - "70 of 70 tests pass" (slide 3): "70 of 70 unit tests pass, in 8 of 8 files"
+  - "79 of 79 tests pass" (slide 3): "79 of 79 unit tests pass, in 10 of 10 files"
   - "0 pieces reused so far" (slide 5): "Picked up (the impact counter, counted in SQL over all items): 0"
-  - "Two spaces", both "Estimated" (slide 5): the "Spaces listed" table, both rows "none" confirmed
+  - "Four spaces", all "Estimated" (slide 5): the "Spaces listed" table, all four rows "none" confirmed
   - Inside the screenshots (slide 2): "$7 to $8, estimated prices" and "$1 to $2" are computed by the app from the coder's estimated prices
 Estimated data shown and how it is labelled:
   - Slide 2 screenshot: the app's own words "estimated prices"; caption "Real screens, sample data."

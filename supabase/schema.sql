@@ -195,6 +195,38 @@ alter view public.impact set (security_invoker = true);
 revoke all on public.impact from anon, authenticated;
 grant select on public.impact to service_role;
 
+-- ------------------------------------------- daily live-AI call counter
+-- One row per Pacific calendar day (Gemini's daily quota resets at midnight
+-- Pacific time). The server adds one before each live model request and
+-- stops when the day's limit is reached.
+create table if not exists public.ai_usage (
+  day    date primary key,
+  calls  integer not null default 0
+);
+alter table public.ai_usage enable row level security;
+revoke all on table public.ai_usage from anon, authenticated;
+grant all on table public.ai_usage to service_role;
+
+-- Adds one if the day is still under the limit, in one statement, so two
+-- servers cannot both take the last call. Returns the new count, or -1.
+create or replace function public.spend_ai_call(p_day date, p_limit integer)
+returns integer
+language plpgsql
+set search_path = public
+as $$
+declare
+  v_calls integer;
+begin
+  insert into public.ai_usage as u (day, calls)
+  values (p_day, 1)
+  on conflict (day) do update set calls = u.calls + 1 where u.calls < p_limit
+  returning u.calls into v_calls;
+  return coalesce(v_calls, -1);
+end;
+$$;
+revoke all on function public.spend_ai_call(date, integer) from public, anon, authenticated;
+grant execute on function public.spend_ai_call(date, integer) to service_role;
+
 -- ------------------------------------------------------ storage bucket
 -- Public read so photo URLs work in <img>. No storage policies are added, so
 -- only the service role (staff routes on the server) can upload.
