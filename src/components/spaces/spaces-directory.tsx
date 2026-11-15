@@ -123,7 +123,7 @@ function SpaceCard({ space, elig }: { space: SpaceDoc; elig: ReturnType<typeof e
       )}
       <p className="mt-2">{space.blurb}</p>
       <p className="mt-2 text-[15px] text-gray-text">
-        {space.capabilities.map((c) => CAPABILITY_LABELS[c]).join(" · ")}
+        {space.capabilities.length > 0 ? space.capabilities.map((c) => CAPABILITY_LABELS[c]).join(" · ") : "Equipment not listed. Ask the staff."}
       </p>
     </article>
   );

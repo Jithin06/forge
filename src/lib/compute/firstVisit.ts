@@ -33,7 +33,7 @@ export function firstVisit(space: SpaceDoc, trainings: Training[]): string[] {
   items.push(
     hours
       ? `Go to ${space.name}, ${space.location}. Listed hours: ${hours}.`
-      : `Go to ${space.name}, ${space.location}. Hours are not listed, so check the official page first.`,
+      : `Go to ${space.name}, ${space.location}. ${space.hours_note ?? "Hours are not listed, so check the official page first."}`,
   );
   items.push(...space.access_steps);
   // Short name: "Level 1: Orientation and safety" -> "level 1".

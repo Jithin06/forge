@@ -1,0 +1,79 @@
+{
+  "id": "ahmanson-lab",
+  "name": "Ahmanson Lab",
+  "school": "Sidney Harman Academy for Polymathic Study",
+  "location": "Leavey Library, room 301",
+  "official_url": "https://libraries.usc.edu/locations/leavey-library/rooms/lvl-301-ahmanson-lab",
+  "blurb": "A lab that offers technology, equipment, services and workshops to USC students, staff and faculty. Its official page does not list specific equipment, so ask the lab what it has.",
+  "capabilities": [],
+  "hours": null,
+  "hours_note": "The official page lists 9 AM to 9 PM and does not say which days.",
+  "access": [
+    {
+      "audience": "viterbi_undergrad",
+      "status": "open",
+      "note": null
+    },
+    {
+      "audience": "viterbi_grad",
+      "status": "open",
+      "note": null
+    },
+    {
+      "audience": "usc_undergrad_other",
+      "status": "open",
+      "note": null
+    },
+    {
+      "audience": "usc_grad_other",
+      "status": "open",
+      "note": null
+    }
+  ],
+  "access_steps": [
+    "Email the lab at lvy@usc.edu to ask what equipment and workshops it has."
+  ],
+  "trainings": [],
+  "equipment": [],
+  "materials": [],
+  "services": [
+    {
+      "name": "Technology, equipment and services for USC students, staff and faculty",
+      "how_to_request": "Contact lvy@usc.edu"
+    },
+    {
+      "name": "Workshops",
+      "how_to_request": "Contact lvy@usc.edu"
+    }
+  ],
+  "usage_fee_note": null,
+  "prohibited": [],
+  "scrap_policy": {
+    "offers_scrap": false,
+    "never_offer": [],
+    "pickup_note": null
+  },
+  "source": {
+    "urls": [
+      "https://libraries.usc.edu/locations/leavey-library/rooms/lvl-301-ahmanson-lab"
+    ],
+    "checked_on": "2026-11-14"
+  },
+  "status": {
+    "hours": {
+      "state": "estimated"
+    },
+    "access": {
+      "state": "estimated"
+    },
+    "trainings": {
+      "state": "estimated"
+    },
+    "equipment": {
+      "state": "estimated"
+    },
+    "prices": {
+      "state": "estimated"
+    }
+  }
+}

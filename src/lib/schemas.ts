@@ -135,8 +135,11 @@ export const spaceDocSchema = z
     location: text,
     official_url: z.url(),
     blurb: text,
-    capabilities: z.array(vocab("capability", CAPABILITIES)).min(1),
+    /** May be empty when the official page lists no equipment. */
+    capabilities: z.array(vocab("capability", CAPABILITIES)),
     hours: z.record(z.enum(WEEKDAYS), dayHours).nullable(),
+    /** For hours a page states without saying which days, e.g. "9 AM to 9 PM". */
+    hours_note: z.string().nullable().optional(),
     access: z.array(accessEntrySchema),
     access_steps: z.array(text),
     trainings: z.array(trainingSchema),

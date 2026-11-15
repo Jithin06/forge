@@ -87,7 +87,7 @@ function SpaceView({ space, scrap }: { space: SpaceDoc; scrap: ScrapCard[] }) {
             </tbody>
           </table>
         ) : (
-          <p>Hours are not listed. Check the official page before you go.</p>
+          <p>{space.hours_note ?? "Hours are not listed. Check the official page before you go."}</p>
         )}
       </Section>
 
@@ -119,6 +119,19 @@ function SpaceView({ space, scrap }: { space: SpaceDoc; scrap: ScrapCard[] }) {
           </div>
         )}
       </Section>
+
+      {space.services.length > 0 && (
+        <Section title="What staff can help with" status={space.status.equipment}>
+          <ul className="space-y-3">
+            {space.services.map((sv) => (
+              <li key={sv.name} className="border-l-2 border-gray-line pl-3">
+                <p className="font-semibold">{sv.name}</p>
+                <p className="text-[15px]">{sv.how_to_request ?? "Ask the staff how to request this."}</p>
+              </li>
+            ))}
+          </ul>
+        </Section>
+      )}
 
       <Section title="Trainings" status={space.status.trainings}>
         {space.trainings.length === 0 ? (

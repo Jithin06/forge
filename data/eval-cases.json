@@ -1,9 +1,11 @@
 {
   "status": "drafted by coder, awaiting Jithin's review",
-  "note": "Each case lists the space ids a knowledgeable person would accept as the TOP route for that student. An empty list means the right answer is no route at all. The accepted sets are the coder's judgment from the space documents; Jithin should correct them from what he knows of the spaces.",
+  "note": "Each case lists the space ids a knowledgeable person would accept as the TOP route for that student. An empty list means the right answer is no route at all. The accepted sets are the coder's judgment from the space documents; Jithin should correct them from what he knows of the spaces. Remember that code sorts routes that are open to the student ahead of ask-first ones, so the top route depends on the audience.",
   "spaces_at_time_of_writing": [
+    "ahmanson-lab",
     "bfms",
-    "bme-innovation"
+    "bme-innovation",
+    "digital-creative-lab"
   ],
   "cases": [
     {
@@ -168,67 +170,6 @@
       "why": "Metalworking: both spaces list a machine shop. A strong 3D print at the Maker Space is also acceptable."
     },
     {
-      "id": "bme-grip",
-      "idea": "A prototype handle grip for a medical device for my biomedical engineering class project. Palm sized, a few copies.",
-      "answers": {
-        "size": [
-          "hand"
-        ],
-        "quantity": [
-          "few"
-        ],
-        "demands": [
-          "weight"
-        ]
-      },
-      "audience": "viterbi_undergrad",
-      "accept_space_ids": [
-        "bme-innovation",
-        "bfms"
-      ],
-      "why": "3D printing; either space."
-    },
-    {
-      "id": "long-part",
-      "idea": "One plastic part about 30 inches long that has to be made in a single piece, not glued together.",
-      "answers": {
-        "size": [
-          "bigger"
-        ],
-        "quantity": [
-          "one"
-        ],
-        "demands": [
-          "weight"
-        ]
-      },
-      "audience": "viterbi_undergrad",
-      "accept_space_ids": [
-        "bfms"
-      ],
-      "why": "Only the Stratasys F900 at the Maker Space lists a build area that long."
-    },
-    {
-      "id": "face-shield",
-      "idea": "A clear face shield visor cut from a thin flat sheet of clear plastic, sized to fit my head.",
-      "answers": {
-        "size": [
-          "backpack"
-        ],
-        "quantity": [
-          "one"
-        ],
-        "demands": [
-          "looks"
-        ]
-      },
-      "audience": "viterbi_grad",
-      "accept_space_ids": [
-        "bfms"
-      ],
-      "why": "Laser-cut PETG sheet at the Maker Space."
-    },
-    {
       "id": "guitar-pedal",
       "idea": "I have a guitar effects pedal kit and need to solder the parts onto the circuit board and test it.",
       "answers": {
@@ -249,32 +190,63 @@
       "why": "Soldering. BME is not open to this student, so the Maker Space must be first."
     },
     {
-      "id": "keychains",
-      "idea": "Twenty small wooden keychains with our team logo engraved, to give away at an event.",
+      "id": "podcast",
+      "idea": "I want to record a podcast episode with two friends about campus food. We need microphones and a quiet room.",
+      "answers": {},
+      "audience": "usc_undergrad_other",
+      "accept_space_ids": [
+        "digital-creative-lab"
+      ],
+      "why": "Non-engineering idea. The Digital Creative Lab's page lists podcast studios open to students."
+    },
+    {
+      "id": "oral-history",
+      "idea": "For my anthropology seminar I am recording spoken interviews with three alumni and need a quiet place to record clean audio.",
+      "answers": {},
+      "audience": "usc_grad_other",
+      "accept_space_ids": [
+        "digital-creative-lab"
+      ],
+      "why": "Non-engineering idea. Audio recording: the podcast studios."
+    },
+    {
+      "id": "audio-drama",
+      "idea": "My theatre class is making a ten-minute radio play. We need somewhere to record four voices.",
       "answers": {
-        "size": [
-          "hand"
-        ],
         "quantity": [
-          "many"
-        ],
-        "demands": [
-          "looks"
+          "one"
+        ]
+      },
+      "audience": "usc_undergrad_other",
+      "accept_space_ids": [
+        "digital-creative-lab"
+      ],
+      "why": "Non-engineering idea. Audio recording: the podcast studios."
+    },
+    {
+      "id": "tech-workshop",
+      "idea": "I am an English major with an idea for a digital storytelling project. I have never used any of this technology and would like a workshop or someone to show me what is possible.",
+      "answers": {},
+      "audience": "usc_undergrad_other",
+      "accept_space_ids": [
+        "ahmanson-lab"
+      ],
+      "why": "Non-engineering idea. The Ahmanson Lab's page offers technology, services and workshops to USC students; no other listed space offers workshops for a beginner outside engineering. Its equipment is not listed, so the right route says to ask its staff."
+    },
+    {
+      "id": "podcast-and-sign",
+      "idea": "Our club is starting a podcast. We need to record the first episode and also make a small acrylic sign with the show's logo for our table.",
+      "answers": {
+        "quantity": [
+          "one"
         ]
       },
       "audience": "viterbi_undergrad",
       "accept_space_ids": [
+        "digital-creative-lab",
         "bfms"
       ],
-      "why": "Laser cutting many small flat pieces."
-    },
-    {
-      "id": "podcast",
-      "idea": "I want to record a podcast episode with two friends and need microphones and a quiet room.",
-      "answers": {},
-      "audience": "viterbi_undergrad",
-      "accept_space_ids": [],
-      "why": "No listed space has audio recording. The right answer is no route, with a reason."
+      "why": "Two needs. Either the studio or the laser cutter is acceptable as the top route, as long as both needs are covered."
     },
     {
       "id": "tote-bag",

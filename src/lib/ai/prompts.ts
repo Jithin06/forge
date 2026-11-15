@@ -15,6 +15,7 @@ function spaceForModel(s: SpaceDoc) {
     name: s.name,
     location: s.location,
     blurb: s.blurb,
+    hours_note: s.hours_note ?? null,
     capabilities: s.capabilities,
     equipment: s.equipment.map((e) => ({
       id: e.id,
@@ -90,6 +91,7 @@ Rules:
 - Estimate material quantities conservatively, as a range. Use the material's price_unit as the unit when it has one.
 - Never state a price, cost or dollar amount. Costs are calculated separately from stored prices.
 - If the space data lacks something you need, say so and point the student to the space's staff. Never guess specifications.
+- A space that lists no equipment can be a route only for what its listed services cover; use an empty equipment list and tell the student to ask its staff. Do not assume it has any particular tool.
 - If a photo is provided, describe only what bears on building the object. Do not identify or describe people.
 - Use clarifying_question only if nothing useful can be said without it. Use not_supported_reason when no space fits.
 - ${UNTRUSTED}

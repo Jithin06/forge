@@ -1,0 +1,84 @@
+{
+  "id": "digital-creative-lab",
+  "name": "Digital Creative Lab",
+  "school": "Leavey Library",
+  "location": "Leavey Library, basement",
+  "official_url": "https://itservices.usc.edu/?p=24117",
+  "blurb": "Podcast studios that students and faculty are welcome to use. The official page gives no hours, cost or way to book.",
+  "capabilities": [
+    "audio_recording"
+  ],
+  "hours": null,
+  "hours_note": null,
+  "access": [
+    {
+      "audience": "viterbi_undergrad",
+      "status": "open",
+      "note": null
+    },
+    {
+      "audience": "viterbi_grad",
+      "status": "open",
+      "note": null
+    },
+    {
+      "audience": "usc_undergrad_other",
+      "status": "open",
+      "note": null
+    },
+    {
+      "audience": "usc_grad_other",
+      "status": "open",
+      "note": null
+    }
+  ],
+  "access_steps": [
+    "The official page does not say how to book a studio. Check it for updates before you go."
+  ],
+  "trainings": [],
+  "equipment": [
+    {
+      "id": "podcast_studios",
+      "name": "Podcast studios",
+      "capability": "audio_recording",
+      "plain_name": "Podcast studio (a room for recording audio)",
+      "required_training_ids": [],
+      "staff_operated": null,
+      "work_area_note": null,
+      "good_for": [],
+      "not_for": []
+    }
+  ],
+  "materials": [],
+  "services": [],
+  "usage_fee_note": null,
+  "prohibited": [],
+  "scrap_policy": {
+    "offers_scrap": false,
+    "never_offer": [],
+    "pickup_note": null
+  },
+  "source": {
+    "urls": [
+      "https://itservices.usc.edu/?p=24117"
+    ],
+    "checked_on": "2026-11-14"
+  },
+  "status": {
+    "hours": {
+      "state": "estimated"
+    },
+    "access": {
+      "state": "estimated"
+    },
+    "trainings": {
+      "state": "estimated"
+    },
+    "equipment": {
+      "state": "estimated"
+    },
+    "prices": {
+      "state": "estimated"
+    }
+  }
+}
