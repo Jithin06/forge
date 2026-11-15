@@ -1,0 +1,12 @@
+{
+  "plywood-offcut": { "size_note": "Birch plywood, 1/4 in thick, about 8.5 x 11 in" },
+  "acrylic-offcut": { "size_note": "Clear acrylic, 1/8 in thick, about 6 x 4 in" },
+  "red-acrylic-strip": { "size_note": "Red acrylic strip, about 12 x 2 in" },
+  "mdf-offcut": { "size_note": "MDF, 1/4 in thick, about 8 x 10 in" },
+  "cardboard-offcut": { "size_note": "Corrugated cardboard, about 14 x 10 in" },
+  "failed-prints": { "size_note": "Failed PLA prints, 5 pieces" },
+  "filament-spool": { "size_note": "Black PLA spool, nearly empty" },
+  "pine-2x4": { "size_note": "Pine 2x4, about 12 in long" },
+  "aluminium-pieces": { "size_note": "Aluminium square tube and a small plate" },
+  "wire-and-hardware-tray": { "size_note": "Wire ends and loose fasteners, one small tray" }
+}

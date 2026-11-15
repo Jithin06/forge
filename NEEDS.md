@@ -37,6 +37,13 @@ The `ai_usage` table exists in your Supabase project (checked Nov 15), so the li
 - **Why:** everything so far uses one drawn stand-in (`data/samples/scrap-standin.jpg`). The M4 check "a real offcut photo yields a sensible draft" and M2b's scrap check need real photos, and the demo needs real pieces in the bin.
 - **Where:** save them in `data/samples/real/` (any names), or post them yourself: sign in as staff, Staff portal, Post scrap.
 
+### 5b. Sample scrap is in the bin: four things to decide
+Ten sample items made from generated photos are published at the Maker Space (see `reports/sample-scrap.md`).
+- **The club sign plan shows "$0 with free scrap"** because two acrylic pieces match by material. Both are far smaller than the 12-inch sign. The app matches scrap by kind of material, never by size. I did not change that, because it is part of how plans are made. Decide whether to demo that plan as it is, or remove the two acrylic items.
+- **The sample sentence shows only when a piece is opened**, not on the Scrap tab cards, the Maker Space strip or the plan. Say if you want it somewhere more visible.
+- **Two drafted warnings are wrong** ("Do not laser cut PVC" on the plywood and the red acrylic). I left the model's words alone. You can edit or remove the items in the staff portal.
+- **Before real use, remove them:** `KEEP_SAMPLES=0 npm run clean:test`. Without that setting the cleanup keeps them.
+
 ### 6. Confirm the scrap lists in the portal
 Your supervisor has approved the scrap exchange, so it is no longer described as a proposed pilot. The may-post and never-post lists still show as estimated until you confirm them with your real account.
 
@@ -61,7 +68,7 @@ Prices now come from the staff quote sheet you showed (Nov 14), which is newer t
 Run once: 20 of 21, 45 of 45 badges. The tote bag is left as a miss by your decision; RESULTS.md says why. The over-strict price check is fixed and tested. Nothing else is pending here.
 
 ### 10. Local call budget
-`AI_CALL_BUDGET=150` in `.env.local` is our own fixed total and never resets. 127 are used, 23 are left. Raise the number there if you want more local live runs. It has no effect on the live site, whose cap is 450 a Pacific day.
+`AI_CALL_BUDGET=150` in `.env.local` is our own fixed total and never resets. 140 are used, 10 are left. Raise the number there if you want more local live runs. It has no effect on the live site, whose cap is 450 a Pacific day.
 
 ### 11. Your problem story
 - **What:** one true story from working at the Maker Space: one student, one idea, where they got stuck. About 25 words for the slide, about 55 spoken.

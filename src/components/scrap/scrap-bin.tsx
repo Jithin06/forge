@@ -119,7 +119,7 @@ export function ScrapBin() {
                 <legend className="label">Material</legend>
                 <div className="-mx-4 flex gap-2 overflow-x-auto px-4 py-1.5">
                   {["", ...cats].map((c) => (
-                    <label key={c || "any"} className={`chip shrink-0 whitespace-nowrap ${category === c ? "chip-on" : ""}`}>
+                    <label key={c || "any"} className={`chip relative shrink-0 whitespace-nowrap ${category === c ? "chip-on" : ""}`}>
                       <input type="radio" name={ids.cat} value={c} checked={category === c} onChange={() => setCategory(c)} className="sr-only" />
                       {c ? MATERIAL_LABELS[c as MaterialCategory] : "Any material"}
                     </label>

@@ -1,0 +1,265 @@
+{
+  "swollen-lipo": {
+    "status": 200,
+    "draft": {
+      "material_category": "electronic_components",
+      "title": "Swelling LiPo Battery",
+      "description": "This is a lithium polymer battery showing signs of swelling.",
+      "size_note": "About 5 x 4 cm, approximate size",
+      "condition": "rough",
+      "suggested_uses": [],
+      "restrictions": [
+        "Do not puncture",
+        "Dispose of properly as hazardous waste"
+      ],
+      "confidence": "high",
+      "needs_staff_check": true,
+      "never_post_match": "Batteries"
+    },
+    "blocked_reason": "This cannot be posted. Baum Family Maker Space never gives away: batteries.",
+    "fixture": false
+  },
+  "acrylic-offcut": {
+    "status": 200,
+    "draft": {
+      "material_category": "acrylic",
+      "title": "Small clear acrylic sheet remnant",
+      "description": "This is a small, clear piece of acrylic with the protective blue plastic film partially attached.",
+      "size_note": "Approximately 15 x 10 cm, 3 mm thick, size is approximate.",
+      "condition": "good",
+      "suggested_uses": [
+        "Small laser cut charms",
+        "Display stand",
+        "Model making base"
+      ],
+      "restrictions": [
+        "Do not laser cut if uncertain of material safety",
+        "Remove protective film before use"
+      ],
+      "confidence": "high",
+      "needs_staff_check": false,
+      "never_post_match": null
+    },
+    "blocked_reason": null,
+    "fixture": false,
+    "published_id": "7e605054-46d6-498f-8752-ed78d3b2a126"
+  },
+  "aluminium-pieces": {
+    "status": 200,
+    "draft": {
+      "material_category": "aluminum",
+      "title": "Small aluminum tube and plate",
+      "description": "These are small leftover aluminum pieces suitable for fabrication practice or brackets.",
+      "size_note": "About 10 x 5 cm, approximate size",
+      "condition": "usable",
+      "suggested_uses": [
+        "Small brackets",
+        "Model parts",
+        "Spacer blocks"
+      ],
+      "restrictions": [
+        "Edges may be sharp"
+      ],
+      "confidence": "high",
+      "needs_staff_check": false,
+      "never_post_match": null
+    },
+    "blocked_reason": null,
+    "fixture": false,
+    "published_id": "d3014c93-560e-462e-8269-57b6a30863ef"
+  },
+  "cardboard-offcut": {
+    "status": 200,
+    "draft": {
+      "material_category": "cardboard_paper",
+      "title": "Small piece of corrugated cardboard",
+      "description": "This is a small piece of corrugated cardboard with a few cutout holes.",
+      "size_note": "About 20 x 20 cm, approximate size",
+      "condition": "usable",
+      "suggested_uses": [
+        "Model making",
+        "Quick prototyping",
+        "Packing material"
+      ],
+      "restrictions": [
+        "Keep away from water"
+      ],
+      "confidence": "high",
+      "needs_staff_check": false,
+      "never_post_match": null
+    },
+    "blocked_reason": null,
+    "fixture": false,
+    "published_id": "5f9e6857-c4d3-4cc0-95d1-ba4908fc02b2"
+  },
+  "failed-prints": {
+    "status": 200,
+    "draft": {
+      "material_category": "pla_filament",
+      "title": "Assorted 3D printing scraps and prints",
+      "description": "This is a collection of various leftover 3D printed objects and filament waste.",
+      "size_note": "About 30 x 20 cm total, sizes vary",
+      "condition": "usable",
+      "suggested_uses": [
+        "Recycling experiments",
+        "Small craft filler",
+        "Prototyping tests"
+      ],
+      "restrictions": [
+        "Do not heat in enclosed spaces without ventilation"
+      ],
+      "confidence": "high",
+      "needs_staff_check": false,
+      "never_post_match": null
+    },
+    "blocked_reason": null,
+    "fixture": false,
+    "published_id": "fde490a8-f0a1-4b17-bc7d-e3ad6ae067d2"
+  },
+  "filament-spool": {
+    "status": 200,
+    "draft": {
+      "material_category": "pla_filament",
+      "title": "Partial spool of black filament",
+      "description": "This is a partially used spool of black 3D printer filament on a wooden spool.",
+      "size_note": "About 20 cm diameter, approximate size.",
+      "condition": "usable",
+      "suggested_uses": [
+        "Small 3D prints",
+        "Testing printer settings",
+        "Prototypes"
+      ],
+      "restrictions": [
+        "Verify printer compatibility"
+      ],
+      "confidence": "high",
+      "needs_staff_check": false,
+      "never_post_match": null
+    },
+    "blocked_reason": null,
+    "fixture": false,
+    "published_id": "3b00c189-90b9-4b92-9059-33a8d7a1e829"
+  },
+  "mdf-offcut": {
+    "status": 200,
+    "draft": {
+      "material_category": "mdf",
+      "title": "Square piece of MDF board",
+      "description": "This is a flat piece of medium density fiberboard suitable for small craft projects or model building.",
+      "size_note": "About 20 x 20 cm, approximate size.",
+      "condition": "usable",
+      "suggested_uses": [
+        "Small shelf",
+        "Model base",
+        "Craft stencil"
+      ],
+      "restrictions": [
+        "Do not use with laser cutter if thickness unknown",
+        "Ventilate area when sanding"
+      ],
+      "confidence": "high",
+      "needs_staff_check": false,
+      "never_post_match": null
+    },
+    "blocked_reason": null,
+    "fixture": false,
+    "published_id": "c24a243f-2c57-484b-bbdd-cfb58d6445d5"
+  },
+  "pine-2x4": {
+    "status": 200,
+    "draft": {
+      "material_category": "solid_wood",
+      "title": "Small solid wood board",
+      "description": "This is a small piece of solid wood with visible knots suitable for basic woodworking practice.",
+      "size_note": "About 30 x 10 cm, 2 cm thick approximately",
+      "condition": "good",
+      "suggested_uses": [
+        "Small shelf bracket",
+        "Carving practice",
+        "Spacer block"
+      ],
+      "restrictions": [
+        "Check for nails before cutting"
+      ],
+      "confidence": "high",
+      "needs_staff_check": false,
+      "never_post_match": null
+    },
+    "blocked_reason": null,
+    "fixture": false,
+    "published_id": "bfb9ee95-5ebc-48d2-aa69-8b58085a7289"
+  },
+  "plywood-offcut": {
+    "status": 200,
+    "draft": {
+      "material_category": "plywood",
+      "title": "Small plywood sheet scrap",
+      "description": "This is a small piece of light wood plywood with a few cutouts in the corner.",
+      "size_note": "About 30 x 30 cm, 3 mm thick, approximate",
+      "condition": "usable",
+      "suggested_uses": [
+        "Laser cutting practice",
+        "Small model components",
+        "Jig spacers"
+      ],
+      "restrictions": [
+        "Do not laser cut PVC"
+      ],
+      "confidence": "high",
+      "needs_staff_check": false,
+      "never_post_match": null
+    },
+    "blocked_reason": null,
+    "fixture": false,
+    "published_id": "29039d7d-db8b-4673-82ca-72f00f3feb59"
+  },
+  "red-acrylic-strip": {
+    "status": 200,
+    "draft": {
+      "material_category": "acrylic",
+      "title": "Red acrylic strip with holes",
+      "description": "This is a thin red plastic strip with several circular cutouts along its length.",
+      "size_note": "About 30 x 4 cm, 3 mm thick, approximate",
+      "condition": "usable",
+      "suggested_uses": [
+        "Model building details",
+        "Small bracket fabrication",
+        "Craft projects"
+      ],
+      "restrictions": [
+        "Do not laser cut PVC"
+      ],
+      "confidence": "high",
+      "needs_staff_check": false,
+      "never_post_match": null
+    },
+    "blocked_reason": null,
+    "fixture": false,
+    "published_id": "9ad615d5-4279-49ac-8379-c889614ce655"
+  },
+  "wire-and-hardware-tray": {
+    "status": 200,
+    "draft": {
+      "material_category": "electronic_components",
+      "title": "Small wires and hardware",
+      "description": "This is a collection of assorted scrap wires and small metal fasteners in a tray.",
+      "size_note": "About 20 x 15 cm tray, approximate sizes",
+      "condition": "usable",
+      "suggested_uses": [
+        "Small wiring practice",
+        "Minor hardware replacement",
+        "Prototype assembly"
+      ],
+      "restrictions": [
+        "Verify wire gauge before use",
+        "Inspect fasteners for wear"
+      ],
+      "confidence": "high",
+      "needs_staff_check": false,
+      "never_post_match": null
+    },
+    "blocked_reason": null,
+    "fixture": false,
+    "published_id": "bb7d8f46-6191-4dfa-a39f-c30e505f59e7"
+  }
+}

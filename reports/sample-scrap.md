@@ -1,0 +1,70 @@
+# Sample scrap for the demo (Nov 15)
+
+Ten sample items are published at the Maker Space in the database the live site reads. The battery was blocked and is not published. Nothing about how plans are made changed.
+
+## Calls
+13 model requests, of the 14 allowed (log lines 128 to 140): 11 drafts, plus 2 requests that the primary model refused with a 503 and the fallback model then answered. The local total is 140 of 150.
+
+## 1. The images
+The folder was `~/Downloads/scrap-images`, not `~/Downloads/images`. It held 11 images and I looked at every one.
+
+- **Skipped: none.** No image has text, a logo or a person.
+- **All 11 look like 3D renders, not photos.** The bench grain, the lighting and the blurred pegboard are the same in each. I did not skip any for that, since skipping on that ground would have skipped all of them.
+- **Weakest images:**
+  - Filament spool: the spool's sides look like plywood, and the filament is as thick as cable.
+  - Cardboard: one patch has a texture like chipboard.
+  - Failed prints: there are about 10 pieces in the picture, and the size you gave says 5.
+
+All 11 are in `data/samples/scrap/`, 1200 by 900 px JPG, with metadata stripped (checked: no EXIF, XMP, comment or colour profile).
+
+## 2. What the model drafted
+Every image went through `POST /api/staff/scrap/draft`, the route the staff portal uses, signed in as the test staff account, with no staff note. The full drafts are in `reports/sample-scrap-drafts.json`.
+
+| Image | Category | Title | Model's size | What it got wrong |
+| --- | --- | --- | --- | --- |
+| plywood-offcut | Plywood | Small plywood sheet scrap | About 30 x 30 cm, 3 mm | Size. Did not say birch. Warning "Do not laser cut PVC" has nothing to do with plywood |
+| acrylic-offcut | Acrylic | Small clear acrylic sheet remnant | About 15 x 10 cm, 3 mm | Size is close. Warning "Do not laser cut if uncertain of material safety" contradicts its own high confidence |
+| red-acrylic-strip | Acrylic | Red acrylic strip with holes | About 30 x 4 cm, 3 mm | Size is close. Description says "red plastic". Same PVC warning |
+| mdf-offcut | MDF | Square piece of MDF board | About 20 x 20 cm | Size. It is not square. Suggested "small shelf", too big for the piece |
+| cardboard-offcut | Cardboard | Small piece of corrugated cardboard | About 20 x 20 cm | Size, well under 14 x 10 in |
+| failed-prints | PLA filament | Assorted 3D printing scraps and prints | About 30 x 20 cm total | Gave an area, not a count. It cannot know the plastic is PLA, yet said high confidence. Vague warning about heating |
+| filament-spool | PLA filament | Partial spool of black filament | About 20 cm diameter | Did not say how much is left. Says "wooden spool" (the image's fault). Same PLA guess |
+| pine-2x4 | Solid wood | Small solid wood board | About 30 x 10 cm, 2 cm thick | Thickness: a 2x4 is about 4 cm thick. Did not say pine or 2x4 |
+| aluminium-pieces | Aluminum | Small aluminum tube and plate | About 10 x 5 cm | One size for two different pieces |
+| wire-and-hardware-tray | Electronic parts | Small wires and hardware | About 20 x 15 cm tray | Nothing serious. The category fits the wire better than the fasteners |
+| swollen-lipo | Electronic parts | Swelling LiPo Battery | About 5 x 4 cm | Nothing. See below |
+
+Categories were right for all 11. Sizes were the weak point, as you expected.
+
+## 3. The battery
+**Blocked.** The model matched it to "Batteries" on the Maker Space never-post list, and the route answered: "This cannot be posted. Baum Family Maker Space never gives away: batteries." It was not sent to the publish route. Its image is in the repo with the others but is not in the database or the photo store.
+
+## 4. What was published
+Ten items, through `POST /api/staff/scrap` as `forge-test-staff@usc.edu`. The live site's `/api/scrap` lists all ten.
+
+My edits, and nothing else:
+- every description ends with "Sample item. Generated photo, not real Maker Space stock.";
+- the size line is yours, from `data/samples/scrap/edits.json`. I put the words you gave (birch, clear, black PLA, pine 2x4) in the size line, so the model's title and description stay as drafted.
+
+Titles, descriptions, categories, conditions and warnings are the model's. The pickup note is the standard Maker Space one.
+
+## 5. The check at 390 px
+Sample-data mode, production build, no live calls. Screenshots are in `reports/sample-scrap/`.
+
+- **Scrap tab:** 10 pieces, 10 photos load, no sideways scroll (after the fix below).
+- **Maker Space page, "Free here now":** 10 cards with photo, title and size.
+- **Club sign plan:** shows two free acrylic pieces, each with "Claim this piece", and "With free scrap, about $0".
+- **Phone stand plan:** shows the pine piece with "Claim this piece". It does not show the plywood, because the recorded plan builds the stand from solid wood.
+
+I did not press "Claim", so no hold was made.
+
+## Found on the way
+- **Fixed: the Scrap tab scrolled sideways on a phone.** With eight material chips, the hidden radio buttons inside the chips widened the page to 1146 px. One class added in `src/components/scrap/scrap-bin.tsx`. This was a real bug that the earlier reviews missed because the bin never held this many kinds of material.
+- **Not fixed, your call: the club sign's "$0".** The two acrylic pieces are 12 x 2 in and 6 x 4 in. The sign needs a sheet about 12 in wide. The app matches scrap by kind of material and does not compare sizes, so the plan says the material is free when neither piece is big enough. Changing that would change how plans are made.
+- **The sample sentence is only visible when a piece is opened.** The cards, the strip and the plan show the title and size, not the description.
+- **`npm run clean:test` used to delete everything the test staff account posted.** It now keeps items whose description ends with the sample sentence. `KEEP_SAMPLES=0 npm run clean:test` removes them.
+
+## Checks
+- `npm test`: 125 of 125. Typecheck and lint clean.
+- Not re-run: the full UI review at three widths, and axe. Only the four screens above were looked at, at 390 px.
+- Three plans made by my failed first attempts at the screenshot script were deleted.
